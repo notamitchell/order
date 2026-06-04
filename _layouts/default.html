@@ -12,6 +12,32 @@
     </header>
 
     {{ content }}
-  <script>console.log("js");</script>
+  <script>
+    
+  console.log("js");
+  
+  const CONFIG = {
+            user: 'notamitchell',
+            repo: 'order',
+            path: 'eac',
+            pagesBase: 'https://notamitchell.github.io/order/eac/'
+        };
+
+
+    const response = await fetch(`https://api.github.com/repos/${CONFIG.user}/${CONFIG.repo}/contents/${CONFIG.path}`);
+    const files = await response.json();
+    const xmlFiles = files.filter(f => f.name.endsWith('.xml'));
+
+    const promises = xmlFiles.map(async file => {
+      const res = await fetch(file.download_url);
+      const text = await res.text();
+      const xml = new DOMParser().parseFromString(text, "text/xml");
+
+      const abstract = xml.getElementsByTagName("abstract")[0];
+      console.log("abstract");          
+    }
+  
+  
+  </script>
   </body>
 </html>
