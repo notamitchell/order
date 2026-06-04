@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="shared/cpf.rng" type="xml"?>
+<eac-cpf xmlns="urn:isbn:1-931666-33-4" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
+<control>
+<recordId>EM01205</recordId>
+<maintenanceStatus>new</maintenanceStatus>
+<maintenanceAgency>
+<agencyCode>AU-EMEL</agencyCode>
+<agencyName>eMelbourne - The Encyclopedia of Melbourne Online</agencyName>
+<descriptiveNote>
+<p></p>
+</descriptiveNote>
+</maintenanceAgency>
+<languageDeclaration>
+<language languageCode="eng">English</language>
+<script scriptCode="Latn">Latin</script>
+</languageDeclaration>
+<conventionDeclaration>
+<abbreviation>AACR2</abbreviation>
+<citation>Anglo-American Cataloguing Rules</citation>
+</conventionDeclaration>
+<localControl localType="typeOfEntity">
+<term>Entry</term>
+</localControl>
+<maintenanceHistory>
+<maintenanceEvent>
+<eventType>created</eventType>
+<eventDateTime standardDateTime="2008-06-26">2008-06-26</eventDateTime>
+<agentType>human</agentType>
+<agent>Andrew Brown-May And Kasia Zygmuntowicz</agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+<maintenanceEvent>
+<eventType>updated</eventType>
+<eventDateTime standardDateTime="2015-02-17">2015-02-17</eventDateTime>
+<agentType>human</agentType>
+<agent></agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+</maintenanceHistory>
+</control>
+<cpfDescription>
+<identity><entityId>http://www.emelbourne.net.au/biogs/EM01205b.htm</entityId>
+<entityType>concept</entityType>
+<nameEntry><part>Public Record Office Victoria</part>
+<authorizedForm>AACR2</authorizedForm>
+</nameEntry>
+</identity>
+<description><places>
+</places>
+<biogHist>
+<abstract>Established under the <span style="font-style:italic">Public Records Act 1973</span>, the Public Record Office Victoria (PROV) is Victoria's state archival authority. The director and keeper of public records is responsible for the management, preservation and provision of access to Victoria's public records. Public records provide evidence of government actions, past and present. Whenever an individual or organisation has formal dealings with a government agency or department, a public record is created. Public records involve every facet of government including parliament, the Cabinet, government departments and agencies, municipal government, statutory authorities, educational and judicial institutions and health organisations. 
+
+Victorian public records managed by PROV date from the establishment of permanent government services in the Port Phillip District in 1836. The first official transfer of government records did not occur until 1903, when records of the Law Department were deposited with the Public Library of Victoria (later State Library of Victoria). From 1910 the (Royal) Historical Society of Victoria, representatives of the Public Library of Victoria, the History Department of the University of Melbourne and many committed individuals campaigned for the establishment of a State records office. In 1955 the State Library of Victoria established an Archives Division, led by Harry Nunn as senior archivist. Almost 20 years later Nunn became the first keeper of public records when the <span style="font-style:italic">Public Records Act 1973</span> was passed and the Public Record Office was created. 
+
+The 1973 legislation was a milestone for the 'corporate memory' of the Victorian Government. Since then the State archives have grown from 75 000 lineal ft (22 km) of records to 82 km of records managed within a state-of-the-art repository. With the advent of electronic records, PROV initiatives, including the Victorian Electronic Records Strategy (VERS) and the Digital Archive, are ensuring the long-term preservation of electronic, or digital, archives of the Victorian Government. 
+
+</abstract>
+
+</biogHist>
+</description>
+<relations><cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM03395b.htm">
+<relationEntry localType="Concept">
+Civic Treasures
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM03394b.htm">
+<relationEntry localType="Concept">
+Letterheads
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="hierarchical-parent" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM00005b.htm">
+<relationEntry localType="Theme">
+Culture
+</relationEntry>
+</cpfRelation>
+<resourceRelation resourceRelationType="subjectOf">
+<relationEntry localType="published">'Public Record Office Victoria', in <span style="font-style:italic">eMelbourne - The Encyclopedia of Melbourne Online</span>, School of Historical Studies, Department of History, The University of Melbourne</relationEntry>
+
+<objectXMLWrap>
+<bibref xmlns="urn:isbn:1-931666-22-9">
+<title render="italic">Public Record Office Victoria</title>
+<imprint>
+<publisher>School of Historical Studies<br /> Department of History, The University of Melbourne</publisher>
+</imprint>
+<bibseries>
+<title render="italic">eMelbourne - The Encyclopedia of Melbourne Online</title>
+</bibseries>
+<extptr linktype="simple" href="http://www.emelbourne.net.au/biogs/EM01205b.htm"></extptr>
+</bibref>
+</objectXMLWrap>
+</resourceRelation>
+<resourceRelation resourceRelationType="other" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/bib/PEM000039.htm">
+<relationEntry localType="published">Book: A matter of record: a history of Public Record Office Victoria</relationEntry>
+
+<objectXMLWrap>
+<bibref xmlns="urn:isbn:1-931666-22-9">
+<name type="author">Russell, E.W.</name>
+<title render="italic">A matter of record: a history of Public Record Office Victoria</title>
+<imprint>
+<place>Melbourne</place>
+<publisher>Public Record Office</publisher>
+<date>2003</date>
+</imprint>
+</bibref>
+</objectXMLWrap>
+
+<descriptiveNote>
+<p>Source used to compile entry</p>
+</descriptiveNote>
+</resourceRelation>
+</relations>
+</cpfDescription>
+</eac-cpf>
