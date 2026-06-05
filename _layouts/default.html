@@ -282,8 +282,9 @@
     
 <script type="module">
   const CONFIG = {
-    path: '{{ EACCPFpath }}' 
+    path: '{{ page.EACCPFpath }}' 
   };
+
 
   // 1. Get the ID from the URL parameters (e.g., ?id=EM02472)
   const urlParams = new URLSearchParams(window.location.search);
@@ -310,8 +311,6 @@
       const givenName = xml.getElementsByTagNameNS(ns, "part").item(1)?.textContent || "";
       const fullName = givenName ? `${givenName} ${familyName}` : familyName;
 
-      // Entity Type (e.g., Person)
-      const entityType = xml.getElementsByTagNameNS(ns, "entityType")[0]?.textContent || "Unknown";
 
       // Dates (Birth and Death)
       const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";
@@ -346,7 +345,6 @@
       entryContainer.innerHTML = `
         <article class="biography">
           <header class="entry-header">
-            <span class="entity-badge">${entityType}</span>
             <h1 class="entry-title">${fullName}</h1>
             <p class="life-span">${lifeSpan}</p>
           </header>
@@ -354,7 +352,6 @@
           <hr />
 
           <section class="quick-facts">
-            <h3>Quick Facts</h3>
             <ul>
               ${occupationText ? `<li><strong>Occupation:</strong> ${occupationText}</li>` : ''}
               ${placesHtml}
@@ -362,7 +359,6 @@
           </section>
 
           <section class="biography-text">
-            <h3>Abstract</h3>
             <div>${abstractHtml}</div>
           </section>
         </article>
