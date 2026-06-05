@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "biography"
-EAC-CPF: "biogs"
+EAC-CPF-path: "biogs"
 ---
 
 # Biography
