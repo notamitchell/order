@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }}</title>
   </head>
   <body>
@@ -10,8 +12,275 @@
         <a href="/">Home</a> | <a href="/about">About</a>
       </nav>
     </header>
+<style>
+        /* Modern CSS Reset & Core Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    {{ content }}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #2c3e50;
+            background-color: #f4f7f6;
+            line-height: 1.6;
+        }
+
+        /* Container */
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+.banner-container {
+    width: 100%;
+    /* This calculates an aspect ratio that is exactly half the height of the original image */
+    aspect-ratio: 1200 / 60; /* Adjust '60' based on half your actual image aspect ratio */
+    overflow: hidden;
+    display: block;
+    background-color: #387573;
+}
+
+.banner-container img {
+    width: 100%;
+    height: 200%; /* Force the image to be twice the height of the container */
+    object-fit: cover;
+    object-position: top center; /* Pins the image to the top, hiding the bottom */
+    display: block;
+}
+
+        /* Header Navigation */
+        .main-nav {
+            background-color: #387573; /* Teal extracted from banner */
+            border-bottom: 4px solid #c99723; /* Accent Gold from horse/lettering */
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li a {
+            display: block;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 20px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-links li a:hover {
+            background-color: #2d5e5c;
+            color: #ffe699;
+        }
+
+        /* Main Content Layout Grid */
+        .layout-container {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .layout-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 30px;
+            }
+        }
+
+        /* Content Area typography */
+        .main-content h1 {
+            font-family: "Georgia", Times, serif;
+            color: #234b4a;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: normal;
+            border-bottom: 1px solid #e0e8e7;
+            padding-bottom: 10px;
+        }
+
+        .main-content p {
+            margin-bottom: 20px;
+            color: #4a5568;
+            font-size: 1.05rem;
+        }
+
+        /* Sidebar Styling */
+        .sidebar-menu {
+            background-color: #f8faf9;
+            border: 1px solid #e2ecea;
+            border-radius: 6px;
+            padding: 24px;
+            align-self: start;
+        }
+
+        .sidebar-menu h2 {
+            font-family: "Georgia", Times, serif;
+            color: #234b4a;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #387573;
+            font-weight: normal;
+        }
+
+        .theme-list {
+            list-style: none;
+        }
+
+        .theme-list li {
+            border-bottom: 1px solid #eaf2f1;
+        }
+
+        .theme-list li:last-child {
+            border-bottom: none;
+        }
+
+        .theme-list a {
+            display: block;
+            color: #3a6361;
+            text-decoration: none;
+            padding: 8px 4px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-list a:hover {
+            color: #c99723;
+            padding-left: 8px;
+            background-color: #f0f6f5;
+        }
+
+        /* Footer styling */
+        .main-footer {
+            background-color: #252c2c;
+            color: #a0aec0;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+        }
+
+        .footer-content {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #ffe699;
+        }
+
+        .footer-attribution {
+            border-top: 1px solid #3a4444;
+            width: 100%;
+            padding-top: 20px;
+            color: #8795a1;
+            font-size: 0.85rem;
+        }
+    </style>
+
+    <body>
+
+    <div class="wrapper">
+        
+        <!-- Banner Image Component -->
+        <header class="banner-container">
+            <img src="https://www.emelbourne.net.au/images/emelb_banner.jpg" alt="Banner">
+        </header>
+
+        <!-- Top Navigation Bar -->
+        <nav class="main-nav">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#a-z">A-Z Listing</a></li>
+                <li><a href="#search">Search</a></li>
+                <li><a href="#help">Help</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Layout Split -->
+        <div class="layout-container">
+            
+            <!-- Main Copy Placeholder -->
+            <main class="main-content">
+               {{ content }}
+            </main>
+
+            <!-- Themes Sidebar -->
+            <aside class="sidebar-menu">
+                <h2>Browse by Theme</h2>
+                <ul class="theme-list">
+                    <li><a href="#aboriginal-melbourne">Aboriginal Melbourne</a></li>
+                    <li><a href="#architecture-planning">Architecture & Planning</a></li>
+                    <li><a href="#business-industry">Business & Industry</a></li>
+                    <li><a href="#crime-law-order">Crime, Law & Order</a></li>
+                    <li><a href="#culture">Culture</a></li>
+                    <li><a href="#early-settlement">Early Settlement</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#ethnicity-demography">Ethnicity & Demography</a></li>
+                    <li><a href="#health-well-being">Health & Well Being</a></li>
+                    <li><a href="#media-communications">Media & Communications</a></li>
+                    <li><a href="#military-defence">Military & Defence</a></li>
+                    <li><a href="#politics-government">Politics & Government</a></li>
+                    <li><a href="#reform-charity-philanthropy">Reform, Charity & Philanthropy</a></li>
+                    <li><a href="#religion">Religion</a></li>
+                    <li><a href="#science-nature-geography">Science, Nature, Geography</a></li>
+                    <li><a href="#social-life-customs">Social Life & Customs</a></li>
+                    <li><a href="#sport-recreation">Sport & Recreation</a></li>
+                    <li><a href="#streets-lanes">Streets & Lanes</a></li>
+                    <li><a href="#suburbs-localities">Suburbs & Localities</a></li>
+                    <li><a href="#transport">Transport</a></li>
+                    <li><a href="#urban-environment">Urban Environment</a></li>
+                </ul>
+            </aside>
+
+        </div>
+
+        <!-- Footer Module -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#a-z">A-Z Listing</a></li>
+                    <li><a href="#search">Search</a></li>
+                    <li><a href="#help">Help</a></li>
+                </ul>
+                <div class="footer-attribution">
+                    Produced and published by the School of Historical & Philosophical Studies, The University of Melbourne
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    
     
     <script type="module">
       console.log("js");
