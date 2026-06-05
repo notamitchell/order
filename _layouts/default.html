@@ -311,8 +311,8 @@
 
       // Dates (Birth and Death)
       const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";
-      const toDate = xml.getElementsByTagNameNS(ns, "toDate")[0]?.textContent || "Present";
-      const lifeSpan = fromDate ? `(${fromDate} – ${toDate})` : "";
+      const toDate = xml.getElementsByTagNameNS(ns, "toDate")[0]?.textContent || "";
+      const lifeSpan = fromDate ? `(${fromDate} – ${toDate || 'Present'})` : "";
 
       // Places (Loop and map role to place entry)
       const placeElements = xml.getElementsByTagNameNS(ns, "place");
@@ -338,7 +338,7 @@
       const abstractNode = xml.getElementsByTagNameNS(ns, "abstract")[0];
       const abstractHtml = abstractNode ? abstractNode.innerHTML : "No description available.";
 
-      // --- NEW: Extract Author (Created by) ---
+      // --- Extract Author (Created by) ---
       let authorName = "";
       const events = xml.getElementsByTagNameNS(ns, "maintenanceEvent");
       for (let event of events) {
@@ -349,11 +349,49 @@
         }
       }
 
-      // --- NEW: Extract Digital Objects (e.g., Etchings, images, references) ---
+      // --- Parse Resource Relations (Split into References vs Digital Objects) ---
       let digitalObjectsHtml = "";
+      let referencesHtml = "";
+      
       const resourceRelations = xml.getElementsByTagNameNS(ns, "resourceRelation");
+      
       for (let rel of resourceRelations) {
-        if (rel.getAttribute("resourceRelationType") === "other") {
+        // Skip self-referencing subjectOf links
+        if (rel.getAttribute("resourceRelationType") === "subjectOf") continue;
+
+        const note = rel.getElementsByTagNameNS(ns, "p")[0]?.textContent || "";
+        
+        // 1. Check if it's a Reference Source
+        if (note.toLowerCase().includes("source used") || rel.getElementsByTagNameNS(ns, "bibref").length > 0) {
+          const bibref = rel.getElementsByTagNameNS(ns, "bibref")[0];
+          if (bibref) {
+            // Target nested namespaces if present, default back to standard
+            const author = bibref.getElementsByTagName("name")[0]?.textContent || "";
+            const title = bibref.getElementsByTagName("title")[0]?.textContent || "";
+            const series = bibref.getElementsByTagName("bibseries")[0]?.getElementsByTagName("title")[0]?.textContent || "";
+            const publisher = bibref.getElementsByTagName("publisher")[0]?.textContent?.replace(/<br\s*\/?>/gi, ', ') || "";
+            const date = bibref.getElementsByTagName("date")[0]?.textContent || "";
+            const href = bibref.getElementsByTagName("extptr")[0]?.getAttribute("href") || "";
+
+            // Build dynamic citation string
+            let citationParts = [];
+            if (author) citationParts.push(author);
+            if (title) citationParts.push(`'${title}'`);
+            if (series) citationParts.push(`in <em>${series}</em>`);
+            if (publisher) citationParts.push(publisher);
+            if (date) citationParts.push(date);
+            
+            let citationText = citationParts.join(", ");
+            if (href) {
+              citationText += `, <a href="${href}" target="_blank" rel="noopener">${href}</a>`;
+            }
+            if (citationText) {
+              referencesHtml += `<li>${citationText}.</li>`;
+            }
+          }
+        } 
+        // 2. Otherwise treat it as an Image/Digital Object Asset
+        else if (rel.getAttribute("resourceRelationType") === "other") {
           const title = rel.getElementsByTagNameNS(ns, "relationEntry")[0]?.textContent || "";
           const descNode = rel.getElementsByTagNameNS(ns, "abstract")[0] || rel.getElementsByTagNameNS(ns, "p")[0];
           const desc = descNode ? descNode.textContent : "";
@@ -368,7 +406,7 @@
         }
       }
 
-      // --- NEW: Extract See Also Links ---
+      // --- Extract See Also Links ---
       let seeAlsoHtml = "";
       const cpfRelations = xml.getElementsByTagNameNS(ns, "cpfRelation");
       if (cpfRelations.length > 0) {
@@ -377,7 +415,6 @@
           const entryName = rel.getElementsByTagNameNS(ns, "relationEntry")[0]?.textContent?.trim() || "";
           const originalHref = rel.getAttribute("xlink:href") || "";
           
-          // Extracts the ID from the URL (e.g., "EM02104b.htm" -> "EM02104")
           const idMatch = originalHref.match(/(EM\d+)/);
           const targetId = idMatch ? idMatch[0] : null;
 
@@ -388,7 +425,7 @@
         if (linksList) {
           seeAlsoHtml = `
             <section class="see-also" style="margin-top: 30px;">
-              ### See Also
+              <h3>See Also</h3>
               <ul style="line-height: 1.6;">${linksList}</ul>
             </section>`;
         }
@@ -426,8 +463,18 @@
           ${digitalObjectsHtml ? `
             <hr />
             <section class="digital-resources" style="margin-top: 20px;">
-              ### Images & Artifacts
+              <h3>Images & Artifacts</h3>
               ${digitalObjectsHtml}
+            </section>
+          ` : ''}
+
+          ${referencesHtml ? `
+            <hr />
+            <section class="references" style="margin-top: 20px;">
+              <h3>References</h3>
+              <ul style="line-height: 1.6; padding-left: 20px;">
+                ${referencesHtml}
+              </ul>
             </section>
           ` : ''}
 
