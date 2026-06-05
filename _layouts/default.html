@@ -279,12 +279,10 @@
 
     </div>
     
-    
 <script type="module">
   const CONFIG = {
     path: '{{ page.EACCPFpath }}' 
   };
-
 
   // 1. Get the ID from the URL parameters (e.g., ?id=EM02472)
   const urlParams = new URLSearchParams(window.location.search);
@@ -306,11 +304,10 @@
 
       // 2. Extract Fields safely using namespaced queries
       
-      // Name (Combining family and given name)
+      // Name (Combining family and given name, or handling single concept names)
       const familyName = xml.getElementsByTagNameNS(ns, "part").item(0)?.textContent || "";
       const givenName = xml.getElementsByTagNameNS(ns, "part").item(1)?.textContent || "";
       const fullName = givenName ? `${givenName} ${familyName}` : familyName;
-
 
       // Dates (Birth and Death)
       const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";
@@ -341,6 +338,62 @@
       const abstractNode = xml.getElementsByTagNameNS(ns, "abstract")[0];
       const abstractHtml = abstractNode ? abstractNode.innerHTML : "No description available.";
 
+      // --- NEW: Extract Author (Created by) ---
+      let authorName = "";
+      const events = xml.getElementsByTagNameNS(ns, "maintenanceEvent");
+      for (let event of events) {
+        const type = event.getElementsByTagNameNS(ns, "eventType")[0]?.textContent;
+        if (type === "created") {
+          authorName = event.getElementsByTagNameNS(ns, "agent")[0]?.textContent || "";
+          break;
+        }
+      }
+
+      // --- NEW: Extract Digital Objects (e.g., Etchings, images, references) ---
+      let digitalObjectsHtml = "";
+      const resourceRelations = xml.getElementsByTagNameNS(ns, "resourceRelation");
+      for (let rel of resourceRelations) {
+        if (rel.getAttribute("resourceRelationType") === "other") {
+          const title = rel.getElementsByTagNameNS(ns, "relationEntry")[0]?.textContent || "";
+          const descNode = rel.getElementsByTagNameNS(ns, "abstract")[0] || rel.getElementsByTagNameNS(ns, "p")[0];
+          const desc = descNode ? descNode.textContent : "";
+          
+          if (title) {
+            digitalObjectsHtml += `
+              <div class="digital-object-item" style="margin-bottom: 15px; padding-left: 10px; border-left: 3px solid #ccc;">
+                <strong>${title}</strong>
+                ${desc ? `<p style="margin: 5px 0 0 0; font-size: 0.95em; color: #555;">${desc}</p>` : ''}
+              </div>`;
+          }
+        }
+      }
+
+      // --- NEW: Extract See Also Links ---
+      let seeAlsoHtml = "";
+      const cpfRelations = xml.getElementsByTagNameNS(ns, "cpfRelation");
+      if (cpfRelations.length > 0) {
+        let linksList = "";
+        for (let rel of cpfRelations) {
+          const entryName = rel.getElementsByTagNameNS(ns, "relationEntry")[0]?.textContent?.trim() || "";
+          const originalHref = rel.getAttribute("xlink:href") || "";
+          
+          // Extracts the ID from the URL (e.g., "EM02104b.htm" -> "EM02104")
+          const idMatch = originalHref.match(/(EM\d+)/);
+          const targetId = idMatch ? idMatch[0] : null;
+
+          if (entryName && targetId) {
+            linksList += `<li><a href="?id=${targetId}">${entryName}</a></li>`;
+          }
+        }
+        if (linksList) {
+          seeAlsoHtml = `
+            <section class="see-also" style="margin-top: 30px;">
+              ### See Also
+              <ul style="line-height: 1.6;">${linksList}</ul>
+            </section>`;
+        }
+      }
+
       // 3. Construct and Inject the HTML Layout
       entryContainer.innerHTML = `
         <article class="biography">
@@ -351,16 +404,34 @@
           
           <hr />
 
+          ${(occupationText || placesHtml) ? `
           <section class="quick-facts">
             <ul>
               ${occupationText ? `<li><strong>Occupation:</strong> ${occupationText}</li>` : ''}
               ${placesHtml}
             </ul>
           </section>
+          ` : ''}
 
           <section class="biography-text">
             <div>${abstractHtml}</div>
+            
+            ${authorName ? `
+              <p class="author-credit" style="margin-top: 20px; font-style: italic; text-align: right; color: #666;">
+                By ${authorName}
+              </p>
+            ` : ''}
           </section>
+
+          ${digitalObjectsHtml ? `
+            <hr />
+            <section class="digital-resources" style="margin-top: 20px;">
+              ### Images & Artifacts
+              ${digitalObjectsHtml}
+            </section>
+          ` : ''}
+
+          ${seeAlsoHtml}
         </article>
       `;
 
