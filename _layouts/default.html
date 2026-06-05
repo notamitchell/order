@@ -224,6 +224,11 @@
             <!-- Main Copy Placeholder -->
             <main class="main-content">
                {{ content }}
+
+            <div id="encyclopedia-entry" class="entry-card">
+            <p class="loading">Loading record...</p>
+            </div>
+
             </main>
 
             <!-- Themes Sidebar -->
@@ -279,43 +284,98 @@
   console.log("js");
   
   const CONFIG = {
-    path: 'biogs'
+    path: '{{ EAC-CPF-path }}' 
   };
 
   // 1. Get the ID from the URL parameters (e.g., ?id=EM02472)
   const urlParams = new URLSearchParams(window.location.search);
   const fileId = urlParams.get('id');
+  const entryContainer = document.getElementById('encyclopedia-entry');
 
   if (fileId) {
-    // 2. Build a relative URL to your GitHub Pages folder
-    // This resolves to: /order/biogs/EM02472.xml
     const fileUrl = `./${CONFIG.path}/${fileId}.xml`;
 
     try {
-      // 3. Fetch the XML file directly from your website's hosting
       const response = await fetch(fileUrl);
+      if (!response.ok) throw new Error(`File not found (Status: ${response.status})`);
       
-      if (!response.ok) {
-        throw new Error(`File not found (Status: ${response.status})`);
+      const text = await response.text();
+      const xml = new DOMParser().parseFromString(text, "text/xml");
+      
+      // The EAC-CPF namespace used in your document
+      const ns = "urn:isbn:1-931666-33-4";
+
+      // 2. Extract Fields safely using namespaced queries
+      
+      // Name (Combining family and given name)
+      const familyName = xml.getElementsByTagNameNS(ns, "part").item(0)?.textContent || "";
+      const givenName = xml.getElementsByTagNameNS(ns, "part").item(1)?.textContent || "";
+      const fullName = givenName ? `${givenName} ${familyName}` : familyName;
+
+      // Entity Type (e.g., Person)
+      const entityType = xml.getElementsByTagNameNS(ns, "entityType")[0]?.textContent || "Unknown";
+
+      // Dates (Birth and Death)
+      const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";
+      const toDate = xml.getElementsByTagNameNS(ns, "toDate")[0]?.textContent || "Present";
+      const lifeSpan = fromDate ? `(${fromDate} – ${toDate})` : "";
+
+      // Places (Loop and map role to place entry)
+      const placeElements = xml.getElementsByTagNameNS(ns, "place");
+      let placesHtml = "";
+      for (let place of placeElements) {
+        const role = place.getElementsByTagNameNS(ns, "placeRole")[0]?.textContent || "Location";
+        const entry = place.getElementsByTagNameNS(ns, "placeEntry")[0]?.textContent || "";
+        if (entry) {
+          placesHtml += `<li><strong>${role}:</strong> ${entry}</li>`;
+        }
       }
 
-      const text = await response.text();
-      
-      // 4. Parse and log the abstract
-      const xml = new DOMParser().parseFromString(text, "text/xml");
-      const abstract = xml.getElementsByTagName("abstract")[0];
-      
-      if (abstract) {
-        console.log("Abstract found:", abstract.textContent);
-      } else {
-        console.log("No <abstract> tag found in this XML.");
+      // Occupations
+      const occupationElements = xml.getElementsByTagNameNS(ns, "occupation");
+      let occupations = [];
+      for (let occ of occupationElements) {
+        const term = occ.getElementsByTagNameNS(ns, "term")[0]?.textContent;
+        if (term) occupations.push(term);
       }
+      const occupationText = occupations.join(", ");
+
+      // Abstract (Handles any nested HTML markup inside the abstract safely)
+      const abstractNode = xml.getElementsByTagNameNS(ns, "abstract")[0];
+      const abstractHtml = abstractNode ? abstractNode.innerHTML : "No description available.";
+
+      // 3. Construct and Inject the HTML Layout
+      entryContainer.innerHTML = `
+        <article class="biography">
+          <header class="entry-header">
+            <span class="entity-badge">${entityType}</span>
+            <h1 class="entry-title">${fullName}</h1>
+            <p class="life-span">${lifeSpan}</p>
+          </header>
+          
+          <hr />
+
+          <section class="quick-facts">
+            <h3>Quick Facts</h3>
+            <ul>
+              ${occupationText ? `<li><strong>Occupation:</strong> ${occupationText}</li>` : ''}
+              ${placesHtml}
+            </ul>
+          </section>
+
+          <section class="biography-text">
+            <h3>Abstract</h3>
+            <div>${abstractHtml}</div>
+          </section>
+        </article>
+      `;
 
     } catch (error) {
       console.error("Error loading the XML file:", error);
+      entryContainer.innerHTML = `<p class="error-msg">Error: Could not load the requested record.</p>`;
     }
   } else {
-    console.error("No 'id' parameter found in the URL.");
+    entryContainer.innerHTML = `<p class="error-msg">No identification ID provided in the URL query string.</p>`;
   }
 </script>
   </body>
