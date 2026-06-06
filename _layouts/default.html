@@ -6,7 +6,6 @@
     <title>{{ page.title }}</title>
   </head>
 <style>
-        /* Modern CSS Reset & Core Styling */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -212,7 +211,7 @@
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#a-z">A-Z Listing</a></li>
+                <li><a href="aToZ">A-Z Listing</a></li>
                 <li><a href="#search">Search</a></li>
                 <li><a href="#help">Help</a></li>
             </ul>
@@ -235,27 +234,27 @@
             <aside class="sidebar-menu">
                 <h2>Browse by Theme</h2>
                 <ul class="theme-list">
-                    <li><a href="#aboriginal-melbourne">Aboriginal Melbourne</a></li>
-                    <li><a href="#architecture-planning">Architecture & Planning</a></li>
-                    <li><a href="#business-industry">Business & Industry</a></li>
-                    <li><a href="#crime-law-order">Crime, Law & Order</a></li>
-                    <li><a href="#culture">Culture</a></li>
-                    <li><a href="#early-settlement">Early Settlement</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#ethnicity-demography">Ethnicity & Demography</a></li>
-                    <li><a href="#health-well-being">Health & Well Being</a></li>
-                    <li><a href="#media-communications">Media & Communications</a></li>
-                    <li><a href="#military-defence">Military & Defence</a></li>
-                    <li><a href="#politics-government">Politics & Government</a></li>
-                    <li><a href="#reform-charity-philanthropy">Reform, Charity & Philanthropy</a></li>
-                    <li><a href="#religion">Religion</a></li>
-                    <li><a href="#science-nature-geography">Science, Nature, Geography</a></li>
-                    <li><a href="#social-life-customs">Social Life & Customs</a></li>
-                    <li><a href="#sport-recreation">Sport & Recreation</a></li>
-                    <li><a href="#streets-lanes">Streets & Lanes</a></li>
-                    <li><a href="#suburbs-localities">Suburbs & Localities</a></li>
-                    <li><a href="#transport">Transport</a></li>
-                    <li><a href="#urban-environment">Urban Environment</a></li>
+                    <li><a href="aboriginal-melbourne">Aboriginal Melbourne</a></li>
+                    <li><a href="architecture-planning">Architecture & Planning</a></li>
+                    <li><a href="business-industry">Business & Industry</a></li>
+                    <li><a href="crime-law-order">Crime, Law & Order</a></li>
+                    <li><a href="culture">Culture</a></li>
+                    <li><a href="early-settlement">Early Settlement</a></li>
+                    <li><a href="education">Education</a></li>
+                    <li><a href="ethnicity-demography">Ethnicity & Demography</a></li>
+                    <li><a href="health-well-being">Health & Well Being</a></li>
+                    <li><a href="media-communications">Media & Communications</a></li>
+                    <li><a href="military-defence">Military & Defence</a></li>
+                    <li><a href="politics-government">Politics & Government</a></li>
+                    <li><a href="reform-charity-philanthropy">Reform, Charity & Philanthropy</a></li>
+                    <li><a href="religion">Religion</a></li>
+                    <li><a href="science-nature-geography">Science, Nature, Geography</a></li>
+                    <li><a href="social-life-customs">Social Life & Customs</a></li>
+                    <li><a href="sport-recreation">Sport & Recreation</a></li>
+                    <li><a href="streets-lanes">Streets & Lanes</a></li>
+                    <li><a href="suburbs-localities">Suburbs & Localities</a></li>
+                    <li><a href="transport">Transport</a></li>
+                    <li><a href="urban-environment">Urban Environment</a></li>
                 </ul>
             </aside>
 
@@ -486,8 +485,6 @@
       console.error("Error loading the XML file:", error);
       entryContainer.innerHTML = `<p class="error-msg">Error: Could not load the requested record.</p>`;
     }
-  } else {
-    entryContainer.innerHTML = `<p class="error-msg">No identification ID provided in the URL query string.</p>`;
   }
 </script>
   </body>
