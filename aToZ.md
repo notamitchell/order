@@ -13,15 +13,20 @@ Select a letter below to jump directly to that section.
 
 ---
 
+## Misc Examples
+
+[George Rothwell Wilson Adam](biogs?id=EM02472)
+
+[Bourke Street Mall](eac?id=EM00221)
+
+[Public Record Office Victoria](eac?id=EM01205)
+
+[Public Toilets](eac?id=EM01206)
+
 ## A
 
 ### Argyle Place
 A place in Carlton.
-
-[EM02472](biogs.md?id=EM02472)
-[EM02472](eac.md?id=EM00221)
-[EM02472](eac.md?id=EM01205)
-[EM02472](eac.md?id=EM01206)
 
 ### Astor Place
 Another place in Carlton.
