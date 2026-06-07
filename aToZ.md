@@ -14,7 +14,7 @@ Select a letter below to jump directly to that section.
 
 ## A
 
-[Back to Top](#encyclopedia-index-a-to-z)
+[Back to Top](#index-a-to-z)
 
 ---
 
@@ -24,7 +24,7 @@ Select a letter below to jump directly to that section.
 
 [Boy On A Turtle](eac?id=EM02041)
 
-[Back to Top](#encyclopedia-index-a-to-z)
+[Back to Top](#index-a-to-z)
 
 ---
 
@@ -38,11 +38,13 @@ Select a letter below to jump directly to that section.
 
 [Carlton Gardens](eac?id=EM00297)
 
-[Back to Top](#encyclopedia-index-a-to-z)
+[Back to Top](#index-a-to-z)
 
 ## D
 
 [Dinny O'Hearn Fountain](eac?id=EM02072)
+
+[Back to Top](#index-a-to-z)
 
 ## E
 
@@ -50,7 +52,7 @@ Select a letter below to jump directly to that section.
 
 [Exhibition Fountain (aka Hochgurtel Fountain)](eac?id=EM02078)
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
@@ -58,124 +60,124 @@ Select a letter below to jump directly to that section.
 
 [French Fountain](eac?id=EM02026)
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## G
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## H
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## I
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## J
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## K
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## L
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## M
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## N
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## O
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## P
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## Q
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## R
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## S
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## T
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## U
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## V
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## W
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## X
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## Y
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
 
 ---
 
 ## Z
 
-[Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
+[Back to Top](#index-a-to-z)
