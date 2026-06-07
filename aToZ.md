@@ -13,23 +13,7 @@ Select a letter below to jump directly to that section.
 
 ---
 
-## Misc Examples
-
-[George Rothwell Wilson Adam](biogs?id=EM02472)
-
-[Bourke Street Mall](eac?id=EM00221)
-
-[Public Record Office Victoria](eac?id=EM01205)
-
-[Public Toilets](eac?id=EM01206)
-
 ## A
-
-### Argyle Place
-A place in Carlton.
-
-### Astor Place
-Another place in Carlton.
 
 [Back to Top](#encyclopedia-index-a-to-z)
 
@@ -37,42 +21,23 @@ Another place in Carlton.
 
 ## B
 
-### Belle Vue Place
-It's in Carlton!
-
-### Bouverie Street
-A street in Carlton.
-
 [Back to Top](#encyclopedia-index-a-to-z)
 
 ---
 
 ## C
 
-### Cardigan Street
-A street!
+[Carlton Football Club](eac?id=EM00296)
 
 [Back to Top](#encyclopedia-index-a-to-z)
 
 ## E
-
-### Espresso Machine
-Carlton was the launchpad for Australia's famous coffee culture. The country's very first commercial espresso machines were installed along Lygon Street in the 1950s by Italian immigrants, changing how Melburnians drank coffee forever.
-
-### Exhibition Building (Royal)
-Completed in 1880 for the Melbourne International Exhibition, this grand monument features a soaring dome inspired by the Florence Cathedral. It holds a UNESCO World Heritage listing and hosted the opening of the first Parliament of Australia in 1901.
 
 [Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
 
 ---
 
 ## F
-
-### Faraday Street National School
-Opened in 1858, this was one of Carlton's earliest institutions and operated continuously as a state school until 1972. The historic brick building remains a prominent architectural feature of the streetscape.
-
-### Fiesta (Lygon Street)
-Launched in 1978, the Lygon Street Fiesta was Australia's first major multicultural street festival. It celebrates Carlton's rich Italian heritage with food, music, and the famous waiters' race.
 
 [Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
 
