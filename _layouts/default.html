@@ -261,11 +261,8 @@
         <footer class="main-footer">
             <div class="footer-content">
                 <ul class="footer-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#a-z">A-Z Listing</a></li>
-                    <li><a href="#search">Search</a></li>
-                    <li><a href="#help">Help</a></li>
+                    <li><a href="index">Home</a></li>
+                    <li><a href="aToZ">A-Z Listing</a></li>
                 </ul>
                 <div class="footer-attribution">
                     Produced and published by the School of Historical & Philosophical Studies, The University of Melbourne
@@ -356,25 +353,27 @@
         if (rel.getAttribute("resourceRelationType") === "subjectOf") continue;
 
         const note = rel.getElementsByTagNameNS(ns, "p")[0]?.textContent || "";
+        const bibref = rel.getElementsByTagNameNS(ns, "bibref")[0];
         
-        // 1. Check if it's a Reference Source
-        if (note.toLowerCase().includes("source used") || rel.getElementsByTagNameNS(ns, "bibref").length > 0) {
-          const bibref = rel.getElementsByTagNameNS(ns, "bibref")[0];
+        // 1. Check if it's a Reference Source (Look for bibref explicitly)
+        if (bibref || note.toLowerCase().includes("source used")) {
           if (bibref) {
-            // Target nested namespaces if present, default back to standard
+            // Target nested namespaces safely
             const author = bibref.getElementsByTagName("name")[0]?.textContent || "";
             const title = bibref.getElementsByTagName("title")[0]?.textContent || "";
             const series = bibref.getElementsByTagName("bibseries")[0]?.getElementsByTagName("title")[0]?.textContent || "";
             const publisher = bibref.getElementsByTagName("publisher")[0]?.textContent?.replace(/<br\s*\/?>/gi, ', ') || "";
+            const place = bibref.getElementsByTagName("place")[0]?.textContent || "";
             const date = bibref.getElementsByTagName("date")[0]?.textContent || "";
             const href = bibref.getElementsByTagName("extptr")[0]?.getAttribute("href") || "";
 
-            // Build dynamic citation string
+            // Build dynamic citation string matching your pattern
             let citationParts = [];
             if (author) citationParts.push(author);
-            if (title) citationParts.push(`'${title}'`);
+            if (title) citationParts.push(title); // Removed the hardcoded '' single quotes
             if (series) citationParts.push(`in <em>${series}</em>`);
             if (publisher) citationParts.push(publisher);
+            if (place) citationParts.push(place);
             if (date) citationParts.push(date);
             
             let citationText = citationParts.join(", ");
