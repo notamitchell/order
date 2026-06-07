@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="shared/cpf.rng" type="xml"?>
+<eac-cpf xmlns="urn:isbn:1-931666-33-4" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
+<control>
+<recordId>EM00298</recordId>
+<maintenanceStatus>new</maintenanceStatus>
+<maintenanceAgency>
+<agencyCode>AU-EMEL</agencyCode>
+<agencyName>eMelbourne - The Encyclopedia of Melbourne Online</agencyName>
+<descriptiveNote>
+<p></p>
+</descriptiveNote>
+</maintenanceAgency>
+<languageDeclaration>
+<language languageCode="eng">English</language>
+<script scriptCode="Latn">Latin</script>
+</languageDeclaration>
+<conventionDeclaration>
+<abbreviation>AACR2</abbreviation>
+<citation>Anglo-American Cataloguing Rules</citation>
+</conventionDeclaration>
+<localControl localType="typeOfEntity">
+<term>Entry</term>
+</localControl>
+<maintenanceHistory>
+<maintenanceEvent>
+<eventType>created</eventType>
+<eventDateTime standardDateTime="2008-06-26">2008-06-26</eventDateTime>
+<agentType>human</agentType>
+<agent>Frances O'Neill</agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+<maintenanceEvent>
+<eventType>updated</eventType>
+<eventDateTime standardDateTime="2008-06-26">2008-06-26</eventDateTime>
+<agentType>human</agentType>
+<agent></agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+</maintenanceHistory>
+</control>
+<cpfDescription>
+<identity><entityId>http://www.emelbourne.net.au/biogs/EM00298b.htm</entityId>
+<entityType>concept</entityType>
+<nameEntry><part>Carlton Refuge</part>
+<authorizedForm>AACR2</authorizedForm>
+</nameEntry>
+</identity>
+<description><places>
+</places>
+<biogHist>
+<abstract>Opened in Carlton on 9 October 1861, the Carlton Refuge replaced an earlier 1850s refuge as a reformatory or Magdalen Asylum for young women after the birth of their first illegitimate child. While they were being trained for domestic service they were virtual prisoners. From 1870, the Refuge allowed the women to bring their babies with them. The institution was conducted on Protestant evangelical principles, being a co-operative effort between the Church of England and the Presbyterian Church, while involving the other Protestant churches in religious services in the chapel. As the Carlton Home, from 1935, and later the Queen Elizabeth Centre, the institution continued to care for mothers and their children until it closed in 1998. 
+
+</abstract>
+
+</biogHist>
+</description>
+<relations><resourceRelation resourceRelationType="subjectOf">
+<relationEntry localType="published">'Carlton Refuge', in <span style="font-style:italic">eMelbourne - The Encyclopedia of Melbourne Online</span>, School of Historical Studies, Department of History, The University of Melbourne</relationEntry>
+
+<objectXMLWrap>
+<bibref xmlns="urn:isbn:1-931666-22-9">
+<title render="italic">Carlton Refuge</title>
+<imprint>
+<publisher>School of Historical Studies<br /> Department of History, The University of Melbourne</publisher>
+</imprint>
+<bibseries>
+<title render="italic">eMelbourne - The Encyclopedia of Melbourne Online</title>
+</bibseries>
+<extptr linktype="simple" href="http://www.emelbourne.net.au/biogs/EM00298b.htm"></extptr>
+</bibref>
+</objectXMLWrap>
+</resourceRelation>
+</relations>
+</cpfDescription>
+</eac-cpf>
