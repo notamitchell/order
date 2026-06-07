@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="shared/cpf.rng" type="xml"?>
+<eac-cpf xmlns="urn:isbn:1-931666-33-4" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
+<control>
+<recordId>EM02041</recordId>
+<maintenanceStatus>revised</maintenanceStatus>
+<maintenanceAgency>
+<agencyCode>AU-EMEL</agencyCode>
+<agencyName>eMelbourne - The Encyclopedia of Melbourne Online</agencyName>
+<descriptiveNote>
+<p></p>
+</descriptiveNote>
+</maintenanceAgency>
+<languageDeclaration>
+<language languageCode="eng">English</language>
+<script scriptCode="Latn">Latin</script>
+</languageDeclaration>
+<conventionDeclaration>
+<abbreviation>AACR2</abbreviation>
+<citation>Anglo-American Cataloguing Rules</citation>
+</conventionDeclaration>
+<localControl localType="typeOfEntity">
+<term>Cultural Artefact</term>
+</localControl>
+<maintenanceHistory>
+<maintenanceEvent>
+<eventType>created</eventType>
+<eventDateTime standardDateTime="2008-08-01">2008-08-01</eventDateTime>
+<agentType>human</agentType>
+<agent>City Of Melbourne</agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+<maintenanceEvent>
+<eventType>updated</eventType>
+<eventDateTime standardDateTime="2011-10-17">2011-10-17</eventDateTime>
+<agentType>human</agentType>
+<agent></agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+</maintenanceHistory>
+</control>
+<cpfDescription>
+<identity><entityId>http://www.emelbourne.net.au/biogs/EM02041b.htm</entityId>
+<entityType>culturalArtefact</entityType>
+<nameEntry><part>Boy On A Turtle</part>
+<authorizedForm>AACR2</authorizedForm>
+</nameEntry>
+</identity>
+<description><places>
+</places>
+<biogHist>
+<abstract>Artist unknown
+Bronze statue
+c. 1850
+Fitzroy Gardens
+(Melway ref. 2G B4)
+
+This bronze sculpture of a cherub-like boy astride the back of a turtle has led a long and eventful life. Boy on a Turtle was erected in Carlton Gardens during the 1850s, where it first stood in a prominent position on the corner of Victoria and Rathdowne streets, before being relocated in 1937 to the Nicholson Street side of the gardens. Some years later the statue was moved to its present home in Fitzroy Gardens; appropriately, Boy on a Turtle sits in the lower lake of the gardens. In March 1977, this popular statue was stolen from the gardens - a remarkable feat considering the great weight of the bronze. It was also the fate suffered by Larry La Trobe nearly 20 years later. Two and a half years after the sculpture's disappearance, police found it in an abandoned Richmond car park.</abstract>
+
+</biogHist>
+</description>
+<relations><cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM00297b.htm">
+<relationEntry localType="Entry">
+Carlton Gardens
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM00576b.htm">
+<relationEntry localType="Entry">
+Fitzroy Gardens
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02093b.htm">
+<relationEntry localType="Cultural Artefact">
+Larry La Trobe
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM01342b.htm">
+<relationEntry localType="Entry">
+Sculpture and Memorials
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02021b.htm">
+<relationEntry localType="Entry">
+City of Melbourne Art and Heritage Collection
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="hierarchical-parent" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM00005b.htm">
+<relationEntry localType="Theme">
+Culture
+</relationEntry>
+</cpfRelation>
+<resourceRelation resourceRelationType="subjectOf">
+<relationEntry localType="published">'Boy On A Turtle', in <span style="font-style:italic">eMelbourne - The Encyclopedia of Melbourne Online</span>, School of Historical Studies, Department of History, The University of Melbourne</relationEntry>
+
+<objectXMLWrap>
+<bibref xmlns="urn:isbn:1-931666-22-9">
+<title render="italic">Boy On A Turtle</title>
+<imprint>
+<publisher>School of Historical Studies<br /> Department of History, The University of Melbourne</publisher>
+</imprint>
+<bibseries>
+<title render="italic">eMelbourne - The Encyclopedia of Melbourne Online</title>
+</bibseries>
+<extptr linktype="simple" href="http://www.emelbourne.net.au/biogs/EM02041b.htm"></extptr>
+</bibref>
+</objectXMLWrap>
+</resourceRelation>
+<resourceRelation resourceRelationType="other" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/objects/D00000069.htm">
+<relationEntry localType="digitalObject">Boy On A Turtle</relationEntry>
+
+<objectXMLWrap>
+<archref xmlns="urn:isbn:1-931666-22-9">
+<unittitle>Boy On A Turtle</unittitle>
+<unitdate>c. 1850</unitdate>
+<physdesc>Bronze statue<geogname>Fitzroy Gardens</geogname>
+</physdesc>
+<note label="rights">Courtesy City of Melbourne</note>
+</archref>
+</objectXMLWrap>
+
+<descriptiveNote>
+<p>Include in Gallery</p>
+</descriptiveNote>
+</resourceRelation>
+</relations>
+</cpfDescription>
+</eac-cpf>
