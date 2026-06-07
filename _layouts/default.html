@@ -483,8 +483,12 @@
 
     } catch (error) {
       console.error("Error loading the XML file:", error);
-      entryContainer.innerHTML = `<p class="error-msg">Error: Could not load the requested record.</p>`;
+      // Keeps the container blank if fetch/parsing fails
+      entryContainer.innerHTML = '';
     }
+  } else {
+    // Keeps the container blank if there's no ?id= parameter in the URL
+    entryContainer.innerHTML = '';
   }
 </script>
   </body>
