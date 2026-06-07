@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="shared/cpf.rng" type="xml"?>
+<eac-cpf xmlns="urn:isbn:1-931666-33-4" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
+<control>
+<recordId>EM00145</recordId>
+<maintenanceStatus>new</maintenanceStatus>
+<maintenanceAgency>
+<agencyCode>AU-EMEL</agencyCode>
+<agencyName>eMelbourne - The Encyclopedia of Melbourne Online</agencyName>
+<descriptiveNote>
+<p></p>
+</descriptiveNote>
+</maintenanceAgency>
+<languageDeclaration>
+<language languageCode="eng">English</language>
+<script scriptCode="Latn">Latin</script>
+</languageDeclaration>
+<conventionDeclaration>
+<abbreviation>AACR2</abbreviation>
+<citation>Anglo-American Cataloguing Rules</citation>
+</conventionDeclaration>
+<localControl localType="typeOfEntity">
+<term>Entry</term>
+</localControl>
+<maintenanceHistory>
+<maintenanceEvent>
+<eventType>created</eventType>
+<eventDateTime standardDateTime="2008-06-26">2008-06-26</eventDateTime>
+<agentType>human</agentType>
+<agent>Andrew May</agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+<maintenanceEvent>
+<eventType>updated</eventType>
+<eventDateTime standardDateTime="2008-07-17">2008-07-17</eventDateTime>
+<agentType>human</agentType>
+<agent></agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+</maintenanceHistory>
+</control>
+<cpfDescription>
+<identity><entityId>http://www.emelbourne.net.au/biogs/EM00145b.htm</entityId>
+<entityType>concept</entityType>
+<nameEntry><part>Ball &amp; Welch</part>
+<authorizedForm>AACR2</authorizedForm>
+</nameEntry>
+</identity>
+<description><places>
+</places>
+<biogHist>
+<abstract>This firm of drapers was established in the early 1850s by Charles Ball and his nephew W.H. Welch, first on the goldfields at Forest Creek, at Vaughan in 1861, then in 1882 at nearby Castlemaine. In 1874 a branch was established in Carlton, the three-storeyed premises having frontages to Faraday, Drummond and Swanston streets. An emporium at 180 Flinders Street designed by architects Reed Smart &amp; Tappin was completed in 1899 and extended in 1911 with the purchase of the adjoining Commercial Travellers' Club. The Carlton premises were subsequently used as a warehouse, the original building there partly destroyed by fire in 1928. The Flinders Street store was one of the first in Melbourne to erect neon outdoor advertising, reportedly visible from the Dandenong Ranges. A Sydney branch operated between 1913 and 1924, and the Castlemaine store was finally closed in 1941. With suburban retail expansion in the 1960s, branches were opened in Frankston, Camberwell, and at Eastland and Southland shopping centres. Georges Australia Ltd bought Ball &amp; Welch in 1970, closing the stores in 1976 because of declining profits. The Flinders Street store was renovated as Flinders Fair shopping centre in the late 1970s, its façade (including the Commercial Travellers' Club frontage) eventually incorporated into the Flindersgate carpark. In its heyday, the Ball &amp; Welch department store was Melbourne's leading family draper, its A to Z departments including gloves, umbrellas and handkerchiefs, mantles, furniture, mercery, millinery, furs and corsets. At one time 26 assistants were devoted to the sale of lace alone. The store's demise was linked to the postwar decline of Flinders Street as a retail strip. 
+
+</abstract>
+
+</biogHist>
+</description>
+<relations><cpfRelation cpfRelationType="hierarchical-parent" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM00003b.htm">
+<relationEntry localType="Theme">
+Business &amp; Industry
+</relationEntry>
+</cpfRelation>
+<resourceRelation resourceRelationType="subjectOf">
+<relationEntry localType="published">'Ball &amp; Welch', in <span style="font-style:italic">eMelbourne - The Encyclopedia of Melbourne Online</span>, School of Historical Studies, Department of History, The University of Melbourne</relationEntry>
+
+<objectXMLWrap>
+<bibref xmlns="urn:isbn:1-931666-22-9">
+<title render="italic">Ball &amp; Welch</title>
+<imprint>
+<publisher>School of Historical Studies<br /> Department of History, The University of Melbourne</publisher>
+</imprint>
+<bibseries>
+<title render="italic">eMelbourne - The Encyclopedia of Melbourne Online</title>
+</bibseries>
+<extptr linktype="simple" href="http://www.emelbourne.net.au/biogs/EM00145b.htm"></extptr>
+</bibref>
+</objectXMLWrap>
+</resourceRelation>
+</relations>
+</cpfDescription>
+</eac-cpf>
