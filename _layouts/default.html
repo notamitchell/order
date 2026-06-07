@@ -302,6 +302,11 @@
       const givenName = xml.getElementsByTagNameNS(ns, "part").item(1)?.textContent || "";
       const fullName = givenName ? `${givenName} ${familyName}` : familyName;
 
+      // Append the entry title to the existing webpage title
+      if (fullName) {
+        document.title = `${document.title} - ${fullName}`;
+      }  
+
       // Dates (Birth and Death)
       const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";
       const toDate = xml.getElementsByTagNameNS(ns, "toDate")[0]?.textContent || "";
