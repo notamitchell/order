@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="shared/cpf.rng" type="xml"?>
+<eac-cpf xmlns="urn:isbn:1-931666-33-4" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
+<control>
+<recordId>EM00297</recordId>
+<maintenanceStatus>new</maintenanceStatus>
+<maintenanceAgency>
+<agencyCode>AU-EMEL</agencyCode>
+<agencyName>eMelbourne - The Encyclopedia of Melbourne Online</agencyName>
+<descriptiveNote>
+<p></p>
+</descriptiveNote>
+</maintenanceAgency>
+<languageDeclaration>
+<language languageCode="eng">English</language>
+<script scriptCode="Latn">Latin</script>
+</languageDeclaration>
+<conventionDeclaration>
+<abbreviation>AACR2</abbreviation>
+<citation>Anglo-American Cataloguing Rules</citation>
+</conventionDeclaration>
+<localControl localType="typeOfEntity">
+<term>Entry</term>
+</localControl>
+<maintenanceHistory>
+<maintenanceEvent>
+<eventType>created</eventType>
+<eventDateTime standardDateTime="2008-06-26">2008-06-26</eventDateTime>
+<agentType>human</agentType>
+<agent>Georgina Whitehead</agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+<maintenanceEvent>
+<eventType>updated</eventType>
+<eventDateTime standardDateTime="2009-05-31">2009-05-31</eventDateTime>
+<agentType>human</agentType>
+<agent></agent>
+<eventDescription></eventDescription>
+</maintenanceEvent>
+</maintenanceHistory>
+</control>
+<cpfDescription>
+<identity><entityId>http://www.emelbourne.net.au/biogs/EM00297b.htm</entityId>
+<entityType>concept</entityType>
+<nameEntry><part>Carlton Gardens</part>
+<authorizedForm>AACR2</authorizedForm>
+</nameEntry>
+</identity>
+<description><places>
+</places>
+<biogHist>
+<abstract>Often called the Exhibition Gardens, the Carlton Gardens were laid out in the late 1850s to a design by Edward La Trobe Bateman. Most of this work was obliterated when the Gardens were redesigned for the 1880 Melbourne International Exhibition and the central third excised to accommodate Joseph Reed's Royal Exhibition Building. Reed was also the architect of the south garden, which was conceived as an extension of his Italianate palace. Josef Hochgurtel's imposing fountain, representing trade between nations and ornamented with Victorian flora and fauna, stands at the intersection of paths radiating from the Great Hall's ceremonial entrance to the perimeter of the Gardens. The main central avenue, 24 m wide and lined with plane trees, was likened to Versailles. William Sangster of the nursery firm Taylor &amp; Sangster carried out the planting. It included colourful bedding plants arranged in decorative patterns, of which the existing beds of annuals near Hochgurtel's fountain are a reminder. The north garden, replanted in the aftermath of the 1888 Centennial Exhibition that had engulfed it, has many fine avenues of oaks, elms and plane trees dating from that period. The new Melbourne Museum was opened in 2000 within the central reserve next to the Royal Exhibition Building. 
+
+</abstract>
+
+</biogHist>
+</description>
+<relations><cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02073b.htm">
+<relationEntry localType="Cultural Artefact">
+Dr Louis Smith Bust
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02132b.htm">
+<relationEntry localType="Cultural Artefact">
+Lie Of The Land
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02041b.htm">
+<relationEntry localType="Cultural Artefact">
+Boy On A Turtle
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02027b.htm">
+<relationEntry localType="Cultural Artefact">
+Westgarth Drinking Fountain
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="associative" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM02026b.htm">
+<relationEntry localType="Cultural Artefact">
+French Fountain
+</relationEntry>
+</cpfRelation>
+<cpfRelation cpfRelationType="hierarchical-parent" xlink:type="simple" xlink:href="http://www.emelbourne.net.au/biogs/EM00016b.htm">
+<relationEntry localType="Theme">
+Science, Nature, Geography
+</relationEntry>
+</cpfRelation>
+<resourceRelation resourceRelationType="subjectOf">
+<relationEntry localType="published">'Carlton Gardens', in <span style="font-style:italic">eMelbourne - The Encyclopedia of Melbourne Online</span>, School of Historical Studies, Department of History, The University of Melbourne</relationEntry>
+
+<objectXMLWrap>
+<bibref xmlns="urn:isbn:1-931666-22-9">
+<title render="italic">Carlton Gardens</title>
+<imprint>
+<publisher>School of Historical Studies<br /> Department of History, The University of Melbourne</publisher>
+</imprint>
+<bibseries>
+<title render="italic">eMelbourne - The Encyclopedia of Melbourne Online</title>
+</bibseries>
+<extptr linktype="simple" href="http://www.emelbourne.net.au/biogs/EM00297b.htm"></extptr>
+</bibref>
+</objectXMLWrap>
+</resourceRelation>
+</relations>
+</cpfDescription>
+</eac-cpf>
