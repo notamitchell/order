@@ -27,6 +27,8 @@ Select a letter below to jump directly to that section.
 
 ## C
 
+[Carlton & United Breweries](eac?id=EM00295)
+
 [Carlton Football Club](eac?id=EM00296)
 
 [Carlton Refuge](eac?id=EM00298)
@@ -36,6 +38,8 @@ Select a letter below to jump directly to that section.
 [Back to Top](#encyclopedia-index-a-to-z)
 
 ## E
+
+[Exhibition Fountain (aka Hochgurtel Fountain)](eac?id=EM02078)
 
 [Back to Top](#encyclopedia-index-a-to-z-carlton-melbourne-edition)
 
