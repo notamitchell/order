@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map</title>
+    
+    <!-- Leaflet CSS from CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    
+    <style>
+        html, body, #map {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Control Panel */
+        .leaflet-control-layers {
+            max-height: 85vh;
+            width: 320px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95) !important;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            border-radius: 6px;
+            padding: 10px !important;
+        }
+
+        .layer-control-row {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .layer-control-row:last-child {
+            border-bottom: none;
+        }
+
+        .layer-label-container {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 13px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .layer-label-container input {
+            margin-right: 8px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            margin-top: 4px;
+            margin-left: 22px;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .opacity-slider {
+            flex-grow: 1;
+            margin: 0 8px;
+            cursor: pointer;
+        }
+
+        /* Custom Modal Window Styling */
+        .custom-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 2000; /* High index to sit on top of everything */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(3px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
+            position: relative;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        #modal-heading {
+            margin-top: 0;
+            color: #111;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            font-size: 20px;
+        }
+
+        #modal-body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 18px;
+        }
+
+        .coords-box {
+            background-color: #f7f7f7;
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #555;
+            word-break: break-all;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+
+        /* Styling for the Home Link at the top of the panel */
+.control-home-link {
+    display: block;
+    text-align: center;
+    background-color: #2c3e50;
+    color: white !important;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    transition: background-color 0.2s;
+}
+
+.control-home-link:hover {
+    background-color: #34495e;
+}
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <!-- The Details Modal structure -->
+    <div id="details-modal" class="custom-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="close-modal-btn">&times;</span>
+            <h3 id="modal-heading">Feature Title</h3>
+            <div id="modal-body">Custom HTML Content goes here.</div>
+            <strong>Coordinates:</strong>
+            <div class="coords-box" id="modal-coords"></div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    
+    <script>
+        // 1. MapWarper Layer Configuration JSON
+        const mapConfig = [
+            { id: 82967, source: 'net', label: 'Melbourne and its suburbs', visibleByDefault: true },
+            { id: 80116, source: 'net', label: 'Mapwarper Net 80116', visibleByDefault: false },
+            { id: 83032, source: 'net', label: 'Mapwarper Net 83032', visibleByDefault: false },
+            { id: 7342, source: 'vic', label: 'PROV Vic 7342', visibleByDefault: false },
+            { id: 7265, source: 'vic', label: 'PROV Vic 7265', visibleByDefault: false },
+            { id: 82968, source: 'net', label: 'Mapwarper Net 82968', visibleByDefault: false },
+            { id: 82969, source: 'net', label: 'Mapwarper Net 82969', visibleByDefault: false },
+            { id: 82971, source: 'net', label: 'Mapwarper Net 82971', visibleByDefault: false },
+            { id: 82973, source: 'net', label: 'Mapwarper Net 82973', visibleByDefault: false },
+            { id: 82976, source: 'net', label: 'Mapwarper Net 82976', visibleByDefault: false },
+            { id: 82978, source: 'net', label: 'Mapwarper Net 82978', visibleByDefault: false },
+            { id: 82979, source: 'net', label: 'Mapwarper Net 82979', visibleByDefault: false },
+            { id: 82904, source: 'net', label: 'Mapwarper Net 82904', visibleByDefault: false },
+            { id: 7242, source: 'vic', label: 'PROV Vic 7242', visibleByDefault: false },
+            { id: 7316, source: 'vic', label: 'PROV Vic 7316', visibleByDefault: false },
+            { id: 4331, source: 'vic', label: 'PROV Vic 4331', visibleByDefault: false },
+            { id: 11775, source: 'vic', label: 'PROV Vic 11775', visibleByDefault: false },
+            { id: 7231, source: 'vic', label: 'PROV Vic 7231', visibleByDefault: false },
+            { id: 7981, source: 'vic', label: 'PROV Vic 7981', visibleByDefault: false },
+            { id: 7452, source: 'vic', label: 'PROV Vic 7452', visibleByDefault: false }
+
+
+
+        ];
+
+        // 2. Vector Features Config JSON (Pins, Lines, Polygons)
+        const featureConfig = [
+            {
+                type: 'polygon',
+                heading: 'The University of Melbourne',
+                htmlContent: '<p>Established in 1853, this is Australia\'s second oldest university. The main campus is located in Parkville, north of the Melbourne CBD.</p><ul><li><strong>Main Campus:</strong> Parkville</li><li><strong>Historical Note:</strong> Started with just four professors and 16 students.</li></ul>',
+                coordinates: [
+                    [-37.7995, 144.9595],
+                    [-37.7963, 144.9592],
+                    [-37.7967, 144.9645],
+                    [-37.7999, 144.9648]
+                ],
+                style: { color: '#1c3f60', fillColor: '#2980b9', fillOpacity: 0.4, weight: 3 }
+            },
+            {
+                type: 'line',
+                heading: 'Grattan Street',
+                htmlContent: '<p>Grattan Street runs directly through the university precinct. Historically a key transport corridor, it has seen massive changes due to the <em>Metro Tunnel project</em> infrastructure development.</p>',
+                coordinates: [
+                    [-37.7999, 144.9545],
+                    [-37.7995, 144.9595],
+                    [-37.7999, 144.9648],
+                    [-37.8003, 144.9700]
+                ],
+                style: { color: '#e67e22', weight: 5, opacity: 0.8 }
+            },
+            {
+                type: 'point',
+                heading: 'Lincoln Square',
+                htmlContent: '<p>A historic public square and parkland reserve plotted in the original survey of Melbourne. It features grand old Moreton Bay Fig trees and serves as a popular gathering space for local residents and students.</p>',
+                coordinates: [-37.8025, 144.9632],
+                style: { color: '#27ae60' } // Fallback marker styling
+            }
+        ];
+
+        // 3. Initialize Map canvas
+        const map = L.map('map', {
+            center: [-37.8000, 144.9620], // Adjusted camera focus on the Parkville/Melbourne Uni area
+            zoom: 15,
+            minZoom: 2,
+            maxZoom: 20
+        });
+
+        const layerRegistry = {};
+
+        function getTileUrl(source, id) {
+            if (source === 'vic') {
+                return `https://mapwarper.prov.vic.gov.au/maps/tile/${id}/{z}/{x}/{y}.png`;
+            }
+            return `https://mapwarper.net/maps/tile/${id}/{z}/{x}/{y}.png`;
+        }
+
+// 4. Custom Control Panel Construction (with Home Link)
+        const CustomControl = L.Control.extend({
+            options: { position: 'topright' },
+            onAdd: function () {
+                const container = L.DomUtil.create('div', 'leaflet-control-layers');
+                
+                L.DomEvent.disableClickPropagation(container);
+                L.DomEvent.disableScrollPropagation(container);
+
+                // --- NEW: Add Home Link to the top of the legend ---
+                const homeLink = L.DomUtil.create('a', 'control-home-link', container);
+                homeLink.href = '/'; // Goes to the root URL of your domain
+                homeLink.innerText = 'Home';
+                // --------------------------------------------------
+
+                mapConfig.forEach(config => {
+                    const row = L.DomUtil.create('div', 'layer-control-row', container);
+                    
+                    const labelContainer = L.DomUtil.create('label', 'layer-label-container', row);
+                    const checkbox = L.DomUtil.create('input', '', labelContainer);
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = config.visibleByDefault;
+                    
+                    const textSpan = L.DomUtil.create('span', '', labelContainer);
+                    textSpan.innerText = config.label;
+
+                    const sliderContainer = L.DomUtil.create('div', 'slider-container', row);
+                    sliderContainer.innerHTML = '<span>0%</span>';
+                    
+                    const slider = L.DomUtil.create('input', 'opacity-slider', sliderContainer);
+                    slider.type = 'range';
+                    slider.min = 0;
+                    slider.max = 100;
+                    slider.value = 100;
+                    
+                    sliderContainer.insertAdjacentHTML('beforeend', '<span>100%</span>');
+
+                    const tileUrl = getTileUrl(config.source, config.id);
+                    const layer = L.tileLayer(tileUrl, {
+                        maxZoom: 20,
+                        maxNativeZoom: 19,
+                        opacity: 1.0
+                    });
+
+                    layerRegistry[config.id] = layer;
+
+                    if (config.visibleByDefault) {
+                        layer.addTo(map);
+                    }
+
+                    L.DomEvent.on(checkbox, 'change', function() {
+                        if (checkbox.checked) {
+                            layer.addTo(map);
+                        } else {
+                            map.removeLayer(layer);
+                        }
+                    });
+
+                    L.DomEvent.on(slider, 'input', function() {
+                        layer.setOpacity(slider.value / 100);
+                    });
+                });
+
+                return container;
+            }
+        });
+
+        map.addControl(new CustomControl());
+
+        // 5. Modal Functionality
+        const modal = document.getElementById('details-modal');
+        const mHeading = document.getElementById('modal-heading');
+        const mBody = document.getElementById('modal-body');
+        const mCoords = document.getElementById('modal-coords');
+        const closeBtn = document.getElementById('close-modal-btn');
+
+        function openModal(heading, html, coordsText) {
+            mHeading.innerText = heading;
+            mBody.innerHTML = html;
+            mCoords.innerText = coordsText;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        closeBtn.onclick = closeModal;
+        window.onclick = function(event) {
+            if (event.target === modal) closeModal();
+        }
+
+        // 6. Draw features and link click events to our custom modal window
+        featureConfig.forEach(feat => {
+            let leafletFeature;
+
+            if (feat.type === 'polygon') {
+                leafletFeature = L.polygon(feat.coordinates, feat.style || {});
+                leafletFeature.on('click', function() {
+                    const coordString = JSON.stringify(feat.coordinates);
+                    openModal(feat.heading, feat.htmlContent, coordString);
+                });
+            } 
+            else if (feat.type === 'line') {
+                leafletFeature = L.polyline(feat.coordinates, feat.style || {});
+                leafletFeature.on('click', function() {
+                    const coordString = JSON.stringify(feat.coordinates);
+                    openModal(feat.heading, feat.htmlContent, coordString);
+                });
+            } 
+            else if (feat.type === 'point') {
+                // Pin gets standard native interactive marker
+                leafletFeature = L.marker(feat.coordinates);
+                leafletFeature.on('click', function() {
+                    const coordString = `Latitude: ${feat.coordinates[0]}, Longitude: ${feat.coordinates[1]}`;
+                    openModal(feat.heading, feat.htmlContent, coordString);
+                });
+            }
+
+            if (leafletFeature) {
+                leafletFeature.addTo(map);
+            }
+        });
+
+    </script>
+</body>
+</html>
