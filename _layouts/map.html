@@ -3,389 +3,1026 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Map</title>
-    
-    <!-- Leaflet CSS from CDN -->
+    <title>Map Directory</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
-    
     <style>
         html, body, #map {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
             background-color: #1a1a1a;
+            font-family: 'Georgia', serif;
+        }
+        .leaflet-control-layers {
+            max-height: 85vh; width: 320px; overflow-y: auto;
+            background: rgba(245,240,230,0.97) !important;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            border-radius: 4px; padding: 10px !important;
+            border: 1px solid #c8b89a;
+        }
+        .panel-section-title {
+            font-size: 10px; font-weight: bold; letter-spacing: 0.12em;
+            text-transform: uppercase; color: #7a6a55;
+            margin: 12px 0 6px 0; padding-bottom: 3px;
+            border-bottom: 1px solid #d5c9b5;
+        }
+        .layer-control-row {
+            display: flex; flex-direction: column;
+            margin-bottom: 8px; padding-bottom: 8px;
+            border-bottom: 1px solid #e8e0d0;
+        }
+        .layer-control-row:last-child { border-bottom: none; }
+        .layer-label-container {
+            display: flex; align-items: center; font-size: 12px;
+            color: #3a2e22; cursor: pointer; font-family: 'Georgia', serif;
+        }
+        .layer-label-container input { margin-right: 8px; }
+        .slider-container {
+            display: flex; align-items: center; margin-top: 4px;
+            margin-left: 22px; font-size: 10px; color: #8a7a65;
             font-family: Arial, sans-serif;
         }
-        
-        /* Control Panel */
-        .leaflet-control-layers {
-            max-height: 85vh;
-            width: 320px;
-            overflow-y: auto;
-            background: rgba(255, 255, 255, 0.95) !important;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
-            border-radius: 6px;
-            padding: 10px !important;
+        .opacity-slider { flex-grow: 1; margin: 0 6px; cursor: pointer; }
+        .year-row {
+            display: flex; align-items: center; margin-bottom: 6px;
+            font-size: 12px; color: #3a2e22; cursor: pointer;
+            font-family: 'Georgia', serif;
         }
-
-        .layer-control-row {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #eee;
+        .year-row input { margin-right: 8px; }
+        .year-swatch {
+            width: 12px; height: 12px; border-radius: 50%;
+            margin-right: 6px; flex-shrink: 0;
+            border: 1.5px solid rgba(0,0,0,0.2);
         }
-
-        .layer-control-row:last-child {
-            border-bottom: none;
+        .control-home-link {
+            display: block; text-align: center;
+            background-color: #2c3e50; color: #f0e8d8 !important;
+            text-decoration: none; font-weight: bold; font-size: 12px;
+            font-family: 'Georgia', serif; padding: 7px 12px;
+            border-radius: 3px; margin-bottom: 12px;
+            transition: background-color 0.2s; letter-spacing: 0.05em;
         }
-
-        .layer-label-container {
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            font-size: 13px;
-            color: #333;
-            cursor: pointer;
-        }
-
-        .layer-label-container input {
-            margin-right: 8px;
-        }
-
-        .slider-container {
-            display: flex;
-            align-items: center;
-            margin-top: 4px;
-            margin-left: 22px;
-            font-size: 11px;
-            color: #666;
-        }
-
-        .opacity-slider {
-            flex-grow: 1;
-            margin: 0 8px;
-            cursor: pointer;
-        }
-
-        /* Custom Modal Window Styling */
+        .control-home-link:hover { background-color: #34495e; }
         .custom-modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 2000; /* High index to sit on top of everything */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(3px);
-            align-items: center;
-            justify-content: center;
+            display: none; position: fixed; z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.55); backdrop-filter: blur(2px);
+            align-items: center; justify-content: center;
         }
-
         .modal-content {
-            background-color: #fff;
-            padding: 24px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.4);
-            position: relative;
-            animation: fadeIn 0.25s ease-out;
+            background-color: #faf6ee; padding: 24px; border-radius: 4px;
+            width: 90%; max-width: 480px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.35); position: relative;
+            border: 1px solid #c8b89a; animation: fadeIn 0.2s ease-out;
         }
-
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity:0; transform:translateY(-12px); }
+            to   { opacity:1; transform:translateY(0); }
         }
-
         .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 18px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #aaa;
-            cursor: pointer;
-            transition: color 0.2s;
+            position: absolute; top: 14px; right: 16px;
+            font-size: 22px; font-weight: bold;
+            color: #aaa; cursor: pointer; transition: color 0.2s;
         }
-
-        .modal-close:hover {
-            color: #333;
-        }
-
+        .modal-close:hover { color: #333; }
         #modal-heading {
-            margin-top: 0;
-            color: #111;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-            font-size: 20px;
+            margin-top: 0; color: #1e1209;
+            border-bottom: 2px solid #e0d4be;
+            padding-bottom: 8px; font-size: 18px; font-family: 'Georgia', serif;
         }
-
+        #modal-meta {
+            font-size: 11px; color: #9a8a74; margin-bottom: 10px;
+            font-family: Arial, sans-serif; letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
         #modal-body {
-            font-size: 14px;
-            line-height: 1.6;
-            color: #444;
-            margin-bottom: 18px;
+            font-size: 13px; line-height: 1.6;
+            color: #3a2e22; margin-bottom: 14px; font-family: 'Georgia', serif;
         }
-
         .coords-box {
-            background-color: #f7f7f7;
-            border: 1px solid #e3e3e3;
-            border-radius: 4px;
-            padding: 10px;
-            font-family: monospace;
-            font-size: 12px;
-            color: #555;
-            word-break: break-all;
-            max-height: 100px;
-            overflow-y: auto;
+            background-color: #f0ebe0; border: 1px solid #ddd0bb;
+            border-radius: 3px; padding: 8px; font-family: monospace;
+            font-size: 11px; color: #666; word-break: break-all;
+            max-height: 80px; overflow-y: auto;
         }
-
-
-        /* Styling for the Home Link at the top of the panel */
-.control-home-link {
-    display: block;
-    text-align: center;
-    background-color: #2c3e50;
-    color: white !important;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 4px;
-    margin-bottom: 12px;
-    transition: background-color 0.2s;
-}
-
-.control-home-link:hover {
-    background-color: #34495e;
-}
+        .leaflet-tooltip {
+            font-family: 'Georgia', serif; font-size: 12px;
+            background: rgba(30,18,9,0.88); color: #f0e8d8;
+            border: 1px solid #7a6a55; border-radius: 3px;
+            padding: 3px 7px; box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            white-space: nowrap;
+        }
+        .leaflet-tooltip-top:before { border-top-color: rgba(30,18,9,0.88); }
     </style>
 </head>
 <body>
-
-    <div id="map"></div>
-
-    <!-- The Details Modal structure -->
-    <div id="details-modal" class="custom-modal">
-        <div class="modal-content">
-            <span class="modal-close" id="close-modal-btn">&times;</span>
-            <h3 id="modal-heading">Feature Title</h3>
-            <div id="modal-body">Custom HTML Content goes here.</div>
-            <strong>Coordinates:</strong>
-            <div class="coords-box" id="modal-coords"></div>
-        </div>
+<div id="map"></div>
+<div id="details-modal" class="custom-modal">
+    <div class="modal-content">
+        <span class="modal-close" id="close-modal-btn">&times;</span>
+        <h3 id="modal-heading">—</h3>
+        <div id="modal-meta"></div>
+        <div id="modal-body"></div>
+        <strong style="font-size:11px;color:#7a6a55;font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:.04em;">Coordinates</strong>
+        <div class="coords-box" id="modal-coords">—</div>
     </div>
+</div>
 
-    <!-- Leaflet JS from CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-    
-    <script>
-        // 1. MapWarper Layer Configuration JSON
-        const mapConfig = [
-            { id: 82967, source: 'net', label: 'Melbourne and its suburbs', visibleByDefault: true },
-            { id: 80116, source: 'net', label: 'Mapwarper Net 80116', visibleByDefault: false },
-            { id: 83032, source: 'net', label: 'Mapwarper Net 83032', visibleByDefault: false },
-            { id: 7342, source: 'vic', label: 'PROV Vic 7342', visibleByDefault: false },
-            { id: 7265, source: 'vic', label: 'PROV Vic 7265', visibleByDefault: false },
-            { id: 82968, source: 'net', label: 'Mapwarper Net 82968', visibleByDefault: false },
-            { id: 82969, source: 'net', label: 'Mapwarper Net 82969', visibleByDefault: false },
-            { id: 82971, source: 'net', label: 'Mapwarper Net 82971', visibleByDefault: false },
-            { id: 82973, source: 'net', label: 'Mapwarper Net 82973', visibleByDefault: false },
-            { id: 82976, source: 'net', label: 'Mapwarper Net 82976', visibleByDefault: false },
-            { id: 82978, source: 'net', label: 'Mapwarper Net 82978', visibleByDefault: false },
-            { id: 82979, source: 'net', label: 'Mapwarper Net 82979', visibleByDefault: false },
-            { id: 82904, source: 'net', label: 'Mapwarper Net 82904', visibleByDefault: false },
-            { id: 7242, source: 'vic', label: 'PROV Vic 7242', visibleByDefault: false },
-            { id: 7316, source: 'vic', label: 'PROV Vic 7316', visibleByDefault: false },
-            { id: 4331, source: 'vic', label: 'PROV Vic 4331', visibleByDefault: false },
-            { id: 11775, source: 'vic', label: 'PROV Vic 11775', visibleByDefault: false },
-            { id: 7231, source: 'vic', label: 'PROV Vic 7231', visibleByDefault: false },
-            { id: 7981, source: 'vic', label: 'PROV Vic 7981', visibleByDefault: false },
-            { id: 7452, source: 'vic', label: 'PROV Vic 7452', visibleByDefault: false }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════
+//  HISTORIC MAP TILE LAYERS
+// ═══════════════════════════════════════════════════════════
+const mapConfig = [
+    { id:7316,  source:'vic', label:'Plan of Melbourne, Hotham, Carlton, Fitzroy and East Melbourne (1866)',             visibleByDefault:true },
+    { id:82967, source:'net', label:'Melbourne and its suburbs (1855)', visibleByDefault:false  },
+    { id:80116, source:'net', label:'Bibbs Map PROV (c1857-67)',       visibleByDefault:false },
+    { id:83032, source:'net', label:'Morgan\'s Official street directory. Melbourne & Suburbs (1951).',       visibleByDefault:false },
+    { id:7342,  source:'vic', label:'City of Melbourne Block Plan compiled for use in City Surveyor\'s office (1910)',             visibleByDefault:false },
+    { id:7265,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7265',             visibleByDefault:false },
+    { id:82968, source:'net', label:'Mapwarper Net 82968',       visibleByDefault:false },
+    { id:82969, source:'net', label:'Mapwarper Net 82969',       visibleByDefault:false },
+    { id:82971, source:'net', label:'Mapwarper Net 82971',       visibleByDefault:false },
+    { id:82973, source:'net', label:'Mapwarper Net 82973',       visibleByDefault:false },
+    { id:82976, source:'net', label:'Mapwarper Net 82976',       visibleByDefault:false },
+    { id:82978, source:'net', label:'Mapwarper Net 82978',       visibleByDefault:false },
+    { id:82979, source:'net', label:'Mapwarper Net 82979',       visibleByDefault:false },
+    { id:82904, source:'net', label:'Mapwarper Net 82904',       visibleByDefault:false },
+    { id:7242,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7242',             visibleByDefault:false },
+    { id:4331,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/4331',             visibleByDefault:false },
+    { id:11775, source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/11775',            visibleByDefault:false },
+    { id:7231,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7231',             visibleByDefault:false },
+    { id:7981,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7981',             visibleByDefault:false },
+    { id:7452,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7452',             visibleByDefault:false },
+];
+
+// ═══════════════════════════════════════════════════════════
+//  DIRECTORY DATA
+// ═══════════════════════════════════════════════════════════
+const directoryData = [
+
+    //  ── 1860 ──
+    { "year": 1860, "pages": "80-81", "listing": "Victoria street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East" , lat:-37.80640793275185, lng:144.96145049396495 },
+    { "year": 1860, "pages": "80-81", "listing": "2 Deely, Thomas, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "4 Woodhouse, Robert", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "Sly, Benjamin", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "6 Clark, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "Palmer, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "8 Metzger, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "10 Middleton, David, saddler", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "12 Bradley, William B., Union stables", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "14 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "16 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "18 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "20 Beresford, William Henry", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "22 Savage and Clifford, brewers", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "28 Mowbray, —, painter", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "32 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+    { "year": 1860, "pages": "80-81", "listing": "Ballarat street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East"},
+  { "year": 1860, "pages": "80-81", "listing": "34 Kidney, John, bootmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "38 Brown, Alfred, tailor", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "40 Jacobson, Mrs., dressmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "42 Evans, William", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "Manchester, Joseph", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "44 Lever, Benjamin", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "46 Palmer, J., painter", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "48 Raper, John, cabinet maker", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "50 Rowland, Alfred", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "52 Ormsby, William, bootmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "54 Foley, Henry", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "56 Emmett, John, carpenter", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "58 Tanner, George", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "60 Patterson, Mrs, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "Queensberry street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East"  , lat:-37.804328504554725, lng:144.9618813330136 },
+  { "year": 1860, "pages": "80-81", "listing": "Vacant allotments", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "70 Cullen Brothers, cabinet makers & joiners", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "72 Smith, James, farrier", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "Vacant allotments", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "84 Munyard, —", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "87 Kennard, John H., builder", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "Vacant allotments", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "Pelham street.", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East"  , lat:-37.80231709407864, lng:144.96214946400573 },
+  { "year": 1860, "pages": "80-81", "listing": "Vacant allotments", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "146 Alcorn, Thomas", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "150 Sinclair, P. S., contractor", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "152 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1860, "pages": "80-81", "listing": "Grattan Street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East"  , lat:-37.80029940917306, lng:144.96249656780145 },
+  { "year": 1860, "pages": "80-81", "listing": "Victoria street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "West"  , lat:-37.80640793275185, lng:144.96145049396495 },
+  { "year": 1860, "pages": "80-81", "listing": "1 Snow, J. and W., butchers", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "3 Smith, Edward, bootmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Henderson, F. whip and thong maker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "5 Collins, Denis", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "7 Hastie, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "9 Reddish and Snelling, pawnbrokers", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "11 Sparrow, William C. (Customs)", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "13 Bateman, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "15 Tribe, John, general dealer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Right of way", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "17 Coine, Thomas, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "19 Newson, Charles", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "21 Madder, J., agricultural implement maker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "23 Anderson, Alfred", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Murphy's Cottages", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "25 Gee, John, butcher", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "27 Cleary, Thomas, general dealer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "29 Smith, John, M., general dealer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "33 Tobin, James, contractor", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "35 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "37 Watson, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "39 Barney, William", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "41 Doherty, Michael", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "47 Bouverie Hotel, Sheehan, Thomas", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "59 Fullarton, Mrs., grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Queensberry street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "West"  , lat:-37.804328504554725, lng:144.9618813330136 },
+
+
+  { "year": 1860, "pages": "80-81", "listing": "61 Snow, —", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "63 Christmas, William", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "65 Blackball, William", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "67 Foy, Miss, dressmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "69 Roberts, William, sign writer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "71 Broyer, Nicholas, dealer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "73 Garden, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "81 Graham, Thomas, Carlton Stables", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "95 Armitage, Benjamin", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "97 Proctor, George", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "99 McLean, Mrs., grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Right-of-way", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "103 Connell, John, greengrocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Vacant allotments", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "111 Lewis, Mrs., midwife", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "117 Emu Hotel, Hill, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Pelham street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "West" , lat:-37.80231709407864, lng:144.96214946400573 },
+  { "year": 1860, "pages": "80-81", "listing": "121 Murphy, Patrick, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "123 Davis, Abraham, carpenter", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "125 Crawley, Samuel", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "131 Wilson, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Lincoln Cottages— Wilson, James. Turner, Mrs. Jones, Mrs. Hillman, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "McFarlane, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Right-of-way", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "135 Forsyth, William, builder", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Right-of-way.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "137 Scott, John, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Right of way", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Banbridge Terrace", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "139 Radcliffe, William", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "141 Grant, Alexander A.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "143 Ramsdale, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "145 Simmonds, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "147 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "O’Callaghan, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "151 Parry, Miss, dressmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "153 Bogle, John Scott, baker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1860, "pages": "80-81", "listing": "Grattan street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "West" , lat:-37.80029940917306, lng:144.96249656780145 },
+
+// ── 1865 ──
+  { "year": 1865, "pages": "65-66", "listing": "Victoria street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East", lat:-37.80640415398262, lng:144.9614409247508 },
+  { "year": 1865, "pages": "65-66", "listing": "2 Deely, Thomas, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "4 Grant, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "6 Reynolds, E.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "8 Daley, W.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "10 Molloy, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "12 Charles, Thomas", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "18 Clifton, H.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "18 Bell, H. W.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "20 Ballinger, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "22 Flantow, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "24 Clark, W. H.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "30 Nutley, T.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "32 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "34 Clerley, R.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "36 Watson, G.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "38 Philmore, C. S.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "40 Jackson, A.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "42 Champion, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Ballarat street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "44 Wadsworth, J., bootmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "46 Oxley, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "48 Clarke, Miss", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "50 Brown, Alfred, tailor", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "54 Griffiths, T., greengrocer", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Cambridge place", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Dryden, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "56 Dowdle, Thomas", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "58 Lever, R.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "60 Smith, William", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "62 Hilson, John", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "64 Swain, Mrs.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "66 M'Intyre, H., tailor", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "68 Barton, W. A.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "70 Emmett, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "74 Patterson, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Queensberry street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East" , lat:-37.804328504554725, lng:144.9618813330136 },
+  { "year": 1865, "pages": "65-66", "listing": "76 Young, H., hay and corn store", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "78 Davis, J. C.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "80 Johnston, W.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "82 Smith, W. F.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "84 Lynch, P.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "86 Carnaby, J. H.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "88 Munyard, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "90 Taylor, J.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Vacant allotments", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Lincoln square", "street": "Bouverie Street", "type": "Place", "cardinality": "East" , lat:-37.80233300527129, lng:144.96223550627874 },
+  { "year": 1865, "pages": "65-66", "listing": "Alcorn, Thomas, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "84 Lucas, C. T.", "street": "Bouverie Street", "type": "Place", "cardinality": "East" },
+  { "year": 1865, "pages": "65-66", "listing": "Grattan street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "East" , lat:-37.80029940917306, lng:144.96249656780145 },
+
+
+  { "year": 1865, "pages": "65-66", "listing": "Victoria street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "West", lat:-37.80640793275185, lng:144.96145049396495 },
+  { "year": 1865, "pages": "65-66", "listing": "1 Easby, Ann, store", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "1a Morony, M.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "3 Coman, E., dressmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "7 Nugent, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "Miles, -", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "9 Davey, J., bootmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "11 Kent, Henry, hairdresser", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "13 Collins, D.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "15 Snelling, S.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "17 M'Kernan, H., greengrocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "19 Neil, James", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "21 Nicholson, J., implement maker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "25 Bettleton, -", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "27 Morris, Thomas, butcher", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "Murphy's-cottages", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "25 and 27 Scofield, J., grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "29 Murphy, Patrick", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "31 Wesley, James", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "33 Clarke, Mr.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "35 Vacant", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "37 Jones, J., grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "39 Nugget Hotel, Hamey, William", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "47 Bouverie Hotel, Phelan, M.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "49 Riley, James, blacksmith", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "51 Gough, W.", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "53 Smith, John", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "55 Scott, James, bootmaker", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "57 M'MVlahon, James", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "61 Senior, John, grocer", "street": "Bouverie Street", "type": "Place", "cardinality": "West" },
+  { "year": 1865, "pages": "65-66", "listing": "Queensberry street", "street": "Bouverie Street", "type": "Intersection", "cardinality": "West", lat:-37.804328504554725, lng:144.9618813330136  },
 
 
 
-        ];
+    // ── 1900 ──
+    { year:1900, pages:176, listing:"Madeline st",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1900, pages:176, listing:"8 Felt, Mrs Bridget",    street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"10 Kelly, Mrs Annie",    street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"12 Monaghan, Mrs Win.",  street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"Right-of-way",           street:"Church Street", type:"Right-of-way", cardinality:"North", crossYearId:"row-north-1" },
+    { year:1900, pages:176, listing:"18 Hogan, James",        street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"20 Robertson, Robert",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"22 King, Mrs Lizzie",    street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"24 Levy, A.",            street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"Bouverie st",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80092588528112, lng:144.96238754611835 },
+    { year:1900, pages:176, listing:"38 Peirce, Thomas",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"40 Gilchrist, Archb.",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"42 Steinberg, Mrs C.",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"44 Bergman, Moses",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"46 O'Brien, J. F.",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"48 Marks, Mrs E.",       street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"50 Keane, Stephen",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1900, pages:176, listing:"Fence",                  street:"Church Street", type:"Fence",        cardinality:"North" },
+    { year:1900, pages:176, listing:"Madeline st",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1900, pages:176, listing:"11 Main, George",        street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"13 Quinlan, Michael",    street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"15 Whisler, George",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"17 Scanlan, James F.",   street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"Right-of-way",           street:"Church Street", type:"Right-of-way", cardinality:"South", crossYearId:"row-south-1" },
+    { year:1900, pages:176, listing:"19 Smyth, Mrs Mary",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"21 Tierney, Andrew",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"23 McDougall, William",  street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"25 Adams, George",       street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1900, pages:176, listing:"Bouverie st",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80092588528112, lng:144.96238754611835 },
+    { year:1900, pages:176, listing:"Fence",                  street:"Church Street", type:"Fence",        cardinality:"South" },
+    // ── 1910 ──
+    { year:1910, pages:191, listing:"Madeline st",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1910, pages:191, listing:"8 Ruben, Arthur",        street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"10 Byrne, Mrs Julia",    street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"12 Monaghan, Miss W.",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"18 Smith, Arthur",       street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"20 Dodd, Wm.",           street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"22 Connell, John",       street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"24 Davis, Wm.",          street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"Bouverie St",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80092588528112, lng:144.96238754611835 },
+    { year:1910, pages:191, listing:"38 Barry, Mrs Ethel",    street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"40 Vacant",              street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"42 Hilton, Sydney",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"44 Snowden, Allan",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"46 Clarke, John",        street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"48 Watson, Thomas",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1910, pages:191, listing:"50 Munro, Edward",       street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"munro-edward-50" },
+    { year:1910, pages:191, listing:"Madeline st",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1910, pages:191, listing:"11 O'Brien, Henry",      street:"Church Street", type:"Place",        cardinality:"South", crossYearId:"obrien-henry" },
+    { year:1910, pages:191, listing:"13 Moss, Samuel",        street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1910, pages:191, listing:"15 Ryan, George",        street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1910, pages:191, listing:"17 Clay, Mrs Annie",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1910, pages:191, listing:"19 Clay, Mrs Annie",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1910, pages:191, listing:"21 Robertson, Mrs Jane", street:"Church Street", type:"Place",        cardinality:"South", crossYearId:"robertson-jane-21" },
+    { year:1910, pages:191, listing:"23 Pitcher, Fredk.",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1910, pages:191, listing:"25 Smart, Mrs Ethel",    street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1910, pages:191, listing:"Bouverie st",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80092588528112, lng:144.96238754611835 },
+    // ── 1915 ──
+    { year:1915, pages:192, listing:"Madeline st",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1915, pages:192, listing:"8 Evans, Mrs Mary",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"10 Mildrum, James",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"12 Donovan, Michael",    street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"donovan-michael-12" },
+    { year:1915, pages:192, listing:"18 Love, William",       street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"love-william-18" },
+    { year:1915, pages:192, listing:"20 Brownsmaher, Mrs K.", street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"22 Johnstone, Andrew",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"24 O'Brien, Henry",      street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"obrien-henry" },
+    { year:1915, pages:192, listing:"Bouverie st",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80092588528112, lng:144.96238754611835 },
+    { year:1915, pages:192, listing:"38 Turner, William",     street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"40 Gray, Mrs Mary",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"42 Skinner, Henry",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"44 Gould, Harry",        street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"46 Ameer, Samuel",       street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"48 Buchanan, Jas. R.",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1915, pages:192, listing:"50 Munro, Edward",       street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"munro-edward-50" },
+    { year:1915, pages:192, listing:"Madeline st",            street:"Church Street", type:"Place",        cardinality:"South", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1915, pages:192, listing:"11 Cross, George",       street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"13 Monaghan, John",      street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"15 Pearce, Thomas",      street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"17 Higgins, Charles",    street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"19 Christopherson, W.L.",street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"21 Robertson, Mrs Jane", street:"Church Street", type:"Place",        cardinality:"South", crossYearId:"robertson-jane-21" },
+    { year:1915, pages:192, listing:"23 Main, Clyde",         street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"26 Smith, James",        street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1915, pages:192, listing:"Bouverie st",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80092588528112, lng:144.96238754611835 },
+    // ── 1920 ──
+    { year:1920, pages:204, listing:"Madeline st",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1920, pages:204, listing:"10 Cruise, Mrs Margt.",  street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"12 Donovan, Michael",    street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"donovan-michael-12" },
+    { year:1920, pages:204, listing:"18 Love, William",       street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"love-william-18" },
+    { year:1920, pages:204, listing:"20 Touchen, Jno.",       street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"22 O'Connell, John",     street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"24 O'Brien, Henry",      street:"Church Street", type:"Place",        cardinality:"North", crossYearId:"obrien-henry" },
+    { year:1920, pages:204, listing:"Bouverie St",            street:"Church Street", type:"Intersection", cardinality:"North", lat:-37.80092588528112, lng:144.96238754611835 },
+    { year:1920, pages:204, listing:"38 Matthews, Herb. S.",  street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"40 Byrne, Thos.",        street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"42 Kinnane, Lawrence",   street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"44 Epstein, Mrs. Debora",street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"46 Gibbs, Edwd.",        street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"48 Harvey, Richard",     street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"50 Power, Michael",      street:"Church Street", type:"Place",        cardinality:"North" },
+    { year:1920, pages:204, listing:"Madeline St",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80082165456708, lng:144.96164422798955 },
+    { year:1920, pages:204, listing:"11 Wood, Jno.",          street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"13 Whitehouse, Wm.",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"15 Worthington, C. H.",  street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"17 Evans, Mrs Marion",   street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"19 Alexander, Mrs C.",   street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"21 Robertson, Mrs Jane", street:"Church Street", type:"Place",        cardinality:"South", crossYearId:"robertson-jane-21" },
+    { year:1920, pages:204, listing:"23 Lebihan, Mrs E.",     street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"25 Hobbs, Wm.",          street:"Church Street", type:"Place",        cardinality:"South" },
+    { year:1920, pages:204, listing:"Bouverie st",            street:"Church Street", type:"Intersection", cardinality:"South", lat:-37.80092588528112, lng:144.96238754611835 },
+];
 
-        // 2. Vector Features Config JSON (Pins, Lines, Polygons)
-        const featureConfig = [
-            {
-                type: 'polygon',
-                heading: 'The University of Melbourne',
-                htmlContent: '<p>Established in 1853, this is Australia\'s second oldest university. The main campus is located in Parkville, north of the Melbourne CBD.</p><ul><li><strong>Main Campus:</strong> Parkville</li><li><strong>Historical Note:</strong> Started with just four professors and 16 students.</li></ul>',
-                coordinates: [
-                    [-37.7995, 144.9595],
-                    [-37.7963, 144.9592],
-                    [-37.7967, 144.9645],
-                    [-37.7999, 144.9648]
-                ],
-                style: { color: '#1c3f60', fillColor: '#2980b9', fillOpacity: 0.4, weight: 3 }
-            },
-            {
-                type: 'line',
-                heading: 'Grattan Street',
-                htmlContent: '<p>Grattan Street runs directly through the university precinct. Historically a key transport corridor, it has seen massive changes due to the <em>Metro Tunnel project</em> infrastructure development.</p>',
-                coordinates: [
-                    [-37.7999, 144.9545],
-                    [-37.7995, 144.9595],
-                    [-37.7999, 144.9648],
-                    [-37.8003, 144.9700]
-                ],
-                style: { color: '#e67e22', weight: 5, opacity: 0.8 }
-            },
-            {
-                type: 'point',
-                heading: 'Lincoln Square',
-                htmlContent: '<p>A historic public square and parkland reserve plotted in the original survey of Melbourne. It features grand old Moreton Bay Fig trees and serves as a popular gathering space for local residents and students.</p>',
-                coordinates: [-37.8025, 144.9632],
-                style: { color: '#27ae60' } // Fallback marker styling
-            }
-        ];
+// ═══════════════════════════════════════════════════════════
+//  CONSTANTS — derived from data
+// ═══════════════════════════════════════════════════════════
+const YEARS = [...new Set(directoryData.map(e => e.year))].sort((a,b) => a - b);
 
-        // 3. Initialize Map canvas
-        const map = L.map('map', {
-            center: [-37.8000, 144.9620], // Adjusted camera focus on the Parkville/Melbourne Uni area
-            zoom: 15,
-            minZoom: 2,
-            maxZoom: 20
-        });
+// Interpolate a colour for each year across a fixed palette:
+// oldest → warm amber, stepping through teal/violet/green → newest cool blue.
+// Works for any number of years automatically.
+(function() {
+    const palette = [
+        [181,  69, 27],  // warm rust
+        [184, 134, 11],  // amber
+        [46, 125, 94],   // teal green
+        [123, 94, 167],  // violet
+        [42, 100, 160],  // steel blue
+    ];
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function toHex(r,g,b) {
+        return '#' + [r,g,b].map(v => Math.round(v).toString(16).padStart(2,'0')).join('');
+    }
+    window.YEAR_COLORS = {};
+    YEARS.forEach((year, i) => {
+        const t   = YEARS.length === 1 ? 0 : i / (YEARS.length - 1);
+        const raw = t * (palette.length - 1);
+        const lo  = Math.floor(raw), hi = Math.min(lo + 1, palette.length - 1);
+        const f   = raw - lo;
+        const r   = lerp(palette[lo][0], palette[hi][0], f);
+        const g   = lerp(palette[lo][1], palette[hi][1], f);
+        const b   = lerp(palette[lo][2], palette[hi][2], f);
+        YEAR_COLORS[year] = toHex(r, g, b);
+    });
+})();
+const MAX_ARC_OFFSET  = 0.00072; // constant outer bound (degrees lat)
+const ANIM_DURATION   = 600;     // ms
 
-        const layerRegistry = {};
+// ═══════════════════════════════════════════════════════════
+//  MAP INIT
+// ═══════════════════════════════════════════════════════════
+const map = L.map('map', { center:[-37.8009,144.9622], zoom:18, minZoom:2, maxZoom:20 });
 
-        function getTileUrl(source, id) {
-            if (source === 'vic') {
-                return `https://mapwarper.prov.vic.gov.au/maps/tile/${id}/{z}/{x}/{y}.png`;
-            }
-            return `https://mapwarper.net/maps/tile/${id}/{z}/{x}/{y}.png`;
+// Permanent anchor line between two intersections shared across years.
+// We find the pair of named intersections (same normalised listing, same street,
+// same cardinality) that appear in the most years and have known coordinates,
+// then draw a line between the first two such anchors in document order.
+(function() {
+    // Collect all entries that are Intersections with coordinates
+    const anchors = directoryData.filter(e => e.type === 'Intersection' && e.lat != null);
+
+    // Build a map: normKey → [{lat,lng}, ...]
+    const byKey = {};
+    anchors.forEach(e => {
+        const key = `${e.street}|${e.cardinality}|${e.listing.toLowerCase().replace(/\s+/g,'_')}`;
+        if (!byKey[key]) byKey[key] = [];
+        // Store unique lat/lng (same coords appear across years)
+        const already = byKey[key].some(p => p.lat === e.lat && p.lng === e.lng);
+        if (!already) byKey[key].push({ lat: e.lat, lng: e.lng });
+    });
+
+    // Among groups that appear in ≥2 years and share a street+cardinality,
+    // pick the two most-attested ones as line endpoints.
+    // Group by street+cardinality first, collect qualifying intersection names.
+    const byStreetSide = {};
+    Object.entries(byKey).forEach(([key, pts]) => {
+        // Only candidates that have exactly one unique coord (stable location)
+        if (pts.length !== 1) return;
+        const [street, card] = key.split('|');
+        const sc = `${street}|${card}`;
+        if (!byStreetSide[sc]) byStreetSide[sc] = [];
+        byStreetSide[sc].push({ key, lat: pts[0].lat, lng: pts[0].lng });
+    });
+
+    // Find the street+side with ≥2 candidates; prefer most candidates
+    let best = null, bestCount = 0;
+    Object.entries(byStreetSide).forEach(([sc, list]) => {
+        if (list.length >= 2 && list.length > bestCount) {
+            bestCount = list.length;
+            best = list;
         }
+    });
 
-// 4. Custom Control Panel Construction (with Home Link)
-        const CustomControl = L.Control.extend({
-            options: { position: 'topright' },
-            onAdd: function () {
-                const container = L.DomUtil.create('div', 'leaflet-control-layers');
-                
-                L.DomEvent.disableClickPropagation(container);
-                L.DomEvent.disableScrollPropagation(container);
+    if (best && best.length >= 2) {
+        // Use document order: find first two in directoryData
+        const coordPairs = best.map(b => [b.lat, b.lng]);
+        L.polyline([coordPairs[0], coordPairs[1]], { color:'#000000', weight:2.5, opacity:1 }).addTo(map);
+    }
+})();
 
-                // --- NEW: Add Home Link to the top of the legend ---
-                const homeLink = L.DomUtil.create('a', 'control-home-link', container);
-                homeLink.href = '/order'; 
-                homeLink.innerText = 'Home';
-                // --------------------------------------------------
+// ═══════════════════════════════════════════════════════════
+//  ARC GEOMETRY
+// ═══════════════════════════════════════════════════════════
+function bezier(A, ctrl, B, t) {
+    const u = 1 - t;
+    return { lat: u*u*A.lat + 2*u*t*ctrl.lat + t*t*B.lat,
+             lng: u*u*A.lng + 2*u*t*ctrl.lng + t*t*B.lng };
+}
 
-                mapConfig.forEach(config => {
-                    const row = L.DomUtil.create('div', 'layer-control-row', container);
-                    
-                    const labelContainer = L.DomUtil.create('label', 'layer-label-container', row);
-                    const checkbox = L.DomUtil.create('input', '', labelContainer);
-                    checkbox.type = 'checkbox';
-                    checkbox.checked = config.visibleByDefault;
-                    
-                    const textSpan = L.DomUtil.create('span', '', labelContainer);
-                    textSpan.innerText = config.label;
+/**
+ * Compute arc positions for one year+side chain.
+ * arcOffset: positive = north/east, negative = south/west. Magnitude sets bow amount.
+ *
+ * For tail/head segments (one open end), we project a ghost anchor
+ * in the STREET direction (east/west) while preserving the correct
+ * lateral offset so the arc always bows the right way.
+ */
+/**
+ * Apply arcOffset to the correct geographic axis:
+ *   - North/South sides: offset perpendicular to an east-west street → nudge latitude
+ *   - East/West sides:   offset perpendicular to a north-south street → nudge longitude
+ * Returns { lat, lng } with the bow applied.
+ */
+function applyOffset(midLat, midLng, arcOffset, side) {
+    if (side === 'East' || side === 'West') {
+        return { lat: midLat, lng: midLng + arcOffset };
+    }
+    return { lat: midLat + arcOffset, lng: midLng };
+}
 
-                    const sliderContainer = L.DomUtil.create('div', 'slider-container', row);
-                    sliderContainer.innerHTML = '<span>0%</span>';
-                    
-                    const slider = L.DomUtil.create('input', 'opacity-slider', sliderContainer);
-                    slider.type = 'range';
-                    slider.min = 0;
-                    slider.max = 100;
-                    slider.value = 100;
-                    
-                    sliderContainer.insertAdjacentHTML('beforeend', '<span>100%</span>');
+function computeChain(entries, arcOffset, side) {
+    const r = entries.map(e => ({ ...e }));
+    const n = r.length;
 
-                    const tileUrl = getTileUrl(config.source, config.id);
-                    const layer = L.tileLayer(tileUrl, {
-                        maxZoom: 20,
-                        maxNativeZoom: 19,
-                        opacity: 1.0
-                    });
+    // Identify anchor indices
+    const anchors = r.map((e,i) => e.lat != null ? i : -1).filter(i => i >= 0);
 
-                    layerRegistry[config.id] = layer;
+    // ── Anchored segments between consecutive anchors ──
+    for (let ai = 0; ai < anchors.length - 1; ai++) {
+        const si = anchors[ai], ei = anchors[ai+1];
+        const A  = { lat:r[si].lat, lng:r[si].lng };
+        const B  = { lat:r[ei].lat, lng:r[ei].lng };
+        const ctrl = applyOffset((A.lat+B.lat)/2, (A.lng+B.lng)/2, arcOffset, side);
+        const steps = ei - si;
+        for (let k = 1; k < steps; k++) {
+            const p = bezier(A, ctrl, B, k/steps);
+            r[si+k].lat = p.lat; r[si+k].lng = p.lng; r[si+k]._computed = true;
+        }
+    }
 
-                    if (config.visibleByDefault) {
-                        layer.addTo(map);
-                    }
+    // ── Tail: entries after last anchor ──
+    if (anchors.length > 0) {
+        const lastAi = anchors[anchors.length - 1];
+        const tailCount = n - lastAi - 1;
+        if (tailCount > 0) {
+            const A = { lat:r[lastAi].lat, lng:r[lastAi].lng };
+            // Street direction: from second-to-last anchor to last, or infer from side
+            // N/S sides run east-west → default forward direction is east (+lng)
+            // E/W sides run north-south → default forward direction is north (-lat, i.e. decreasing lat)
+            let dLng = 0, dLat = 0;
+            if (anchors.length >= 2) {
+                const prev = anchors[anchors.length - 2];
+                const rawLat = A.lat - r[prev].lat;
+                const rawLng = A.lng - r[prev].lng;
+                const len = Math.sqrt(rawLat*rawLat + rawLng*rawLng) || 1;
+                dLat = (rawLat/len) * 0.00014;
+                dLng = (rawLng/len) * 0.00014;
+            } else {
+                // fallback defaults based on street orientation
+                if (side === 'East' || side === 'West') { dLat = -0.00014; } // north-south street → project northward
+                else                                    { dLng =  0.00014; } // east-west street  → project eastward
+            }
+            const ghost = { lat: A.lat + dLat*(tailCount+1), lng: A.lng + dLng*(tailCount+1) };
+            const ctrl  = applyOffset((A.lat+ghost.lat)/2, (A.lng+ghost.lng)/2, arcOffset, side);
+            for (let k = 1; k <= tailCount; k++) {
+                const p = bezier(A, ctrl, ghost, k/(tailCount+1));
+                r[lastAi+k].lat = p.lat; r[lastAi+k].lng = p.lng; r[lastAi+k]._computed = true;
+            }
+        }
+    }
 
-                    L.DomEvent.on(checkbox, 'change', function() {
-                        if (checkbox.checked) {
-                            layer.addTo(map);
-                        } else {
-                            map.removeLayer(layer);
+    // ── Head: entries before first anchor ──
+    if (anchors.length > 0) {
+        const firstAi = anchors[0];
+        if (firstAi > 0) {
+            const A = { lat:r[firstAi].lat, lng:r[firstAi].lng };
+            let dLng = 0, dLat = 0;
+            if (anchors.length >= 2) {
+                const next = anchors[1];
+                const rawLat = r[next].lat - A.lat;
+                const rawLng = r[next].lng - A.lng;
+                const len = Math.sqrt(rawLat*rawLat + rawLng*rawLng) || 1;
+                dLat = -(rawLat/len) * 0.00014;
+                dLng = -(rawLng/len) * 0.00014;
+            } else {
+                if (side === 'East' || side === 'West') { dLat =  0.00014; } // project southward (back)
+                else                                    { dLng = -0.00014; } // project westward (back)
+            }
+            const ghost = { lat: A.lat + dLat*(firstAi+1), lng: A.lng + dLng*(firstAi+1) };
+            const ctrl  = applyOffset((ghost.lat+A.lat)/2, (ghost.lng+A.lng)/2, arcOffset, side);
+            for (let k = 0; k < firstAi; k++) {
+                const t = (firstAi - k) / (firstAi + 1);
+                const p = bezier(ghost, ctrl, A, t);
+                r[k].lat = p.lat; r[k].lng = p.lng; r[k]._computed = true;
+            }
+        }
+    }
+
+    return r;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  LIVE STATE
+//  For each year+side we store an array of "live" objects,
+//  each with { lat, lng } that get animated frame-by-frame.
+// ═══════════════════════════════════════════════════════════
+
+// All cardinalities (sides) present in the data — supports North/South and East/West
+const SIDES = [...new Set(directoryData.map(e => e.cardinality))].sort();
+
+// Raw template entries per year+side (immutable originals)
+const rawChains = {};
+YEARS.forEach(year => {
+    SIDES.forEach(side => {
+        rawChains[`${year}-${side}`] = directoryData.filter(
+            e => e.year === year && e.cardinality === side
+        ).map(e => ({ ...e }));
+    });
+});
+
+// Active year tracking
+const activeYears = new Set([YEARS[0]]); // 1900 on by default
+
+// Compute arc offset for a year given the current active set.
+// For North/East: positive offset (bows north / east away from street centreline).
+// For South/West: negative offset (bows south / west away from street centreline).
+// The sign is applied to lat (North/South) or lng (East/West) by applyOffset().
+//
+// Ranking is done ONLY among active years that share the same street+side group.
+// Years on different streets are independent and must not shift each other's offsets.
+function arcOffsetForYear(year, side) {
+    const sideSign = (side === 'North' || side === 'East') ? 1 : -1;
+
+    // Streets present for this year+side
+    const streets = new Set(
+        (rawChains[`${year}-${side}`] || []).map(e => e.street)
+    );
+
+    // Active peers: years that have at least one entry on the same street+side
+    const peers = [...activeYears].filter(y => {
+        const chain = rawChains[`${y}-${side}`] || [];
+        return chain.length > 0 && chain.some(e => streets.has(e.street));
+    }).sort((a, b) => b - a); // newest first
+
+    const N    = peers.length;
+    const rank = peers.indexOf(year);
+    if (rank < 0) return 0;
+
+    // rank 0 → smallest offset, rank N-1 → MAX_ARC_OFFSET
+    const magnitude = N === 1 ? MAX_ARC_OFFSET * 0.15 : MAX_ARC_OFFSET * (rank + 1) / N;
+    return magnitude * sideSign;
+}
+
+// ── Leaflet layer objects ──
+const markerLayers = {}; // `${year}-${side}-${idx}` → L.Marker
+const polyLayers   = {}; // `${year}-${side}` → L.Polyline
+const yearGroups   = {}; // year → L.LayerGroup (holds markers + polylines for that year)
+
+YEARS.forEach(year => {
+    yearGroups[year] = L.layerGroup();
+    SIDES.forEach(side => {
+        const key = `${year}-${side}`;
+        // Placeholder polyline (empty)
+        const poly = L.polyline([], { color:YEAR_COLORS[year], weight:1.5, opacity:0.85 })
+            .bindTooltip(String(year), { sticky:true, direction:'top' });
+        polyLayers[key] = poly;
+        poly.addTo(yearGroups[year]);
+
+        // Markers — created once for every entry; positions set by initPositions/animation
+        rawChains[key].forEach((entry, idx) => {
+            const mk = L.marker([0,0], { icon: makeIcon(entry, YEAR_COLORS[year]) });
+            mk.bindTooltip(entry.listing, { direction:'top', offset:[0,-4] });
+            mk.on('click', () => openModal(entry));
+            markerLayers[`${key}-${idx}`] = mk;
+            mk.addTo(yearGroups[year]);
+        });
+    });
+});
+
+// Cross-year layer (rebuilt on toggle)
+let crossYearLayer = L.layerGroup().addTo(map);
+const crossYearById = {};
+
+// ═══════════════════════════════════════════════════════════
+//  ICON FACTORY
+// ═══════════════════════════════════════════════════════════
+function makeIcon(entry, color) {
+    const t = entry.type;
+    let html, size;
+
+    if (t === 'Intersection') {
+        html = `<div style="position:relative;width:11px;height:11px;">
+            <div style="position:absolute;top:4px;left:0;width:11px;height:3px;background:${color};border-radius:1px;"></div>
+            <div style="position:absolute;left:4px;top:0;width:3px;height:11px;background:${color};border-radius:1px;"></div>
+        </div>`;
+        size = [11,11];
+    } else if (t === 'Right-of-way') {
+        html = `<div style="position:relative;width:11px;height:11px;">
+            <div style="position:absolute;top:4px;left:0;width:11px;height:3px;border:1.5px solid ${color};border-radius:1px;box-sizing:border-box;"></div>
+            <div style="position:absolute;left:4px;top:0;width:3px;height:11px;border:1.5px solid ${color};border-radius:1px;box-sizing:border-box;"></div>
+        </div>`;
+        size = [11,11];
+    } else if (t === 'Fence') {
+        html = `<div style="width:7px;height:7px;background:${color};opacity:0.45;border:1px solid rgba(255,255,255,0.5);"></div>`;
+        size = [7,7];
+    } else {
+        html = `<div style="width:6px;height:6px;border-radius:50%;background:${color};border:1px solid rgba(255,255,255,0.65);box-shadow:0 0 2px rgba(0,0,0,0.4);"></div>`;
+        size = [6,6];
+    }
+    return L.divIcon({ html, className:'', iconSize:size, iconAnchor:[size[0]/2,size[1]/2] });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  POSITIONED CHAIN CACHE
+//  We store the current "from" positions and animate to "to".
+// ═══════════════════════════════════════════════════════════
+const currentPos = {}; // `${year}-${side}-${idx}` → { lat, lng }
+
+function getTargetPositions(year, side) {
+    const offset = arcOffsetForYear(year, side);
+    return computeChain(rawChains[`${year}-${side}`], offset, side);
+}
+
+// Initialise positions for the default year (1900)
+function initPositions() {
+    YEARS.forEach(year => {
+        SIDES.forEach(side => {
+            const key     = `${year}-${side}`;
+            const targets = getTargetPositions(year, side);
+            targets.forEach((e, idx) => {
+                if (e.lat == null) return;
+                currentPos[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
+                rawChains[key][idx]._computed = e._computed;
+            });
+        });
+    });
+    applyPositionsToMap();
+}
+
+function applyPositionsToMap() {
+    YEARS.forEach(year => {
+        SIDES.forEach(side => {
+            const key   = `${year}-${side}`;
+            const pts   = [];
+            rawChains[key].forEach((entry, idx) => {
+                const pos = currentPos[`${key}-${idx}`];
+                if (!pos) return;
+                const mk = markerLayers[`${key}-${idx}`];
+                if (mk) {
+                    if (pos) {
+                        mk.setLatLng([pos.lat, pos.lng]);
+                        if (!map.hasLayer(mk) && yearGroups[year] && map.hasLayer(yearGroups[year])) {
+                            // marker is in the group; setLatLng is enough
                         }
-                    });
+                    }
+                }
+                pts.push([pos.lat, pos.lng]);
+            });
+            polyLayers[key].setLatLngs(pts);
+        });
+    });
+}
 
-                    L.DomEvent.on(slider, 'input', function() {
-                        layer.setOpacity(slider.value / 100);
-                    });
-                });
+// ═══════════════════════════════════════════════════════════
+//  ANIMATION ENGINE
+// ═══════════════════════════════════════════════════════════
+let animHandle = null;
+let animStart  = null;
+const animFrom = {};
+const animTo   = {};
 
-                return container;
-            }
+function easeInOut(t) {
+    return t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+}
+
+function startAnimation() {
+    if (animHandle) cancelAnimationFrame(animHandle);
+
+    // Snapshot current as "from"
+    Object.assign(animFrom, JSON.parse(JSON.stringify(currentPos)));
+
+    // Compute "to" for all active years
+    Object.keys(animTo).forEach(k => delete animTo[k]);
+    activeYears.forEach(year => {
+        SIDES.forEach(side => {
+            const key     = `${year}-${side}`;
+            const targets = getTargetPositions(year, side);
+            targets.forEach((e, idx) => {
+                if (e.lat == null) return;
+                animTo[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
+            });
+        });
+    });
+
+    animStart = null;
+    animHandle = requestAnimationFrame(animFrame);
+}
+
+function animFrame(ts) {
+    if (!animStart) animStart = ts;
+    const elapsed = ts - animStart;
+    const t       = Math.min(elapsed / ANIM_DURATION, 1);
+    const ease    = easeInOut(t);
+
+    // Interpolate all positions that have a "to" target
+    Object.keys(animTo).forEach(k => {
+        const from = animFrom[k] || animTo[k];
+        const to   = animTo[k];
+        currentPos[k] = {
+            lat: from.lat + (to.lat - from.lat) * ease,
+            lng: from.lng + (to.lng - from.lng) * ease,
+        };
+    });
+
+    applyPositionsToMap();
+    rebuildCrossYearLines();
+
+    if (t < 1) {
+        animHandle = requestAnimationFrame(animFrame);
+    } else {
+        animHandle = null;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CROSS-YEAR LINES
+// ═══════════════════════════════════════════════════════════
+// Build index
+YEARS.forEach(year => {
+    SIDES.forEach(side => {
+        rawChains[`${year}-${side}`].forEach((e, idx) => {
+            if (!e.crossYearId) return;
+            if (!crossYearById[e.crossYearId]) crossYearById[e.crossYearId] = [];
+            crossYearById[e.crossYearId].push({ year, side, idx });
+        });
+    });
+});
+Object.values(crossYearById).forEach(g => g.sort((a,b) => a.year - b.year));
+
+function rebuildCrossYearLines() {
+    crossYearLayer.clearLayers();
+    Object.values(crossYearById).forEach(group => {
+        for (let i = 0; i < group.length - 1; i++) {
+            const a = group[i], b = group[i+1];
+            if (!activeYears.has(a.year) || !activeYears.has(b.year)) continue;
+            const posA = currentPos[`${a.year}-${a.side}-${a.idx}`];
+            const posB = currentPos[`${b.year}-${b.side}-${b.idx}`];
+            if (!posA || !posB) continue;
+            L.polyline([[posA.lat,posA.lng],[posB.lat,posB.lng]],
+                { color:'#222', weight:3.5, opacity:0.55, dashArray:'6,5' }).addTo(crossYearLayer);
+            L.polyline([[posA.lat,posA.lng],[posB.lat,posB.lng]],
+                { color:'#fff', weight:1.5, opacity:0.9,  dashArray:'6,5' }).addTo(crossYearLayer);
+        }
+    });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════════════
+const modal    = document.getElementById('details-modal');
+const mHeading = document.getElementById('modal-heading');
+const mMeta    = document.getElementById('modal-meta');
+const mBody    = document.getElementById('modal-body');
+const mCoords  = document.getElementById('modal-coords');
+document.getElementById('close-modal-btn').onclick = () => modal.style.display = 'none';
+window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+
+function openModal(entry) {
+    mHeading.innerText = entry.listing;
+    mMeta.innerText    = `${entry.year}  ·  ${entry.street}  ·  ${entry.cardinality} side  ·  p.${entry.pages}`;
+    mBody.innerHTML    = entry.htmlContent || '';
+    const key = `${entry.year}-${entry.cardinality}`;
+    const idx = rawChains[key] ? rawChains[key].indexOf(entry) : -1;
+    const pos = idx >= 0 ? currentPos[`${key}-${idx}`] : null;
+    mCoords.innerText  = pos
+        ? `${pos.lat.toFixed(7)}, ${pos.lng.toFixed(7)}${entry._computed ? ' (estimated)' : ''}`
+        : 'Unknown';
+    modal.style.display = 'flex';
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONTROL PANEL
+// ═══════════════════════════════════════════════════════════
+function getTileUrl(source, id) {
+    return source === 'vic'
+        ? `https://mapwarper.prov.vic.gov.au/maps/tile/${id}/{z}/{x}/{y}.png`
+        : `https://mapwarper.net/maps/tile/${id}/{z}/{x}/{y}.png`;
+}
+
+const CustomControl = L.Control.extend({
+    options: { position:'topright' },
+    onAdd() {
+        const container = L.DomUtil.create('div', 'leaflet-control-layers');
+        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.disableScrollPropagation(container);
+
+        const homeLink = L.DomUtil.create('a', 'control-home-link', container);
+        homeLink.href = '/order'; homeLink.innerText = '← Home';
+
+        const yearTitle = L.DomUtil.create('div', 'panel-section-title', container);
+        yearTitle.innerText = 'Directory Years';
+
+        YEARS.forEach(year => {
+            const row = L.DomUtil.create('label', 'year-row', container);
+            const cb  = L.DomUtil.create('input', '', row);
+            cb.type = 'checkbox'; cb.checked = (year === YEARS[0]);
+            const swatch = L.DomUtil.create('span', 'year-swatch', row);
+            swatch.style.background = YEAR_COLORS[year];
+            row.appendChild(document.createTextNode(String(year)));
+
+            L.DomEvent.on(cb, 'change', () => {
+                if (cb.checked) {
+                    activeYears.add(year);
+                    yearGroups[year].addTo(map);
+                } else {
+                    activeYears.delete(year);
+                    map.removeLayer(yearGroups[year]);
+                }
+                startAnimation();
+            });
         });
 
-        map.addControl(new CustomControl());
+        const mapTitle = L.DomUtil.create('div', 'panel-section-title', container);
+        mapTitle.innerText = 'Historic Map Layers';
 
-        // 5. Modal Functionality
-        const modal = document.getElementById('details-modal');
-        const mHeading = document.getElementById('modal-heading');
-        const mBody = document.getElementById('modal-body');
-        const mCoords = document.getElementById('modal-coords');
-        const closeBtn = document.getElementById('close-modal-btn');
-
-        function openModal(heading, html, coordsText) {
-            mHeading.innerText = heading;
-            mBody.innerHTML = html;
-            mCoords.innerText = coordsText;
-            modal.style.display = 'flex';
-        }
-
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-
-        closeBtn.onclick = closeModal;
-        window.onclick = function(event) {
-            if (event.target === modal) closeModal();
-        }
-
-        // 6. Draw features and link click events to our custom modal window
-        featureConfig.forEach(feat => {
-            let leafletFeature;
-
-            if (feat.type === 'polygon') {
-                leafletFeature = L.polygon(feat.coordinates, feat.style || {});
-                leafletFeature.on('click', function() {
-                    const coordString = JSON.stringify(feat.coordinates);
-                    openModal(feat.heading, feat.htmlContent, coordString);
-                });
-            } 
-            else if (feat.type === 'line') {
-                leafletFeature = L.polyline(feat.coordinates, feat.style || {});
-                leafletFeature.on('click', function() {
-                    const coordString = JSON.stringify(feat.coordinates);
-                    openModal(feat.heading, feat.htmlContent, coordString);
-                });
-            } 
-            else if (feat.type === 'point') {
-                // Pin gets standard native interactive marker
-                leafletFeature = L.marker(feat.coordinates);
-                leafletFeature.on('click', function() {
-                    const coordString = `Latitude: ${feat.coordinates[0]}, Longitude: ${feat.coordinates[1]}`;
-                    openModal(feat.heading, feat.htmlContent, coordString);
-                });
-            }
-
-            if (leafletFeature) {
-                leafletFeature.addTo(map);
-            }
+        mapConfig.forEach(config => {
+            const row  = L.DomUtil.create('div', 'layer-control-row', container);
+            const lbl  = L.DomUtil.create('label', 'layer-label-container', row);
+            const cb   = L.DomUtil.create('input', '', lbl); cb.type = 'checkbox'; cb.checked = config.visibleByDefault;
+            const span = L.DomUtil.create('span', '', lbl); span.innerText = config.label;
+            const sc   = L.DomUtil.create('div', 'slider-container', row);
+            sc.innerHTML = '<span>0%</span>';
+            const sl   = L.DomUtil.create('input', 'opacity-slider', sc);
+            sl.type = 'range'; sl.min = 0; sl.max = 100; sl.value = 100;
+            sc.insertAdjacentHTML('beforeend', '<span>100%</span>');
+            const layer = L.tileLayer(getTileUrl(config.source, config.id), { maxZoom:20, maxNativeZoom:19, opacity:1 });
+            if (config.visibleByDefault) layer.addTo(map);
+            L.DomEvent.on(cb, 'change', () => cb.checked ? layer.addTo(map) : map.removeLayer(layer));
+            L.DomEvent.on(sl, 'input',  () => layer.setOpacity(sl.value/100));
         });
 
-    </script>
+        return container;
+    }
+});
+map.addControl(new CustomControl());
+
+// ═══════════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════════
+initPositions();
+yearGroups[YEARS[0]].addTo(map); // 1900 visible by default
+rebuildCrossYearLines();
+</script>
 </body>
 </html>
