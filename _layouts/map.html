@@ -582,52 +582,7 @@ const ANIM_DURATION   = 600;     // ms
 // ═══════════════════════════════════════════════════════════
 const map = L.map('map', { center:[-37.8009,144.9622], zoom:18, minZoom:2, maxZoom:20 });
 
-// Permanent anchor line between two intersections shared across years.
-// We find the pair of named intersections (same normalised listing, same street,
-// same cardinality) that appear in the most years and have known coordinates,
-// then draw a line between the first two such anchors in document order.
-(function() {
-    // Collect all entries that are Intersections with coordinates
-    const anchors = directoryData.filter(e => e.type === 'Intersection' && e.lat != null);
 
-    // Build a map: normKey → [{lat,lng}, ...]
-    const byKey = {};
-    anchors.forEach(e => {
-        const key = `${e.street}|${e.cardinality}|${e.listing.toLowerCase().replace(/\s+/g,'_')}`;
-        if (!byKey[key]) byKey[key] = [];
-        // Store unique lat/lng (same coords appear across years)
-        const already = byKey[key].some(p => p.lat === e.lat && p.lng === e.lng);
-        if (!already) byKey[key].push({ lat: e.lat, lng: e.lng });
-    });
-
-    // Among groups that appear in ≥2 years and share a street+cardinality,
-    // pick the two most-attested ones as line endpoints.
-    // Group by street+cardinality first, collect qualifying intersection names.
-    const byStreetSide = {};
-    Object.entries(byKey).forEach(([key, pts]) => {
-        // Only candidates that have exactly one unique coord (stable location)
-        if (pts.length !== 1) return;
-        const [street, card] = key.split('|');
-        const sc = `${street}|${card}`;
-        if (!byStreetSide[sc]) byStreetSide[sc] = [];
-        byStreetSide[sc].push({ key, lat: pts[0].lat, lng: pts[0].lng });
-    });
-
-    // Find the street+side with ≥2 candidates; prefer most candidates
-    let best = null, bestCount = 0;
-    Object.entries(byStreetSide).forEach(([sc, list]) => {
-        if (list.length >= 2 && list.length > bestCount) {
-            bestCount = list.length;
-            best = list;
-        }
-    });
-
-    if (best && best.length >= 2) {
-        // Use document order: find first two in directoryData
-        const coordPairs = best.map(b => [b.lat, b.lng]);
-        L.polyline([coordPairs[0], coordPairs[1]], { color:'#000000', weight:2.5, opacity:1 }).addTo(map);
-    }
-})();
 
 // ═══════════════════════════════════════════════════════════
 //  ARC GEOMETRY
@@ -746,17 +701,22 @@ function computeChain(entries, arcOffset, side) {
 //  each with { lat, lng } that get animated frame-by-frame.
 // ═══════════════════════════════════════════════════════════
 
-// All cardinalities (sides) present in the data — supports North/South and East/West
-const SIDES = [...new Set(directoryData.map(e => e.cardinality))].sort();
-
-// Raw template entries per year+side (immutable originals)
-const rawChains = {};
-YEARS.forEach(year => {
-    SIDES.forEach(side => {
-        rawChains[`${year}-${side}`] = directoryData.filter(
-            e => e.year === year && e.cardinality === side
-        ).map(e => ({ ...e }));
+// All unique {year, street, side} combinations present in the data
+const CHAINS = [];
+{
+    const seen = new Set();
+    directoryData.forEach(e => {
+        const k = `${e.year}|${e.street}|${e.cardinality}`;
+        if (!seen.has(k)) { seen.add(k); CHAINS.push({ year:e.year, street:e.street, side:e.cardinality }); }
     });
+}
+
+// Raw template entries per year+street+side (immutable originals)
+const rawChains = {};
+CHAINS.forEach(({ year, street, side }) => {
+    rawChains[`${year}-${street}-${side}`] = directoryData.filter(
+        e => e.year === year && e.street === street && e.cardinality === side
+    ).map(e => ({ ...e }));
 });
 
 // Active year tracking
@@ -769,19 +729,13 @@ const activeYears = new Set([YEARS[0]]); // 1900 on by default
 //
 // Ranking is done ONLY among active years that share the same street+side group.
 // Years on different streets are independent and must not shift each other's offsets.
-function arcOffsetForYear(year, side) {
+function arcOffsetForYear(year, street, side) {
     const sideSign = (side === 'North' || side === 'East') ? 1 : -1;
 
-    // Streets present for this year+side
-    const streets = new Set(
-        (rawChains[`${year}-${side}`] || []).map(e => e.street)
-    );
-
-    // Active peers: years that have at least one entry on the same street+side
-    const peers = [...activeYears].filter(y => {
-        const chain = rawChains[`${y}-${side}`] || [];
-        return chain.length > 0 && chain.some(e => streets.has(e.street));
-    }).sort((a, b) => b - a); // newest first
+    // Active peers: years that have a chain for this exact street+side
+    const peers = [...activeYears].filter(y =>
+        (rawChains[`${y}-${street}-${side}`] || []).length > 0
+    ).sort((a, b) => b - a); // newest first
 
     const N    = peers.length;
     const rank = peers.indexOf(year);
@@ -793,28 +747,26 @@ function arcOffsetForYear(year, side) {
 }
 
 // ── Leaflet layer objects ──
-const markerLayers = {}; // `${year}-${side}-${idx}` → L.Marker
-const polyLayers   = {}; // `${year}-${side}` → L.Polyline
+const markerLayers = {}; // `${year}-${street}-${side}-${idx}` → L.Marker
+const polyLayers   = {}; // `${year}-${street}-${side}` → L.Polyline
 const yearGroups   = {}; // year → L.LayerGroup (holds markers + polylines for that year)
 
-YEARS.forEach(year => {
-    yearGroups[year] = L.layerGroup();
-    SIDES.forEach(side => {
-        const key = `${year}-${side}`;
-        // Placeholder polyline (empty)
-        const poly = L.polyline([], { color:YEAR_COLORS[year], weight:1.5, opacity:0.85 })
-            .bindTooltip(String(year), { sticky:true, direction:'top' });
-        polyLayers[key] = poly;
-        poly.addTo(yearGroups[year]);
+YEARS.forEach(year => { yearGroups[year] = L.layerGroup(); });
+CHAINS.forEach(({ year, street, side }) => {
+    const key = `${year}-${street}-${side}`;
+    // Placeholder polyline (empty)
+    const poly = L.polyline([], { color:YEAR_COLORS[year], weight:1.5, opacity:0.85 })
+        .bindTooltip(`${year} · ${street}`, { sticky:true, direction:'top' });
+    polyLayers[key] = poly;
+    poly.addTo(yearGroups[year]);
 
-        // Markers — created once for every entry; positions set by initPositions/animation
-        rawChains[key].forEach((entry, idx) => {
-            const mk = L.marker([0,0], { icon: makeIcon(entry, YEAR_COLORS[year]) });
-            mk.bindTooltip(entry.listing, { direction:'top', offset:[0,-4] });
-            mk.on('click', () => openModal(entry));
-            markerLayers[`${key}-${idx}`] = mk;
-            mk.addTo(yearGroups[year]);
-        });
+    // Markers — created once for every entry; positions set by initPositions/animation
+    rawChains[key].forEach((entry, idx) => {
+        const mk = L.marker([0,0], { icon: makeIcon(entry, YEAR_COLORS[year]) });
+        mk.bindTooltip(entry.listing, { direction:'top', offset:[0,-4] });
+        mk.on('click', () => openModal(entry));
+        markerLayers[`${key}-${idx}`] = mk;
+        mk.addTo(yearGroups[year]);
     });
 });
 
@@ -852,50 +804,39 @@ function makeIcon(entry, color) {
 //  POSITIONED CHAIN CACHE
 //  We store the current "from" positions and animate to "to".
 // ═══════════════════════════════════════════════════════════
-const currentPos = {}; // `${year}-${side}-${idx}` → { lat, lng }
+const currentPos = {}; // `${year}-${street}-${side}-${idx}` → { lat, lng }
 
-function getTargetPositions(year, side) {
-    const offset = arcOffsetForYear(year, side);
-    return computeChain(rawChains[`${year}-${side}`], offset, side);
+function getTargetPositions(year, street, side) {
+    const offset = arcOffsetForYear(year, street, side);
+    return computeChain(rawChains[`${year}-${street}-${side}`], offset, side);
 }
 
-// Initialise positions for the default year (1900)
+// Initialise positions for all chains
 function initPositions() {
-    YEARS.forEach(year => {
-        SIDES.forEach(side => {
-            const key     = `${year}-${side}`;
-            const targets = getTargetPositions(year, side);
-            targets.forEach((e, idx) => {
-                if (e.lat == null) return;
-                currentPos[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
-                rawChains[key][idx]._computed = e._computed;
-            });
+    CHAINS.forEach(({ year, street, side }) => {
+        const key     = `${year}-${street}-${side}`;
+        const targets = getTargetPositions(year, street, side);
+        targets.forEach((e, idx) => {
+            if (e.lat == null) return;
+            currentPos[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
+            rawChains[key][idx]._computed = e._computed;
         });
     });
     applyPositionsToMap();
 }
 
 function applyPositionsToMap() {
-    YEARS.forEach(year => {
-        SIDES.forEach(side => {
-            const key   = `${year}-${side}`;
-            const pts   = [];
-            rawChains[key].forEach((entry, idx) => {
-                const pos = currentPos[`${key}-${idx}`];
-                if (!pos) return;
-                const mk = markerLayers[`${key}-${idx}`];
-                if (mk) {
-                    if (pos) {
-                        mk.setLatLng([pos.lat, pos.lng]);
-                        if (!map.hasLayer(mk) && yearGroups[year] && map.hasLayer(yearGroups[year])) {
-                            // marker is in the group; setLatLng is enough
-                        }
-                    }
-                }
-                pts.push([pos.lat, pos.lng]);
-            });
-            polyLayers[key].setLatLngs(pts);
+    CHAINS.forEach(({ year, street, side }) => {
+        const key   = `${year}-${street}-${side}`;
+        const pts   = [];
+        rawChains[key].forEach((entry, idx) => {
+            const pos = currentPos[`${key}-${idx}`];
+            if (!pos) return;
+            const mk = markerLayers[`${key}-${idx}`];
+            if (mk) mk.setLatLng([pos.lat, pos.lng]);
+            pts.push([pos.lat, pos.lng]);
         });
+        polyLayers[key].setLatLngs(pts);
     });
 }
 
@@ -919,14 +860,12 @@ function startAnimation() {
 
     // Compute "to" for all active years
     Object.keys(animTo).forEach(k => delete animTo[k]);
-    activeYears.forEach(year => {
-        SIDES.forEach(side => {
-            const key     = `${year}-${side}`;
-            const targets = getTargetPositions(year, side);
-            targets.forEach((e, idx) => {
-                if (e.lat == null) return;
-                animTo[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
-            });
+    CHAINS.filter(c => activeYears.has(c.year)).forEach(({ year, street, side }) => {
+        const key     = `${year}-${street}-${side}`;
+        const targets = getTargetPositions(year, street, side);
+        targets.forEach((e, idx) => {
+            if (e.lat == null) return;
+            animTo[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
         });
     });
 
@@ -964,13 +903,11 @@ function animFrame(ts) {
 //  CROSS-YEAR LINES
 // ═══════════════════════════════════════════════════════════
 // Build index
-YEARS.forEach(year => {
-    SIDES.forEach(side => {
-        rawChains[`${year}-${side}`].forEach((e, idx) => {
-            if (!e.crossYearId) return;
-            if (!crossYearById[e.crossYearId]) crossYearById[e.crossYearId] = [];
-            crossYearById[e.crossYearId].push({ year, side, idx });
-        });
+CHAINS.forEach(({ year, street, side }) => {
+    rawChains[`${year}-${street}-${side}`].forEach((e, idx) => {
+        if (!e.crossYearId) return;
+        if (!crossYearById[e.crossYearId]) crossYearById[e.crossYearId] = [];
+        crossYearById[e.crossYearId].push({ year, street, side, idx });
     });
 });
 Object.values(crossYearById).forEach(g => g.sort((a,b) => a.year - b.year));
@@ -981,8 +918,8 @@ function rebuildCrossYearLines() {
         for (let i = 0; i < group.length - 1; i++) {
             const a = group[i], b = group[i+1];
             if (!activeYears.has(a.year) || !activeYears.has(b.year)) continue;
-            const posA = currentPos[`${a.year}-${a.side}-${a.idx}`];
-            const posB = currentPos[`${b.year}-${b.side}-${b.idx}`];
+            const posA = currentPos[`${a.year}-${a.street}-${a.side}-${a.idx}`];
+            const posB = currentPos[`${b.year}-${b.street}-${b.side}-${b.idx}`];
             if (!posA || !posB) continue;
             L.polyline([[posA.lat,posA.lng],[posB.lat,posB.lng]],
                 { color:'#222', weight:3.5, opacity:0.55, dashArray:'6,5' }).addTo(crossYearLayer);
@@ -1007,7 +944,7 @@ function openModal(entry) {
     mHeading.innerText = entry.listing;
     mMeta.innerText    = `${entry.year}  ·  ${entry.street}  ·  ${entry.cardinality} side  ·  p.${entry.pages}`;
     mBody.innerHTML    = entry.htmlContent || '';
-    const key = `${entry.year}-${entry.cardinality}`;
+    const key = `${entry.year}-${entry.street}-${entry.cardinality}`;
     const idx = rawChains[key] ? rawChains[key].indexOf(entry) : -1;
     const pos = idx >= 0 ? currentPos[`${key}-${idx}`] : null;
     mCoords.innerText  = pos
