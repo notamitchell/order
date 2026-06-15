@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Historic Directory Network</title>
+    <style>
+        html, body {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: #0b0c10;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #c5c6c7;
+        }
+        #canvas-container {
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0; z-index: 1;
+        }
+        /* UI Overlay */
+        #ui-layer {
+            position: absolute; top: 20px; left: 20px;
+            z-index: 10; pointer-events: none;
+        }
+        h1 {
+            margin: 0 0 5px 0; font-size: 24px; color: #66fcf1;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        p { margin: 0; font-size: 13px; color: #45f3ff; opacity: 0.8; }
+        
+        /* Interactive Sidebar Info Panel */
+        #info-panel {
+            position: absolute; top: 20px; right: 20px;
+            width: 300px; background: rgba(26, 28, 36, 0.85);
+            backdrop-filter: blur(8px); border: 1px solid #1f2833;
+            border-top: 3px solid #66fcf1; border-radius: 4px;
+            padding: 15px; z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .panel-header { font-size: 11px; text-transform: uppercase; color: #858585; letter-spacing: 1px; }
+        .node-title { font-size: 16px; font-weight: bold; color: #fff; margin: 5px 0 10px 0; }
+        .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
+        .meta-item span { display: block; color: #858585; font-size: 10px; }
+        
+        /* Tooltip style */
+        #tooltip {
+            position: absolute; background: rgba(11, 12, 16, 0.95);
+            color: #66fcf1; padding: 5px 10px; border: 1px solid #66fcf1;
+            border-radius: 3px; font-size: 12px; pointer-events: none;
+            display: none; z-index: 20; font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="canvas-container"></div>
+    
+    <div id="ui-layer">
+        <h1>Directory Chronosphere</h1>
+        <p>Drag to rotate | Scroll to zoom | Hover nodes to highlight cross-time chains</p>
+    </div>
+
+    <div id="info-panel">
+        <div class="panel-header">Selected Entry</div>
+        <div class="node-title" id="node-name">Hover or click a node</div>
+        <div class="meta-grid">
+            <div class="meta-item"><span class="label">YEAR</span><div id="node-year">-</div></div>
+            <div class="meta-item"><span class="label">STREET</span><div id="node-street">-</div></div>
+            <div class="meta-item"><span class="label">SIDE</span><div id="node-side">-</div></div>
+            <div class="meta-item"><span class="label">TYPE</span><div id="node-type">-</div></div>
+        </div>
+    </div>
+
+    <div id="tooltip"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="map-data.js"></script>
+    
+    <script>
+        // 1. DATA SAMPLING & BOUNDS CALCULATION
+        const knownPoints = directoryData.filter(d => d.lat != null && d.lng != null);
+
+        let minLat = Infinity, maxLat = -Infinity;
+        let minLng = Infinity, maxLng = -Infinity;
+        const yearsSet = new Set();
+
+        directoryData.forEach(d => yearsSet.add(d.year));
+        knownPoints.forEach(d => {
+            if (d.lat < minLat) minLat = d.lat;
+            if (d.lat > maxLat) maxLat = d.lat;
+            if (d.lng < minLng) minLng = d.lng;
+            if (d.lng > maxLng) maxLng = d.lng;
+        });
+
+        const sortedYears = [...yearsSet].sort((a, b) => a - b);
+
+        // Grid Metric Spacers
+        const PLANE_SIZE = 50;       
+        const PLANE_SPACING = 18;    
+        const latRange = maxLat - minLat || 1;
+        const lngRange = maxLng - minLng || 1;
+
+        function mapCoordsToXY(lat, lng) {
+            const pctX = (lng - minLng) / lngRange;
+            const pctY = (lat - minLat) / latRange;
+            const x = (pctX - 0.5) * PLANE_SIZE;
+            const z = (pctY - 0.5) * PLANE_SIZE * -1; 
+            return { x, z };
+        }
+
+        // Native Bezier Street Interpolation Engine from Original Map Source
+        function bezier(A, ctrl, B, t) {
+            const u = 1 - t;
+            return { 
+                lat: u*u*A.lat + 2*u*t*ctrl.lat + t*t*B.lat,
+                lng: u*u*A.lng + 2*u*t*ctrl.lng + t*t*B.lng 
+            };
+        }
+
+        function applyOffset(midLat, midLng, arcOffset, side) {
+            if (side === 'East' || side === 'West') {
+                return { lat: midLat, lng: midLng + arcOffset };
+            }
+            return { lat: midLat + arcOffset, lng: midLng };
+        }
+
+        function computeChain(entries, side) {
+            const r = entries.map(e => ({ ...e }));
+            const n = r.length;
+            const anchors = r.map((e,i) => e.lat != null ? i : -1).filter(i => i >= 0);
+            const arcOffset = (side === 'North' || side === 'East') ? 0.0001 : -0.0001;
+
+            for (let ai = 0; ai < anchors.length - 1; ai++) {
+                const si = anchors[ai], ei = anchors[ai+1];
+                const A  = { lat:r[si].lat, lng:r[si].lng };
+                const B  = { lat:r[ei].lat, lng:r[ei].lng };
+                const ctrl = applyOffset((A.lat+B.lat)/2, (A.lng+B.lng)/2, arcOffset, side);
+                const steps = ei - si;
+                for (let k = 1; k < steps; k++) {
+                    const p = bezier(A, ctrl, B, k/steps);
+                    r[si+k].lat = p.lat; r[si+k].lng = p.lng; r[si+k]._computed = true;
+                }
+            }
+
+            if (anchors.length > 0) {
+                const lastAi = anchors[anchors.length - 1];
+                const tailCount = n - lastAi - 1;
+                if (tailCount > 0) {
+                    const A = { lat:r[lastAi].lat, lng:r[lastAi].lng };
+                    let dLng = 0, dLat = 0;
+                    if (anchors.length >= 2) {
+                        const prev = anchors[anchors.length - 2];
+                        const len = Math.sqrt(Math.pow(A.lat - r[prev].lat, 2) + Math.pow(A.lng - r[prev].lng, 2)) || 1;
+                        dLat = ((A.lat - r[prev].lat)/len) * 0.00014;
+                        dLng = ((A.lng - r[prev].lng)/len) * 0.00014;
+                    } else {
+                        if (side === 'East' || side === 'West') { dLat = -0.00014; }
+                        else                                    { dLng =  0.00014; }
+                    }
+                    const ghost = { lat: A.lat + dLat*(tailCount+1), lng: A.lng + dLng*(tailCount+1) };
+                    const ctrl  = applyOffset((A.lat+ghost.lat)/2, (A.lng+ghost.lng)/2, arcOffset, side);
+                    for (let k = 1; k <= tailCount; k++) {
+                        const p = bezier(A, ctrl, ghost, k/(tailCount+1));
+                        r[lastAi+k].lat = p.lat; r[lastAi+k].lng = p.lng; r[lastAi+k]._computed = true;
+                    }
+                }
+            }
+
+            if (anchors.length > 0) {
+                const firstAi = anchors[0];
+                if (firstAi > 0) {
+                    const A = { lat:r[firstAi].lat, lng:r[firstAi].lng };
+                    let dLng = 0, dLat = 0;
+                    if (anchors.length >= 2) {
+                        const next = anchors[1];
+                        const len = Math.sqrt(Math.pow(r[next].lat - A.lat, 2) + Math.pow(r[next].lng - A.lng, 2)) || 1;
+                        dLat = -((r[next].lat - A.lat)/len) * 0.00014;
+                        dLng = -((r[next].lng - A.lng)/len) * 0.00014;
+                    } else {
+                        if (side === 'East' || side === 'West') { dLat =  0.00014; }
+                        else                                    { dLng = -0.00014; }
+                    }
+                    const ghost = { lat: A.lat + dLat*(firstAi+1), lng: A.lng + dLng*(firstAi+1) };
+                    const ctrl  = applyOffset((ghost.lat+A.lat)/2, (ghost.lng+A.lng)/2, arcOffset, side);
+                    for (let k = 0; k < firstAi; k++) {
+                        const t = (firstAi - k) / (firstAi + 1);
+                        const p = bezier(ghost, ctrl, A, t);
+                        r[k].lat = p.lat; r[k].lng = p.lng; r[k]._computed = true;
+                    }
+                }
+            }
+            return r;
+        }
+
+        const palette = ['#b5451b', '#b8860b', '#2e7d5e', '#7b5ea7', '#2a64a0'];
+        function getYearColor(year) {
+            const index = sortedYears.indexOf(year);
+            const pct = sortedYears.length <= 1 ? 0 : index / (sortedYears.length - 1);
+            const paletteIdx = Math.min(Math.floor(pct * (palette.length - 1)), palette.length - 2);
+            return palette[paletteIdx];
+        }
+
+        // 2. THREE.JS INITIALIZATION
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0b0c10);
+        scene.fog = new THREE.FogExp2(0x0b0c10, 0.005);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        camera.position.set(PLANE_SIZE * 1.1, sortedYears.length * PLANE_SPACING * 0.8, PLANE_SIZE * 1.3);
+        controls.target.set(0, (sortedYears.length * PLANE_SPACING) / 2, 0);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.65));
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.45);
+        dirLight.position.set(30, 50, 10);
+        scene.add(dirLight);
+
+        // 3. GENERATION ENGINE FOR LAYERS & CROSS-YEAR CONNECTORS
+        const interactiveNodes = [];
+        const crossYearLinesMap = {}; // Tracks structural segments per crossYearId
+        const nodePositionCache = {}; // Global key map lookup for spatial data alignments
+
+        // Loop 1: Map layout floors and process nodes
+        sortedYears.forEach((year, layerIdx) => {
+            const layerY = layerIdx * PLANE_SPACING;
+            const themeColor = getYearColor(year);
+
+            // Wireframe Boundary Floor
+            const planeGeo = new THREE.PlaneGeometry(PLANE_SIZE, PLANE_SIZE);
+            const planeMat = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(themeColor),
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.03
+            });
+            const planeMesh = new THREE.Mesh(planeGeo, planeMat);
+            planeMesh.rotation.x = Math.PI / 2;
+            planeMesh.position.y = layerY;
+            scene.add(planeMesh);
+
+            const wireGeo = new THREE.EdgesGeometry(planeGeo);
+            const wireMat = new THREE.LineBasicMaterial({ color: themeColor, transparent: true, opacity: 0.2 });
+            const wireframe = new THREE.LineSegments(wireGeo, wireMat);
+            wireframe.rotation.x = Math.PI / 2;
+            wireframe.position.y = layerY;
+            scene.add(wireframe);
+
+            // Street Processing
+            const yearRawEntries = directoryData.filter(d => d.year === year);
+            const chainGroups = {};
+            yearRawEntries.forEach(entry => {
+                const key = `${entry.street}-${entry.cardinality}`;
+                if (!chainGroups[key]) chainGroups[key] = [];
+                chainGroups[key].push(entry);
+            });
+
+            Object.keys(chainGroups).forEach(key => {
+                const side = key.split('-')[1];
+                const processedNodes = computeChain(chainGroups[key], side);
+
+                const points = [];
+                processedNodes.forEach(node => {
+                    if(node.lat == null || node.lng == null) return;
+                    const localPos = mapCoordsToXY(node.lat, node.lng);
+                    const nodePosVector = new THREE.Vector3(localPos.x, layerY, localPos.z);
+                    points.push(nodePosVector);
+                    
+                    // Cache positions globally for Cross-Year network threads to access instantly
+                    if (node.crossYearId) {
+                        if (!nodePositionCache[node.crossYearId]) nodePositionCache[node.crossYearId] = [];
+                        nodePositionCache[node.crossYearId].push({ year, position: nodePosVector });
+                    }
+
+                    // Geometry assignments
+                    let geom;
+                    if (node.type === 'Intersection') {
+                        geom = new THREE.BoxGeometry(0.7, 0.7, 0.7);
+                    } else if (node.type === 'Right-of-way') {
+                        geom = new THREE.ConeGeometry(0.4, 0.8, 4);
+                    } else {
+                        geom = new THREE.SphereGeometry(0.35, 8, 8);
+                    }
+
+                    let mat;
+                    if (node._computed) {
+                        mat = new THREE.MeshPhongMaterial({
+                            color: new THREE.Color(themeColor),
+                            transparent: true,
+                            opacity: 0.5,
+                            wireframe: true
+                        });
+                    } else {
+                        mat = new THREE.MeshPhongMaterial({
+                            color: new THREE.Color(themeColor),
+                            specular: 0xffffff,
+                            shininess: 30
+                        });
+                    }
+
+                    const mesh = new THREE.Mesh(geom, mat);
+                    mesh.position.copy(nodePosVector);
+                    mesh.userData = { ...node };
+
+                    scene.add(mesh);
+                    interactiveNodes.push(mesh);
+                });
+
+                if (points.length > 1) {
+                    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+                    const lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(themeColor), transparent: true, opacity: 0.4 });
+                    const streetLine = new THREE.Line(lineGeo, lineMat);
+                    scene.add(streetLine);
+                }
+            });
+        });
+
+        // Loop 2: Process the Cross-Year interconnect timeline links
+        Object.keys(nodePositionCache).forEach(crossId => {
+            // Sort time keys sequentially
+            const pointsList = nodePositionCache[crossId].sort((a, b) => a.year - b.year).map(p => p.position);
+            
+            if (pointsList.length > 1) {
+                // Generate structural line links
+                const lineGeo = new THREE.BufferGeometry().setFromPoints(pointsList);
+                
+                // Using a semi-translucent styling that updates dynamically on interaction
+                const lineMat = new THREE.LineBasicMaterial({
+                    color: 0x45f3ff,
+                    transparent: true,
+                    opacity: 0.15, // Blends subtly into the background unless hovered
+                    linewidth: 1
+                });
+                
+                const crossLine = new THREE.Line(lineGeo, lineMat);
+                scene.add(crossLine);
+                
+                // Map reference vectors back to global state lookup
+                crossYearLinesMap[crossId] = crossLine;
+            }
+        });
+
+        // 4. MOUSE EVENTS & INTERACTIVE FOCUS READOUTS
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        const tooltip = document.getElementById('tooltip');
+        let currentIntersectedNode = null;
+        let activeHighlightedLine = null;
+
+        const elName = document.getElementById('node-name');
+        const elYear = document.getElementById('node-year');
+        const elStreet = document.getElementById('node-street');
+        const elSide = document.getElementById('node-side');
+        const elType = document.getElementById('node-type');
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            tooltip.style.left = (event.clientX + 15) + 'px';
+            tooltip.style.top = (event.clientY + 15) + 'px';
+        });
+
+        // 5. ANIMATION RENDERING LOOP
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(interactiveNodes);
+
+            if (intersects.length > 0) {
+                const hitMesh = intersects[0].object;
+
+                if (currentIntersectedNode !== hitMesh) {
+                    // Reset highlights on exit
+                    if (currentIntersectedNode) {
+                        currentIntersectedNode.material.emissive.setHex(0x000000);
+                        currentIntersectedNode.scale.set(1, 1, 1);
+                    }
+                    if (activeHighlightedLine) {
+                        activeHighlightedLine.material.opacity = 0.15;
+                        activeHighlightedLine.material.color.setHex(0x45f3ff);
+                        activeHighlightedLine = null;
+                    }
+
+                    currentIntersectedNode = hitMesh;
+                    currentIntersectedNode.material.emissive.setHex(0x444444);
+                    currentIntersectedNode.scale.set(1.6, 1.6, 1.6);
+
+                    const data = currentIntersectedNode.userData;
+                    tooltip.innerText = data.listing + (data._computed ? ' (Estimated Location)' : '');
+                    tooltip.style.display = 'block';
+
+                    elName.innerText = data.listing;
+                    elYear.innerText = data.year;
+                    elStreet.innerText = data.street;
+                    elSide.innerText = data.cardinality;
+                    elType.innerText = (data.type || 'Standard Listing') + (data._computed ? ' [Interpolated]' : ' [Anchored]');
+
+                    // Cross-Year Connector Highlighting
+                    if (data.crossYearId && crossYearLinesMap[data.crossYearId]) {
+                        activeHighlightedLine = crossYearLinesMap[data.crossYearId];
+                        activeHighlightedLine.material.opacity = 0.9; // Make link fully solid
+                        activeHighlightedLine.material.color.setHex(0x66fcf1); // Transition link color to neon cyan
+                    }
+                }
+            } else {
+                if (currentIntersectedNode) {
+                    currentIntersectedNode.material.emissive.setHex(0x000000);
+                    currentIntersectedNode.scale.set(1, 1, 1);
+                    currentIntersectedNode = null;
+                    tooltip.style.display = 'none';
+                }
+                if (activeHighlightedLine) {
+                    activeHighlightedLine.material.opacity = 0.15;
+                    activeHighlightedLine.material.color.setHex(0x45f3ff);
+                    activeHighlightedLine = null;
+                }
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
