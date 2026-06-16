@@ -1,5 +1,5 @@
 ---
-layout: map
+layout: map3d
 title: "Map 3D"
 EACCPFpath: "N/A"
 ---
