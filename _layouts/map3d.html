@@ -20,7 +20,7 @@
         /* UI Overlay */
         #ui-layer {
             position: absolute; top: 20px; left: 20px;
-            z-index: 10; pointer-events: none;
+            z-index: 10; pointer-events: auto; /* Changed to auto so the checkbox can be clicked */
         }
         h1 {
             margin: 0 0 5px 0; font-size: 24px; color: #66fcf1;
@@ -28,25 +28,68 @@
         }
         p { margin: 0; font-size: 13px; color: #45f3ff; opacity: 0.8; }
         
-        /* Interactive Sidebar Info Panel */
+        /* Toggle Switch Container */
+        .toggle-container {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #66fcf1;
+            background: rgba(26, 28, 36, 0.6);
+            padding: 6px 10px;
+            border-radius: 4px;
+            border: 1px solid #1f2833;
+            width: max-content;
+        }
+        .toggle-container input {
+            cursor: pointer;
+            accent-color: #66fcf1;
+        }
+        
+        /* Interactive Sidebar Info Panel — desktop */
         #info-panel {
             position: absolute; top: 20px; right: 20px;
             width: 300px; background: rgba(26, 28, 36, 0.85);
             backdrop-filter: blur(8px); border: 1px solid #1f2833;
             border-top: 3px solid #66fcf1; border-radius: 4px;
             padding: 15px; z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
         }
         .panel-header { font-size: 11px; text-transform: uppercase; color: #858585; letter-spacing: 1px; }
         .node-title { font-size: 16px; font-weight: bold; color: #fff; margin: 5px 0 10px 0; }
         .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
         .meta-item span { display: block; color: #858585; font-size: 10px; }
-        
-        /* Tooltip style */
+        #cross-year-note { display: none; margin-top: 10px; font-size: 11px; color: #45f3ff;
+            border-top: 1px solid #1f2833; padding-top: 8px; white-space: pre-line; line-height: 1.6; }
+        #cross-year-note.visible { display: block; }
+
+        /* Tooltip style — desktop only */
         #tooltip {
             position: absolute; background: rgba(11, 12, 16, 0.95);
             color: #66fcf1; padding: 5px 10px; border: 1px solid #66fcf1;
             border-radius: 3px; font-size: 12px; pointer-events: none;
             display: none; z-index: 20; font-family: monospace;
+        }
+
+        /* Mobile overrides */
+        @media (max-width: 600px) {
+            #ui-layer { top: 12px; left: 12px; right: 80px; }
+            h1 { font-size: 15px; letter-spacing: 1px; }
+            p { font-size: 11px; }
+
+            #info-panel {
+                top: auto; right: 0; left: 0; bottom: 0;
+                width: 100%; border-radius: 12px 12px 0 0;
+                border-top: 3px solid #66fcf1;
+                transform: translateY(calc(100% - 48px));
+                padding: 12px 16px 24px;
+                box-sizing: border-box;
+            }
+            #info-panel.has-selection { transform: translateY(0); }
+            .panel-header { font-size: 12px; }
+            .node-title { font-size: 15px; }
+            #tooltip { display: none !important; }
         }
     </style>
 </head>
@@ -56,18 +99,24 @@
     
     <div id="ui-layer">
         <h1>Directory Chronosphere</h1>
-        <p>Drag to rotate | Scroll to zoom | Hover nodes to highlight cross-time chains</p>
+        <p id="hint-text">Drag to rotate · Scroll to zoom · Tap nodes &amp; links</p>
+        <!-- Toggle Control Component -->
+        <label class="toggle-container">
+            <input type="checkbox" id="toggle-links">
+            <span>Show Cross-Year Links</span>
+        </label>
     </div>
 
     <div id="info-panel">
         <div class="panel-header">Selected Entry</div>
-        <div class="node-title" id="node-name">Hover or click a node</div>
+        <div class="node-title" id="node-name">Tap a node or link</div>
         <div class="meta-grid">
             <div class="meta-item"><span class="label">YEAR</span><div id="node-year">-</div></div>
             <div class="meta-item"><span class="label">STREET</span><div id="node-street">-</div></div>
             <div class="meta-item"><span class="label">SIDE</span><div id="node-side">-</div></div>
             <div class="meta-item"><span class="label">TYPE</span><div id="node-type">-</div></div>
         </div>
+        <div id="cross-year-note"></div>
     </div>
 
     <div id="tooltip"></div>
@@ -75,8 +124,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="map-data.js"></script>
-    
+
     <script>
+        // Global visibility state tracker
+        let showCrossYearLinks = false;
+
         // 1. DATA SAMPLING & BOUNDS CALCULATION
         const knownPoints = directoryData.filter(d => d.lat != null && d.lng != null);
 
@@ -94,9 +146,11 @@
 
         const sortedYears = [...yearsSet].sort((a, b) => a - b);
 
-        // Grid Metric Spacers
-        const PLANE_SIZE = 50;       
-        const PLANE_SPACING = 18;    
+        const isMobile = window.innerWidth <= 600 || ('ontouchstart' in window);
+
+        // Grid Metric Spacers — wider on mobile for breathing room
+        const PLANE_SIZE = isMobile ? 160 : 130;
+        const PLANE_SPACING = 30;    
         const latRange = maxLat - minLat || 1;
         const lngRange = maxLng - minLng || 1;
 
@@ -124,11 +178,15 @@
             return { lat: midLat + arcOffset, lng: midLng };
         }
 
+        // Vertical arc amplitude: nodes bow up to this many units above the plane
+        const ARC_HEIGHT = 3.5;
+
         function computeChain(entries, side) {
-            const r = entries.map(e => ({ ...e }));
+            const r = entries.map(e => ({ ...e, _yOffset: 0 }));
             const n = r.length;
             const anchors = r.map((e,i) => e.lat != null ? i : -1).filter(i => i >= 0);
             const arcOffset = (side === 'North' || side === 'East') ? 0.0001 : -0.0001;
+            const arcSign = 1;
 
             for (let ai = 0; ai < anchors.length - 1; ai++) {
                 const si = anchors[ai], ei = anchors[ai+1];
@@ -139,6 +197,7 @@
                 for (let k = 1; k < steps; k++) {
                     const p = bezier(A, ctrl, B, k/steps);
                     r[si+k].lat = p.lat; r[si+k].lng = p.lng; r[si+k]._computed = true;
+                    r[si+k]._yOffset = arcSign * ARC_HEIGHT * Math.sin(Math.PI * k / steps);
                 }
             }
 
@@ -162,6 +221,7 @@
                     for (let k = 1; k <= tailCount; k++) {
                         const p = bezier(A, ctrl, ghost, k/(tailCount+1));
                         r[lastAi+k].lat = p.lat; r[lastAi+k].lng = p.lng; r[lastAi+k]._computed = true;
+                        r[lastAi+k]._yOffset = arcSign * ARC_HEIGHT * Math.sin(Math.PI * k / (tailCount + 1));
                     }
                 }
             }
@@ -186,6 +246,8 @@
                         const t = (firstAi - k) / (firstAi + 1);
                         const p = bezier(ghost, ctrl, A, t);
                         r[k].lat = p.lat; r[k].lng = p.lng; r[k]._computed = true;
+                        const tArc = (firstAi - k) / (firstAi + 1);
+                        r[k]._yOffset = arcSign * ARC_HEIGHT * Math.sin(Math.PI * tArc);
                     }
                 }
             }
@@ -226,21 +288,20 @@
 
         // 3. GENERATION ENGINE FOR LAYERS & CROSS-YEAR CONNECTORS
         const interactiveNodes = [];
-        const crossYearLinesMap = {}; // Tracks structural segments per crossYearId
-        const nodePositionCache = {}; // Global key map lookup for spatial data alignments
+        const nodePositionCache = {}; 
+        const crossYearTubesList = []; // Tracking array to toggle tube instances in scene loop
 
         // Loop 1: Map layout floors and process nodes
         sortedYears.forEach((year, layerIdx) => {
             const layerY = layerIdx * PLANE_SPACING;
             const themeColor = getYearColor(year);
 
-            // Wireframe Boundary Floor
             const planeGeo = new THREE.PlaneGeometry(PLANE_SIZE, PLANE_SIZE);
             const planeMat = new THREE.MeshBasicMaterial({
                 color: new THREE.Color(themeColor),
                 side: THREE.DoubleSide,
                 transparent: true,
-                opacity: 0.03
+                opacity: 0.5
             });
             const planeMesh = new THREE.Mesh(planeGeo, planeMat);
             planeMesh.rotation.x = Math.PI / 2;
@@ -254,7 +315,49 @@
             wireframe.position.y = layerY;
             scene.add(wireframe);
 
-            // Street Processing
+            (function addYearLabel(year, layerY, themeColor) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 512;
+                canvas.height = 160;
+                const ctx = canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(11, 12, 16, 0.55)';
+                const rx = 24;
+                ctx.beginPath();
+                ctx.moveTo(rx, 10);
+                ctx.lineTo(canvas.width - rx, 10);
+                ctx.quadraticCurveTo(canvas.width - 4, 10, canvas.width - 4, 10 + rx);
+                ctx.lineTo(canvas.width - 4, canvas.height - 10 - rx);
+                ctx.quadraticCurveTo(canvas.width - 4, canvas.height - 10, canvas.width - rx, canvas.height - 10);
+                ctx.lineTo(rx, canvas.height - 10);
+                ctx.quadraticCurveTo(4, canvas.height - 10, 4, canvas.height - 10 - rx);
+                ctx.lineTo(4, 10 + rx);
+                ctx.quadraticCurveTo(4, 10, rx, 10);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.strokeStyle = themeColor;
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                ctx.font = 'bold 108px "Segoe UI", Arial, sans-serif';
+                ctx.fillStyle = themeColor;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.shadowColor = themeColor;
+                ctx.shadowBlur = 18;
+                ctx.fillText(String(year), canvas.width / 2, canvas.height / 2 + 4);
+
+                const texture = new THREE.CanvasTexture(canvas);
+                const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+                const sprite = new THREE.Sprite(spriteMat);
+
+                sprite.position.set(-PLANE_SIZE / 2 - 20, layerY, 0);
+                sprite.scale.set(26, 8, 1);
+                scene.add(sprite);
+            })(year, layerY, themeColor);
+
             const yearRawEntries = directoryData.filter(d => d.year === year);
             const chainGroups = {};
             yearRawEntries.forEach(entry => {
@@ -271,23 +374,23 @@
                 processedNodes.forEach(node => {
                     if(node.lat == null || node.lng == null) return;
                     const localPos = mapCoordsToXY(node.lat, node.lng);
-                    const nodePosVector = new THREE.Vector3(localPos.x, layerY, localPos.z);
+                    const nodePosVector = new THREE.Vector3(localPos.x, layerY + (node._yOffset || 0), localPos.z);
                     points.push(nodePosVector);
                     
-                    // Cache positions globally for Cross-Year network threads to access instantly
                     if (node.crossYearId) {
                         if (!nodePositionCache[node.crossYearId]) nodePositionCache[node.crossYearId] = [];
-                        nodePositionCache[node.crossYearId].push({ year, position: nodePosVector });
+                        nodePositionCache[node.crossYearId].push({ year, position: nodePosVector, listing: node.listing });
                     }
 
-                    // Geometry assignments
+                    const nodeSz = isMobile ? 1.1 : 0.7;
+                    const sphereSz = isMobile ? 0.7 : 0.35;
                     let geom;
                     if (node.type === 'Intersection') {
-                        geom = new THREE.BoxGeometry(0.7, 0.7, 0.7);
+                        geom = new THREE.BoxGeometry(nodeSz, nodeSz, nodeSz);
                     } else if (node.type === 'Right-of-way') {
-                        geom = new THREE.ConeGeometry(0.4, 0.8, 4);
+                        geom = new THREE.ConeGeometry(nodeSz * 0.55, nodeSz * 1.1, 4);
                     } else {
-                        geom = new THREE.SphereGeometry(0.35, 8, 8);
+                        geom = new THREE.SphereGeometry(sphereSz, 8, 8);
                     }
 
                     let mat;
@@ -296,13 +399,16 @@
                             color: new THREE.Color(themeColor),
                             transparent: true,
                             opacity: 0.5,
+                            emissive: new THREE.Color(themeColor).multiplyScalar(1.5), 
+                            specular: 0xffffff,
                             wireframe: true
                         });
                     } else {
                         mat = new THREE.MeshPhongMaterial({
                             color: new THREE.Color(themeColor),
+                            emissive: new THREE.Color(themeColor).multiplyScalar(1.5), 
                             specular: 0xffffff,
-                            shininess: 30
+                            shininess: 100 
                         });
                     }
 
@@ -323,36 +429,58 @@
             });
         });
 
-        // Loop 2: Process the Cross-Year interconnect timeline links
+        // Loop 2: Process Cross-Year threads 
+        const crossYearMeshMap = {}; 
+
         Object.keys(nodePositionCache).forEach(crossId => {
-            // Sort time keys sequentially
-            const pointsList = nodePositionCache[crossId].sort((a, b) => a.year - b.year).map(p => p.position);
-            
+            const sorted = nodePositionCache[crossId].sort((a, b) => a.year - b.year);
+            const pointsList = sorted.map(p => p.position);
+            const yearSpan = sorted.length; 
+
             if (pointsList.length > 1) {
-                // Generate structural line links
-                const lineGeo = new THREE.BufferGeometry().setFromPoints(pointsList);
-                
-                // Using a semi-translucent styling that updates dynamically on interaction
-                const lineMat = new THREE.LineBasicMaterial({
+                const tubeRadius = 0.12 + Math.max(0, yearSpan - 2) * 0.07;
+                const curve = new THREE.CatmullRomCurve3(pointsList);
+                const tubeGeo = new THREE.TubeGeometry(curve, pointsList.length * 4, tubeRadius, 6, false);
+                const tubeMat = new THREE.MeshPhongMaterial({
                     color: 0x45f3ff,
                     transparent: true,
-                    opacity: 0.15, // Blends subtly into the background unless hovered
-                    linewidth: 1
+                    opacity: 0.18,
+                    emissive: 0x112233,
                 });
+                const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
+                tubeMesh.userData = { isCrossYearLine: true, crossId, yearSpan, years: sorted.map(p => p.year), listings: sorted.map(p => p.listing) };
                 
-                const crossLine = new THREE.Line(lineGeo, lineMat);
-                scene.add(crossLine);
+                // Initial visibility set to FALSE per instructions
+                tubeMesh.visible = false; 
                 
-                // Map reference vectors back to global state lookup
-                crossYearLinesMap[crossId] = crossLine;
+                scene.add(tubeMesh);
+                crossYearMeshMap[crossId] = tubeMesh;
+                crossYearTubesList.push(tubeMesh);
+                interactiveNodes.push(tubeMesh); 
             }
         });
 
-        // 4. MOUSE EVENTS & INTERACTIVE FOCUS READOUTS
+        // 4. UI INTERACTION HANDLERS & TOGGLE IMPLEMENTATION
+        const toggleCheckbox = document.getElementById('toggle-links');
+        toggleCheckbox.addEventListener('change', (e) => {
+            showCrossYearLinks = e.target.checked;
+            crossYearTubesList.forEach(tube => {
+                tube.visible = showCrossYearLinks;
+            });
+            // Clear selections if hidden out from underneath the viewer
+            if (!showCrossYearLinks && currentSelected && currentSelected.userData.isCrossYearLine) {
+                resetHighlight();
+                infoPanel.classList.remove('has-selection');
+                lockedSelection = null;
+            }
+        });
+
         const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
+        raycaster.params.Mesh.threshold = isMobile ? 1.5 : 0.5;
+        const pointer = new THREE.Vector2();
         const tooltip = document.getElementById('tooltip');
-        let currentIntersectedNode = null;
+        const infoPanel = document.getElementById('info-panel');
+        let currentSelected = null;
         let activeHighlightedLine = null;
 
         const elName = document.getElementById('node-name');
@@ -360,69 +488,177 @@
         const elStreet = document.getElementById('node-street');
         const elSide = document.getElementById('node-side');
         const elType = document.getElementById('node-type');
+        const elCrossNote = document.getElementById('cross-year-note');
+
+        function resetHighlight() {
+            if (currentSelected) {
+                if (currentSelected.userData.isCrossYearLine) {
+                    currentSelected.material.opacity = 0.18;
+                    currentSelected.material.color.setHex(0x45f3ff);
+                    currentSelected.material.emissive.setHex(0x112233);
+                } else {
+                    if (currentSelected.material.emissive) currentSelected.material.emissive.setHex(0x000000);
+                    currentSelected.scale.set(1, 1, 1);
+                    const cid = currentSelected.userData.crossYearId;
+                    if (cid && crossYearMeshMap[cid]) {
+                        crossYearMeshMap[cid].material.opacity = 0.18;
+                        crossYearMeshMap[cid].material.color.setHex(0x45f3ff);
+                        crossYearMeshMap[cid].material.emissive.setHex(0x112233);
+                    }
+                }
+                currentSelected = null;
+            }
+            tooltip.style.display = 'none';
+            elCrossNote.classList.remove('visible');
+        }
+
+        function getValidHits(hits) {
+            // Filter out cross-year lines from Raycasting calculation if toggle is false
+            return hits.filter(hit => {
+                if (hit.object.userData.isCrossYearLine) {
+                    return showCrossYearLinks;
+                }
+                return true;
+            });
+        }
+
+        function selectObject(obj, screenX, screenY) {
+            resetHighlight();
+            currentSelected = obj;
+
+            if (obj.userData.isCrossYearLine) {
+                obj.material.opacity = 0.95;
+                obj.material.color.setHex(0x66fcf1);
+                obj.material.emissive.setHex(0x003333);
+
+                const d = obj.userData;
+                elName.innerText = `Cross-time link`;
+                elYear.innerText = d.years.join(' → ');
+                elStreet.innerText = '-';
+                elSide.innerText = '-';
+                elType.innerText = `${d.yearSpan} year appearances`;
+                const lineItems = d.years.map((y, i) => `${y}: ${d.listings[i] || '—'}`).join('\n');
+                elCrossNote.innerText = lineItems;
+                elCrossNote.classList.add('visible');
+            } else {
+                if (obj.material.emissive) obj.material.emissive.setHex(0x444444);
+                obj.scale.set(1.6, 1.6, 1.6);
+
+                const data = obj.userData;
+                tooltip.innerText = data.listing + (data._computed ? ' (Estimated)' : '');
+                if (screenX !== undefined) {
+                    tooltip.style.left = (event.clientX + 15) + 'px';
+                    tooltip.style.top  = (event.clientY + 15) + 'px';
+                    tooltip.style.display = isMobile ? 'none' : 'block';
+                }
+
+                elName.innerText = data.listing;
+                elYear.innerText = data.year;
+                elStreet.innerText = data.street;
+                elSide.innerText = data.cardinality;
+                elType.innerText = (data.type || 'Standard Listing') + (data._computed ? ' [Interpolated]' : ' [Anchored]');
+
+                // Highlight connecting tube only if visibility toggle is active
+                if (showCrossYearLinks && data.crossYearId && crossYearMeshMap[data.crossYearId]) {
+                    const tube = crossYearMeshMap[data.crossYearId];
+                    tube.material.opacity = 0.9;
+                    tube.material.color.setHex(0x66fcf1);
+                    tube.material.emissive.setHex(0x003333);
+                    const d = tube.userData;
+                    const lineItems = d.years.map((y, i) => `${y}: ${d.listings[i] || '—'}`).join('\n');
+                    elCrossNote.innerText = lineItems;
+                    elCrossNote.classList.add('visible');
+                }
+            }
+
+            infoPanel.classList.add('has-selection');
+        }
+
+        let lockedSelection = null;
 
         window.addEventListener('mousemove', (event) => {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
             tooltip.style.left = (event.clientX + 15) + 'px';
-            tooltip.style.top = (event.clientY + 15) + 'px';
+            tooltip.style.top  = (event.clientY + 15) + 'px';
         });
 
+        window.addEventListener('click', (event) => {
+            // Prevent canvas clicking from triggering if interacting with UI panel layers
+            if(event.target.closest('#ui-layer') || event.target.closest('#info-panel')) return;
+
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(pointer, camera);
+            const hits = getValidHits(raycaster.intersectObjects(interactiveNodes));
+            if (hits.length > 0) {
+                lockedSelection = hits[0].object;
+                selectObject(lockedSelection, event.clientX, event.clientY);
+            } else {
+                lockedSelection = null;
+                resetHighlight();
+                infoPanel.classList.remove('has-selection');
+            }
+        });
+
+        let touchStartX = 0, touchStartY = 0;
+        window.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            if(e.target.closest('#ui-layer') || e.target.closest('#info-panel')) return;
+
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            if (Math.sqrt(dx*dx + dy*dy) > 10) return; 
+            const touch = e.changedTouches[0];
+            pointer.x = (touch.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(pointer, camera);
+            const hits = getValidHits(raycaster.intersectObjects(interactiveNodes));
+            if (hits.length > 0) {
+                selectObject(hits[0].object);
+            } else {
+                resetHighlight();
+                infoPanel.classList.remove('has-selection');
+            }
+        }, { passive: true });
+
         // 5. ANIMATION RENDERING LOOP
+        let hoveredObj = null;
+
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
 
-            raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(interactiveNodes);
+            if (!isMobile && !lockedSelection) {
+                raycaster.setFromCamera(pointer, camera);
+                const hits = getValidHits(raycaster.intersectObjects(interactiveNodes));
+                const hit = hits.length > 0 ? hits[0].object : null;
 
-            if (intersects.length > 0) {
-                const hitMesh = intersects[0].object;
-
-                if (currentIntersectedNode !== hitMesh) {
-                    // Reset highlights on exit
-                    if (currentIntersectedNode) {
-                        currentIntersectedNode.material.emissive.setHex(0x000000);
-                        currentIntersectedNode.scale.set(1, 1, 1);
+                if (hit !== hoveredObj) {
+                    if (hoveredObj && hoveredObj !== lockedSelection) {
+                        if (hoveredObj.userData.isCrossYearLine) {
+                            hoveredObj.material.opacity = 0.18;
+                            hoveredObj.material.color.setHex(0x45f3ff);
+                            hoveredObj.material.emissive.setHex(0x112233);
+                        } else {
+                            if (hoveredObj.material.emissive) hoveredObj.material.emissive.setHex(0x000000);
+                            hoveredObj.scale.set(1, 1, 1);
+                            const cid = hoveredObj.userData.crossYearId;
+                            if (cid && crossYearMeshMap[cid]) {
+                                crossYearMeshMap[cid].material.opacity = 0.18;
+                                crossYearMeshMap[cid].material.color.setHex(0x45f3ff);
+                            }
+                        }
+                        tooltip.style.display = 'none';
+                        elCrossNote.classList.remove('visible');
+                        infoPanel.classList.remove('has-selection');
                     }
-                    if (activeHighlightedLine) {
-                        activeHighlightedLine.material.opacity = 0.15;
-                        activeHighlightedLine.material.color.setHex(0x45f3ff);
-                        activeHighlightedLine = null;
-                    }
-
-                    currentIntersectedNode = hitMesh;
-                    currentIntersectedNode.material.emissive.setHex(0x444444);
-                    currentIntersectedNode.scale.set(1.6, 1.6, 1.6);
-
-                    const data = currentIntersectedNode.userData;
-                    tooltip.innerText = data.listing + (data._computed ? ' (Estimated Location)' : '');
-                    tooltip.style.display = 'block';
-
-                    elName.innerText = data.listing;
-                    elYear.innerText = data.year;
-                    elStreet.innerText = data.street;
-                    elSide.innerText = data.cardinality;
-                    elType.innerText = (data.type || 'Standard Listing') + (data._computed ? ' [Interpolated]' : ' [Anchored]');
-
-                    // Cross-Year Connector Highlighting
-                    if (data.crossYearId && crossYearLinesMap[data.crossYearId]) {
-                        activeHighlightedLine = crossYearLinesMap[data.crossYearId];
-                        activeHighlightedLine.material.opacity = 0.9; // Make link fully solid
-                        activeHighlightedLine.material.color.setHex(0x66fcf1); // Transition link color to neon cyan
-                    }
-                }
-            } else {
-                if (currentIntersectedNode) {
-                    currentIntersectedNode.material.emissive.setHex(0x000000);
-                    currentIntersectedNode.scale.set(1, 1, 1);
-                    currentIntersectedNode = null;
-                    tooltip.style.display = 'none';
-                }
-                if (activeHighlightedLine) {
-                    activeHighlightedLine.material.opacity = 0.15;
-                    activeHighlightedLine.material.color.setHex(0x45f3ff);
-                    activeHighlightedLine = null;
+                    hoveredObj = hit;
+                    if (hit) selectObject(hit, undefined, undefined);
                 }
             }
 
