@@ -20,7 +20,7 @@
         /* UI Overlay */
         #ui-layer {
             position: absolute; top: 20px; left: 20px;
-            z-index: 10; pointer-events: auto; /* Changed to auto so the checkbox can be clicked */
+            z-index: 10; pointer-events: auto;
         }
         h1 {
             margin: 0 0 5px 0; font-size: 24px; color: #66fcf1;
@@ -28,23 +28,111 @@
         }
         p { margin: 0; font-size: 13px; color: #45f3ff; opacity: 0.8; }
         
-        /* Toggle Switch Container */
-        .toggle-container {
+        /* Control Panel */
+        .controls-panel {
             margin-top: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: rgba(26, 28, 36, 0.75);
+            backdrop-filter: blur(4px);
+            padding: 10px 14px;
+            border-radius: 4px;
+            border: 1px solid #1f2833;
+            width: max-content;
+        }
+
+        .toggle-container {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 13px;
             color: #66fcf1;
-            background: rgba(26, 28, 36, 0.6);
-            padding: 6px 10px;
-            border-radius: 4px;
-            border: 1px solid #1f2833;
-            width: max-content;
         }
         .toggle-container input {
             cursor: pointer;
             accent-color: #66fcf1;
+        }
+
+        /* Year Filter Grid */
+        .year-filters {
+            border-top: 1px solid #1f2833;
+            padding-top: 8px;
+            margin-top: 4px;
+        }
+        .filter-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #858585;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px 12px;
+        }
+        
+        /* Google Earth style Navigation Controls */
+        #nav-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(26, 28, 36, 0.75);
+            backdrop-filter: blur(4px);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #1f2833;
+            user-select: none;
+            pointer-events: auto;
+        }
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 32px);
+            grid-template-rows: repeat(3, 32px);
+            gap: 4px;
+            justify-content: center;
+        }
+        .nav-btn {
+            width: 32px;
+            height: 32px;
+            background: #1f2833;
+            border: 1px solid #66fcf1;
+            color: #66fcf1;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            background: #66fcf1;
+            color: #0b0c10;
+            box-shadow: 0 0 8px rgba(102, 252, 241, 0.4);
+        }
+        .nav-btn:active {
+            transform: scale(0.92);
+        }
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #858585;
+            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+            text-align: center;
         }
         
         /* Interactive Sidebar Info Panel — desktop */
@@ -77,6 +165,8 @@
             #ui-layer { top: 12px; left: 12px; right: 80px; }
             h1 { font-size: 15px; letter-spacing: 1px; }
             p { font-size: 11px; }
+            .checkbox-group { grid-template-columns: repeat(3, 1fr); }
+            #nav-controls { display: none; }
 
             #info-panel {
                 top: auto; right: 0; left: 0; bottom: 0;
@@ -100,11 +190,46 @@
     <div id="ui-layer">
         <h1>Directory Chronosphere</h1>
         <p id="hint-text">Drag to rotate · Scroll to zoom · Tap nodes &amp; links</p>
-        <!-- Toggle Control Component -->
-        <label class="toggle-container">
-            <input type="checkbox" id="toggle-links">
-            <span>Show Cross-Year Links</span>
-        </label>
+        
+        <div class="controls-panel">
+            <label class="toggle-container">
+                <input type="checkbox" id="toggle-links">
+                <span>Show Cross-Year Links</span>
+            </label>
+
+            <div class="year-filters">
+                <div class="filter-title">Visible Years</div>
+                <div id="year-checkbox-group" class="checkbox-group">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="nav-controls">
+        <div class="nav-group">
+            <div class="nav-label">Pan Map</div>
+            <div class="nav-grid">
+                <div></div>
+                <button class="nav-btn" id="nav-pan-up" title="Pan Up">▲</button>
+                <div></div>
+                <button class="nav-btn" id="nav-pan-left" title="Pan Left">◀</button>
+                <div></div>
+                <button class="nav-btn" id="nav-pan-right" title="Pan Right">▶</button>
+                <div></div>
+                <button class="nav-btn" id="nav-pan-down" title="Pan Down">▼</button>
+                <div></div>
+            </div>
+        </div>
+
+        <div class="nav-group" style="border-top: 1px solid #1f2833; padding-top: 8px;">
+            <div class="nav-label">Zoom / Orbit</div>
+            <div style="display: flex; gap: 6px;">
+                <button class="nav-btn" id="nav-zoom-in" title="Zoom In">+</button>
+                <button class="nav-btn" id="nav-zoom-out" title="Zoom Out">−</button>
+                <button class="nav-btn" id="nav-rot-left" title="Rotate Left">⟲</button>
+                <button class="nav-btn" id="nav-rot-right" title="Rotate Right">⟳</button>
+            </div>
+        </div>
     </div>
 
     <div id="info-panel">
@@ -126,8 +251,10 @@
     <script src="map-data.js"></script>
 
     <script>
-        // Global visibility state tracker
+        // Global visibility state trackers
         let showCrossYearLinks = false;
+        let layersAreMoving = false;
+        const visibleYears = new Set(); 
 
         // 1. DATA SAMPLING & BOUNDS CALCULATION
         const knownPoints = directoryData.filter(d => d.lat != null && d.lng != null);
@@ -146,9 +273,13 @@
 
         const sortedYears = [...yearsSet].sort((a, b) => a - b);
 
+        // DEFAULT STATE: Show only the first year initially
+        if (sortedYears.length > 0) {
+            visibleYears.add(sortedYears[0]);
+        }
+
         const isMobile = window.innerWidth <= 600 || ('ontouchstart' in window);
 
-        // Grid Metric Spacers — wider on mobile for breathing room
         const PLANE_SIZE = isMobile ? 160 : 130;
         const PLANE_SPACING = 30;    
         const latRange = maxLat - minLat || 1;
@@ -162,7 +293,6 @@
             return { x, z };
         }
 
-        // Native Bezier Street Interpolation Engine from Original Map Source
         function bezier(A, ctrl, B, t) {
             const u = 1 - t;
             return { 
@@ -178,7 +308,6 @@
             return { lat: midLat + arcOffset, lng: midLng };
         }
 
-        // Vertical arc amplitude: nodes bow up to this many units above the plane
         const ARC_HEIGHT = 3.5;
 
         function computeChain(entries, side) {
@@ -289,12 +418,27 @@
         // 3. GENERATION ENGINE FOR LAYERS & CROSS-YEAR CONNECTORS
         const interactiveNodes = [];
         const nodePositionCache = {}; 
-        const crossYearTubesList = []; // Tracking array to toggle tube instances in scene loop
+        const crossYearTubesList = []; 
+        const yearGroupsMap = {};
 
         // Loop 1: Map layout floors and process nodes
         sortedYears.forEach((year, layerIdx) => {
             const layerY = layerIdx * PLANE_SPACING;
             const themeColor = getYearColor(year);
+
+            // Group container for layer visibility control
+            const yearGroup = new THREE.Group();
+            yearGroup.visible = visibleYears.has(year);
+            scene.add(yearGroup);
+            yearGroupsMap[year] = yearGroup;
+
+            // Set dynamic interpolation initial properties
+            yearGroup.userData.targetY = layerY;
+            if(!visibleYears.has(year)) {
+                yearGroup.position.y = 0; // Collapsed initially if hidden
+            } else {
+                yearGroup.position.y = layerY;
+            }
 
             const planeGeo = new THREE.PlaneGeometry(PLANE_SIZE, PLANE_SIZE);
             const planeMat = new THREE.MeshBasicMaterial({
@@ -305,17 +449,15 @@
             });
             const planeMesh = new THREE.Mesh(planeGeo, planeMat);
             planeMesh.rotation.x = Math.PI / 2;
-            planeMesh.position.y = layerY;
-            scene.add(planeMesh);
+            yearGroup.add(planeMesh);
 
             const wireGeo = new THREE.EdgesGeometry(planeGeo);
             const wireMat = new THREE.LineBasicMaterial({ color: themeColor, transparent: true, opacity: 0.2 });
             const wireframe = new THREE.LineSegments(wireGeo, wireMat);
             wireframe.rotation.x = Math.PI / 2;
-            wireframe.position.y = layerY;
-            scene.add(wireframe);
+            yearGroup.add(wireframe);
 
-            (function addYearLabel(year, layerY, themeColor) {
+            (function addYearLabel(year, themeColor) {
                 const canvas = document.createElement('canvas');
                 canvas.width = 512;
                 canvas.height = 160;
@@ -353,10 +495,10 @@
                 const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
                 const sprite = new THREE.Sprite(spriteMat);
 
-                sprite.position.set(-PLANE_SIZE / 2 - 20, layerY, 0);
+                sprite.position.set(-PLANE_SIZE / 2 - 20, 0, 0);
                 sprite.scale.set(26, 8, 1);
-                scene.add(sprite);
-            })(year, layerY, themeColor);
+                yearGroup.add(sprite);
+            })(year, themeColor);
 
             const yearRawEntries = directoryData.filter(d => d.year === year);
             const chainGroups = {};
@@ -374,12 +516,14 @@
                 processedNodes.forEach(node => {
                     if(node.lat == null || node.lng == null) return;
                     const localPos = mapCoordsToXY(node.lat, node.lng);
-                    const nodePosVector = new THREE.Vector3(localPos.x, layerY + (node._yOffset || 0), localPos.z);
+                    // Vector calculation now sits native at 0 locally; translated directly by the parent group structure
+                    const nodePosVector = new THREE.Vector3(localPos.x, (node._yOffset || 0), localPos.z);
                     points.push(nodePosVector);
                     
                     if (node.crossYearId) {
                         if (!nodePositionCache[node.crossYearId]) nodePositionCache[node.crossYearId] = [];
-                        nodePositionCache[node.crossYearId].push({ year, position: nodePosVector, listing: node.listing });
+                        // Save structural reference elements to the parent group so links can query their live absolute positions
+                        nodePositionCache[node.crossYearId].push({ year, localPosition: nodePosVector, listing: node.listing, parentGroup: yearGroup });
                     }
 
                     const nodeSz = isMobile ? 1.1 : 0.7;
@@ -416,7 +560,7 @@
                     mesh.position.copy(nodePosVector);
                     mesh.userData = { ...node };
 
-                    scene.add(mesh);
+                    yearGroup.add(mesh);
                     interactiveNodes.push(mesh);
                 });
 
@@ -424,7 +568,7 @@
                     const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
                     const lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(themeColor), transparent: true, opacity: 0.4 });
                     const streetLine = new THREE.Line(lineGeo, lineMat);
-                    scene.add(streetLine);
+                    yearGroup.add(streetLine);
                 }
             });
         });
@@ -434,13 +578,16 @@
 
         Object.keys(nodePositionCache).forEach(crossId => {
             const sorted = nodePositionCache[crossId].sort((a, b) => a.year - b.year);
-            const pointsList = sorted.map(p => p.position);
             const yearSpan = sorted.length; 
 
-            if (pointsList.length > 1) {
+            if (sorted.length > 1) {
                 const tubeRadius = 0.12 + Math.max(0, yearSpan - 2) * 0.07;
-                const curve = new THREE.CatmullRomCurve3(pointsList);
-                const tubeGeo = new THREE.TubeGeometry(curve, pointsList.length * 4, tubeRadius, 6, false);
+                
+                // Build a structural template system path using dummy world anchors to form basic geometric setups
+                const samplePoints = sorted.map(() => new THREE.Vector3());
+                const curve = new THREE.CatmullRomCurve3(samplePoints);
+                const tubeGeo = new THREE.TubeGeometry(curve, sorted.length * 4, tubeRadius, 6, false);
+                
                 const tubeMat = new THREE.MeshPhongMaterial({
                     color: 0x45f3ff,
                     transparent: true,
@@ -448,9 +595,15 @@
                     emissive: 0x112233,
                 });
                 const tubeMesh = new THREE.Mesh(tubeGeo, tubeMat);
-                tubeMesh.userData = { isCrossYearLine: true, crossId, yearSpan, years: sorted.map(p => p.year), listings: sorted.map(p => p.listing) };
+                tubeMesh.userData = { 
+                    isCrossYearLine: true, 
+                    crossId, 
+                    yearSpan, 
+                    years: sorted.map(p => p.year), 
+                    listings: sorted.map(p => p.listing),
+                    rawAnchors: sorted // Retain active memory linkage mapping to local coordinate references
+                };
                 
-                // Initial visibility set to FALSE per instructions
                 tubeMesh.visible = false; 
                 
                 scene.add(tubeMesh);
@@ -461,20 +614,172 @@
         });
 
         // 4. UI INTERACTION HANDLERS & TOGGLE IMPLEMENTATION
+        
+        // Dynamic Checkbox Injection
+        const checkGroupContainer = document.getElementById('year-checkbox-group');
+        sortedYears.forEach(year => {
+            const label = document.createElement('label');
+            label.className = 'toggle-container';
+            
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = year;
+            checkbox.checked = visibleYears.has(year);
+            
+            checkbox.addEventListener('change', (e) => {
+                const targetYear = parseInt(e.target.value);
+                if (e.target.checked) {
+                    visibleYears.add(targetYear);
+                } else {
+                    visibleYears.delete(targetYear);
+                }
+                
+                // Trigger dynamic restructuring updates
+                recalculateLayerTargets();
+                
+                if (currentSelected && !currentSelected.userData.isCrossYearLine && currentSelected.userData.year === targetYear) {
+                    clearActiveSelection();
+                }
+            });
+            
+            const span = document.createElement('span');
+            span.innerText = year;
+            
+            label.appendChild(checkbox);
+            label.appendChild(span);
+            checkGroupContainer.appendChild(label);
+        });
+
         const toggleCheckbox = document.getElementById('toggle-links');
         toggleCheckbox.addEventListener('change', (e) => {
             showCrossYearLinks = e.target.checked;
-            crossYearTubesList.forEach(tube => {
-                tube.visible = showCrossYearLinks;
-            });
-            // Clear selections if hidden out from underneath the viewer
+            updateCrossYearTubesVisibility();
+            
             if (!showCrossYearLinks && currentSelected && currentSelected.userData.isCrossYearLine) {
-                resetHighlight();
-                infoPanel.classList.remove('has-selection');
-                lockedSelection = null;
+                clearActiveSelection();
             }
         });
 
+        // Calculate layout targets based exclusively on active selections
+        function recalculateLayerTargets() {
+            let visibleIndex = 0;
+            sortedYears.forEach(year => {
+                const group = yearGroupsMap[year];
+                if (visibleYears.has(year)) {
+                    group.userData.targetY = visibleIndex * PLANE_SPACING;
+                    visibleIndex++;
+                } else {
+                    // Pull unselected layers down safely to a flat plane layout matrix base coordinate space
+                    group.userData.targetY = 0; 
+                }
+            });
+            
+            // Flag layout transitions to cleanly fade threads out during transition
+            layersAreMoving = true;
+            updateCrossYearTubesVisibility();
+        }
+
+        // Evaluate live alignment conditions
+        function updateCrossYearTubesVisibility() {
+            crossYearTubesList.forEach(tube => {
+                // If switch is off OR layers are mid-slide, keep links fully hidden (Fast & Clean approach)
+                if (!showCrossYearLinks || layersAreMoving) {
+                    tube.visible = false;
+                    return;
+                }
+                const visibleSpanCount = tube.userData.years.filter(y => visibleYears.has(y)).length;
+                tube.visible = visibleSpanCount >= 2;
+            });
+        }
+
+        // Live structural updates tracking world coordinate maps
+        function rebuildActiveTubeGeometries() {
+            crossYearTubesList.forEach(tube => {
+                if (!tube.visible) return;
+                
+                // Collect live world vector placements mapping current parent group transitions
+                const currentWorldPoints = tube.userData.rawAnchors.map(anchor => {
+                    const pt = anchor.localPosition.clone();
+                    pt.y += anchor.parentGroup.position.y; // Append running runtime height transformations
+                    return pt;
+                });
+                
+                const curve = new THREE.CatmullRomCurve3(currentWorldPoints);
+                const tubeRadius = 0.12 + Math.max(0, tube.userData.yearSpan - 2) * 0.07;
+                
+                // Hot swap active operational geometry paths safely
+                tube.geometry.dispose();
+                tube.geometry = new THREE.TubeGeometry(curve, tube.userData.yearSpan * 4, tubeRadius, 6, false);
+            });
+        }
+
+        function clearActiveSelection() {
+            resetHighlight();
+            infoPanel.classList.remove('has-selection');
+            lockedSelection = null;
+        }
+
+        // CAMERA NAVIGATION ENGINE (Google Earth Pro Inspired)
+        const PAN_SPEED = 8;
+        const ZOOM_SPEED = 0.15;
+        const ROTATE_SPEED = 0.25;
+
+        function panCamera(deltaX, deltaY) {
+            const right = new THREE.Vector3();
+            camera.matrix.extractBasis(right, new THREE.Vector3(), new THREE.Vector3());
+            right.y = 0;
+            right.normalize();
+            
+            const forward = new THREE.Vector3(right.z, 0, -right.x);
+
+            const translation = new THREE.Vector3()
+                .addScaledVector(right, deltaX * PAN_SPEED)
+                .addScaledVector(forward, deltaY * PAN_SPEED);
+
+            camera.position.add(translation);
+            controls.target.add(translation);
+            controls.update();
+        }
+
+        function zoomCamera(direction) {
+            const offset = new THREE.Vector3().subVectors(camera.position, controls.target);
+            if (direction === 'in') {
+                offset.multiplyScalar(1 - ZOOM_SPEED);
+            } else {
+                offset.multiplyScalar(1 + ZOOM_SPEED);
+            }
+            camera.position.copy(controls.target).add(offset);
+            controls.update();
+        }
+
+        function rotateCamera(direction) {
+            const offset = new THREE.Vector3().subVectors(camera.position, controls.target);
+            const spherical = new THREE.Spherical().setFromVector3(offset);
+            
+            if (direction === 'left') {
+                spherical.theta -= ROTATE_SPEED;
+            } else {
+                spherical.theta += ROTATE_SPEED;
+            }
+            
+            spherical.makeSafe();
+            offset.setFromSpherical(spherical);
+            camera.position.copy(controls.target).add(offset);
+            controls.update();
+        }
+
+        // Navigation UI Listeners
+        document.getElementById('nav-pan-up').addEventListener('click', () => panCamera(0, 1));
+        document.getElementById('nav-pan-down').addEventListener('click', () => panCamera(0, -1));
+        document.getElementById('nav-pan-left').addEventListener('click', () => panCamera(-1, 0));
+        document.getElementById('nav-pan-right').addEventListener('click', () => panCamera(1, 0));
+        document.getElementById('nav-zoom-in').addEventListener('click', () => zoomCamera('in'));
+        document.getElementById('nav-zoom-out').addEventListener('click', () => zoomCamera('out'));
+        document.getElementById('nav-rot-left').addEventListener('click', () => rotateCamera('left'));
+        document.getElementById('nav-rot-right').addEventListener('click', () => rotateCamera('right'));
+
+
+        // RAYCASTING AND INTERACTION SELECTION
         const raycaster = new THREE.Raycaster();
         raycaster.params.Mesh.threshold = isMobile ? 1.5 : 0.5;
         const pointer = new THREE.Vector2();
@@ -513,12 +818,12 @@
         }
 
         function getValidHits(hits) {
-            // Filter out cross-year lines from Raycasting calculation if toggle is false
             return hits.filter(hit => {
-                if (hit.object.userData.isCrossYearLine) {
-                    return showCrossYearLinks;
+                const data = hit.object.userData;
+                if (data.isCrossYearLine) {
+                    return hit.object.visible;
                 }
-                return true;
+                return visibleYears.has(data.year);
             });
         }
 
@@ -547,8 +852,8 @@
                 const data = obj.userData;
                 tooltip.innerText = data.listing + (data._computed ? ' (Estimated)' : '');
                 if (screenX !== undefined) {
-                    tooltip.style.left = (event.clientX + 15) + 'px';
-                    tooltip.style.top  = (event.clientY + 15) + 'px';
+                    tooltip.style.left = (screenX + 15) + 'px';
+                    tooltip.style.top  = (screenY + 15) + 'px';
                     tooltip.style.display = isMobile ? 'none' : 'block';
                 }
 
@@ -558,8 +863,7 @@
                 elSide.innerText = data.cardinality;
                 elType.innerText = (data.type || 'Standard Listing') + (data._computed ? ' [Interpolated]' : ' [Anchored]');
 
-                // Highlight connecting tube only if visibility toggle is active
-                if (showCrossYearLinks && data.crossYearId && crossYearMeshMap[data.crossYearId]) {
+                if (showCrossYearLinks && data.crossYearId && crossYearMeshMap[data.crossYearId] && crossYearMeshMap[data.crossYearId].visible) {
                     const tube = crossYearMeshMap[data.crossYearId];
                     tube.material.opacity = 0.9;
                     tube.material.color.setHex(0x66fcf1);
@@ -584,8 +888,7 @@
         });
 
         window.addEventListener('click', (event) => {
-            // Prevent canvas clicking from triggering if interacting with UI panel layers
-            if(event.target.closest('#ui-layer') || event.target.closest('#info-panel')) return;
+            if(event.target.closest('#ui-layer') || event.target.closest('#info-panel') || event.target.closest('#nav-controls')) return;
 
             pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -608,7 +911,7 @@
         }, { passive: true });
 
         window.addEventListener('touchend', (e) => {
-            if(e.target.closest('#ui-layer') || e.target.closest('#info-panel')) return;
+            if(e.target.closest('#ui-layer') || e.target.closest('#info-panel') || e.target.closest('#nav-controls')) return;
 
             const dx = e.changedTouches[0].clientX - touchStartX;
             const dy = e.changedTouches[0].clientY - touchStartY;
@@ -626,12 +929,57 @@
             }
         }, { passive: true });
 
+        // Initial setup execution mapping configuration values
+        recalculateLayerTargets();
+
         // 5. ANIMATION RENDERING LOOP
         let hoveredObj = null;
 
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
+
+            // Run interpolation movements across floor layers
+            let displacementOccurred = false;
+            
+            sortedYears.forEach(year => {
+                const group = yearGroupsMap[year];
+                if (group) {
+                    const target = group.userData.targetY;
+                    
+                    if (visibleYears.has(year)) {
+                        group.visible = true;
+                    }
+
+                    // Calculate remaining delta path
+                    const delta = target - group.position.y;
+                    if (Math.abs(delta) > 0.005) {
+                        // Linear interpolation sliding step (12% closer per frame loop)
+                        group.position.y += delta * 0.12;
+                        displacementOccurred = true;
+                    } else {
+                        group.position.y = target; // Lock axis placement directly
+                    }
+
+                    // Turn off rendering for hidden groups once collapsed back to baseline zero position
+                    if (!visibleYears.has(year) && group.position.y === 0) {
+                        group.visible = false;
+                    }
+                }
+            });
+
+            // Handle cross-year connector updates
+            if (displacementOccurred) {
+                // If layers are sliding, ensure tube linkages are turned off
+                if (showCrossYearLinks) {
+                    crossYearTubesList.forEach(t => t.visible = false);
+                }
+            } else if (layersAreMoving) {
+                // Triggered precisely on the single frame completion point when movement terminates
+                layersAreMoving = false;
+                updateCrossYearTubesVisibility();
+                rebuildActiveTubeGeometries();
+            }
 
             if (!isMobile && !lockedSelection) {
                 raycaster.setFromCamera(pointer, camera);
