@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eac xmlns="https://archivists.org/ns/eac/v2"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="https://archivists.org/ns/eac/v2 https://eac.staatsbibliothek-berlin.de/schema/eac.xsd">
+  <control>
+    <recordId>civic-1783474957101</recordId>
+    <maintenanceStatus>new</maintenanceStatus>
+    <maintenanceHistory>
+      <maintenanceEvent>
+        <agentType>human</agentType>
+        <agent>Mitchell</agent>
+        <eventDateTime standardDateTime="2026-07-08T01:42:37.101Z">2026-07-08T01:42:37.101Z</eventDateTime>
+        <maintenanceEventType>created</maintenanceEventType>
+      </maintenanceEvent>
+    </maintenanceHistory>
+  </control>
+  <cpfDescription>
+    <identity>
+      <entityType>person</entityType>
+      <nameEntry>
+        <part>Mitchell</part>
+      </nameEntry>
+    </identity>
+    <description>
+      <abstract>My contribution to test 2</abstract>
+    </description>
+  </cpfDescription>
+</eac>
