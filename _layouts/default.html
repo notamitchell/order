@@ -275,6 +275,7 @@
     </div>
     
 <script type="module">
+<script type="module">
   const CONFIG = {
     path: '{{ page.EACCPFpath }}' 
   };
@@ -283,6 +284,31 @@
   const urlParams = new URLSearchParams(window.location.search);
   const fileId = urlParams.get('id');
   const entryContainer = document.getElementById('encyclopedia-entry');
+
+  // Helper function to inject the Google Form when a record is missing
+  function showContributionForm(missingId) {
+    const idMessage = missingId ? ` for record <strong>${missingId}</strong>` : '';
+    
+    entryContainer.innerHTML = `
+      <div class="contribution-container" style="margin-top: 20px; padding: 20px; border: 1px dashed #387573; border-radius: 6px; background-color: #fafdfc;">
+        <h2 style="font-family: 'Georgia', Times, serif; color: #234b4a; margin-bottom: 10px;">Article Not Found</h2>
+        <p style="margin-bottom: 20px; color: #4a5568;">
+          This article${idMessage} doesn't exist yet. Fill in the form below to contribute information to this entry!
+        </p>
+        <div style="width: 100%; overflow: hidden; display: flex; justify-content: center;">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeUqh5yd_QJrpy81mPlHXEVYYGykIA2hgyVDSLTzpouXF-YtA/viewform?embedded=true" 
+                  width="100%" 
+                  height="600" 
+                  frameborder="0" 
+                  marginheight="0" 
+                  marginwidth="0"
+                  style="max-width: 640px; background: transparent;">
+            Loading…
+          </iframe>
+        </div>
+      </div>
+    `;
+  }
 
   if (fileId) {
     const fileUrl = `./${CONFIG.path}/${fileId}.xml`;
@@ -298,23 +324,18 @@
       const ns = "urn:isbn:1-931666-33-4";
 
       // 2. Extract Fields safely using namespaced queries
-      
-      // Name (Combining family and given name, or handling single concept names)
       const familyName = xml.getElementsByTagNameNS(ns, "part").item(0)?.textContent || "";
       const givenName = xml.getElementsByTagNameNS(ns, "part").item(1)?.textContent || "";
       const fullName = givenName ? `${givenName} ${familyName}` : familyName;
 
-      // Append the entry title to the existing webpage title
       if (fullName) {
         document.title = `${document.title} - ${fullName}`;
       }  
 
-      // Dates (Birth and Death)
       const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";
       const toDate = xml.getElementsByTagNameNS(ns, "toDate")[0]?.textContent || "";
       const lifeSpan = fromDate ? `(${fromDate} – ${toDate || 'Present'})` : "";
 
-      // Places (Loop and map role to place entry)
       const placeElements = xml.getElementsByTagNameNS(ns, "place");
       let placesHtml = "";
       for (let place of placeElements) {
@@ -325,7 +346,6 @@
         }
       }
 
-      // Occupations
       const occupationElements = xml.getElementsByTagNameNS(ns, "occupation");
       let occupations = [];
       for (let occ of occupationElements) {
@@ -334,11 +354,9 @@
       }
       const occupationText = occupations.join(", ");
 
-      // Abstract (Handles any nested HTML markup inside the abstract safely)
       const abstractNode = xml.getElementsByTagNameNS(ns, "abstract")[0];
       const abstractHtml = abstractNode ? abstractNode.innerHTML : "No description available.";
 
-      // --- Extract Author (Created by) ---
       let authorName = "";
       const events = xml.getElementsByTagNameNS(ns, "maintenanceEvent");
       for (let event of events) {
@@ -349,23 +367,18 @@
         }
       }
 
-      // --- Parse Resource Relations (Split into References vs Digital Objects) ---
       let digitalObjectsHtml = "";
       let referencesHtml = "";
-      
       const resourceRelations = xml.getElementsByTagNameNS(ns, "resourceRelation");
       
       for (let rel of resourceRelations) {
-        // Skip self-referencing subjectOf links
         if (rel.getAttribute("resourceRelationType") === "subjectOf") continue;
 
         const note = rel.getElementsByTagNameNS(ns, "p")[0]?.textContent || "";
         const bibref = rel.getElementsByTagNameNS(ns, "bibref")[0];
         
-        // 1. Check if it's a Reference Source (Look for bibref explicitly)
         if (bibref || note.toLowerCase().includes("source used")) {
           if (bibref) {
-            // Target nested namespaces safely
             const author = bibref.getElementsByTagName("name")[0]?.textContent || "";
             const title = bibref.getElementsByTagName("title")[0]?.textContent || "";
             const series = bibref.getElementsByTagName("bibseries")[0]?.getElementsByTagName("title")[0]?.textContent || "";
@@ -374,10 +387,9 @@
             const date = bibref.getElementsByTagName("date")[0]?.textContent || "";
             const href = bibref.getElementsByTagName("extptr")[0]?.getAttribute("href") || "";
 
-            // Build dynamic citation string matching your pattern
             let citationParts = [];
             if (author) citationParts.push(author);
-            if (title) citationParts.push(title); // Removed the hardcoded '' single quotes
+            if (title) citationParts.push(title);
             if (series) citationParts.push(`in <em>${series}</em>`);
             if (publisher) citationParts.push(publisher);
             if (place) citationParts.push(place);
@@ -392,7 +404,6 @@
             }
           }
         } 
-        // 2. Otherwise treat it as an Image/Digital Object Asset
         else if (rel.getAttribute("resourceRelationType") === "other") {
           const title = rel.getElementsByTagNameNS(ns, "relationEntry")[0]?.textContent || "";
           const descNode = rel.getElementsByTagNameNS(ns, "abstract")[0] || rel.getElementsByTagNameNS(ns, "p")[0];
@@ -408,7 +419,6 @@
         }
       }
 
-      // --- Extract See Also Links ---
       let seeAlsoHtml = "";
       const cpfRelations = xml.getElementsByTagNameNS(ns, "cpfRelation");
       if (cpfRelations.length > 0) {
@@ -454,45 +464,25 @@
 
           <section class="biography-text">
             <div>${abstractHtml}</div>
-            
-            ${authorName ? `
-              <p class="author-credit" style="margin-top: 20px; font-style: italic; text-align: right; color: #666;">
-                By ${authorName}
-              </p>
-            ` : ''}
+            ${authorName ? `<p class="author-credit" style="margin-top: 20px; font-style: italic; text-align: right; color: #666;">By ${authorName}</p>` : ''}
           </section>
 
-          ${digitalObjectsHtml ? `
-            <hr />
-            <section class="digital-resources" style="margin-top: 20px;">
-              <h3>Images & Artifacts</h3>
-              ${digitalObjectsHtml}
-            </section>
-          ` : ''}
-
-          ${referencesHtml ? `
-            <hr />
-            <section class="references" style="margin-top: 20px;">
-              <h3>References</h3>
-              <ul style="line-height: 1.6; padding-left: 20px;">
-                ${referencesHtml}
-              </ul>
-            </section>
-          ` : ''}
-
+          ${digitalObjectsHtml ? `<hr /><section class="digital-resources" style="margin-top: 20px;"><h3>Images & Artifacts</h3>${digitalObjectsHtml}</section>` : ''}
+          ${referencesHtml ? `<hr /><section class="references" style="margin-top: 20px;"><h3>References</h3><ul style="line-height: 1.6; padding-left: 20px;">${referencesHtml}</ul></section>` : ''}
           ${seeAlsoHtml}
         </article>
       `;
 
     } catch (error) {
-      console.error("Error loading the XML file:", error);
-      // Keeps the container blank if fetch/parsing fails
-      entryContainer.innerHTML = '';
+      console.warn("XML file not found, showing submission form:", error);
+      // CALL FORM: If the file wasn't found in the repo, show the form
+      showContributionForm(fileId);
     }
   } else {
-    // Keeps the container blank if there's no ?id= parameter in the URL
-    entryContainer.innerHTML = '';
+    // CALL FORM: If there is no ?id= parameter in the URL, show a clean form
+    showContributionForm(null);
   }
+</script>
 </script>
   </body>
 </html>
