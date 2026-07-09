@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   </head>
 <style>
         * {
@@ -71,6 +74,340 @@
         .nav-links li a:hover {
             background-color: #2d5e5c;
             color: #ffe699;
+        }
+
+        .nav-directory-toggle {
+            display: flex !important;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-directory-toggle .nav-caret {
+            font-size: 0.7em;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-directory-toggle[aria-expanded="true"] {
+            background-color: #2d5e5c;
+            color: #ffe699;
+        }
+
+        .nav-directory-toggle[aria-expanded="true"] .nav-caret {
+            transform: rotate(180deg);
+        }
+
+        /* Directory Search Panel — ledger/archival theme */
+        .directory-panel-wrapper {
+            --paper: #f1e8d6;
+            --ink: #241f18;
+            --ink-soft: #58503f;
+            --maroon: #7c2d26;
+            --brass: #a6822e;
+            --slate: #435560;
+            --rule: rgba(36,31,24,0.18);
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s ease;
+            background-color: var(--paper);
+            border-bottom: 0 solid var(--brass);
+        }
+
+        .directory-panel-wrapper.open {
+            grid-template-rows: 1fr;
+            border-bottom-width: 4px;
+        }
+
+        .directory-panel-wrapper > .directory-panel {
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        .directory-panel-inner {
+            padding: 26px 40px 34px;
+            position: relative;
+            font-family: 'Courier Prime', monospace;
+            color: var(--ink);
+        }
+
+        .directory-stamp {
+            position: absolute;
+            top: 24px; right: 40px;
+            font-family: 'Libre Caslon Text', serif;
+            font-size: 10px;
+            color: var(--ink-soft);
+            border: 1px solid var(--rule);
+            padding: 5px 9px;
+            transform: rotate(2deg);
+            text-align: center;
+            line-height: 1.4;
+        }
+        .directory-stamp b {
+            display: block;
+            font-size: 14px;
+            color: var(--maroon);
+            font-family: 'Courier Prime', monospace;
+        }
+
+        .directory-close {
+            position: absolute;
+            top: 18px; left: 40px;
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            line-height: 1;
+            color: var(--ink-soft);
+            cursor: pointer;
+            padding: 2px 8px;
+        }
+        .directory-close:hover { color: var(--maroon); }
+
+        .directory-masthead-text {
+            text-align: center;
+            padding-top: 4px;
+        }
+
+        .directory-eyebrow {
+            font-family: 'Courier Prime', monospace;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            font-size: 10px;
+            color: var(--maroon);
+            margin-bottom: 8px;
+        }
+
+        .directory-h1 {
+            font-family: 'Libre Caslon Text', serif;
+            font-weight: 700;
+            font-size: clamp(24px, 3.6vw, 34px);
+            margin: 0;
+            letter-spacing: 0.01em;
+            color: var(--ink);
+        }
+        .directory-h1 em { font-style: italic; color: var(--maroon); }
+
+        .directory-subtitle {
+            font-family: 'Libre Caslon Text', serif;
+            font-style: italic;
+            color: var(--ink-soft);
+            margin: 6px 0 0;
+            font-size: 13px;
+        }
+
+        .directory-rule {
+            height: 5px;
+            margin: 14px auto 22px;
+            max-width: 520px;
+            border-top: 2px solid var(--ink);
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .directory-toolbar {
+            display: grid;
+            grid-template-columns: 1.6fr repeat(4, 1fr) auto;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 18px;
+        }
+
+        .dir-field label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--maroon);
+            margin-bottom: 5px;
+        }
+
+        .dir-field input[type="text"],
+        .dir-field select {
+            width: 100%;
+            font-family: 'Courier Prime', monospace;
+            font-size: 13px;
+            padding: 8px 10px;
+            background: #fdf9ee;
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .dir-field select {
+            cursor: pointer;
+            background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+            background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+            background-size: 5px 5px, 5px 5px;
+            background-repeat: no-repeat;
+        }
+
+        .dir-field input:focus,
+        .dir-field select:focus {
+            outline: 2px solid var(--slate);
+            outline-offset: 1px;
+        }
+
+        .directory-reset {
+            font-size: 11px;
+            padding: 9px 14px;
+            background: var(--paper);
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: 'Courier Prime', monospace;
+        }
+
+        .directory-reset:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .directory-result-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-size: 12px;
+            color: var(--ink-soft);
+            margin-bottom: 8px;
+        }
+
+        .directory-result-line strong { color: var(--ink); }
+
+        .dir-trace-notice { color: var(--maroon); font-weight: 600; }
+
+        .dir-trace-notice button {
+            background: none;
+            border: none;
+            color: var(--slate);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: 'Courier Prime', monospace;
+            margin-left: 6px;
+        }
+
+        .directory-table-wrap {
+            border: 1px solid var(--rule);
+            max-height: 420px;
+            overflow: auto;
+            background: var(--paper);
+        }
+
+        .directory-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .directory-table thead th {
+            position: sticky;
+            top: 0;
+            background-color: var(--ink);
+            color: var(--paper);
+            text-align: left;
+            padding: 10px 12px;
+            font-family: 'Courier Prime', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .directory-table thead th:hover { background-color: var(--maroon); }
+        .directory-table thead th.active { background-color: var(--maroon); }
+
+        .directory-table thead th .dir-arrow {
+            margin-left: 5px;
+            opacity: 0.7;
+            font-size: 9px;
+        }
+
+        .directory-table tbody td {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--rule);
+            vertical-align: top;
+        }
+
+        .directory-table tbody tr:nth-child(even) { background-color: rgba(36,31,24,0.035); }
+        .directory-table tbody tr:hover { background-color: rgba(166,130,46,0.14); }
+
+        .dir-col-year { font-weight: 700; color: var(--maroon); white-space: nowrap; }
+        .dir-col-card { white-space: nowrap; color: var(--slate); font-style: italic; font-family: 'Libre Caslon Text', serif; }
+        .dir-col-type { white-space: nowrap; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+        .dir-col-pages { white-space: nowrap; text-align: right; color: var(--ink-soft); }
+
+        .directory-table td:nth-child(2),
+        .directory-table td:nth-child(5) {
+            font-family: 'Libre Caslon Text', serif;
+            font-size: 14px;
+        }
+
+        .dir-trace-btn {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 10px;
+            padding: 1px 6px;
+            border: 1px solid var(--maroon);
+            color: var(--maroon);
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            font-family: 'Courier Prime', monospace;
+            vertical-align: middle;
+        }
+
+        .dir-trace-btn:hover { background-color: var(--maroon); color: var(--paper); }
+
+        .directory-no-results {
+            padding: 40px 20px;
+            text-align: center;
+            font-family: 'Libre Caslon Text', serif;
+            font-style: italic;
+            color: var(--ink-soft);
+            font-size: 15px;
+        }
+
+        .directory-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+
+        .directory-pagination button {
+            font-family: 'Courier Prime', monospace;
+            font-size: 12px;
+            padding: 6px 12px;
+            background: var(--paper);
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            cursor: pointer;
+        }
+
+        .directory-pagination button:hover:not(:disabled) {
+            background-color: var(--ink);
+            color: var(--paper);
+        }
+
+        .directory-pagination button:disabled { opacity: 0.35; cursor: default; }
+
+        .directory-pagination .dir-page-indicator {
+            font-family: 'Libre Caslon Text', serif;
+            font-style: italic;
+            font-size: 12px;
+            padding: 0 8px;
+            color: var(--ink-soft);
+        }
+
+        @media (max-width: 768px) {
+            .directory-panel-inner { padding: 60px 20px 24px; }
+            .directory-toolbar { grid-template-columns: 1fr 1fr; }
+            .directory-reset { grid-column: 1 / -1; }
+            .directory-stamp { display: none; }
+            .directory-close { top: 14px; left: 14px; }
         }
 
         /* Main Content Layout Grid */
@@ -213,8 +550,65 @@
                 <li><a href="aToZ">A-Z Listing</a></li>
                 <li><a href="map">Map</a></li>
                 <li><a href="map3d">Map 3D</a></li>
+                <li><a href="#" id="directoryToggle" class="nav-directory-toggle" aria-expanded="false" aria-controls="directoryPanelWrapper">Search Directories<span class="nav-caret">▾</span></a></li>
             </ul>
         </nav>
+
+        <!-- Street Directory Search Panel (expands from nav) -->
+        <div id="directoryPanelWrapper" class="directory-panel-wrapper">
+            <div class="directory-panel">
+                <div class="directory-panel-inner">
+                    <button type="button" id="directoryClose" class="directory-close" aria-label="Close search">&times;</button>
+                    <div class="directory-stamp">VOL.<b id="dirVolCount">&ndash;</b>ENTRIES</div>
+
+                    <div class="directory-masthead-text">
+                        <p class="directory-eyebrow">Sands &amp; McDougall</p>
+                        <h1 class="directory-h1"><em>Carlton</em> Directory</h1>
+                        <p class="directory-subtitle">A house-by-house register of streets, residents and premises, 1900&ndash;1925</p>
+                    </div>
+                    <div class="directory-rule"></div>
+
+                    <div class="directory-toolbar">
+                        <div class="dir-field">
+                            <label for="dirSearchInput">Search listing or street</label>
+                            <input type="text" id="dirSearchInput" placeholder="e.g. Griffiths, grocer, Barry Street…">
+                        </div>
+                        <div class="dir-field">
+                            <label for="dirYearSelect">Year</label>
+                            <select id="dirYearSelect"><option value="">All years</option></select>
+                        </div>
+                        <div class="dir-field">
+                            <label for="dirStreetSelect">Street</label>
+                            <select id="dirStreetSelect"><option value="">All streets</option></select>
+                        </div>
+                        <div class="dir-field">
+                            <label for="dirTypeSelect">Type</label>
+                            <select id="dirTypeSelect"><option value="">All types</option></select>
+                        </div>
+                        <div class="dir-field">
+                            <label for="dirCardSelect">Side</label>
+                            <select id="dirCardSelect"><option value="">Both sides</option></select>
+                        </div>
+                        <button type="button" class="directory-reset" id="dirResetBtn">Clear filters</button>
+                    </div>
+
+                    <div class="directory-result-line">
+                        <span><strong id="dirResultCount">0</strong> entries found</span>
+                        <span id="dirTraceNotice" class="dir-trace-notice" hidden></span>
+                    </div>
+
+                    <div class="directory-table-wrap">
+                        <table class="directory-table">
+                            <thead><tr id="dirHeaderRow"></tr></thead>
+                            <tbody id="dirTableBody"></tbody>
+                        </table>
+                        <div class="directory-no-results" id="dirNoResults" hidden>No entries match your search. Try clearing a filter.</div>
+                    </div>
+
+                    <div class="directory-pagination" id="dirPagination"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- Main Layout Split -->
         <div class="layout-container">
@@ -274,6 +668,261 @@
 
     </div>
     
+
+<script src="map-data.js"></script>
+<script>
+(function(){
+  const data = (typeof directoryData !== 'undefined') ? directoryData : [];
+
+  const toggle = document.getElementById('directoryToggle');
+  const wrapper = document.getElementById('directoryPanelWrapper');
+  const closeBtn = document.getElementById('directoryClose');
+
+  function openPanel(){
+    wrapper.classList.add('open');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+  function closePanel(){
+    wrapper.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+  function togglePanel(){
+    wrapper.classList.contains('open') ? closePanel() : openPanel();
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    togglePanel();
+    if (wrapper.classList.contains('open') && !initialized) initDirectory();
+  });
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && wrapper.classList.contains('open')) closePanel();
+  });
+
+  let initialized = false;
+
+  function initDirectory(){
+    initialized = true;
+
+    function normType(t){
+      if(!t) return '';
+      const s = t.trim().toLowerCase();
+      if(s === 'right-of-way') return 'Right-of-way';
+      if(s === 'intersection') return 'Intersection';
+      if(s === 'place') return 'Place';
+      return t;
+    }
+    function normCard(c){ return (c || '').trim(); }
+
+    const rows = data.map((d, i) => ({
+      idx: i,
+      year: d.year,
+      pages: d.pages,
+      listing: d.listing || '',
+      street: d.street || '',
+      type: normType(d.type),
+      cardinality: normCard(d.cardinality),
+      crossYearId: d.crossYearId || null
+    }));
+
+    const columns = [
+      { key:'year',        label:'Year',    cls:'dir-col-year' },
+      { key:'street',      label:'Street',  cls:'' },
+      { key:'cardinality', label:'Side',    cls:'dir-col-card' },
+      { key:'type',        label:'Type',    cls:'dir-col-type' },
+      { key:'listing',     label:'Listing', cls:'' },
+      { key:'pages',       label:'Page',    cls:'dir-col-pages' }
+    ];
+
+    const headerRow = document.getElementById('dirHeaderRow');
+    columns.forEach(col => {
+      const th = document.createElement('th');
+      th.dataset.key = col.key;
+      th.innerHTML = col.label + '<span class="dir-arrow"></span>';
+      headerRow.appendChild(th);
+    });
+
+    function fillSelect(id, values){
+      const sel = document.getElementById(id);
+      values.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v;
+        opt.textContent = v;
+        sel.appendChild(opt);
+      });
+    }
+    fillSelect('dirYearSelect', [...new Set(rows.map(r=>r.year))].filter(Boolean).sort((a,b)=>a-b));
+    fillSelect('dirStreetSelect', [...new Set(rows.map(r=>r.street))].filter(Boolean).sort());
+    fillSelect('dirTypeSelect', [...new Set(rows.map(r=>r.type))].filter(Boolean).sort());
+    fillSelect('dirCardSelect', [...new Set(rows.map(r=>r.cardinality))].filter(Boolean).sort());
+
+    const volCountEl = document.getElementById('dirVolCount');
+    if (volCountEl) volCountEl.textContent = rows.length.toLocaleString();
+
+    const state = {
+      search: '', year: '', street: '', type: '', cardinality: '',
+      sortKey: 'year', sortDir: 1, page: 1, perPage: 100, traceId: null
+    };
+
+    const searchInput = document.getElementById('dirSearchInput');
+    const yearSelect = document.getElementById('dirYearSelect');
+    const streetSelect = document.getElementById('dirStreetSelect');
+    const typeSelect = document.getElementById('dirTypeSelect');
+    const cardSelect = document.getElementById('dirCardSelect');
+    const resetBtn = document.getElementById('dirResetBtn');
+    const tableBody = document.getElementById('dirTableBody');
+    const resultCount = document.getElementById('dirResultCount');
+    const noResults = document.getElementById('dirNoResults');
+    const paginationEl = document.getElementById('dirPagination');
+    const traceNotice = document.getElementById('dirTraceNotice');
+
+    let debounceTimer;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        state.search = searchInput.value.trim().toLowerCase();
+        state.page = 1;
+        render();
+      }, 150);
+    });
+
+    yearSelect.addEventListener('change', () => { state.year = yearSelect.value; state.page = 1; render(); });
+    streetSelect.addEventListener('change', () => { state.street = streetSelect.value; state.page = 1; render(); });
+    typeSelect.addEventListener('change', () => { state.type = typeSelect.value; state.page = 1; render(); });
+    cardSelect.addEventListener('change', () => { state.cardinality = cardSelect.value; state.page = 1; render(); });
+
+    resetBtn.addEventListener('click', () => {
+      state.search=''; state.year=''; state.street=''; state.type=''; state.cardinality=''; state.traceId=null; state.page=1;
+      searchInput.value=''; yearSelect.value=''; streetSelect.value=''; typeSelect.value=''; cardSelect.value='';
+      render();
+    });
+
+    headerRow.addEventListener('click', (e) => {
+      const th = e.target.closest('th');
+      if(!th) return;
+      const key = th.dataset.key;
+      if(state.sortKey === key){ state.sortDir *= -1; }
+      else { state.sortKey = key; state.sortDir = 1; }
+      render();
+    });
+
+    tableBody.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-trace]');
+      if(!btn) return;
+      state.traceId = btn.dataset.trace;
+      state.search=''; state.year=''; state.street=''; state.type=''; state.cardinality='';
+      searchInput.value=''; yearSelect.value=''; streetSelect.value=''; typeSelect.value=''; cardSelect.value='';
+      state.sortKey = 'year'; state.sortDir = 1; state.page = 1;
+      render();
+    });
+
+    traceNotice.addEventListener('click', (e) => {
+      if(e.target.closest('[data-clear-trace]')){ state.traceId = null; render(); }
+    });
+
+    function getFiltered(){
+      let out = rows;
+      if(state.traceId) return out.filter(r => r.crossYearId === state.traceId);
+      if(state.search){
+        const q = state.search;
+        out = out.filter(r => r.listing.toLowerCase().includes(q) || r.street.toLowerCase().includes(q));
+      }
+      if(state.year) out = out.filter(r => String(r.year) === state.year);
+      if(state.street) out = out.filter(r => r.street === state.street);
+      if(state.type) out = out.filter(r => r.type === state.type);
+      if(state.cardinality) out = out.filter(r => r.cardinality === state.cardinality);
+      return out;
+    }
+
+    function compareVals(a, b, key){
+      let va = a[key], vb = b[key];
+      if(key === 'year'){ va = Number(va)||0; vb = Number(vb)||0; return va - vb; }
+      if(key === 'pages'){
+        va = parseInt(va,10); if(isNaN(va)) va = 0;
+        vb = parseInt(vb,10); if(isNaN(vb)) vb = 0;
+        return va - vb;
+      }
+      va = (va||'').toString().toLowerCase();
+      vb = (vb||'').toString().toLowerCase();
+      return va.localeCompare(vb);
+    }
+
+    function escapeHtml(s){
+      return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    function render(){
+      [...headerRow.children].forEach(th => {
+        th.classList.toggle('active', th.dataset.key === state.sortKey);
+        const arrow = th.querySelector('.dir-arrow');
+        arrow.textContent = th.dataset.key === state.sortKey ? (state.sortDir === 1 ? '▲' : '▼') : '';
+      });
+
+      let filtered = getFiltered();
+      filtered = filtered.slice().sort((a,b) => compareVals(a,b,state.sortKey) * state.sortDir);
+
+      resultCount.textContent = filtered.length.toLocaleString();
+
+      if(state.traceId){
+        traceNotice.hidden = false;
+        traceNotice.innerHTML = 'Tracing one premises across years <button type="button" data-clear-trace>clear ✕</button>';
+      } else {
+        traceNotice.hidden = true;
+      }
+
+      const totalPages = Math.max(1, Math.ceil(filtered.length / state.perPage));
+      if(state.page > totalPages) state.page = totalPages;
+      const start = (state.page - 1) * state.perPage;
+      const pageRows = filtered.slice(start, start + state.perPage);
+
+      if(pageRows.length === 0){
+        tableBody.innerHTML = '';
+        noResults.hidden = false;
+      } else {
+        noResults.hidden = true;
+        tableBody.innerHTML = pageRows.map(r => {
+          const traceBtn = r.crossYearId
+            ? `<button type="button" class="dir-trace-btn" data-trace="${escapeHtml(r.crossYearId)}" title="Trace this premises across years">trace ⋯</button>`
+            : '';
+          return `<tr>
+            <td class="dir-col-year">${escapeHtml(r.year)}</td>
+            <td>${escapeHtml(r.street)}</td>
+            <td class="dir-col-card">${escapeHtml(r.cardinality)}</td>
+            <td class="dir-col-type">${escapeHtml(r.type)}</td>
+            <td>${escapeHtml(r.listing)}${traceBtn}</td>
+            <td class="dir-col-pages">${escapeHtml(r.pages)}</td>
+          </tr>`;
+        }).join('');
+      }
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages){
+      paginationEl.innerHTML = '';
+      const mk = (label, page, disabled) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label;
+        b.disabled = !!disabled;
+        if(!disabled) b.addEventListener('click', () => { state.page = page; render(); });
+        return b;
+      };
+      paginationEl.appendChild(mk('« First', 1, state.page === 1));
+      paginationEl.appendChild(mk('‹ Prev', state.page - 1, state.page === 1));
+      const indicator = document.createElement('span');
+      indicator.className = 'dir-page-indicator';
+      indicator.textContent = `Page ${state.page} of ${totalPages}`;
+      paginationEl.appendChild(indicator);
+      paginationEl.appendChild(mk('Next ›', state.page + 1, state.page === totalPages));
+      paginationEl.appendChild(mk('Last »', totalPages, state.page === totalPages));
+    }
+
+    render();
+  }
+})();
+</script>
 
 <script type="module">
   const CONFIG = {
