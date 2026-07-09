@@ -5478,7 +5478,7 @@ const directoryData = [
     {"year":1920,"pages":"208","listing":"1 Ryan, Dennis, jun","street":"Leicester Place","type":"Place","cardinality":"North"},
     {"year":1920,"pages":"208","listing":"2 Smith, Thomas","street":"Leicester Place","type":"Place","cardinality":"North"},
     {"year":1920,"pages":"208","listing":"Intersection Leicester street and Victoria street","street":"Leicester Street","type":"Intersection","cardinality":"East","lat":-37.80620367681768,"lng":144.95995501260302},
-    {"year":1920,"pages":"208","listing":"2 Mair, A., & Co., tmbr & iron mers"," street":"Leicester Street","type":"Place","cardinality":"East"},
+    {"year":1920,"pages":"208","listing":"2 Mair, A., & Co., tmbr & iron mers","street":"Leicester Street","type":"Place","cardinality":"East"},
     {"year":1920,"pages":"208","listing":"Standard Box Mnfg Co, carboard boxes","street":"Leicester Street","type":"Place","cardinality":"East"},
     {"year":1920,"pages":"208","listing":"18-32 Modern Printing Co., printers","street":"Leicester Street","type":"Place","cardinality":"East"},
     {"year":1920,"pages":"208","listing":"52 Hayes, Arth. O.","street":"Leicester Street","type":"Place","cardinality":"East"},
