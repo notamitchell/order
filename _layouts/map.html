@@ -141,6 +141,7 @@
         <h3 id="modal-heading">—</h3>
         <div id="modal-meta"></div>
         <div id="modal-body"></div>
+        <div id="modal-link"></div>
         <strong style="font-size:11px;color:#7a6a55;font-family:Arial,sans-serif;text-transform:uppercase;letter-spacing:.04em;">Coordinates</strong>
         <div class="coords-box" id="modal-coords">—</div>
     </div>
@@ -574,6 +575,7 @@ const modal    = document.getElementById('details-modal');
 const mHeading = document.getElementById('modal-heading');
 const mMeta    = document.getElementById('modal-meta');
 const mBody    = document.getElementById('modal-body');
+const mLink    = document.getElementById('modal-link');
 const mCoords  = document.getElementById('modal-coords');
 document.getElementById('close-modal-btn').onclick = () => modal.style.display = 'none';
 window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
@@ -582,7 +584,13 @@ function openModal(entry) {
     mHeading.innerText = entry.listing;
     mMeta.innerText    = `${entry.year}  ·  ${entry.street}  ·  ${entry.cardinality} side  ·  p.${entry.pages}`;
     mBody.innerHTML    = entry.htmlContent || '';
+
     const key = `${entry.year}-${entry.street}-${entry.cardinality}`;
+
+    const primaryKey = `${entry.listing}-${entry.street}}`;
+
+    mLink.innerHTML = `<p><a href="../civic?id=${primaryKey}">More Information ...</a></p>`;
+
     const idx = rawChains[key] ? rawChains[key].indexOf(entry) : -1;
     const pos = idx >= 0 ? currentPos[`${key}-${idx}`] : null;
     mCoords.innerText  = pos
