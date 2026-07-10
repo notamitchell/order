@@ -41,11 +41,15 @@ Select a letter below to jump directly to that section.
 
 [Back to Top](#index-a-to-z)
 
+---
+
 ## D
 
 [Dinny O'Hearn Fountain](eac?id=EM02072)
 
 [Back to Top](#index-a-to-z)
+
+---
 
 ## E
 
