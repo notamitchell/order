@@ -937,10 +937,14 @@
       return; // Exit early to prevent the form from rendering
     }
     
-    // Grab and encode the current page URL
-    const currentUrl = encodeURIComponent(window.location.href);
+    // 1. Parse the current URL's query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('id') || 'Unknown ID'; // Fallback if id is missing
 
-    const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSeUqh5yd_QJrpy81mPlHXEVYYGykIA2hgyVDSLTzpouXF-YtA/viewform?usp=pp_url&entry.402250272=${currentUrl}`;
+    // 2. Encode it for the Google Form
+    const encodedId = encodeURIComponent(articleId);
+
+    const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSeUqh5yd_QJrpy81mPlHXEVYYGykIA2hgyVDSLTzpouXF-YtA/viewform?usp=pp_url&entry.402250272=${encodedId}`;
 
     entryContainer.innerHTML = `
       <div class="contribution-container" style="margin-top: 20px; padding: 20px; border: 1px dashed #387573; border-radius: 6px; background-color: #fafdfc;">
