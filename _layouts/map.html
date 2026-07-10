@@ -592,7 +592,7 @@ function openModal(entry) {
     // Encode the key to make it safe for a URL query parameter
     const encodedKey = encodeURIComponent(primaryKey);
 
-    mLink.innerHTML = `<p><a href="../civic?id=${encodedKey}">More Information ...</a></p>`;
+    mLink.innerHTML = `<p><a href="civic?id=${encodedKey}">More Information ...</a></p>`;
 
     const idx = rawChains[key] ? rawChains[key].indexOf(entry) : -1;
     const pos = idx >= 0 ? currentPos[`${key}-${idx}`] : null;
