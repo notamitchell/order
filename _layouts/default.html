@@ -937,7 +937,11 @@
       return; // Exit early to prevent the form from rendering
     }
     
-    // Existing code for the form layout continues here...
+    // Grab and encode the current page URL
+    const currentUrl = encodeURIComponent(window.location.href);
+
+    const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSeUqh5yd_QJrpy81mPlHXEVYYGykIA2hgyVDSLTzpouXF-YtA/viewform?usp=pp_url&entry.402250272=${currentUrl}`;
+
     entryContainer.innerHTML = `
       <div class="contribution-container" style="margin-top: 20px; padding: 20px; border: 1px dashed #387573; border-radius: 6px; background-color: #fafdfc;">
         <h2 style="font-family: 'Georgia', Times, serif; color: #234b4a; margin-bottom: 10px;">Article Not Found</h2>
@@ -945,7 +949,7 @@
           This article${idMessage} doesn't exist yet. Fill in the form below to contribute information to this entry!
         </p>
         <div style="width: 100%; overflow: hidden; display: flex; justify-content: center;">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeUqh5yd_QJrpy81mPlHXEVYYGykIA2hgyVDSLTzpouXF-YtA/viewform?embedded=true" 
+          <iframe src="${googleFormUrl}" 
                   width="100%" 
                   height="600" 
                   frameborder="0" 
