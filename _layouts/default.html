@@ -141,12 +141,6 @@
             text-align: center;
             line-height: 1.4;
         }
-        .directory-stamp b {
-            display: block;
-            font-size: 14px;
-            color: var(--maroon);
-            font-family: 'Courier Prime', monospace;
-        }
 
         .directory-close {
             position: absolute;
@@ -559,7 +553,7 @@
             <div class="directory-panel">
                 <div class="directory-panel-inner">
                     <button type="button" id="directoryClose" class="directory-close" aria-label="Close search">&times;</button>
-                    <div class="directory-stamp">VOL.<b id="dirVolCount">&ndash;</b>ENTRIES</div>
+                   
 
                     <div class="directory-masthead-text">
                         <p class="directory-eyebrow">Sands &amp; McDougall</p>
@@ -586,8 +580,8 @@
                             <select id="dirTypeSelect"><option value="">All types</option></select>
                         </div>
                         <div class="dir-field">
-                            <label for="dirCardSelect">Side</label>
-                            <select id="dirCardSelect"><option value="">Both sides</option></select>
+                            <label for="dirCardSelect">Street Side (N/S/E/W)</label>
+                            <select id="dirCardSelect"><option value="">All sides</option></select>
                         </div>
                         <button type="button" class="directory-reset" id="dirResetBtn">Clear filters</button>
                     </div>
@@ -757,8 +751,6 @@
     fillSelect('dirTypeSelect', [...new Set(rows.map(r=>r.type))].filter(Boolean).sort());
     fillSelect('dirCardSelect', [...new Set(rows.map(r=>r.cardinality))].filter(Boolean).sort());
 
-    const volCountEl = document.getElementById('dirVolCount');
-    if (volCountEl) volCountEl.textContent = rows.length.toLocaleString();
 
     const state = {
       search: '', year: '', street: '', type: '', cardinality: '',
