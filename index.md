@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "Home"
+overrideCommunityContributionForm: true
 ---
 
 # Hello world
