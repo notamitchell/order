@@ -918,7 +918,8 @@
 
 <script type="module">
   const CONFIG = {
-    path: '{{ page.EACCPFpath }}' 
+    path: '{{ page.EACCPFpath }}',
+    overrideForm: '{{ page.overrideCommunityContributionForm }}' === 'true'
   };
 
   // 1. Get the ID from the URL parameters (e.g., ?id=EM02472)
@@ -930,6 +931,20 @@
   function showContributionForm(missingId) {
     const idMessage = missingId ? ` for record <strong>${missingId}</strong>` : '';
     
+    // If the override config is active, display a clean fallback message instead of the form
+    if (CONFIG.overrideForm) {
+      entryContainer.innerHTML = `
+        <div class="contribution-container" style="margin-top: 20px; padding: 20px; border: 1px dashed #387573; border-radius: 6px; background-color: #fafdfc;">
+          <h2 style="font-family: 'Georgia', Times, serif; color: #234b4a; margin-bottom: 10px;">Article Not Found</h2>
+          <p style="color: #4a5568;">
+            This article${idMessage} doesn't exist.
+          </p>
+        </div>
+      `;
+      return; // Exit early to prevent the form from rendering
+    }
+    
+    // Existing code for the form layout continues here...
     entryContainer.innerHTML = `
       <div class="contribution-container" style="margin-top: 20px; padding: 20px; border: 1px dashed #387573; border-radius: 6px; background-color: #fafdfc;">
         <h2 style="font-family: 'Georgia', Times, serif; color: #234b4a; margin-bottom: 10px;">Article Not Found</h2>
