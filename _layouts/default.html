@@ -917,6 +917,16 @@
 </script>
 
 <script type="module">
+// Helper: Cleans up the incoming prefilled ID parameter to ensure a valid, safe filename
+function slugifyId(text) {
+  return text
+    .toString()
+    .replace(/\s+/g, '-')             // Replace spaces with -
+    .replace(/[^a-zA-Z0-9_\-]/g, '')  // Strip anything that isn't alphanumeric, underscore, or dash
+    .replace(/\-\-+/g, '-');          // Collapse multiple consecutive dashes
+}
+
+    
   const CONFIG = {
     path: '{{ page.EACCPFpath }}',
     overrideForm: '{{ page.overrideCommunityContributionForm }}' === 'true'
@@ -968,7 +978,7 @@
   }
 
   if (fileId) {
-    const fileUrl = `./${CONFIG.path}/${fileId}.xml`;
+    const fileUrl = `./${CONFIG.path}/${slugifyId(fileId)}.xml`;
 
     try {
       const response = await fetch(fileUrl);
