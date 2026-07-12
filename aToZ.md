@@ -31,6 +31,8 @@ Select a letter below to jump directly to that section.
 
 [Barry Street](civic?id=Barry Street)
 
+[Berkley Arms Hotel](civic?id=Berkley Arms hotel-Lissaman%2C Wm.-Berkley Street)
+
 [Berkeley Street](civic?id=Berkeley Street)
 
 [Berkley Place](civic?id=Berkley Place)
