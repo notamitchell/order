@@ -21,9 +21,25 @@ Select a letter below to jump directly to that section.
 
 ## B
 
-[Ball & Welch](eac?id=EM00145)
+[Ballarat Road](civic?id=Ballarat Road)
 
-[Boy On A Turtle](eac?id=EM02041)
+[Banbridge Place](civic?id=Banbridge Place)
+
+[Barkly Place](civic?id=Barkly Place)
+
+[Barkly Street](civic?id=Barkly Street)
+
+[Barry Street](civic?id=Barry Street)
+
+[Berkeley Street](civic?id=Berkeley Street)
+
+[Berkley Place](civic?id=Berkley Place)
+
+[Berkley Street](civic?id=Berkley Street)
+
+[Bouverie Place](civic?id=Bouverie Place)
+
+[Bouverie Street](civic?id=Bouverie Street)
 
 [Back to Top](#index-a-to-z)
 
@@ -31,13 +47,9 @@ Select a letter below to jump directly to that section.
 
 ## C
 
-[Carlton & United Breweries](eac?id=EM00295)
+Church Street
 
-[Carlton Football Club](eac?id=EM00296)
-
-[Carlton Refuge](eac?id=EM00298)
-
-[Carlton Gardens](eac?id=EM00297)
+Cumberland Place
 
 [Back to Top](#index-a-to-z)
 
@@ -45,17 +57,11 @@ Select a letter below to jump directly to that section.
 
 ## D
 
-[Dinny O'Hearn Fountain](eac?id=EM02072)
-
 [Back to Top](#index-a-to-z)
 
 ---
 
 ## E
-
-[Eight Hours' Day Monument](eac?id=EM00512)
-
-[Exhibition Fountain (aka Hochgurtel Fountain)](eac?id=EM02078)
 
 [Back to Top](#index-a-to-z)
 
@@ -63,13 +69,15 @@ Select a letter below to jump directly to that section.
 
 ## F
 
-[French Fountain](eac?id=EM02026)
-
 [Back to Top](#index-a-to-z)
 
 ---
 
 ## G
+
+Grattan Street
+
+Grove Place
 
 [Back to Top](#index-a-to-z)
 
@@ -101,11 +109,45 @@ Select a letter below to jump directly to that section.
 
 ## L
 
+Lansdowne Place
+
+Leicester Place
+
+Leicester Street
+
+Lincoln Cottages
+
+Lincoln Place
+
+Lincoln Place North
+
+Lincoln Place South
+
+Lincoln Square
+
+Lincoln Square North
+
+Lincoln Square South
+
+Little Barkly Street
+
+Little Cardigan Street
+
+Little Grattan Street
+
+Little Pelham Street
+
+Little Queensberry Street
+
 [Back to Top](#index-a-to-z)
 
 ---
 
 ## M
+
+Madeline Street
+
+Malvina Place
 
 [Back to Top](#index-a-to-z)
 
@@ -125,11 +167,21 @@ Select a letter below to jump directly to that section.
 
 ## P
 
+Pelham Place
+
+Pelham Street
+
+Prince of Wales Place
+
 [Back to Top](#index-a-to-z)
 
 ---
 
 ## Q
+
+Queensberry Place
+
+Queensberry Street
 
 [Back to Top](#index-a-to-z)
 
