@@ -173,6 +173,8 @@ Select a letter below to jump directly to that section.
 
 [Pelham Street](civic?id=Pelham Street)
 
+[Perseverance Hotel](civic?id=41-Perseverance-hotel-Strain-Mrs-Cath-Barry-Street)
+
 [Prince of Wales Place](civic?id=Prince of Wales Place)
 
 [Back to Top](#index-a-to-z)
