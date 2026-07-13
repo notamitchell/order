@@ -880,7 +880,7 @@
         
           // 1. Construct the raw ID template based on row properties
           // Adjust the fallback hierarchy if some rows are missing 'listing' or 'type'
-          const rawId = `${r.listing.trim()}-${r.type.trim()}-${r.street.trim()}`;
+          const rawId = `${r.listing.trim()}-${r.street.trim()}`;
           
           // 2. Safely encode it for the URL string parameter
           const encodedId = encodeURIComponent(rawId);
@@ -889,7 +889,7 @@
           // 3. Render row with link wrapped around the primary entry identifiers (e.g., Listing)
           return `<tr>
             <td class="dir-col-year">${escapeHtml(r.year)}</td>
-            <td><a href="${targetLink}" style="color: inherit; text-decoration: underline;">${escapeHtml(r.street)}</a></td>
+            <td>${escapeHtml(r.street)}</td>
             <td class="dir-col-card">${escapeHtml(r.cardinality)}</td>
             <td class="dir-col-type">${escapeHtml(r.type)}</td>
             <td>
