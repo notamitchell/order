@@ -969,7 +969,7 @@ function slugifyId(text) {
     // 2. Encode it for the Google Form
     const encodedId = encodeURIComponent(articleId);
 
-    const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLSeUqh5yd_QJrpy81mPlHXEVYYGykIA2hgyVDSLTzpouXF-YtA/viewform?usp=pp_url&entry.402250272=${encodedId}`;
+    const googleFormUrl = `form.html?id=${encodedId}`;
 
     entryContainer.innerHTML = `
       <div class="contribution-container" style="margin-top: 20px; padding: 20px; border: 1px dashed #387573; border-radius: 6px; background-color: #fafdfc;">
