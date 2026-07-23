@@ -622,7 +622,7 @@ const CustomControl = L.Control.extend({
         homeLink.href = '/order'; homeLink.innerText = '← Home';
 
         const yearTitle = L.DomUtil.create('div', 'panel-section-title', container);
-        yearTitle.innerText = 'Directory Years';
+        yearTitle.innerText = 'Years';
 
         YEARS.slice().reverse().forEach(year => {
             const row = L.DomUtil.create('label', 'year-row', container);
