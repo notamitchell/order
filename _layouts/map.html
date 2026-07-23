@@ -113,18 +113,6 @@
         }
         .leaflet-tooltip-top:before { border-top-color: rgba(30,18,9,0.88); }
 
-/* Gentle floating arc animation setup */
-/*@keyframes floatPulse {
-    0%   { transform: scale(1);    filter: url(#leaflet-3d-shadow) opacity(1); }
-    50%  { transform: scale(1.55); filter: url(#leaflet-3d-shadow) opacity(1); }
-    100% { transform: scale(1);    filter: url(#leaflet-3d-shadow) opacity(1); }
-}
-
-
-.marker-uncertain, .marker-uncertain-cross {
-    animation: floatPulse 5.2s ease-in-out infinite;
-    transform-origin: center center;
-}*/
 
         /* Leaflet internally masks vector shapes using overflow:hidden. 
            This container directive forces the map canvas to render vectors outer bounds */
@@ -349,11 +337,6 @@ function computeChain(entries, arcOffset, side) {
     return r;
 }
 
-// ═══════════════════════════════════════════════════════════
-//  LIVE STATE
-//  For each year+side we store an array of "live" objects,
-//  each with { lat, lng } that get animated frame-by-frame.
-// ═══════════════════════════════════════════════════════════
 
 // All unique {year, street, side} combinations present in the data
 const CHAINS = [];
@@ -414,7 +397,7 @@ CHAINS.forEach(({ year, street, side }) => {
     polyLayers[key] = poly;
     poly.addTo(yearGroups[year]);
 
-    // Markers — created once for every entry; positions set by initPositions/animation
+    // Markers — created once for every entry; positions set by initPositions
     rawChains[key].forEach((entry, idx) => {
         const mk = L.marker([0,0], { icon: makeIcon(entry, YEAR_COLORS[year]) });
         mk.bindTooltip(entry.listing, { direction:'top', offset:[0,-4] });
@@ -582,23 +565,62 @@ window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
 
 function openModal(entry) {
     mHeading.innerText = entry.listing;
-    mMeta.innerText    = `${entry.year}  ·  ${entry.street}  ·  ${entry.cardinality} side  ·  p.${entry.pages}`;
-    mBody.innerHTML    = entry.htmlContent || '';
 
-    const key = `${entry.year}-${entry.street}-${entry.cardinality}`;
+    // 1. Build the metadata bar cleanly without 'undefined'
+    const metaParts = [];
+    
+    if (entry.year) metaParts.push(entry.year);
+    if (entry.source) metaParts.push(entry.source);
+    if (entry.street) metaParts.push(entry.street);
+    if (entry.cardinality) metaParts.push(`${entry.cardinality} side`);
+    if (entry.pages) metaParts.push(`p. ${entry.pages}`);
 
+    mMeta.innerText = metaParts.join('  ·  ');
+
+    // 2. Dynamically build mBody content based on source-specific fields
+    let bodyHtml = entry.htmlContent || '';
+
+    if (entry.source === 'Electoral roll') {
+        const details = [];
+        if (entry['Surname'] || entry['Given Names']) {
+            details.push(`<strong>Name:</strong> ${entry['Given Names'] || ''} ${entry['Surname'] || ''}`);
+        }
+        if (entry['Occupation']) details.push(`<strong>Occupation:</strong> ${entry['Occupation']}`);
+        if (entry['Gender']) details.push(`<strong>Gender:</strong> ${entry['Gender']}`);
+        if (entry['Address']) details.push(`<strong>Address:</strong> ${entry['Address']}`);
+        if (entry['Registration Number']) details.push(`<strong>Reg #:</strong> ${entry['Registration Number']}`);
+
+        if (details.length > 0) {
+            bodyHtml += `<div class="electoral-details">${details.join('<br>')}</div>`;
+        }
+    } else if (entry.source === 'directory') {
+        if (entry.type) {
+            bodyHtml += `<p><strong>Type:</strong> ${entry.type}</p>`;
+        }
+    }
+
+    mBody.innerHTML = bodyHtml;
+
+    // 3. Link construction
     const primaryKey = `${entry.listing}-${entry.street}`;
-
-    // Encode the key to make it safe for a URL query parameter
     const encodedKey = encodeURIComponent(primaryKey);
+    mLink.innerHTML  = `<p><a href="civic?id=${encodedKey}">More Information ...</a></p>`;
 
-    mLink.innerHTML = `<p><a href="civic?id=${encodedKey}">More Information ...</a></p>`;
-
+    // 4. Coordinates handling
+    const key = `${entry.year}-${entry.street}-${entry.cardinality}`;
     const idx = rawChains[key] ? rawChains[key].indexOf(entry) : -1;
     const pos = idx >= 0 ? currentPos[`${key}-${idx}`] : null;
-    mCoords.innerText  = pos
-        ? `${pos.lat.toFixed(7)}, ${pos.lng.toFixed(7)}${entry._computed ? ' (estimated)' : ''}`
-        : 'Unknown';
+
+    // Direct lat/lng on entry fallback if pos from currentPos isn't set
+    const lat = pos ? pos.lat : entry.lat;
+    const lng = pos ? pos.lng : entry.lng;
+
+    if (lat !== undefined && lng !== undefined) {
+        mCoords.innerText = `${Number(lat).toFixed(7)}, ${Number(lng).toFixed(7)}${entry._computed ? ' (estimated)' : ''}`;
+    } else {
+        mCoords.innerText = 'Unknown';
+    }
+
     modal.style.display = 'flex';
 }
 
@@ -610,6 +632,19 @@ function getTileUrl(source, id) {
         ? `https://mapwarper.prov.vic.gov.au/maps/tile/${id}/{z}/{x}/{y}.png`
         : `https://mapwarper.net/maps/tile/${id}/{z}/{x}/{y}.png`;
 }
+
+// Build a lookup for each year's source type(s)
+const YEAR_SOURCES = {};
+YEARS.forEach(year => {
+    const sourcesForYear = [...new Set(
+        directoryData
+            .filter(e => e.year === year && e.source)
+            .map(e => e.source)
+    )];
+    // Formats as "Electoral roll", "directory", or "directory, Electoral roll" if a year has both
+    YEAR_SOURCES[year] = sourcesForYear.join(', ');
+});
+
 
 const CustomControl = L.Control.extend({
     options: { position:'topright' },
@@ -630,7 +665,8 @@ const CustomControl = L.Control.extend({
             cb.type = 'checkbox'; cb.checked = (year === YEARS[YEARS.length - 1]);
             const swatch = L.DomUtil.create('span', 'year-swatch', row);
             swatch.style.background = YEAR_COLORS[year];
-            row.appendChild(document.createTextNode(String(year)));
+            const sourceInfo = YEAR_SOURCES[year] ? ` (${YEAR_SOURCES[year]})` : '';
+            row.appendChild(document.createTextNode(`${year}${sourceInfo}`));
 
             L.DomEvent.on(cb, 'change', () => {
                 if (cb.checked) {
