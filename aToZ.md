@@ -49,7 +49,7 @@ Select a letter below to jump directly to that section.
 
 ## C
 
-[Carlton Brewery Ltd](civic?id=16-Carlton-Brewery-Ltd-Parker-Thos-L-manager-Bouverie-Street)
+[Carlton Brewery](civic?id=Carlton Brewery)
 
 [Church Street](civic?id=Church Street)
 
