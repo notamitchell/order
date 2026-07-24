@@ -868,10 +868,21 @@
       const start = (state.page - 1) * state.perPage;
       const pageRows = filtered.slice(start, start + state.perPage);
 
-      if(pageRows.length === 0){
-        tableBody.innerHTML = '';
-        noResults.hidden = false;
+    if(pageRows.length === 0){
+      tableBody.innerHTML = '';
+      
+      // Check if there is an active text search
+      const searchTerm = searchInput.value.trim();
+      
+      if (searchTerm) {
+        const encodedTerm = encodeURIComponent(searchTerm);
+        noResults.innerHTML = `No entries match your search. <a href="/civic?id=${encodedTerm}" style="color: var(--maroon); text-decoration: underline; font-weight: bold;">Suggest a new page for "${escapeHtml(searchTerm)}"?</a>`;
       } else {
+        noResults.innerHTML = `No entries match your search. Try clearing a filter.`;
+      }
+      
+      noResults.hidden = false;
+    } else {
         noResults.hidden = true;
         tableBody.innerHTML = pageRows.map(r => {
           const traceBtn = r.crossYearId
