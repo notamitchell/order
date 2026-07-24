@@ -5,7 +5,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
   <control>
-    <recordId>16-Carlton-Brewery-Ltd-Parker-Thos-L-manager-Bouverie-Street</recordId>
+    <recordId>Carlton Brewery</recordId>
     <maintenanceStatus>new</maintenanceStatus>
     <maintenanceAgency>
       <agencyCode>AU-EMEL</agencyCode>
