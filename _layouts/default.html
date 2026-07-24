@@ -876,7 +876,7 @@
       
       if (searchTerm) {
         const encodedTerm = encodeURIComponent(searchTerm);
-        noResults.innerHTML = `No entries match your search. <a href="/civic?id=${encodedTerm}" style="color: var(--maroon); text-decoration: underline; font-weight: bold;">Suggest a new page for "${escapeHtml(searchTerm)}"?</a>`;
+        noResults.innerHTML = `No entries match your search. Suggest a new page for "<a href="civic?id=${encodedTerm}" style="color: var(--maroon); text-decoration: underline; font-weight: bold;">${escapeHtml(searchTerm)}</a>"?`;
       } else {
         noResults.innerHTML = `No entries match your search. Try clearing a filter.`;
       }
