@@ -656,7 +656,7 @@
                     <li><a href="aToZ">A-Z Listing</a></li>
                 </ul>
                 <div class="footer-attribution">
-                    Produced and published by the School of Historical & Philosophical Studies, The University of Melbourne
+                    Website under construction. Produced and published by the School of Historical & Philosophical Studies, The University of Melbourne.
                 </div>
             </div>
         </footer>
@@ -879,15 +879,12 @@
             ? `<button type="button" class="dir-trace-btn" data-trace="${escapeHtml(r.crossYearId)}" title="Trace this premises across years">trace ⋯</button>`
             : '';
         
-          // 1. Construct the raw ID template based on row properties
-          // Adjust the fallback hierarchy if some rows are missing 'listing' or 'type'
-          const rawId = `${r.listing.trim()}-${r.street.trim()}`;
           
-          // 2. Safely encode it for the URL string parameter
+          const rawId = `${r.enityID.trim()}`;
           const encodedId = encodeURIComponent(rawId);
           const targetLink = `civic?id=${encodedId}`;
         
-          // 3. Render row with link wrapped around the primary entry identifiers (e.g., Listing)
+          // Render row with link wrapped around the Listing
           return `<tr>
             <td class="dir-col-year">${escapeHtml(r.year)}</td>
             <td>${escapeHtml(r.street)}</td>
