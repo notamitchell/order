@@ -602,9 +602,8 @@ function openModal(entry) {
     mBody.innerHTML = bodyHtml;
 
     // 3. Link construction
-    const primaryKey = `${entry.listing}-${entry.street}`;
-    const encodedKey = encodeURIComponent(primaryKey);
-    mLink.innerHTML  = `<p><a href="civic?id=${encodedKey}">More Information ...</a></p>`;
+    const primaryKey = `${entry.entityID}`;
+    mLink.innerHTML  = `<p><a href="civic?id=${primaryKey}>">More Information ...</a></p>`;
 
     // 4. Coordinates handling
     const key = `${entry.year}-${entry.street}-${entry.cardinality}`;
