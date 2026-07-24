@@ -718,7 +718,8 @@
       street: d.street || '',
       type: normType(d.type),
       cardinality: normCard(d.cardinality),
-      crossYearId: d.crossYearId || null
+      crossYearId: d.crossYearId || null,
+      entityID: d.entityID || '' 
     }));
 
     const columns = [
