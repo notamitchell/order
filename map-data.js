@@ -2160,7 +2160,7 @@ const directoryData = [
     "lng": 144.96145049396495
   },
   {
-    "entityID": 213,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -14938,7 +14938,7 @@ const directoryData = [
     "lng": 144.96145049396495
   },
   {
-    "entityID": 1460,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -22350,7 +22350,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2180,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -35480,7 +35480,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3460,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -47764,7 +47764,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4656,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -53376,7 +53376,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5201,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53386,7 +53386,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5202,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -59254,7 +59254,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5774,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -63082,7 +63082,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6146,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63102,7 +63102,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6148,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -68862,7 +68862,7 @@ const directoryData = [
     "lng": 144.96291042663492
   },
   {
-    "entityID": 6707,
+    "entityID": "Carlton Brewery",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
