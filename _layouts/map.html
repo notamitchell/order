@@ -524,12 +524,14 @@ function recomputePositions() {
 // ═══════════════════════════════════════════════════════════
 //  CROSS-YEAR LINES
 // ═══════════════════════════════════════════════════════════
-// Build index
+// Build index using string-type entityIDs as cross-year link identifiers
 CHAINS.forEach(({ year, street, side }) => {
     rawChains[`${year}-${street}-${side}`].forEach((e, idx) => {
-        if (!e.crossYearId) return;
-        if (!crossYearById[e.crossYearId]) crossYearById[e.crossYearId] = [];
-        crossYearById[e.crossYearId].push({ year, street, side, idx });
+        // Cross-year links are identified when entityID is a string
+        if (typeof e.entityID !== 'string') return;
+        
+        if (!crossYearById[e.entityID]) crossYearById[e.entityID] = [];
+        crossYearById[e.entityID].push({ year, street, side, idx });
     });
 });
 Object.values(crossYearById).forEach(g => g.sort((a,b) => a.year - b.year));
