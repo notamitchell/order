@@ -44,7 +44,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5,
+    "entityID": "Bridget O'Neill",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -64,7 +64,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 7,
+    "entityID": "Martha Griffiths",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -174,7 +174,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 18,
+    "entityID": "Michael Scully",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -194,7 +194,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 20,
+    "entityID": "Clifford D Percy",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -282,7 +282,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 28,
+    "entityID": "Thomas Carew",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -382,7 +382,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 38,
+    "entityID": "Ellen Crough",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -422,7 +422,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 42,
+    "entityID": "Burnett Smith",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -432,7 +432,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 43,
+    "entityID": "B Smith, woodyd",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -442,7 +442,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 44,
+    "entityID": "Emma Sanders",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -452,7 +452,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 45,
+    "entityID": "Ralph McIntosh",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -462,7 +462,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 46,
+    "entityID": "Joseph W. Miller",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -472,7 +472,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 47,
+    "entityID": "Harriet Podmore, store",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -482,7 +482,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 48,
+    "entityID": "Henry C Baker",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -574,7 +574,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 57,
+    "entityID": "Michael Reilly",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -624,7 +624,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 62,
+    "entityID": "Charles Till",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -804,7 +804,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 80,
+    "entityID": "Moses Mendoza",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -858,7 +858,7 @@ const directoryData = [
     "lng": 144.96002570605359
   },
   {
-    "entityID": 85,
+    "entityID": "J Garbutt, chainmr",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -1100,7 +1100,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 109,
+    "entityID": "Austin O'Shannassy",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -1130,7 +1130,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 112,
+    "entityID": "Samuel Paul",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -1140,7 +1140,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 113,
+    "entityID": "Thomas McLean",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -1150,7 +1150,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 114,
+    "entityID": "William Armstrong",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -1200,7 +1200,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 119,
+    "entityID": "Charles Davis",
     "source": "Directory",
     "year": 1900,
     "pages": "172",
@@ -1456,7 +1456,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 144,
+    "entityID": "Margaret Hall",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -1476,7 +1476,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 146,
+    "entityID": "James Devlin",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -1496,7 +1496,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 148,
+    "entityID": "Ann Dunn",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -1546,7 +1546,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 153,
+    "entityID": "John Scott",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -1576,7 +1576,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 156,
+    "entityID": "Donald Currie",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -1934,7 +1934,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 191,
+    "entityID": "Peter Grant",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2212,7 +2212,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 218,
+    "entityID": "Mary Stack",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2324,7 +2324,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 229,
+    "entityID": "James Matthews",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2334,7 +2334,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 230,
+    "entityID": "Cath Bourke",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2430,7 +2430,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 239,
+    "entityID": "Abraham Rosenthal, slipper maker",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2440,7 +2440,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 240,
+    "entityID": "Baptist mission hall",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2462,7 +2462,7 @@ const directoryData = [
     "lng": 144.96238754611835
   },
   {
-    "entityID": 242,
+    "entityID": "J Bailey, builder",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2482,7 +2482,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 244,
+    "entityID": "James Dobson",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2502,7 +2502,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 246,
+    "entityID": "Mary Kennard",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2586,7 +2586,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 254,
+    "entityID": "Jas Carter, dealer",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2722,7 +2722,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 267,
+    "entityID": "agricultural engnrs Nicholson & Morrow",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2732,7 +2732,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 268,
+    "entityID": "R Smith, wire wrkr",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2812,7 +2812,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 276,
+    "entityID": "Viggo Hansen",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2832,7 +2832,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 278,
+    "entityID": "Susan Mudge",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2862,7 +2862,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 281,
+    "entityID": "Joseph Mahoney",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2872,7 +2872,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 282,
+    "entityID": "Ellen Nugent",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2964,7 +2964,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 291,
+    "entityID": "Mrs A. Paton, grcr",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -2974,7 +2974,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 292,
+    "entityID": "W Paton, cabt mkr",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3004,7 +3004,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 295,
+    "entityID": "Catherine Kerr",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3014,7 +3014,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 296,
+    "entityID": "John Coughlan",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3024,7 +3024,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 297,
+    "entityID": "John Clarke",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3054,7 +3054,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 300,
+    "entityID": "S Anderson",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3206,7 +3206,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 315,
+    "entityID": "Ellen Harris",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3276,7 +3276,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 322,
+    "entityID": "Nathan Rosenfeld",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3388,7 +3388,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 333,
+    "entityID": "Alex M Bentwitch",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3500,7 +3500,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 344,
+    "entityID": "A Scott, store",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3686,7 +3686,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 362,
+    "entityID": "Lewis Rosenthal",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3756,7 +3756,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 369,
+    "entityID": "Solomon Goldenberg",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -3808,7 +3808,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 374,
+    "entityID": "John Hawkins",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -4066,7 +4066,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 399,
+    "entityID": "Michael Quinlan",
     "source": "Directory",
     "year": 1900,
     "pages": 176,
@@ -4106,7 +4106,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 403,
+    "entityID": "Mary Smyth",
     "source": "Directory",
     "year": 1900,
     "pages": 176,
@@ -4180,7 +4180,7 @@ const directoryData = [
     "lng": 144.96202722798873
   },
   {
-    "entityID": 410,
+    "entityID": "C Reynolds",
     "source": "Directory",
     "year": 1900,
     "pages": "177",
@@ -4210,7 +4210,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 413,
+    "entityID": "John Tippett",
     "source": "Directory",
     "year": 1900,
     "pages": "177",
@@ -4310,7 +4310,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 423,
+    "entityID": "Alexander Hall",
     "source": "Directory",
     "year": 1900,
     "pages": "177",
@@ -4350,7 +4350,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 427,
+    "entityID": "Fredk W Hewlett",
     "source": "Directory",
     "year": 1900,
     "pages": "177",
@@ -4400,7 +4400,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 432,
+    "entityID": "John McNamara",
     "source": "Directory",
     "year": 1900,
     "pages": "177",
@@ -4466,7 +4466,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 438,
+    "entityID": "Women's Hospital",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -4522,7 +4522,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 443,
+    "entityID": "W Pridham, jun, butcher",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -4614,7 +4614,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 452,
+    "entityID": "C Broyer, surg, Broyer, Dr W G",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -4664,7 +4664,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 457,
+    "entityID": "Elizabth Pride, boarding house",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -4706,7 +4706,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 461,
+    "entityID": "Mrs Catherine Ryan",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -4766,7 +4766,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 467,
+    "entityID": "Joseph Herman",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -4892,7 +4892,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 479,
+    "entityID": "John S Davie",
     "source": "Directory",
     "year": 1900,
     "pages": "182-183",
@@ -5122,7 +5122,7 @@ const directoryData = [
     "lng": 144.96249656780145
   },
   {
-    "entityID": 501,
+    "entityID": "R Alderdice, grocer",
     "source": "Directory",
     "year": 1900,
     "pages": "182",
@@ -5202,7 +5202,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 509,
+    "entityID": "Henry Dinsdale",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5356,7 +5356,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 524,
+    "entityID": "Abraham Cohen",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5366,7 +5366,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 525,
+    "entityID": "M E Watson",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5376,7 +5376,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 526,
+    "entityID": "Abraham J Green",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5438,7 +5438,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 532,
+    "entityID": "J. Luttgens, bootmr",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5518,7 +5518,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 540,
+    "entityID": "Henry Gray",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5528,7 +5528,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 541,
+    "entityID": "Sarah Farrell",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5742,7 +5742,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 562,
+    "entityID": "Mrs Margaret Shine",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -5762,7 +5762,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 564,
+    "entityID": "Hy W Hackett",
     "source": "Directory",
     "year": 1900,
     "pages": "183",
@@ -6000,7 +6000,7 @@ const directoryData = [
     "lng": 144.95995501260302
   },
   {
-    "entityID": 587,
+    "entityID": "A. Mair and Co, timber merchants",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6172,7 +6172,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 604,
+    "entityID": "G Oxley, wood trnr",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6182,7 +6182,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 605,
+    "entityID": "George Oxley",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6474,7 +6474,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 633,
+    "entityID": "E Todd",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6534,7 +6534,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 639,
+    "entityID": "Phillip Sheahan",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6554,7 +6554,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 641,
+    "entityID": "Percy Robinson",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6818,7 +6818,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 667,
+    "entityID": "W J Brewer, timber merchant",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6880,7 +6880,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 673,
+    "entityID": "John Garbutt, chain and hame and saddle tree maker",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6910,7 +6910,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 676,
+    "entityID": "John Simcox, & Co, zinc founders",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6962,7 +6962,7 @@ const directoryData = [
     "lng": 144.96017218104672
   },
   {
-    "entityID": 681,
+    "entityID": "Joseph Royal, & Co axle makers",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6972,7 +6972,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 682,
+    "entityID": "Joseph Royal",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7112,7 +7112,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 696,
+    "entityID": "Mary Parnell",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7174,7 +7174,7 @@ const directoryData = [
     "lng": 144.96067467814555
   },
   {
-    "entityID": 702,
+    "entityID": "Bowling green",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7410,7 +7410,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 724,
+    "entityID": "George Scholefield",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7420,7 +7420,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 725,
+    "entityID": "Mary Kelland",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7452,7 +7452,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 728,
+    "entityID": "Ann Quirk",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7472,7 +7472,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 730,
+    "entityID": "Chas W Westcott",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -7526,7 +7526,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 735,
+    "entityID": "McDonald and Co, aerated water mfrs ",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7536,7 +7536,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 736,
+    "entityID": "Seven Stars hotel",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7586,7 +7586,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 741,
+    "entityID": "Danl O'Dwyer",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7676,7 +7676,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 750,
+    "entityID": "Thos. Griffen",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7686,7 +7686,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 751,
+    "entityID": "Fredk Kahle",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7706,7 +7706,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 753,
+    "entityID": "Theodore Shade",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7756,7 +7756,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 758,
+    "entityID": "J Kerr, bootmaker",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7776,7 +7776,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 760,
+    "entityID": "B J Bride, hairdresser and tbcenst",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7796,7 +7796,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 762,
+    "entityID": "John Keane, btmkr",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7876,7 +7876,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 770,
+    "entityID": "Arthur Anderson",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7906,7 +7906,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 773,
+    "entityID": "T Kretschmer, drpr",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7938,7 +7938,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 776,
+    "entityID": "E. Smith, boarding house",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -7970,7 +7970,7 @@ const directoryData = [
     "lng": 144.96351927340865
   },
   {
-    "entityID": 779,
+    "entityID": "William H Exley",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8000,7 +8000,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 782,
+    "entityID": "Edward McDonald",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8060,7 +8060,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 788,
+    "entityID": "John Johnston",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8100,7 +8100,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 792,
+    "entityID": "Mrs Flor. Aylmer",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8110,7 +8110,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 793,
+    "entityID": "V Antonie, mar str",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8120,7 +8120,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 794,
+    "entityID": "John Henderson",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8194,7 +8194,7 @@ const directoryData = [
     "lng": 144.963744885001
   },
   {
-    "entityID": 801,
+    "entityID": "F. W. Lanzendorf",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8204,7 +8204,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 802,
+    "entityID": "George Manson",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8214,7 +8214,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 803,
+    "entityID": "Frank Fitzsimmons",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8274,7 +8274,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 809,
+    "entityID": "John Harding",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8374,7 +8374,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 819,
+    "entityID": "Joseph Barkman",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8394,7 +8394,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 821,
+    "entityID": "James Craigie",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8404,7 +8404,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 822,
+    "entityID": "Hugh Turner",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8494,7 +8494,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 831,
+    "entityID": "Thomas Bolitho",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8576,7 +8576,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 839,
+    "entityID": "James Campbell",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8596,7 +8596,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 841,
+    "entityID": "Mary Williams, grocer",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8638,7 +8638,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 845,
+    "entityID": "William Clark",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8648,7 +8648,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 846,
+    "entityID": "Daniel Tulloch",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8658,7 +8658,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 847,
+    "entityID": "Alfred Lemmon",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8668,7 +8668,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 848,
+    "entityID": "Mrs Cath Eaton",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8750,7 +8750,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 856,
+    "entityID": "James Bailey (340 Madeline Street)",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8780,7 +8780,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 859,
+    "entityID": "Chris Dorian",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8810,7 +8810,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 862,
+    "entityID": "Dennis O'Brien",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8910,7 +8910,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 872,
+    "entityID": "Ellen Power",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8960,7 +8960,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 877,
+    "entityID": "Samuel Lindsay",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -8990,7 +8990,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 880,
+    "entityID": "Patrick Mongovan",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9012,7 +9012,7 @@ const directoryData = [
     "lng": 144.96470638127332
   },
   {
-    "entityID": 882,
+    "entityID": "W. Baker, dairy",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9152,7 +9152,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 896,
+    "entityID": "Mary Brown",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9182,7 +9182,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 899,
+    "entityID": "Thomas Gaynor",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9304,7 +9304,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 911,
+    "entityID": "J W Brown, monumental mason",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9374,7 +9374,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 918,
+    "entityID": "Michael Sullivan",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9406,7 +9406,7 @@ const directoryData = [
     "lng": 144.9651855407633
   },
   {
-    "entityID": 921,
+    "entityID": "S Female ref-Thomson, matr",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9450,7 +9450,7 @@ const directoryData = [
     "lng": 144.96291042663492
   },
   {
-    "entityID": 925,
+    "entityID": "E Ashley, coachbuilders' materials importer",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9500,7 +9500,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 930,
+    "entityID": "G Page, ven bd mfr",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9662,7 +9662,7 @@ const directoryData = [
     "lng": 144.96298347261177
   },
   {
-    "entityID": 946,
+    "entityID": "Wm Norris, grocer",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9672,7 +9672,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 947,
+    "entityID": "R G McMullen, labor agent",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9712,7 +9712,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 951,
+    "entityID": "Wm McMahon, tair",
     "source": "Directory",
     "year": 1900,
     "pages": "188",
@@ -9792,7 +9792,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 959,
+    "entityID": "Lazarus Cruchek, furniture dealer",
     "source": "Directory",
     "year": 1900,
     "pages": "188-189",
@@ -9802,7 +9802,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 960,
+    "entityID": "A Nicholl, underclothing mfr",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -9894,7 +9894,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 969,
+    "entityID": "Alfred Reeves",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -9914,7 +9914,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 971,
+    "entityID": "Thomas Roy",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -9924,7 +9924,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 972,
+    "entityID": "Wm Mills, gen dlr",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -9976,7 +9976,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 977,
+    "entityID": "James Caffery (8 Madeline Street)",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10016,7 +10016,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 981,
+    "entityID": "Hugh Lacy",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10046,7 +10046,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 984,
+    "entityID": "William Brooks",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10152,7 +10152,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 994,
+    "entityID": "Mary Tully",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10162,7 +10162,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 995,
+    "entityID": "Michael Bailey",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10172,7 +10172,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 996,
+    "entityID": "Patrick Stanley",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10182,7 +10182,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 997,
+    "entityID": "Matilda Lamb",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10252,7 +10252,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1004,
+    "entityID": "Ann Jago",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10314,7 +10314,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 1010,
+    "entityID": "University grounds",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10334,7 +10334,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1012,
+    "entityID": "Roman Cath rsrve",
     "source": "Directory",
     "year": 1900,
     "pages": "189",
@@ -10428,7 +10428,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1021,
+    "entityID": "William Healey",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10438,7 +10438,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1022,
+    "entityID": "T S Blake, grocer",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10448,7 +10448,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1023,
+    "entityID": "John Hatton, btchr",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10470,7 +10470,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 1025,
+    "entityID": "Charles W Smith",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10610,7 +10610,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1039,
+    "entityID": "Frank Conway",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10620,7 +10620,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1040,
+    "entityID": "S Cleary",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10662,7 +10662,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 1044,
+    "entityID": "Ornamental reserve",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10694,7 +10694,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1047,
+    "entityID": "William Kennedy",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10854,7 +10854,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1063,
+    "entityID": "Emanuel Martin",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10938,7 +10938,7 @@ const directoryData = [
     "lng": 144.963744885001
   },
   {
-    "entityID": 1071,
+    "entityID": "Jos Mathews, boot & slipper factory",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -10978,7 +10978,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1075,
+    "entityID": "Edward O'Ryan",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11008,7 +11008,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1078,
+    "entityID": "Charles F. Bishop",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11018,7 +11018,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1079,
+    "entityID": "John Kelly (Pelham Street)",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11048,7 +11048,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1082,
+    "entityID": "Jas Dillon, bootmkr",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11144,7 +11144,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1091,
+    "entityID": "Thomas Turner",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11154,7 +11154,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1092,
+    "entityID": "James Pearce",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11184,7 +11184,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1095,
+    "entityID": "Jas Reynolds",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11390,7 +11390,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1115,
+    "entityID": "Bridget Farrell",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11482,7 +11482,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1124,
+    "entityID": "Walter Ryland",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11492,7 +11492,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1125,
+    "entityID": "Daniel Clark",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11502,7 +11502,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1126,
+    "entityID": "Daniel Clark, grcr",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11524,7 +11524,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 1128,
+    "entityID": "James Kennedy",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11616,7 +11616,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1137,
+    "entityID": "F Burrell",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11626,7 +11626,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1138,
+    "entityID": "David Reid",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11730,7 +11730,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1148,
+    "entityID": "Bertha Athens",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11770,7 +11770,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1152,
+    "entityID": "James Crowe",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11800,7 +11800,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1155,
+    "entityID": "John Coop",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11810,7 +11810,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1156,
+    "entityID": "Edward Kealy",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11830,7 +11830,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1158,
+    "entityID": "Mrgt Goodwin",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -11882,7 +11882,7 @@ const directoryData = [
     "lng": 144.9650983971878
   },
   {
-    "entityID": 1163,
+    "entityID": "Argyle sq",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -12044,7 +12044,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1179,
+    "entityID": "Martin Kane",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -12104,7 +12104,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1185,
+    "entityID": "J Gordon, wood and coal merchant",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -12114,7 +12114,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1186,
+    "entityID": "M M Kuntze",
     "source": "Directory",
     "year": 1900,
     "pages": "192",
@@ -12230,7 +12230,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1197,
+    "entityID": "Jeremiah T O'Brien, cooper & vat bdr",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12368,7 +12368,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1210,
+    "entityID": "John Jones, bookslr",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12470,7 +12470,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 1220,
+    "entityID": "A. S. Miles, copprsm",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12502,7 +12502,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1223,
+    "entityID": "Wm. Allamby, furn carrier",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12512,7 +12512,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1224,
+    "entityID": "Henry Branchflower, chair maker",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12616,7 +12616,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1234,
+    "entityID": "Mrgt Shepherd",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12706,7 +12706,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1243,
+    "entityID": "Mary Hemar",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12748,7 +12748,7 @@ const directoryData = [
     "lng": 144.96621526323165
   },
   {
-    "entityID": 1247,
+    "entityID": "M King, drsmr",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12758,7 +12758,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1248,
+    "entityID": "Vacant",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12798,7 +12798,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1252,
+    "entityID": "Rev C P (C of E) Thomas",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12854,7 +12854,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1257,
+    "entityID": "J Coughlan, btmkr",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12896,7 +12896,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1261,
+    "entityID": "Leonard Frewer",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -12948,7 +12948,7 @@ const directoryData = [
     "lng": 144.96031414466464
   },
   {
-    "entityID": 1266,
+    "entityID": "Robert Bodington, millwright and milling engineer",
     "source": "Directory",
     "year": 1900,
     "pages": "193",
@@ -13052,7 +13052,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1276,
+    "entityID": "Mrs M. Oakley, frtr",
     "source": "Directory",
     "year": 1900,
     "pages": "194",
@@ -13178,7 +13178,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1288,
+    "entityID": "Fredk. T. Collier",
     "source": "Directory",
     "year": 1900,
     "pages": "194",
@@ -13188,7 +13188,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1289,
+    "entityID": "George Halkerston, carpenter",
     "source": "Directory",
     "year": 1900,
     "pages": "194",
@@ -13208,7 +13208,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1291,
+    "entityID": "M Orbuck, dealer",
     "source": "Directory",
     "year": 1900,
     "pages": "194",
@@ -13230,7 +13230,7 @@ const directoryData = [
     "lng": 144.9642381077414
   },
   {
-    "entityID": 1293,
+    "entityID": "Alfred Tite",
     "source": "Directory",
     "year": 1900,
     "pages": "194",
@@ -13546,7 +13546,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1324,
+    "entityID": "Howard N Proctor",
     "source": "Directory",
     "year": 1900,
     "pages": "194",
@@ -13612,7 +13612,7 @@ const directoryData = [
     "lng": 144.9603995657422
   },
   {
-    "entityID": 1330,
+    "entityID": "Mrs Frances Stanley",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13632,7 +13632,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1332,
+    "entityID": "Bridget O'Neill",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13652,7 +13652,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1334,
+    "entityID": "Martha Griffiths",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13722,7 +13722,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1341,
+    "entityID": "James Kennelly",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13752,7 +13752,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1344,
+    "entityID": "Michael Scully",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13772,7 +13772,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1346,
+    "entityID": "Clifford D Percy",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13880,7 +13880,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1356,
+    "entityID": "Thomas Carew",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13940,7 +13940,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1362,
+    "entityID": "Sarah Stack",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -13980,7 +13980,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1366,
+    "entityID": "Ellen Crough",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14000,7 +14000,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1368,
+    "entityID": "Thos W Botting",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14020,7 +14020,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1370,
+    "entityID": "Burnett Smith",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14030,7 +14030,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1371,
+    "entityID": "B Smith, woodyd",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14040,7 +14040,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1372,
+    "entityID": "Emma Sanders",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14050,7 +14050,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1373,
+    "entityID": "Ralph McIntosh",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14060,7 +14060,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1374,
+    "entityID": "Joseph W. Miller",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14070,7 +14070,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1375,
+    "entityID": "Harriet Podmore, store",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14080,7 +14080,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1376,
+    "entityID": "Henry C Baker",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14100,7 +14100,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1378,
+    "entityID": "Andrew Steel",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14110,7 +14110,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1379,
+    "entityID": "Thomas Jackson",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14120,7 +14120,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1380,
+    "entityID": "Bridget Nolan",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14164,7 +14164,7 @@ const directoryData = [
     "lng": 144.96002570605359
   },
   {
-    "entityID": 1384,
+    "entityID": "J Garbutt, chainmr",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14418,7 +14418,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1409,
+    "entityID": "Austin O'Shannassy",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14448,7 +14448,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1412,
+    "entityID": "Samuel Paul",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14458,7 +14458,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1413,
+    "entityID": "Thomas McLean",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14468,7 +14468,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1414,
+    "entityID": "William Armstrong",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14520,7 +14520,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1419,
+    "entityID": "Charles Davis",
     "source": "Directory",
     "year": 1905,
     "pages": "178",
@@ -14774,7 +14774,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1444,
+    "entityID": "Margaret Hall",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -14794,7 +14794,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1446,
+    "entityID": "James Devlin",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -14814,7 +14814,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1448,
+    "entityID": "Ann Dunn",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -14874,7 +14874,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1454,
+    "entityID": "John Scott",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -14904,7 +14904,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1457,
+    "entityID": "Donald Currie",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15082,7 +15082,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1474,
+    "entityID": "James Matthews",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15092,7 +15092,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1475,
+    "entityID": "Cath Bourke",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15166,7 +15166,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1482,
+    "entityID": "M O'Kelly, grocer",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15186,7 +15186,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1484,
+    "entityID": "Abraham Rosenthal, slipper maker",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15196,7 +15196,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1485,
+    "entityID": "Baptist mission hall",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15218,7 +15218,7 @@ const directoryData = [
     "lng": 144.96238754611835
   },
   {
-    "entityID": 1487,
+    "entityID": "J Bailey, builder",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15238,7 +15238,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1489,
+    "entityID": "James Dobson",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15258,7 +15258,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1491,
+    "entityID": "Mary Kennard",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15288,7 +15288,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1494,
+    "entityID": "Wm. Winters",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15342,7 +15342,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1499,
+    "entityID": "Robt Zoll, cbtmkr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15352,7 +15352,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1500,
+    "entityID": "Jas Carter, dealer",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15404,7 +15404,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1505,
+    "entityID": "Frederick Gregory",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15466,7 +15466,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1511,
+    "entityID": "agricultural engnrs Nicholson & Morrow",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15476,7 +15476,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1512,
+    "entityID": "R Smith, wire wrkr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15496,7 +15496,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1514,
+    "entityID": "Thos Vaughan",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15506,7 +15506,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1515,
+    "entityID": "T Carroll, hairdrsr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15556,7 +15556,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1520,
+    "entityID": "Viggo Hansen",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15576,7 +15576,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1522,
+    "entityID": "Susan Mudge",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15606,7 +15606,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1525,
+    "entityID": "Joseph Mahoney",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15616,7 +15616,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1526,
+    "entityID": "Ellen Nugent",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15708,7 +15708,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1535,
+    "entityID": "Mrs A. Paton, grcr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15718,7 +15718,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1536,
+    "entityID": "W Paton, cabt mkr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15748,7 +15748,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1539,
+    "entityID": "Catherine Kerr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15758,7 +15758,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1540,
+    "entityID": "John Coughlan",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15768,7 +15768,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1541,
+    "entityID": "John Clarke",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15788,7 +15788,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1543,
+    "entityID": "Robt Connor, baker",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15798,7 +15798,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1544,
+    "entityID": "S Anderson",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15808,7 +15808,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1545,
+    "entityID": "M N Ballard, bedding manufactr",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15940,7 +15940,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1558,
+    "entityID": "Edward J Moyes",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -15950,7 +15950,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1559,
+    "entityID": "Ellen Harris",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16000,7 +16000,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1564,
+    "entityID": "Michael Timmons",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16020,7 +16020,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1566,
+    "entityID": "Nathan Rosenfeld",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16092,7 +16092,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1573,
+    "entityID": "Emu htl",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16134,7 +16134,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1577,
+    "entityID": "Alex M Bentwitch",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16252,7 +16252,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1588,
+    "entityID": "Edward Johnson",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16262,7 +16262,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1589,
+    "entityID": "Albert Hubbard",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16282,7 +16282,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1591,
+    "entityID": "A Scott, store",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16434,7 +16434,7 @@ const directoryData = [
     "lng": 144.96224521626036
   },
   {
-    "entityID": 1605,
+    "entityID": "John Kiley",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16466,7 +16466,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1608,
+    "entityID": "Lewis Rosenthal",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16526,7 +16526,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1614,
+    "entityID": "Solomon Goldenberg",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16580,7 +16580,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1619,
+    "entityID": "John Hawkins",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -16654,7 +16654,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1626,
+    "entityID": "Julia Byrne",
     "source": "Directory",
     "year": 1905,
     "pages": "182",
@@ -16664,7 +16664,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1627,
+    "entityID": "W Monaghan",
     "source": "Directory",
     "year": 1905,
     "pages": "182",
@@ -16840,7 +16840,7 @@ const directoryData = [
     "lng": 144.96374375303895
   },
   {
-    "entityID": 1644,
+    "entityID": "Henry O'Brien",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -16850,7 +16850,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1645,
+    "entityID": "Michael Quinlan",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -16890,7 +16890,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1649,
+    "entityID": "Mary Smyth",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -16900,7 +16900,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1650,
+    "entityID": "Jane Robertson",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -16910,7 +16910,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1651,
+    "entityID": "Fredk Pitcher",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -16964,7 +16964,7 @@ const directoryData = [
     "lng": 144.96202722798873
   },
   {
-    "entityID": 1656,
+    "entityID": "C Reynolds",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -16984,7 +16984,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1658,
+    "entityID": "John Tippett",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -17004,7 +17004,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1660,
+    "entityID": "Walter uce",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -17074,7 +17074,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1667,
+    "entityID": "Alexander Hall",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -17084,7 +17084,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1668,
+    "entityID": "Antonio Menzies",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -17104,7 +17104,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1670,
+    "entityID": "Fredk W Hewlett",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -17154,7 +17154,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1675,
+    "entityID": "John McNamara",
     "source": "Directory",
     "year": 1905,
     "pages": "183",
@@ -17326,7 +17326,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1692,
+    "entityID": "John Training College (Education Dept)",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17348,7 +17348,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 1694,
+    "entityID": "Women's Hospital",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17414,7 +17414,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1700,
+    "entityID": "W Pridham, jun, butcher",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17488,7 +17488,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1707,
+    "entityID": "L Thompson",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17518,7 +17518,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1710,
+    "entityID": "C Broyer, surg, Broyer, Dr W G",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17528,7 +17528,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1711,
+    "entityID": "C Robertson, grocer",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17548,7 +17548,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1713,
+    "entityID": "Mrs Mrgt. Kennedy",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17568,7 +17568,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1715,
+    "entityID": "Elizabth Pride, boarding house",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17622,7 +17622,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1720,
+    "entityID": "Mrs Catherine Ryan",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17632,7 +17632,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1721,
+    "entityID": "Mary McEntee",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17662,7 +17662,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1724,
+    "entityID": "T R O'Connor, bkr",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17684,7 +17684,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1726,
+    "entityID": "Joseph Herman",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17704,7 +17704,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1728,
+    "entityID": "Thomas Foley, J.P.",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17724,7 +17724,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1730,
+    "entityID": "Jane Lemon Tree Hotel-Burke",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17744,7 +17744,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1732,
+    "entityID": "Elizabeth Little",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17788,7 +17788,7 @@ const directoryData = [
     "lng": 144.95777008321585
   },
   {
-    "entityID": 1736,
+    "entityID": "AACo 462 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17810,7 +17810,7 @@ const directoryData = [
     "lng": 144.95879556571705
   },
   {
-    "entityID": 1738,
+    "entityID": "James Bell",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17820,7 +17820,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1739,
+    "entityID": "John S Davie",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17904,7 +17904,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1747,
+    "entityID": "Helen Ingram",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17958,7 +17958,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1752,
+    "entityID": "John O'Sullivan",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -17968,7 +17968,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1753,
+    "entityID": "Agnes Gregory",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18062,7 +18062,7 @@ const directoryData = [
     "lng": 144.96249656780145
   },
   {
-    "entityID": 1762,
+    "entityID": "R Alderdice, grocer",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18122,7 +18122,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1768,
+    "entityID": "Patrick Gleeson",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18142,7 +18142,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1770,
+    "entityID": "Henry Dinsdale",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18236,7 +18236,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1779,
+    "entityID": "Wm J Watt, dairy",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18256,7 +18256,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1781,
+    "entityID": "Walker H Sharp",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18266,7 +18266,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1782,
+    "entityID": "Abraham Cohen",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18276,7 +18276,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1783,
+    "entityID": "M E Watson",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18286,7 +18286,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1784,
+    "entityID": "Abraham J Green",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18338,7 +18338,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1789,
+    "entityID": "J. Luttgens, bootmr",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18410,7 +18410,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1796,
+    "entityID": "Henry Gray",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18420,7 +18420,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1797,
+    "entityID": "Sarah Farrell",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18430,7 +18430,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1798,
+    "entityID": "Henry Jaggers",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18480,7 +18480,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1803,
+    "entityID": "B Madigan, dressmaker",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18490,7 +18490,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1804,
+    "entityID": "John Exell",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18532,7 +18532,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1808,
+    "entityID": "AACo 202 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18564,7 +18564,7 @@ const directoryData = [
     "lng": 144.96840703550365
   },
   {
-    "entityID": 1811,
+    "entityID": "J J Brenan, est agt",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18638,7 +18638,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1818,
+    "entityID": "M O'Connell",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18648,7 +18648,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1819,
+    "entityID": "Mrs Margaret Shine",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18658,7 +18658,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1820,
+    "entityID": "Margt Jackson",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18668,7 +18668,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1821,
+    "entityID": "Hy W Hackett",
     "source": "Directory",
     "year": 1905,
     "pages": "189",
@@ -18722,7 +18722,7 @@ const directoryData = [
     "lng": 144.95995501260302
   },
   {
-    "entityID": 1826,
+    "entityID": "A. Mair and Co, timber merchants",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -18752,7 +18752,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1829,
+    "entityID": "M Leicester Hotel-Lancaster",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -18814,7 +18814,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1835,
+    "entityID": "G Oxley, wood trnr",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -18824,7 +18824,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1836,
+    "entityID": "George Oxley",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -18834,7 +18834,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1837,
+    "entityID": "H Dobson",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19018,7 +19018,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1855,
+    "entityID": "W J Brewer, timber merchant",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19028,7 +19028,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1856,
+    "entityID": "Geo Armitage, cabt maker",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19048,7 +19048,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1858,
+    "entityID": "J Florant, plumber",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19100,7 +19100,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1863,
+    "entityID": "Cath Gleeson",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19110,7 +19110,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1864,
+    "entityID": "John Garbutt, chain and hame and saddle tree maker",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19120,7 +19120,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1865,
+    "entityID": "William Barley",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19140,7 +19140,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1867,
+    "entityID": "John Simcox, & Co, zinc founders",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19192,7 +19192,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1872,
+    "entityID": "Joseph Royal, & Co axle makers",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19202,7 +19202,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1873,
+    "entityID": "Joseph Royal",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19212,7 +19212,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1874,
+    "entityID": "Thomas Phillips",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19222,7 +19222,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1875,
+    "entityID": "Emma Hirt",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19232,7 +19232,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1876,
+    "entityID": "Robert Fitzpatrick",
     "source": "Directory",
     "year": 1905,
     "pages": "190",
@@ -19342,7 +19342,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1887,
+    "entityID": "John W Irving, grcr",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19352,7 +19352,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1888,
+    "entityID": "Mary Parnell",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19414,7 +19414,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 1894,
+    "entityID": "James Bowling grn-Turner, caretkr",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19670,7 +19670,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1918,
+    "entityID": "George Scholefield",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19680,7 +19680,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1919,
+    "entityID": "Mary Kelland",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19712,7 +19712,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1922,
+    "entityID": "Ann Quirk",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19752,7 +19752,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 1926,
+    "entityID": "Chas W Westcott",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19828,7 +19828,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 1933,
+    "entityID": "A Kittson",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19838,7 +19838,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1934,
+    "entityID": "Patrick McHugh",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19848,7 +19848,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1935,
+    "entityID": "Frederick Hill",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19858,7 +19858,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1936,
+    "entityID": "Wm Rush",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19868,7 +19868,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1937,
+    "entityID": "Charles Evans",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19928,7 +19928,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1943,
+    "entityID": "Ann O'Shea",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19958,7 +19958,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1946,
+    "entityID": "John Graham",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -19968,7 +19968,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1947,
+    "entityID": "Chas H Sibley",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -20000,7 +20000,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1950,
+    "entityID": "Susan Brown",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -20020,7 +20020,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1952,
+    "entityID": "Thomas Brennan",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -20072,7 +20072,7 @@ const directoryData = [
     "lng": 144.96087983507917
   },
   {
-    "entityID": 1957,
+    "entityID": "Jane Tipton",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -20102,7 +20102,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 1960,
+    "entityID": "John Kelly (Little Pelham Street)",
     "source": "Directory",
     "year": 1905,
     "pages": "191",
@@ -20298,7 +20298,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1979,
+    "entityID": "McDonald and Co, aerated water mfrs ",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20308,7 +20308,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1980,
+    "entityID": "Seven Stars hotel",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20360,7 +20360,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1985,
+    "entityID": "Danl O'Dwyer",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20420,7 +20420,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1991,
+    "entityID": "Thos. Griffen",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20450,7 +20450,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1994,
+    "entityID": "Fredk Kahle",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20470,7 +20470,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 1996,
+    "entityID": "Theodore Shade",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20542,7 +20542,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2003,
+    "entityID": "J Kerr, bootmaker",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20562,7 +20562,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2005,
+    "entityID": "B J Bride, hairdresser and tbcenst",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20582,7 +20582,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2007,
+    "entityID": "John Keane, btmkr",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20654,7 +20654,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2014,
+    "entityID": "Arthur Anderson",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20684,7 +20684,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2017,
+    "entityID": "T Kretschmer, drpr",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20716,7 +20716,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 2020,
+    "entityID": "AACo 199 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20726,7 +20726,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2021,
+    "entityID": "U Richardson, drap",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20766,7 +20766,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2025,
+    "entityID": "E. Smith, boarding house",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20798,7 +20798,7 @@ const directoryData = [
     "lng": 144.96351927340865
   },
   {
-    "entityID": 2028,
+    "entityID": "William H Exley",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20828,7 +20828,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2031,
+    "entityID": "Edward McDonald",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20880,7 +20880,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2036,
+    "entityID": "John Johnston",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20890,7 +20890,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2037,
+    "entityID": "John Jones, packing case dealer",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20900,7 +20900,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2038,
+    "entityID": "Mrs Flor. Aylmer",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20910,7 +20910,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2039,
+    "entityID": "V Antonie, mar str",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20920,7 +20920,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2040,
+    "entityID": "John Henderson",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20940,7 +20940,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2042,
+    "entityID": "Albt. E. Price, grcr",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20984,7 +20984,7 @@ const directoryData = [
     "lng": 144.963744885001
   },
   {
-    "entityID": 2046,
+    "entityID": "F. W. Lanzendorf",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -20994,7 +20994,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2047,
+    "entityID": "George Manson",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21004,7 +21004,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2048,
+    "entityID": "Frank Fitzsimmons",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21054,7 +21054,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2053,
+    "entityID": "Frederick Liney",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21064,7 +21064,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2054,
+    "entityID": "John Harding",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21074,7 +21074,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2055,
+    "entityID": "Marion Carter",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21156,7 +21156,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2063,
+    "entityID": "Mrs Ellen Green",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21166,7 +21166,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2064,
+    "entityID": "Joseph Barkman",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21176,7 +21176,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2065,
+    "entityID": "Lewis Matenson",
     "source": "Directory",
     "year": 1905,
     "pages": "194",
@@ -21186,7 +21186,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2066,
+    "entityID": "James Craigie",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21196,7 +21196,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2067,
+    "entityID": "Hugh Turner",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21216,7 +21216,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2069,
+    "entityID": "John Noonan",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21276,7 +21276,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2075,
+    "entityID": "Lewis Allen",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21286,7 +21286,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2076,
+    "entityID": "Thomas Bolitho",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21296,7 +21296,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2077,
+    "entityID": "Michael Isaacs",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21368,7 +21368,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2084,
+    "entityID": "I McIntyre",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21378,7 +21378,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2085,
+    "entityID": "James Campbell",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21398,7 +21398,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2087,
+    "entityID": "Mary Williams, grocer",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21440,7 +21440,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2091,
+    "entityID": "William Clark",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21450,7 +21450,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2092,
+    "entityID": "Daniel Tulloch",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21460,7 +21460,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2093,
+    "entityID": "Alfred Lemmon",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21470,7 +21470,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2094,
+    "entityID": "Mrs Cath Eaton",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21552,7 +21552,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2102,
+    "entityID": "James Bailey (340 Madeline Street)",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21582,7 +21582,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2105,
+    "entityID": "Chris Dorian",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21612,7 +21612,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2108,
+    "entityID": "Dennis O'Brien",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21704,7 +21704,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2117,
+    "entityID": "Ellen Power",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21746,7 +21746,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2121,
+    "entityID": "Robert McKean",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21756,7 +21756,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2122,
+    "entityID": "Samuel Lindsay",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21786,7 +21786,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2125,
+    "entityID": "Patrick Mongovan",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21818,7 +21818,7 @@ const directoryData = [
     "lng": 144.96470638127332
   },
   {
-    "entityID": 2128,
+    "entityID": "W. Baker, dairy",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21848,7 +21848,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2131,
+    "entityID": "Letitia Rogers",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21888,7 +21888,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2135,
+    "entityID": "Joseph Hardy",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21950,7 +21950,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2141,
+    "entityID": "Mary Brown",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -21980,7 +21980,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2144,
+    "entityID": "Thomas Gaynor",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22022,7 +22022,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2148,
+    "entityID": "J O'Donoghue",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22042,7 +22042,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2150,
+    "entityID": "Patrick Haren",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22074,7 +22074,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2153,
+    "entityID": "Aubrey C Matthews",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22094,7 +22094,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2155,
+    "entityID": "J W Brown, monumental mason",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22134,7 +22134,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2159,
+    "entityID": "M Shovelton",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22184,7 +22184,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2164,
+    "entityID": "Michael Sullivan",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22216,7 +22216,7 @@ const directoryData = [
     "lng": 144.9651855407633
   },
   {
-    "entityID": 2167,
+    "entityID": "S Female ref-Thomson, matr",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22260,7 +22260,7 @@ const directoryData = [
     "lng": 144.96291042663492
   },
   {
-    "entityID": 2171,
+    "entityID": "E Ashley, coachbuilders' materials importer",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22300,7 +22300,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2175,
+    "entityID": "AACo 197 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22310,7 +22310,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2176,
+    "entityID": "G Page, ven bd mfr",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22340,7 +22340,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2179,
+    "entityID": "Daniel Weatherill, general decorator",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22372,7 +22372,7 @@ const directoryData = [
     "lng": 144.96298347261177
   },
   {
-    "entityID": 2182,
+    "entityID": "Wm Norris, grocer",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22382,7 +22382,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2183,
+    "entityID": "R G McMullen, labor agent",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22402,7 +22402,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2185,
+    "entityID": "F E Striezel, ptrn carver",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22422,7 +22422,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2187,
+    "entityID": "Wm McMahon, tair",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22442,7 +22442,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2189,
+    "entityID": "Patk F Dorgan, bkr",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22482,7 +22482,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2193,
+    "entityID": "J C Alexander, sanitary plumber",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22502,7 +22502,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2195,
+    "entityID": "Lazarus Cruchek, furniture dealer",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22512,7 +22512,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2196,
+    "entityID": "A Nicholl, underclothing mfr",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22564,7 +22564,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 2201,
+    "entityID": "M M Friedman, dpr",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22606,7 +22606,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2205,
+    "entityID": "Alfred Reeves",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22626,7 +22626,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2207,
+    "entityID": "Thomas Roy",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22636,7 +22636,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2208,
+    "entityID": "Wm Mills, gen dlr",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22698,7 +22698,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2214,
+    "entityID": "James Caffery (8 Madeline Street)",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22762,7 +22762,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2220,
+    "entityID": "Hugh Lacy",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22792,7 +22792,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2223,
+    "entityID": "William Brooks",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22822,7 +22822,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2226,
+    "entityID": "J H Holliday, peel merchant",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22888,7 +22888,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2232,
+    "entityID": "Mary Tully",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22898,7 +22898,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2233,
+    "entityID": "Michael Bailey",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22908,7 +22908,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2234,
+    "entityID": "Patrick Stanley",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22918,7 +22918,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2235,
+    "entityID": "Matilda Lamb",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22950,7 +22950,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2238,
+    "entityID": "David Walker",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -22990,7 +22990,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2242,
+    "entityID": "Ann Jago",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -23052,7 +23052,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 2248,
+    "entityID": "University grounds",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -23072,7 +23072,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2250,
+    "entityID": "Roman Cath rsrve",
     "source": "Directory",
     "year": 1905,
     "pages": "195",
@@ -23218,7 +23218,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2264,
+    "entityID": "Albert E Hughes",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23258,7 +23258,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2268,
+    "entityID": "William Healey",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23268,7 +23268,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2269,
+    "entityID": "T S Blake, grocer",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23278,7 +23278,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2270,
+    "entityID": "John Hatton, btchr",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23300,7 +23300,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 2272,
+    "entityID": "Charles W Smith",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23310,7 +23310,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2273,
+    "entityID": "W Whateley, btmr",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23340,7 +23340,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2276,
+    "entityID": "Thomas H Garbutt",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23410,7 +23410,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2283,
+    "entityID": "A Tully",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23420,7 +23420,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2284,
+    "entityID": "Jas Flanagan",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23430,7 +23430,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2285,
+    "entityID": "Frank Conway",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23440,7 +23440,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2286,
+    "entityID": "S Cleary",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23492,7 +23492,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 2291,
+    "entityID": "Ornamental reserve",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23524,7 +23524,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2294,
+    "entityID": "William Kennedy",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23594,7 +23594,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2301,
+    "entityID": "Samuel Kerr",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23674,7 +23674,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2309,
+    "entityID": "Emanuel Martin",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23694,7 +23694,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2311,
+    "entityID": "Alfred H Fryer",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23758,7 +23758,7 @@ const directoryData = [
     "lng": 144.963744885001
   },
   {
-    "entityID": 2317,
+    "entityID": "Jos Mathews, boot & slipper factory",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23790,7 +23790,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2320,
+    "entityID": "Edward O'Ryan",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23820,7 +23820,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2323,
+    "entityID": "Charles F. Bishop",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23830,7 +23830,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2324,
+    "entityID": "John Kelly (Pelham Street)",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23860,7 +23860,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2327,
+    "entityID": "Jas Dillon, bootmkr",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23906,7 +23906,7 @@ const directoryData = [
     "lng": 144.96658891216498
   },
   {
-    "entityID": 2331,
+    "entityID": "Carlton United Clubs htl",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23926,7 +23926,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2333,
+    "entityID": "M J Tinning, general store",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23936,7 +23936,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2334,
+    "entityID": "William Evans",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23946,7 +23946,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2335,
+    "entityID": "David Brown (Pelham Street)",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23966,7 +23966,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2337,
+    "entityID": "Thomas Turner",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -23976,7 +23976,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2338,
+    "entityID": "James Pearce",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -24008,7 +24008,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2341,
+    "entityID": "Jas Reynolds",
     "source": "Directory",
     "year": 1905,
     "pages": "198",
@@ -24128,7 +24128,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2353,
+    "entityID": "Kong Meng",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24234,7 +24234,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2363,
+    "entityID": "Bridget Farrell",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24244,7 +24244,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2364,
+    "entityID": "Frank Ryland, frtr",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24306,7 +24306,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2370,
+    "entityID": "John Kennedy",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24316,7 +24316,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2371,
+    "entityID": "Walter Ryland",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24326,7 +24326,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2372,
+    "entityID": "Daniel Clark",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24336,7 +24336,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2373,
+    "entityID": "Daniel Clark, grcr",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24358,7 +24358,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 2375,
+    "entityID": "James Kennedy",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24378,7 +24378,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2377,
+    "entityID": "Cath Neustetel",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24398,7 +24398,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2379,
+    "entityID": "John F Turner",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24450,7 +24450,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2384,
+    "entityID": "F Burrell",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24472,7 +24472,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2386,
+    "entityID": "David Reid",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24566,7 +24566,7 @@ const directoryData = [
     "lng": 144.963744885001
   },
   {
-    "entityID": 2395,
+    "entityID": "Bertha Athens",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24596,7 +24596,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2398,
+    "entityID": "Eliz Bruggman",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24606,7 +24606,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2399,
+    "entityID": "James Crowe",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24616,7 +24616,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2400,
+    "entityID": "Ernie Graf",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24636,7 +24636,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2402,
+    "entityID": "John Coop",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24646,7 +24646,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2403,
+    "entityID": "Edward Kealy",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24666,7 +24666,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2405,
+    "entityID": "Mrgt Goodwin",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24718,7 +24718,7 @@ const directoryData = [
     "lng": 144.9650983971878
   },
   {
-    "entityID": 2410,
+    "entityID": "Argyle sq",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24740,7 +24740,7 @@ const directoryData = [
     "lng": 144.96658891216498
   },
   {
-    "entityID": 2412,
+    "entityID": "B. L. Sellers",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24872,7 +24872,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2425,
+    "entityID": "Martin Kane",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24892,7 +24892,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2427,
+    "entityID": "J Gordon, wood and coal merchant",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -24912,7 +24912,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2429,
+    "entityID": "M M Kuntze",
     "source": "Directory",
     "year": 1905,
     "pages": "199",
@@ -25010,7 +25010,7 @@ const directoryData = [
     "lng": 144.9587103505729
   },
   {
-    "entityID": 2438,
+    "entityID": "Wm J Royal Artillery htl-Uren",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25020,7 +25020,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2439,
+    "entityID": "Jeremiah T O'Brien, cooper & vat bdr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25158,7 +25158,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2452,
+    "entityID": "John Jones, bookslr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25180,7 +25180,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2454,
+    "entityID": "Charles Cole",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25230,7 +25230,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2459,
+    "entityID": "AACo 185 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25272,7 +25272,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2463,
+    "entityID": "AACo 200 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25282,7 +25282,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2464,
+    "entityID": "A. S. Miles, copprsm",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25292,7 +25292,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2465,
+    "entityID": "J T Adamson, wire worker",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25324,7 +25324,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2468,
+    "entityID": "Wm. Allamby, furn carrier",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25334,7 +25334,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2469,
+    "entityID": "Henry Branchflower, chair maker",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25344,7 +25344,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2470,
+    "entityID": "John Best, boot sole sewer",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25354,7 +25354,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2471,
+    "entityID": "S J Johnson, general store",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25364,7 +25364,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2472,
+    "entityID": "F A Thoren, cbtnmr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25396,7 +25396,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 2475,
+    "entityID": "Queen's Head htl",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25406,7 +25406,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2476,
+    "entityID": "Wm E Murphy",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25468,7 +25468,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2482,
+    "entityID": "Mary Hemar",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25510,7 +25510,7 @@ const directoryData = [
     "lng": 144.96621526323165
   },
   {
-    "entityID": 2486,
+    "entityID": "M King, drsmr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25520,7 +25520,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2487,
+    "entityID": "Vacant",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25550,7 +25550,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2490,
+    "entityID": "St John's Msn Hall",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25560,7 +25560,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2491,
+    "entityID": "Rev C P (C of E) Thomas",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25616,7 +25616,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2496,
+    "entityID": "J Coughlan, btmkr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25710,7 +25710,7 @@ const directoryData = [
     "lng": 144.96031414466464
   },
   {
-    "entityID": 2505,
+    "entityID": "Robert Bodington, millwright and milling engineer",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25730,7 +25730,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2507,
+    "entityID": "Independent church and mission hall",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25740,7 +25740,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2508,
+    "entityID": "P Newton, asphltr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25804,7 +25804,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2514,
+    "entityID": "Mrs M. Oakley, frtr",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25930,7 +25930,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2526,
+    "entityID": "Fredk. T. Collier",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25940,7 +25940,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2527,
+    "entityID": "George Halkerston, carpenter",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25960,7 +25960,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2529,
+    "entityID": "M Orbuck, dealer",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -25982,7 +25982,7 @@ const directoryData = [
     "lng": 144.9642381077414
   },
   {
-    "entityID": 2531,
+    "entityID": "Alfred Tite",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -26154,7 +26154,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2548,
+    "entityID": "Huey Anguey and sons, gn str",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -26174,7 +26174,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2550,
+    "entityID": "AACo 187 HOARDING",
     "source": "Directory",
     "year": 1905,
     "pages": "200",
@@ -26314,7 +26314,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2563,
+    "entityID": "WT Thompson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26324,7 +26324,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2564,
+    "entityID": "John J Fawcett",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26344,7 +26344,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2566,
+    "entityID": "R Weir",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26398,7 +26398,7 @@ const directoryData = [
     "lng": 144.9603995657422
   },
   {
-    "entityID": 2571,
+    "entityID": "Mrs Frances Stanley",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26418,7 +26418,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2573,
+    "entityID": "Bridget O'Neill",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26428,7 +26428,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2574,
+    "entityID": "John Russell",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26438,7 +26438,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2575,
+    "entityID": "Martha Griffiths",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26458,7 +26458,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2577,
+    "entityID": "Henry R Clark",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26508,7 +26508,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2582,
+    "entityID": "James Kennelly",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26518,7 +26518,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2583,
+    "entityID": "Thomas Burrows",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26568,7 +26568,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2588,
+    "entityID": "Clifford D Percy",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26664,7 +26664,7 @@ const directoryData = [
     "lng": 144.96021690828664
   },
   {
-    "entityID": 2597,
+    "entityID": "Thomas Carew",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26704,7 +26704,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2601,
+    "entityID": "Percy Smith",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26724,7 +26724,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2603,
+    "entityID": "Sarah Stack",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26774,7 +26774,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2608,
+    "entityID": "Ellen Creagh",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26804,7 +26804,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2611,
+    "entityID": "Thos W Botting",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26854,7 +26854,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2616,
+    "entityID": "Joseph W. Miller",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26864,7 +26864,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2617,
+    "entityID": "A A Gaskins, general store",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26884,7 +26884,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2619,
+    "entityID": "Andrew Steel",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26894,7 +26894,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2620,
+    "entityID": "Thomas Jackson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26904,7 +26904,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2621,
+    "entityID": "Bridget Nolan",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26936,7 +26936,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 2624,
+    "entityID": "Emily Sumpton",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26946,7 +26946,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2625,
+    "entityID": "David Brown",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26956,7 +26956,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2626,
+    "entityID": "Michael Reilly",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -26986,7 +26986,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2629,
+    "entityID": "Elizab Young",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27006,7 +27006,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2631,
+    "entityID": "Charles Till",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27016,7 +27016,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2632,
+    "entityID": "M Till, cstme",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27076,7 +27076,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2638,
+    "entityID": "John Elcock",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27116,7 +27116,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2642,
+    "entityID": "Wm H Prentice",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27136,7 +27136,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2644,
+    "entityID": "Wm Burton",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27146,7 +27146,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2645,
+    "entityID": "Wm M Dwyer",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27166,7 +27166,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2647,
+    "entityID": "B Byrchall",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27206,7 +27206,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2651,
+    "entityID": "Moses Mendoza",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -27236,7 +27236,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2654,
+    "entityID": "Wm D Alderson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28550,7 +28550,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2783,
+    "entityID": "Mary Stack",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28642,7 +28642,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2792,
+    "entityID": "James Matthews",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28652,7 +28652,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2793,
+    "entityID": "Cath Bourke",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28722,7 +28722,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2800,
+    "entityID": "M O'Kelly, grocer",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28732,7 +28732,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2801,
+    "entityID": "Harris Levi",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28742,7 +28742,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2802,
+    "entityID": "Lewis Rosenthal",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28752,7 +28752,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2803,
+    "entityID": "Baptist mission hall",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28794,7 +28794,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2807,
+    "entityID": "James Dobson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28824,7 +28824,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2810,
+    "entityID": "James Sowter",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28844,7 +28844,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 2812,
+    "entityID": "Wm. Winters",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28898,7 +28898,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2817,
+    "entityID": "Robt Zoll, cbtmkr",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -28948,7 +28948,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2822,
+    "entityID": "Frederick Gregory",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29010,7 +29010,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2828,
+    "entityID": "agricultural engnrs Nicholson & Morrow",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29040,7 +29040,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2831,
+    "entityID": "Thos Vaughan",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29050,7 +29050,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2832,
+    "entityID": "T Carroll, hairdrsr",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29100,7 +29100,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2837,
+    "entityID": "Viggo Hansen",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29120,7 +29120,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2839,
+    "entityID": "Susan Mudge",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29160,7 +29160,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2843,
+    "entityID": "Ellen Nugent",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29232,7 +29232,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2850,
+    "entityID": "William Rose",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29242,7 +29242,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2851,
+    "entityID": "Mrs A. Paton, grcr",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29252,7 +29252,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2852,
+    "entityID": "W Paton, cabt mkr",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29292,7 +29292,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2856,
+    "entityID": "John Coughlan",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29302,7 +29302,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2857,
+    "entityID": "John Clarke",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29322,7 +29322,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2859,
+    "entityID": "Robt Connor, baker",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29332,7 +29332,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2860,
+    "entityID": "S Anderson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29342,7 +29342,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2861,
+    "entityID": "M N Ballard, bedding manufactr",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29352,7 +29352,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2862,
+    "entityID": "John Buchanan",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29404,7 +29404,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2867,
+    "entityID": "James Goonan",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29414,7 +29414,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2868,
+    "entityID": "Edward J Moyes",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29434,7 +29434,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2870,
+    "entityID": "William H C Berry",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29474,7 +29474,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2874,
+    "entityID": "Michael Timmons",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29484,7 +29484,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2875,
+    "entityID": "James Reilly (Bouverie Street)",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29494,7 +29494,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2876,
+    "entityID": "Nathan Rosenfeld",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29544,7 +29544,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2881,
+    "entityID": "Emu htl",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29576,7 +29576,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2884,
+    "entityID": "M E Fitzsimons, dairy produce",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29698,7 +29698,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2896,
+    "entityID": "Edward Johnson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29708,7 +29708,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2897,
+    "entityID": "Albert Hubbard",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29718,7 +29718,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2898,
+    "entityID": "Fredk Steele",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29748,7 +29748,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2901,
+    "entityID": "Solomon Smith",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29818,7 +29818,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2908,
+    "entityID": "J Easton",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29858,7 +29858,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2912,
+    "entityID": "John Kiley",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29878,7 +29878,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2914,
+    "entityID": "John H Harlock",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29970,7 +29970,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2923,
+    "entityID": "James Crow",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -29980,7 +29980,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2924,
+    "entityID": "John Hawkins",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -30000,7 +30000,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2926,
+    "entityID": "Clara Payne",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -30010,7 +30010,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 2927,
+    "entityID": "James Lawson",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -30054,7 +30054,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2931,
+    "entityID": "Julia Byrne",
     "source": "Directory",
     "year": 1910,
     "pages": 191,
@@ -30064,7 +30064,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2932,
+    "entityID": "W Monaghan",
     "source": "Directory",
     "year": 1910,
     "pages": 191,
@@ -30186,7 +30186,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2944,
+    "entityID": "Edward Munro",
     "source": "Directory",
     "year": 1910,
     "pages": 191,
@@ -30208,7 +30208,7 @@ const directoryData = [
     "lng": 144.96374375303895
   },
   {
-    "entityID": 2946,
+    "entityID": "Henry O'Brien",
     "source": "Directory",
     "year": 1910,
     "pages": 191,
@@ -30258,7 +30258,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2951,
+    "entityID": "Jane Robertson",
     "source": "Directory",
     "year": 1910,
     "pages": 191,
@@ -30268,7 +30268,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 2952,
+    "entityID": "Fredk Pitcher",
     "source": "Directory",
     "year": 1910,
     "pages": 191,
@@ -30332,7 +30332,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2958,
+    "entityID": "John Tippett",
     "source": "Directory",
     "year": 1910,
     "pages": "192",
@@ -30342,7 +30342,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2959,
+    "entityID": "Walter uce",
     "source": "Directory",
     "year": 1910,
     "pages": "192",
@@ -30372,7 +30372,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2962,
+    "entityID": "Richard Wishart",
     "source": "Directory",
     "year": 1910,
     "pages": "192",
@@ -30412,7 +30412,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2966,
+    "entityID": "Alexander Hall",
     "source": "Directory",
     "year": 1910,
     "pages": "192",
@@ -30422,7 +30422,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2967,
+    "entityID": "Antonio Menzies",
     "source": "Directory",
     "year": 1910,
     "pages": "192",
@@ -30442,7 +30442,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2969,
+    "entityID": "Fredk W Hewlett",
     "source": "Directory",
     "year": 1910,
     "pages": "192",
@@ -30514,7 +30514,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2976,
+    "entityID": "Elizabeth Little",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30524,7 +30524,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2977,
+    "entityID": "Jewish Club & Libry",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30534,7 +30534,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2978,
+    "entityID": "Jane Lemon Tree Hotel-Burke",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30554,7 +30554,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2980,
+    "entityID": "Thomas Foley, J.P.",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30564,7 +30564,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2981,
+    "entityID": "Michael McDonald",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30584,7 +30584,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2983,
+    "entityID": "T R O'Connor, bkr",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30624,7 +30624,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2987,
+    "entityID": "Mrs Catherine Ryan",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30656,7 +30656,7 @@ const directoryData = [
     "lng": 144.96840703550365
   },
   {
-    "entityID": 2990,
+    "entityID": "Francis Labattaglia",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30686,7 +30686,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2993,
+    "entityID": "Mrs Mrgt. Kennedy",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30696,7 +30696,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2994,
+    "entityID": "C Robertson, grocer",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30706,7 +30706,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2995,
+    "entityID": "C Broyer, surg, Broyer, Dr W G",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30746,7 +30746,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 2999,
+    "entityID": "L Thompson",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30884,7 +30884,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 3012,
+    "entityID": "Jno Training College (Education Dept)",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30958,7 +30958,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3019,
+    "entityID": "Margt Jackson",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30968,7 +30968,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3020,
+    "entityID": "Mrs Margaret Shine",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30978,7 +30978,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3021,
+    "entityID": "M O'Connell",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30988,7 +30988,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3022,
+    "entityID": "J Turnbull, acent",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -30998,7 +30998,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3023,
+    "entityID": "A Suckow, costumiere",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31028,7 +31028,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3026,
+    "entityID": "J J Brenan, est agt",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31050,7 +31050,7 @@ const directoryData = [
     "lng": 144.96840703550365
   },
   {
-    "entityID": 3028,
+    "entityID": "Wm H Orderly rm-Sissons, srgt-mjr",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31060,7 +31060,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3029,
+    "entityID": "AACo 202 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31092,7 +31092,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3032,
+    "entityID": "John Exell",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31102,7 +31102,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3033,
+    "entityID": "B Madigan, dressmaker",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31152,7 +31152,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3038,
+    "entityID": "Henry Jaggers",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31172,7 +31172,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3040,
+    "entityID": "Henry Gray",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31192,7 +31192,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3042,
+    "entityID": "St Joseph's Receiving Home",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31224,7 +31224,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3045,
+    "entityID": "E Warner, cfr",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31234,7 +31234,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3046,
+    "entityID": "J. Luttgens, bootmr",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31244,7 +31244,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3047,
+    "entityID": "Alfred Tite",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31254,7 +31254,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3048,
+    "entityID": "Saml Bridge, grer",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31296,7 +31296,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3052,
+    "entityID": "L Moore-Lane, music teacher",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31306,7 +31306,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3053,
+    "entityID": "M E Watson",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31316,7 +31316,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3054,
+    "entityID": "Charles White",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31326,7 +31326,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3055,
+    "entityID": "Walker H Sharp",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31400,7 +31400,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3062,
+    "entityID": "B Wiedemann",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31420,7 +31420,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3064,
+    "entityID": "James Robinson",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31440,7 +31440,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3066,
+    "entityID": "Robert Davison",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31450,7 +31450,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3067,
+    "entityID": "Patrick Gleeson",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31470,7 +31470,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3069,
+    "entityID": "Albert O'Connell",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31602,7 +31602,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3082,
+    "entityID": "Agnes Gregory",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31612,7 +31612,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3083,
+    "entityID": "John O'Sullivan",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31622,7 +31622,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3084,
+    "entityID": "Anne O'Farrell",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31632,7 +31632,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3085,
+    "entityID": "M J Jeffs",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31654,7 +31654,7 @@ const directoryData = [
     "lng": 144.96175212739325
   },
   {
-    "entityID": 3087,
+    "entityID": "Helen Ingram",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31674,7 +31674,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3089,
+    "entityID": "Cath Grant",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31696,7 +31696,7 @@ const directoryData = [
     "lng": 144.9611597
   },
   {
-    "entityID": 3091,
+    "entityID": "Victoria bowlg green",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31718,7 +31718,7 @@ const directoryData = [
     "lng": 144.9598421178842
   },
   {
-    "entityID": 3093,
+    "entityID": "John W Stamp, engineer",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31728,7 +31728,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3094,
+    "entityID": "Samuel Thompson",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31738,7 +31738,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3095,
+    "entityID": "James Bell",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31770,7 +31770,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3098,
+    "entityID": "AACo 462 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "197",
@@ -31886,7 +31886,7 @@ const directoryData = [
     "lng": 144.95995501260302
   },
   {
-    "entityID": 3109,
+    "entityID": "A. Mair and Co, timber merchants",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -31896,7 +31896,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3110,
+    "entityID": "Nicholson and Morrow, machinery yard",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -31916,7 +31916,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3112,
+    "entityID": "Sargents Ltd, pstryks",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -31926,7 +31926,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3113,
+    "entityID": "M Leicester Hotel-Lancaster",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -31976,7 +31976,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3118,
+    "entityID": "Tas Timber Bending Co",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32006,7 +32006,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3121,
+    "entityID": "H Dobson",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32016,7 +32016,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3122,
+    "entityID": "Morris Davidson",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32036,7 +32036,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3124,
+    "entityID": "Emily Johnston",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32132,7 +32132,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3133,
+    "entityID": "Charles Sanders",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32162,7 +32162,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3136,
+    "entityID": "E Todd",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32222,7 +32222,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3142,
+    "entityID": "Phillip Sheahan",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32242,7 +32242,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3144,
+    "entityID": "Percy Robinson",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32272,7 +32272,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3147,
+    "entityID": "Frederick Malcolm",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32302,7 +32302,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3150,
+    "entityID": "Thomas Larkin",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32322,7 +32322,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3152,
+    "entityID": "John P Waldron",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32352,7 +32352,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3155,
+    "entityID": "Cath Glennon",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32374,7 +32374,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3157,
+    "entityID": "Simon Gannon",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32414,7 +32414,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3161,
+    "entityID": "Mary A McNee",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32434,7 +32434,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3163,
+    "entityID": "Eliza McMahon",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32478,7 +32478,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3167,
+    "entityID": "Geo Armitage, cabt maker",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32488,7 +32488,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3168,
+    "entityID": "Wm H Lees, coach wheeler & body mkr",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32498,7 +32498,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3169,
+    "entityID": "J Florant, plumber",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32530,7 +32530,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3172,
+    "entityID": "James Corin",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32540,7 +32540,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3173,
+    "entityID": "J Garbutt, hame mk",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32550,7 +32550,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3174,
+    "entityID": "Cath Gleeson",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32560,7 +32560,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3175,
+    "entityID": "John Garbutt, chain and hame and saddle tree maker",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32570,7 +32570,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3176,
+    "entityID": "William Barley",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32590,7 +32590,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3178,
+    "entityID": "John Simcox, & Co, zinc founders",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32632,7 +32632,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3182,
+    "entityID": "Joseph Royal, & Co axle makers",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32652,7 +32652,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3184,
+    "entityID": "Thomas Phillips",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32672,7 +32672,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3186,
+    "entityID": "Emma Hirt",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32682,7 +32682,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3187,
+    "entityID": "Robert Fitzpatrick",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32772,7 +32772,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3196,
+    "entityID": "John W Irving, grcr",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32782,7 +32782,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3197,
+    "entityID": "Mary Parnell",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32792,7 +32792,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3198,
+    "entityID": "Annie Bell",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32844,7 +32844,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3203,
+    "entityID": "James Bowling grn-Turner, caretkr",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32930,7 +32930,7 @@ const directoryData = [
     "lng": 144.9632622778136
   },
   {
-    "entityID": 3211,
+    "entityID": "James Elliott",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -32982,7 +32982,7 @@ const directoryData = [
     "lng": 144.963636580966
   },
   {
-    "entityID": 3216,
+    "entityID": "Laing Paterson, and Bruce Ltd, stables",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33252,7 +33252,7 @@ const directoryData = [
     "lng": 144.96522626766304
   },
   {
-    "entityID": 3242,
+    "entityID": "A Kittson",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33262,7 +33262,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3243,
+    "entityID": "Patrick McHugh",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33272,7 +33272,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3244,
+    "entityID": "Frederick Hill",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33282,7 +33282,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3245,
+    "entityID": "Wm Rush",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33292,7 +33292,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3246,
+    "entityID": "Charles Evans",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33352,7 +33352,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3252,
+    "entityID": "Ann O'Shea",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33392,7 +33392,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3256,
+    "entityID": "John Graham",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33402,7 +33402,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3257,
+    "entityID": "Chas H Sibley",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33434,7 +33434,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3260,
+    "entityID": "Susan Brown",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33454,7 +33454,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3262,
+    "entityID": "Thomas Brennan",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33474,7 +33474,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3264,
+    "entityID": "Robert Robertson",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33526,7 +33526,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3269,
+    "entityID": "John Kelly (Little Pelham Street)",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33556,7 +33556,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3272,
+    "entityID": "Jane Tipton",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -33744,7 +33744,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3290,
+    "entityID": "McDonald and Co, aerated water mfrs ",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33816,7 +33816,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3297,
+    "entityID": "Jas Thomas, tbcnst",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33848,7 +33848,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3300,
+    "entityID": "J Kerr, bootmaker",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33868,7 +33868,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3302,
+    "entityID": "B J Bride, hairdresser and tbcenst",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33888,7 +33888,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3304,
+    "entityID": "Enrica Salvio, btmkr",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33950,7 +33950,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3310,
+    "entityID": "T Kretschmer, drpr",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33982,7 +33982,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 3313,
+    "entityID": "AACo 199 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -33992,7 +33992,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3314,
+    "entityID": "U Richardson, drap",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34032,7 +34032,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3318,
+    "entityID": "E. Smith, boarding house",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34064,7 +34064,7 @@ const directoryData = [
     "lng": 144.96351927340865
   },
   {
-    "entityID": 3321,
+    "entityID": "William H Exley",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34084,7 +34084,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3323,
+    "entityID": "James Caffery (120 Madeline Street)",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34094,7 +34094,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3324,
+    "entityID": "Edward Hayes",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34146,7 +34146,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3329,
+    "entityID": "John Johnston",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34156,7 +34156,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3330,
+    "entityID": "John Jones, packing case dealer",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34166,7 +34166,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3331,
+    "entityID": "Mrs Flor. Aylmer",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34176,7 +34176,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3332,
+    "entityID": "V Antonie, mar str",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34186,7 +34186,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3333,
+    "entityID": "John Henderson",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34206,7 +34206,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3335,
+    "entityID": "Albt. E. Price, grcr",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34250,7 +34250,7 @@ const directoryData = [
     "lng": 144.963744885001
   },
   {
-    "entityID": 3339,
+    "entityID": "F. W. Lanzendorf",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34270,7 +34270,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3341,
+    "entityID": "George Manson",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34330,7 +34330,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3347,
+    "entityID": "Frederick Liney",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34340,7 +34340,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3348,
+    "entityID": "John Harding",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34350,7 +34350,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3349,
+    "entityID": "Marion Carter",
     "source": "Directory",
     "year": 1910,
     "pages": "202",
@@ -34410,7 +34410,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3355,
+    "entityID": "Mrs Ellen Green",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34420,7 +34420,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3356,
+    "entityID": "Joseph Barkman",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34440,7 +34440,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3358,
+    "entityID": "Lewis Matenson",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34490,7 +34490,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3363,
+    "entityID": "John Noonan",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34510,7 +34510,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3365,
+    "entityID": "Hugh Turner, sen",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34530,7 +34530,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3367,
+    "entityID": "John Kelly",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34540,7 +34540,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3368,
+    "entityID": "Susannah Cole",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34550,7 +34550,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3369,
+    "entityID": "Lewis Allen",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34560,7 +34560,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3370,
+    "entityID": "Thomas Bolitho",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34570,7 +34570,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3371,
+    "entityID": "Michael Isaacs",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34622,7 +34622,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3376,
+    "entityID": "Edwin Sheppard",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34632,7 +34632,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3377,
+    "entityID": "I McIntyre",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34642,7 +34642,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3378,
+    "entityID": "James Campbell",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34714,7 +34714,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3385,
+    "entityID": "Eliz Tulloch",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34724,7 +34724,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3386,
+    "entityID": "Lawrence Tulloch",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34734,7 +34734,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3387,
+    "entityID": "Alfred Lemmon",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34744,7 +34744,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3388,
+    "entityID": "Mrs Cath Eaton",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34774,7 +34774,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3391,
+    "entityID": "James Newson",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34806,7 +34806,7 @@ const directoryData = [
     "lng": 144.96447018743171
   },
   {
-    "entityID": 3394,
+    "entityID": "James Bailey (336 Madeline Street)",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34856,7 +34856,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3399,
+    "entityID": "Ellen Dorian",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34866,7 +34866,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3400,
+    "entityID": "Louisa Moxham",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34886,7 +34886,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3402,
+    "entityID": "Dennis O'Brien",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34938,7 +34938,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3407,
+    "entityID": "Edith Collinson, Sefton priv hosp",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34948,7 +34948,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3408,
+    "entityID": "Robert McKean",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34958,7 +34958,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3409,
+    "entityID": "M Lindsay",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34968,7 +34968,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3410,
+    "entityID": "John J Tracey",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -34978,7 +34978,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3411,
+    "entityID": "L Mockett",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35020,7 +35020,7 @@ const directoryData = [
     "lng": 144.96470638127332
   },
   {
-    "entityID": 3415,
+    "entityID": "W. Baker, dairy",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35030,7 +35030,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3416,
+    "entityID": "Mary Power",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35050,7 +35050,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3418,
+    "entityID": "Letitia Rogers",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35060,7 +35060,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3419,
+    "entityID": "Michael Cohen",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35080,7 +35080,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3421,
+    "entityID": "James Walkerden",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35090,7 +35090,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3422,
+    "entityID": "Joseph Hardy",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35132,7 +35132,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3426,
+    "entityID": "George R Growcott, cabinet maker",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35152,7 +35152,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3428,
+    "entityID": "Alfd. Hickman",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35172,7 +35172,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3430,
+    "entityID": "J O'Donoghue",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35182,7 +35182,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3431,
+    "entityID": "Cath Fowler",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35192,7 +35192,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3432,
+    "entityID": "Patrick Haren",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35214,7 +35214,7 @@ const directoryData = [
     "lng": 144.96486409352812
   },
   {
-    "entityID": 3434,
+    "entityID": "G S Kluglein",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35224,7 +35224,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3435,
+    "entityID": "Aubrey C Matthews",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35244,7 +35244,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3437,
+    "entityID": "John W Brown, monumental mason",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35264,7 +35264,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3439,
+    "entityID": "Johanna Bevan",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35284,7 +35284,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3441,
+    "entityID": "Maurice Lane, jun",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35294,7 +35294,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3442,
+    "entityID": "Alfred E. Finlay",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35304,7 +35304,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3443,
+    "entityID": "M Shovelton",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35354,7 +35354,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3448,
+    "entityID": "Michael Sullivan",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35386,7 +35386,7 @@ const directoryData = [
     "lng": 144.9651855407633
   },
   {
-    "entityID": 3451,
+    "entityID": "Female Refuge",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35430,7 +35430,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3455,
+    "entityID": "AACo 197 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35470,7 +35470,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3459,
+    "entityID": "Daniel Weatherill, general decorator",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35502,7 +35502,7 @@ const directoryData = [
     "lng": 144.96298347261177
   },
   {
-    "entityID": 3462,
+    "entityID": "Wm Norris, grocer",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35522,7 +35522,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3464,
+    "entityID": "A Kenrick, hrdsr",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35532,7 +35532,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3465,
+    "entityID": "F E Striezel, ptrn carver",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35552,7 +35552,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3467,
+    "entityID": "Frank Puig, rfshts",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35572,7 +35572,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3469,
+    "entityID": "Patk F Dorgan, bkr",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35592,7 +35592,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3471,
+    "entityID": "A F Greenless, stationer",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35612,7 +35612,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3473,
+    "entityID": "J C Alexander, sanitary plumber",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35622,7 +35622,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3474,
+    "entityID": "Matilda Elliott, ham and beef shop",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35632,7 +35632,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3475,
+    "entityID": "Lazarus Cruchek, furniture dealer",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35652,7 +35652,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3477,
+    "entityID": "Mrs A. H. Kopmann, cigar manufacturer",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35662,7 +35662,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3478,
+    "entityID": "Solomon Cohen, tailor",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35694,7 +35694,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 3481,
+    "entityID": "M M Friedman, dpr",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35704,7 +35704,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3482,
+    "entityID": "A Bernard, grocer",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35808,7 +35808,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3492,
+    "entityID": "Alfred Reeves",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35818,7 +35818,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3493,
+    "entityID": "J H Holliday, peel merchant",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35896,7 +35896,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3500,
+    "entityID": "Michael Bailey",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35906,7 +35906,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3501,
+    "entityID": "Patrick Stanley",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35936,7 +35936,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3504,
+    "entityID": "David Walker",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -35976,7 +35976,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3508,
+    "entityID": "Ann Jago",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -36038,7 +36038,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 3514,
+    "entityID": "University grounds",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -36048,7 +36048,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3515,
+    "entityID": "Medical School",
     "source": "Directory",
     "year": 1910,
     "pages": "203",
@@ -36172,7 +36172,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3527,
+    "entityID": "W Armstrong",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36224,7 +36224,7 @@ const directoryData = [
     "lng": 144.969445671475
   },
   {
-    "entityID": 3532,
+    "entityID": "St George's Girls' School",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36256,7 +36256,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3535,
+    "entityID": "Kong Meng",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36298,7 +36298,7 @@ const directoryData = [
     "lng": 144.9673536368875
   },
   {
-    "entityID": 3539,
+    "entityID": "T Kennelly, btmkr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36308,7 +36308,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3540,
+    "entityID": "Thomas Turner",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36328,7 +36328,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3542,
+    "entityID": "David Brown (Pelham Street)",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36338,7 +36338,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3543,
+    "entityID": "William Evans",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36348,7 +36348,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3544,
+    "entityID": "M J Tinning, general store",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36358,7 +36358,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3545,
+    "entityID": "Carlton United Clubs htl",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36424,7 +36424,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3551,
+    "entityID": "Wm Belden, btmkr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36444,7 +36444,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3553,
+    "entityID": "Charles F. Bishop",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36466,7 +36466,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3555,
+    "entityID": "Jos Mathews, boot & slipper factory",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36532,7 +36532,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3561,
+    "entityID": "Alfred H Fryer",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36562,7 +36562,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3564,
+    "entityID": "Emanuel Martin",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36652,7 +36652,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3573,
+    "entityID": "Samuel Kerr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36682,7 +36682,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3576,
+    "entityID": "William Tyndall",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36722,7 +36722,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3580,
+    "entityID": "Charles McLaren",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36798,7 +36798,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3587,
+    "entityID": "S Cleary",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36808,7 +36808,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3588,
+    "entityID": "Frank Conway",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36818,7 +36818,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3589,
+    "entityID": "Jas Flanagan",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36828,7 +36828,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3590,
+    "entityID": "A Tully",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36898,7 +36898,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3597,
+    "entityID": "Thomas H Garbutt",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36928,7 +36928,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3600,
+    "entityID": "W Whateley, btmr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36960,7 +36960,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 3603,
+    "entityID": "John Hatton, btchr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -36980,7 +36980,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3605,
+    "entityID": "William Healey",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37000,7 +37000,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3607,
+    "entityID": "Eliza Dwyer",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37020,7 +37020,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3609,
+    "entityID": "Albert E Hughes",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37030,7 +37030,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3610,
+    "entityID": "A Junction htl-Crosbie",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37064,7 +37064,7 @@ const directoryData = [
     "lng": 144.969445671475
   },
   {
-    "entityID": 3613,
+    "entityID": "Hospital for sick children",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37108,7 +37108,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3617,
+    "entityID": "Geo Greenwood",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37128,7 +37128,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3619,
+    "entityID": "M M Kuntze",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37148,7 +37148,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3621,
+    "entityID": "Michael Glavin",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37200,7 +37200,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3626,
+    "entityID": "I Firth, ger",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37220,7 +37220,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3628,
+    "entityID": "Ellen Glynn",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37230,7 +37230,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3629,
+    "entityID": "B. L. Sellers",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37306,7 +37306,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3636,
+    "entityID": "Mrgt Goodwin",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37356,7 +37356,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3641,
+    "entityID": "Ernie Graf",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37366,7 +37366,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3642,
+    "entityID": "James Crowe",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37376,7 +37376,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3643,
+    "entityID": "Eliz Bruggman",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37386,7 +37386,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3644,
+    "entityID": "M A Nicholls, frtr & gngrer",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37406,7 +37406,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3646,
+    "entityID": "Andrew O'Ryan",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37512,7 +37512,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3656,
+    "entityID": "James Reilly (Pelham Street)",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37522,7 +37522,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3657,
+    "entityID": "William Hudson",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37532,7 +37532,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3658,
+    "entityID": "James J Rae",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37542,7 +37542,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3659,
+    "entityID": "Wm Rae, dairy",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37574,7 +37574,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3662,
+    "entityID": "John F Turner",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37584,7 +37584,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3663,
+    "entityID": "Daniel Leahy",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37594,7 +37594,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3664,
+    "entityID": "Cath Neustetel",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37614,7 +37614,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3666,
+    "entityID": "John Bunting",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37636,7 +37636,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 3668,
+    "entityID": "Daniel Clark, grcr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37646,7 +37646,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3669,
+    "entityID": "Daniel Clark",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37656,7 +37656,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3670,
+    "entityID": "Walter Ryland",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37666,7 +37666,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3671,
+    "entityID": "John Kennedy",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37686,7 +37686,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3673,
+    "entityID": "Michael Penhall",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37728,7 +37728,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 3677,
+    "entityID": "Frank Ryland, frtr",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37748,7 +37748,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3679,
+    "entityID": "Samuel Paul",
     "source": "Directory",
     "year": 1910,
     "pages": "206",
@@ -37792,7 +37792,7 @@ const directoryData = [
     "lng": 144.96906579145556
   },
   {
-    "entityID": 3683,
+    "entityID": "Pres Church",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37814,7 +37814,7 @@ const directoryData = [
     "lng": 144.96769188442224
   },
   {
-    "entityID": 3685,
+    "entityID": "Rev C P (C of E) Thomas",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37824,7 +37824,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3686,
+    "entityID": "St John's Msn Hall",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37844,7 +37844,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3688,
+    "entityID": "M King, drsmr",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37876,7 +37876,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3691,
+    "entityID": "Mary Hemar",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37916,7 +37916,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3695,
+    "entityID": "Mrgt Shepherd",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37926,7 +37926,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3696,
+    "entityID": "Wm E Murphy",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37936,7 +37936,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3697,
+    "entityID": "Queen's Head htl",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37958,7 +37958,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3699,
+    "entityID": "A Merriman",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -37968,7 +37968,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3700,
+    "entityID": "F A Thoren, cbtnmr",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38000,7 +38000,7 @@ const directoryData = [
     "lng": 144.96473865259938
   },
   {
-    "entityID": 3703,
+    "entityID": "S J Johnson, general store",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38010,7 +38010,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3704,
+    "entityID": "John Best, boot sole sewer",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38020,7 +38020,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3705,
+    "entityID": "F Serle, wckrwkr",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38030,7 +38030,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3706,
+    "entityID": "Wm. Allamby, furn carrier",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38062,7 +38062,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3709,
+    "entityID": "A. S. Miles, copprsm",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38072,7 +38072,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3710,
+    "entityID": "J T Adamson, wire worker",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38082,7 +38082,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3711,
+    "entityID": "Church of Christ Chinese mission",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38092,7 +38092,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3712,
+    "entityID": "AACo 200 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38114,7 +38114,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 3714,
+    "entityID": "Mrs Annie Smith",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38124,7 +38124,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3715,
+    "entityID": "AACo 185 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38134,7 +38134,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3716,
+    "entityID": "Mrs Cecilia Steele",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38196,7 +38196,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3722,
+    "entityID": "Charles Cole",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38318,7 +38318,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3734,
+    "entityID": "Percy Smith, stbls",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38384,7 +38384,7 @@ const directoryData = [
     "lng": 144.95947951984581
   },
   {
-    "entityID": 3740,
+    "entityID": "Jeremiah T O'Brien, cooper & vat bdr",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38394,7 +38394,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3741,
+    "entityID": "Wm J Royal Artillery htl-Uren",
     "source": "Directory",
     "year": 1910,
     "pages": "207",
@@ -38438,7 +38438,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3745,
+    "entityID": "Howard N Proctor",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38480,7 +38480,7 @@ const directoryData = [
     "lng": 144.96769188442224
   },
   {
-    "entityID": 3749,
+    "entityID": "Minnie Conboy",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38490,7 +38490,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3750,
+    "entityID": "Cath Apostolic church",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38522,7 +38522,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3753,
+    "entityID": "AACo 187 HOARDING",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38552,7 +38552,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3756,
+    "entityID": "Huey Anguey and sons, gn str",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38708,7 +38708,7 @@ const directoryData = [
     "lng": 144.9642381077414
   },
   {
-    "entityID": 3771,
+    "entityID": "Morris Orbuck, dlr",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38718,7 +38718,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3772,
+    "entityID": "Ellen Codling, pawnbroker",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38738,7 +38738,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3774,
+    "entityID": "Fredk. T. Collier",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38852,7 +38852,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3785,
+    "entityID": "Mrs M. Oakley, frtr",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38872,7 +38872,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3787,
+    "entityID": "John Morgan",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38916,7 +38916,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3791,
+    "entityID": "P Newton, asphltr",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38926,7 +38926,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3792,
+    "entityID": "Independent church and mission hall",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38946,7 +38946,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3794,
+    "entityID": "Robert Bodington, millwright and milling engineer",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -38998,7 +38998,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 3799,
+    "entityID": "Leonard Frewer",
     "source": "Directory",
     "year": 1910,
     "pages": "208",
@@ -39084,7 +39084,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3807,
+    "entityID": "WT Thompson",
     "source": "Directory",
     "year": 1915,
     "pages": "188",
@@ -39094,7 +39094,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3808,
+    "entityID": "John J Fawcett",
     "source": "Directory",
     "year": 1915,
     "pages": "188",
@@ -39114,7 +39114,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 3810,
+    "entityID": "R Weir",
     "source": "Directory",
     "year": 1915,
     "pages": "188",
@@ -40314,7 +40314,7 @@ const directoryData = [
     "lng": 144.9603995657422
   },
   {
-    "entityID": 3928,
+    "entityID": "Mrs Frances Stanley",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40324,7 +40324,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3929,
+    "entityID": "E Oldfield, nrse",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40344,7 +40344,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3931,
+    "entityID": "John Russell",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40354,7 +40354,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3932,
+    "entityID": "Martha Griffiths",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40364,7 +40364,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3933,
+    "entityID": "Henry R Clark",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40414,7 +40414,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3938,
+    "entityID": "James Kennelly",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40424,7 +40424,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3939,
+    "entityID": "Thomas Burrows",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40464,7 +40464,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3943,
+    "entityID": "Clifford D Percy",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40516,7 +40516,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 3948,
+    "entityID": "Victorian Lawn Tennis Court",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40600,7 +40600,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3956,
+    "entityID": "Percy Smith",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40670,7 +40670,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3963,
+    "entityID": "Ellen Crough",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40690,7 +40690,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3965,
+    "entityID": "Thos W Botting",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40710,7 +40710,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3967,
+    "entityID": "Frederick Steabben",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40720,7 +40720,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3968,
+    "entityID": "Sarah Kenny",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40730,7 +40730,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3969,
+    "entityID": "Joseph W. Miller",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40740,7 +40740,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3970,
+    "entityID": "A A Gaskins, general store",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40770,7 +40770,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3973,
+    "entityID": "B Nolan, junior",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40802,7 +40802,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 3976,
+    "entityID": "Emily Sumpton",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40812,7 +40812,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3977,
+    "entityID": "David Brown",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40822,7 +40822,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3978,
+    "entityID": "Michael Reilly",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40832,7 +40832,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3979,
+    "entityID": "H Griffiths",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40852,7 +40852,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3981,
+    "entityID": "Elizab Young",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40872,7 +40872,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3983,
+    "entityID": "Charles Till",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40882,7 +40882,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3984,
+    "entityID": "M Till, cstme",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40912,7 +40912,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3987,
+    "entityID": "Reginald Graham",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40942,7 +40942,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3990,
+    "entityID": "John Elcock",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40962,7 +40962,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3992,
+    "entityID": "Bridget Crowe",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40972,7 +40972,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3993,
+    "entityID": "Wm H Prentice",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40982,7 +40982,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3994,
+    "entityID": "Isabella Hart",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -40992,7 +40992,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3995,
+    "entityID": "Wm Burton",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41002,7 +41002,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3996,
+    "entityID": "Wm M Dwyer",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41032,7 +41032,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 3999,
+    "entityID": "B Byrchall",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41042,7 +41042,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4000,
+    "entityID": "Wm Kiernan",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41052,7 +41052,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4001,
+    "entityID": "Patrick Whelan",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41062,7 +41062,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4002,
+    "entityID": "James O Patterson",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41082,7 +41082,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4004,
+    "entityID": "Mary Anderson",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41092,7 +41092,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4005,
+    "entityID": "Wm D Alderson",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41148,7 +41148,7 @@ const directoryData = [
     "lng": 144.9617040557916
   },
   {
-    "entityID": 4010,
+    "entityID": "H Jones, & Co, clothing & hat mfrs",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41158,7 +41158,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4011,
+    "entityID": "Mary Stack",
     "source": "Directory",
     "year": 1915,
     "pages": "189",
@@ -41220,7 +41220,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4017,
+    "entityID": "James Matthews",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41304,7 +41304,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4025,
+    "entityID": "Francis Wilson, grcr",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41314,7 +41314,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4026,
+    "entityID": "Harris Levi",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41324,7 +41324,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4027,
+    "entityID": "Lewis Rosenthal",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41344,7 +41344,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4029,
+    "entityID": "Baptist mission hall",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41426,7 +41426,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4037,
+    "entityID": "James Sowter",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41624,7 +41624,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4056,
+    "entityID": "T Carroll, hrdrsr & tobacconist",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41716,7 +41716,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4065,
+    "entityID": "William Rose",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41726,7 +41726,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4066,
+    "entityID": "Mrs A. Paton, grcr",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41736,7 +41736,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4067,
+    "entityID": "W Paton, cabt mkr",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41776,7 +41776,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4071,
+    "entityID": "John Coughlan",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41786,7 +41786,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4072,
+    "entityID": "John Clarke",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41806,7 +41806,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4074,
+    "entityID": "Robt Connor, baker",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41816,7 +41816,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4075,
+    "entityID": "M N Ballard, furn mnfctrs",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41826,7 +41826,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4076,
+    "entityID": "John Buchanan",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41878,7 +41878,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4081,
+    "entityID": "James Goonan",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41908,7 +41908,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4084,
+    "entityID": "William H C Berry",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41918,7 +41918,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4085,
+    "entityID": "Thaddeus Booth",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41958,7 +41958,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4089,
+    "entityID": "Michael Timmons",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41968,7 +41968,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4090,
+    "entityID": "James Reilly (Bouverie Street)",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -41998,7 +41998,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4093,
+    "entityID": "Henley Mills",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42018,7 +42018,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4095,
+    "entityID": "Dora Hyman",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42060,7 +42060,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4099,
+    "entityID": "M E Fitzsimons, dairy produce",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42102,7 +42102,7 @@ const directoryData = [
     "lng": 144.96212376529985
   },
   {
-    "entityID": 4103,
+    "entityID": "R Hewat, hrdrsr",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42144,7 +42144,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4107,
+    "entityID": "Frederick Mack",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42164,7 +42164,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4109,
+    "entityID": "Percy Pain",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42174,7 +42174,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4110,
+    "entityID": "Albert Hubbard",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42184,7 +42184,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4111,
+    "entityID": "Fredk Steele",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42214,7 +42214,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4114,
+    "entityID": "Solomon Smith",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42254,7 +42254,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4118,
+    "entityID": "J Easton",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42334,7 +42334,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4126,
+    "entityID": "John H Harlock",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42426,7 +42426,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4135,
+    "entityID": "James Crow",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42436,7 +42436,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4136,
+    "entityID": "John Hawkins",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42456,7 +42456,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4138,
+    "entityID": "Clara Payne",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42466,7 +42466,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4139,
+    "entityID": "James Lawson",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42520,7 +42520,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4144,
+    "entityID": "Michael Donovan",
     "source": "Directory",
     "year": 1915,
     "pages": 192,
@@ -42530,7 +42530,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4145,
+    "entityID": "William Love",
     "source": "Directory",
     "year": 1915,
     "pages": 192,
@@ -42560,7 +42560,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4148,
+    "entityID": "Henry O'Brien",
     "source": "Directory",
     "year": 1915,
     "pages": 192,
@@ -42642,7 +42642,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4156,
+    "entityID": "Edward Munro",
     "source": "Directory",
     "year": 1915,
     "pages": 192,
@@ -42714,7 +42714,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4163,
+    "entityID": "Jane Robertson",
     "source": "Directory",
     "year": 1915,
     "pages": 192,
@@ -42788,7 +42788,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4170,
+    "entityID": "John Tippett",
     "source": "Directory",
     "year": 1915,
     "pages": "192",
@@ -42828,7 +42828,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4174,
+    "entityID": "Richard Wishart",
     "source": "Directory",
     "year": 1915,
     "pages": "192",
@@ -42992,7 +42992,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4190,
+    "entityID": "Jewish Club & Libry",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43002,7 +43002,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4191,
+    "entityID": "Jane Lemon Tree Hotel-Burke",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43012,7 +43012,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4192,
+    "entityID": "Wm W Kendrick",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43022,7 +43022,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4193,
+    "entityID": "Thomas Foley, J.P.",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43032,7 +43032,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4194,
+    "entityID": "Michael McDonald",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43082,7 +43082,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4199,
+    "entityID": "Mary McEntee",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43092,7 +43092,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4200,
+    "entityID": "Mrs Catherine Ryan",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43124,7 +43124,7 @@ const directoryData = [
     "lng": 144.96840703550365
   },
   {
-    "entityID": 4203,
+    "entityID": "Francis Labattaglia",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43134,7 +43134,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4204,
+    "entityID": "Elizabth Pride, boarding house",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43154,7 +43154,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4206,
+    "entityID": "Mrs Mrgt. Kennedy",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43184,7 +43184,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4209,
+    "entityID": "P Gleeson, cabman",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43204,7 +43204,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4211,
+    "entityID": "Chas Von Geyer",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43352,7 +43352,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 4225,
+    "entityID": "Jno Training College (Education Dept)",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43406,7 +43406,7 @@ const directoryData = [
     "lng": 144.96989000158698
   },
   {
-    "entityID": 4230,
+    "entityID": "Erskine hall",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43416,7 +43416,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4231,
+    "entityID": "Annie Conroy",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43426,7 +43426,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4232,
+    "entityID": "Margt Jackson",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43436,7 +43436,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4233,
+    "entityID": "Mrs Margaret Shine",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43456,7 +43456,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4235,
+    "entityID": "J Turnbull, acent",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43466,7 +43466,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4236,
+    "entityID": "A Suckow, costumiere",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43518,7 +43518,7 @@ const directoryData = [
     "lng": 144.96840703550365
   },
   {
-    "entityID": 4241,
+    "entityID": "Wm H Orderly rm-Sissons, srgt-mjr",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43528,7 +43528,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4242,
+    "entityID": "AACo 202 HOARDING",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43570,7 +43570,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4246,
+    "entityID": "John Exell",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43580,7 +43580,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4247,
+    "entityID": "Harriet Mills",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43630,7 +43630,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4252,
+    "entityID": "Tasman Stebbings",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43640,7 +43640,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4253,
+    "entityID": "Louisa Doran",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43650,7 +43650,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4254,
+    "entityID": "Henry Gray",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43670,7 +43670,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4256,
+    "entityID": "St Joseph's Receiving Home",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43702,7 +43702,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4259,
+    "entityID": "E Warner, cfr",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43712,7 +43712,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4260,
+    "entityID": "J. Luttgens, bootmr",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43722,7 +43722,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4261,
+    "entityID": "Alfred Tite",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43732,7 +43732,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4262,
+    "entityID": "Saml Bridge, grer",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43774,7 +43774,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4266,
+    "entityID": "L Moore-Lane, music teacher",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43794,7 +43794,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4268,
+    "entityID": "Charles White",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43814,7 +43814,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4270,
+    "entityID": "Wm J Watt, dairy",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43824,7 +43824,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4271,
+    "entityID": "Richard Bryant",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43878,7 +43878,7 @@ const directoryData = [
     "lng": 144.96353083277336
   },
   {
-    "entityID": 4276,
+    "entityID": "B Wiedemann",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43888,7 +43888,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4277,
+    "entityID": "Frank Briglia",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43898,7 +43898,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4278,
+    "entityID": "James Robinson",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43918,7 +43918,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4280,
+    "entityID": "Robert Davison",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43948,7 +43948,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4283,
+    "entityID": "Albert O'Connell",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -43958,7 +43958,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4284,
+    "entityID": "Jane Alexander",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44060,7 +44060,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4294,
+    "entityID": "Agnes Gregory",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44070,7 +44070,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4295,
+    "entityID": "John O'Sullivan",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44080,7 +44080,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4296,
+    "entityID": "Anne O'Farrell",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44090,7 +44090,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4297,
+    "entityID": "M J Jeffs",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44112,7 +44112,7 @@ const directoryData = [
     "lng": 144.96175212739325
   },
   {
-    "entityID": 4299,
+    "entityID": "Helen Ingram",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44132,7 +44132,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4301,
+    "entityID": "Cath Grant",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44154,7 +44154,7 @@ const directoryData = [
     "lng": 144.9611597
   },
   {
-    "entityID": 4303,
+    "entityID": "Victoria bowlg green",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44176,7 +44176,7 @@ const directoryData = [
     "lng": 144.9598421178842
   },
   {
-    "entityID": 4305,
+    "entityID": "John W Stamp, engineer",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44186,7 +44186,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4306,
+    "entityID": "Samuel Thompson",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44196,7 +44196,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4307,
+    "entityID": "James Bell",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44228,7 +44228,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4310,
+    "entityID": "AACo 462 HOARDING",
     "source": "Directory",
     "year": 1915,
     "pages": "195",
@@ -44409,7 +44409,7 @@ const directoryData = [
     "lng": 144.95995501260302
   },
   {
-    "entityID": 4328,
+    "entityID": "A. Mair and Co, timber merchants",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44419,7 +44419,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4329,
+    "entityID": "Nicholson and Morrow, machinery yard",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44429,7 +44429,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4330,
+    "entityID": "Sargents Ltd, pstryks",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44439,7 +44439,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4331,
+    "entityID": "M Leicester Hotel-Lancaster",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44481,7 +44481,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4335,
+    "entityID": "Tas Timber Bending Co",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44521,7 +44521,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4339,
+    "entityID": "H Dobson",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44531,7 +44531,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4340,
+    "entityID": "Morris Davidson",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44551,7 +44551,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4342,
+    "entityID": "Emily Johnston",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44561,7 +44561,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4343,
+    "entityID": "Thomas Williams",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44647,7 +44647,7 @@ const directoryData = [
     "lng": 144.96087983507917
   },
   {
-    "entityID": 4351,
+    "entityID": "Charles Sanders",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44667,7 +44667,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4353,
+    "entityID": "George A Goater",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44687,7 +44687,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4355,
+    "entityID": "Ellen Bear",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44697,7 +44697,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4356,
+    "entityID": "Janet Bruce",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44727,7 +44727,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4359,
+    "entityID": "Phillip Sheahan",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44757,7 +44757,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4362,
+    "entityID": "B M Crowley",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44767,7 +44767,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4363,
+    "entityID": "Edward J Smith",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44777,7 +44777,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4364,
+    "entityID": "Frederick Malcolm",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44807,7 +44807,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4367,
+    "entityID": "Thomas Larkin",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44827,7 +44827,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4369,
+    "entityID": "John P Waldron",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44857,7 +44857,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4372,
+    "entityID": "Cath Glennon",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44877,7 +44877,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4374,
+    "entityID": "Simon Gannon",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44917,7 +44917,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4378,
+    "entityID": "Mary A McNee",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44927,7 +44927,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4379,
+    "entityID": "M A Harrison",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44937,7 +44937,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4380,
+    "entityID": "Eliza McMahon",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44981,7 +44981,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4384,
+    "entityID": "Geo Armitage, cabt maker",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -44991,7 +44991,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4385,
+    "entityID": "Wm H Lees, coach wheeler & body mkr",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45023,7 +45023,7 @@ const directoryData = [
     "lng": 144.96002570605359
   },
   {
-    "entityID": 4388,
+    "entityID": "Wm Garrick, grcr",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45033,7 +45033,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4389,
+    "entityID": "James Corin",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45043,7 +45043,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4390,
+    "entityID": "J Garbutt, hame mk",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45053,7 +45053,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4391,
+    "entityID": "Cath Gleeson",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45063,7 +45063,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4392,
+    "entityID": "John Garbutt, chain and hame and saddle tree maker",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45073,7 +45073,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4393,
+    "entityID": "William Barley",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45155,7 +45155,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4401,
+    "entityID": "Emma Hirt",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45165,7 +45165,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4402,
+    "entityID": "Robert Fitzpatrick",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45255,7 +45255,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4411,
+    "entityID": "John W Irving, grcr",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45265,7 +45265,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4412,
+    "entityID": "Mary Parnell",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45275,7 +45275,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4413,
+    "entityID": "Annie Bell",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45327,7 +45327,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4418,
+    "entityID": "James Bowling grn-Turner, caretkr",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45403,7 +45403,7 @@ const directoryData = [
     "lng": 144.9632622778136
   },
   {
-    "entityID": 4425,
+    "entityID": "James Elliott",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -45723,7 +45723,7 @@ const directoryData = [
     "type": "Place"
   },
   {
-    "entityID": 4456,
+    "entityID": "Susan Brown",
     "source": "Directory",
     "year": 1915,
     "pages": "197",
@@ -45759,7 +45759,7 @@ const directoryData = [
     "type": "Place"
   },
   {
-    "entityID": 4460,
+    "entityID": "Robert Robertson",
     "source": "Directory",
     "year": 1915,
     "pages": "197",
@@ -45810,7 +45810,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4465,
+    "entityID": "John Kelly (Little Pelham Street)",
     "source": "Directory",
     "year": 1915,
     "pages": "197",
@@ -45978,7 +45978,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4481,
+    "entityID": "McDonald and Co, aerated water mfrs ",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46030,7 +46030,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4486,
+    "entityID": "Jas Thomas, tbcnst",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46072,7 +46072,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4490,
+    "entityID": "J H Bride, hrdr",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46082,7 +46082,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4491,
+    "entityID": "Ying Hie, lndry",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46112,7 +46112,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4494,
+    "entityID": "Enrica Salvio, btmkr",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46286,7 +46286,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4511,
+    "entityID": "E. Smith, boarding house",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46348,7 +46348,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4517,
+    "entityID": "James Caffery (120 Madeline Street)",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46358,7 +46358,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4518,
+    "entityID": "Edward Hayes",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46380,7 +46380,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4520,
+    "entityID": "Chas Chapman",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46450,7 +46450,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4527,
+    "entityID": "Mrs Flor. Aylmer",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46470,7 +46470,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4529,
+    "entityID": "James Hannan",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46480,7 +46480,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4530,
+    "entityID": "John Henderson",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46500,7 +46500,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4532,
+    "entityID": "Albt. E. Price, grcr",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46584,7 +46584,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4540,
+    "entityID": "George Manson",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46604,7 +46604,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4542,
+    "entityID": "John Easton",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46614,7 +46614,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4543,
+    "entityID": "Michael Carey",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46634,7 +46634,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4545,
+    "entityID": "Frederick Liney",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46644,7 +46644,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4546,
+    "entityID": "Mary Jones",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46664,7 +46664,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4548,
+    "entityID": "Lydia Edwards",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46744,7 +46744,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4556,
+    "entityID": "Robt V Stebbing",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46764,7 +46764,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4558,
+    "entityID": "Mrs Ellen Green",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46824,7 +46824,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4564,
+    "entityID": "John Noonan",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46844,7 +46844,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4566,
+    "entityID": "Hugh Turner, sen",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46864,7 +46864,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4568,
+    "entityID": "John Kelly",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46874,7 +46874,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4569,
+    "entityID": "Susannah Cole",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46894,7 +46894,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4571,
+    "entityID": "Thomas Bolitho",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46904,7 +46904,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4572,
+    "entityID": "Alfred Bolitho",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46956,7 +46956,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4577,
+    "entityID": "Edwin Sheppard",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -46976,7 +46976,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4579,
+    "entityID": "James Campbell",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47028,7 +47028,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4584,
+    "entityID": "Andrew Steele",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47038,7 +47038,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4585,
+    "entityID": "George Moyes",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47048,7 +47048,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4586,
+    "entityID": "Eliz Tulloch",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47058,7 +47058,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4587,
+    "entityID": "Lawrence Tulloch",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47068,7 +47068,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4588,
+    "entityID": "Alfred Lemmon",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47078,7 +47078,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4589,
+    "entityID": "Mrs Cath Eaton",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47108,7 +47108,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4592,
+    "entityID": "James Newson",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47140,7 +47140,7 @@ const directoryData = [
     "lng": 144.96447018743171
   },
   {
-    "entityID": 4595,
+    "entityID": "James Batley",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47170,7 +47170,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4598,
+    "entityID": "James H Skipper",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47190,7 +47190,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4600,
+    "entityID": "Ellen Dorian",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47200,7 +47200,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4601,
+    "entityID": "Louisa Moxham",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47220,7 +47220,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4603,
+    "entityID": "Dennis O'Brien",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47242,7 +47242,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4605,
+    "entityID": "William Luttgens",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47262,7 +47262,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4607,
+    "entityID": "Edith Collinson, Sefton priv hosp",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47272,7 +47272,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4608,
+    "entityID": "Robert McKean",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47282,7 +47282,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4609,
+    "entityID": "M Lindsay",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47292,7 +47292,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4610,
+    "entityID": "John J Tracey",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47302,7 +47302,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4611,
+    "entityID": "L Mockett",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47344,7 +47344,7 @@ const directoryData = [
     "lng": 144.96470638127332
   },
   {
-    "entityID": 4615,
+    "entityID": "W. Baker, dairy",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47354,7 +47354,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4616,
+    "entityID": "Mary Power",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47384,7 +47384,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4619,
+    "entityID": "Michael Cohen",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47404,7 +47404,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4621,
+    "entityID": "James Walkerden",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47414,7 +47414,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4622,
+    "entityID": "Joseph Hardie",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47424,7 +47424,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4623,
+    "entityID": "Arthur Cobb",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47456,7 +47456,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4626,
+    "entityID": "George R Growcott, cabinet maker",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47466,7 +47466,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4627,
+    "entityID": "Mrs D Brown, nurse",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47476,7 +47476,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4628,
+    "entityID": "Alfd. Hickman",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47486,7 +47486,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4629,
+    "entityID": "Amy Warr",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47506,7 +47506,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4631,
+    "entityID": "Cath Fowler",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47516,7 +47516,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4632,
+    "entityID": "Mary Twomey",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47538,7 +47538,7 @@ const directoryData = [
     "lng": 144.96486409352812
   },
   {
-    "entityID": 4634,
+    "entityID": "G S Kluglein",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47548,7 +47548,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4635,
+    "entityID": "Aubrey C Matthews",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47568,7 +47568,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4637,
+    "entityID": "John W Brown, monumental mason",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47588,7 +47588,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4639,
+    "entityID": "Johanna Bevan",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47598,7 +47598,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4640,
+    "entityID": "Maurice Lane, jun",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47608,7 +47608,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4641,
+    "entityID": "Alfred E. Finlay",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47678,7 +47678,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4648,
+    "entityID": "Bay View hotel",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47688,7 +47688,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 4649,
+    "entityID": "Michael Sullivan",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47710,7 +47710,7 @@ const directoryData = [
     "lng": 144.9651855407633
   },
   {
-    "entityID": 4651,
+    "entityID": "Female Refuge",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47786,7 +47786,7 @@ const directoryData = [
     "lng": 144.96298347261177
   },
   {
-    "entityID": 4658,
+    "entityID": "Wm Norris, grocer",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47806,7 +47806,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4660,
+    "entityID": "A Kenrick, hrdsr",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47836,7 +47836,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4663,
+    "entityID": "Frank Puig, rfshts",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47876,7 +47876,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4667,
+    "entityID": "A F Greenless, stationer",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47896,7 +47896,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4669,
+    "entityID": "Hy Sleep, sanitary plumber",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47906,7 +47906,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4670,
+    "entityID": "Matilda Elliott, ham and beef shop",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47916,7 +47916,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4671,
+    "entityID": "Lazarus Cruchek, furniture dealer",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47936,7 +47936,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4673,
+    "entityID": "Mrs A. H. Kopmann, cigar manufacturer",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -47946,7 +47946,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4674,
+    "entityID": "Solomon Cohen, tailor",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48000,7 +48000,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4679,
+    "entityID": "A Bernard, grocer",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48072,7 +48072,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4686,
+    "entityID": "Henry Brown",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48124,7 +48124,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4691,
+    "entityID": "Alfred Reeves",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48200,7 +48200,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4698,
+    "entityID": "Michael Bailey",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48210,7 +48210,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4699,
+    "entityID": "Patrick Stanley",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48230,7 +48230,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4701,
+    "entityID": "Alfred Rye, dlr",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48240,7 +48240,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4702,
+    "entityID": "David Walker",
     "source": "Directory",
     "year": 1915,
     "pages": "199",
@@ -48402,7 +48402,7 @@ const directoryData = [
     "type": "Place"
   },
   {
-    "entityID": 4718,
+    "entityID": "W Armstrong",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48432,7 +48432,7 @@ const directoryData = [
     "lng": 144.969445671475
   },
   {
-    "entityID": 4721,
+    "entityID": "St George's Girls' School",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48506,7 +48506,7 @@ const directoryData = [
     "lng": 144.9673536368875
   },
   {
-    "entityID": 4728,
+    "entityID": "T Kennelly, btmkr",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48516,7 +48516,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4729,
+    "entityID": "Thomas Turner",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48556,7 +48556,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4733,
+    "entityID": "M J Tinning, general store",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48622,7 +48622,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4739,
+    "entityID": "Banks and Co",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48632,7 +48632,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4740,
+    "entityID": "Wm Belden, btmkr",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48642,7 +48642,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4741,
+    "entityID": "Wm Bishop",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48652,7 +48652,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4742,
+    "entityID": "Charles F. Bishop",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48740,7 +48740,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4750,
+    "entityID": "Alfred H Fryer",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48770,7 +48770,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4753,
+    "entityID": "Emanuel Martin",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48860,7 +48860,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4762,
+    "entityID": "Samuel Kerr",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48890,7 +48890,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4765,
+    "entityID": "William Tyndall",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -48930,7 +48930,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4769,
+    "entityID": "Charles McLaren",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49006,7 +49006,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4776,
+    "entityID": "S Cleary",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49036,7 +49036,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4779,
+    "entityID": "A Tully",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49188,7 +49188,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4794,
+    "entityID": "William Healey",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49208,7 +49208,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4796,
+    "entityID": "Eliza Dwyer",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49238,7 +49238,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4799,
+    "entityID": "A Junction htl-Crosbie",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49272,7 +49272,7 @@ const directoryData = [
     "lng": 144.969445671475
   },
   {
-    "entityID": 4802,
+    "entityID": "Hospital for sick children",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49326,7 +49326,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4807,
+    "entityID": "Geo Greenwood",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49366,7 +49366,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4811,
+    "entityID": "Michael Glavin",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49376,7 +49376,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4812,
+    "entityID": "A Wilson, cnft",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49418,7 +49418,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4816,
+    "entityID": "I Firth, ger",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49438,7 +49438,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4818,
+    "entityID": "Ellen Glynn",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49448,7 +49448,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4819,
+    "entityID": "B. L. Sellers",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49534,7 +49534,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4827,
+    "entityID": "Mrgt Goodwin",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49594,7 +49594,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4833,
+    "entityID": "James Crowe",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49604,7 +49604,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4834,
+    "entityID": "Eliz Bruggman",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49614,7 +49614,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4835,
+    "entityID": "M A Nicholls, frtr & gngrer",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49634,7 +49634,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4837,
+    "entityID": "Andrew O'Ryan",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49740,7 +49740,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4847,
+    "entityID": "James Reilly (Pelham Street)",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49750,7 +49750,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4848,
+    "entityID": "William Hudson",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49760,7 +49760,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4849,
+    "entityID": "James J Rae",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49770,7 +49770,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4850,
+    "entityID": "Wm Rae, dairy",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49802,7 +49802,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4853,
+    "entityID": "John F Turner",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49822,7 +49822,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4855,
+    "entityID": "Daniel Leahy",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49832,7 +49832,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4856,
+    "entityID": "Cath Neustetel",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49852,7 +49852,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4858,
+    "entityID": "John Bunting",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49874,7 +49874,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 4860,
+    "entityID": "Daniel Clark, grcr",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49884,7 +49884,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4861,
+    "entityID": "Daniel Clark",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49894,7 +49894,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4862,
+    "entityID": "Walter Ryland",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49904,7 +49904,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4863,
+    "entityID": "John Kennedy",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49924,7 +49924,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4865,
+    "entityID": "Michael Penhall",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49966,7 +49966,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 4869,
+    "entityID": "Frank Ryland, frtr",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -49986,7 +49986,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4871,
+    "entityID": "Samuel Paul",
     "source": "Directory",
     "year": 1915,
     "pages": "201",
@@ -50030,7 +50030,7 @@ const directoryData = [
     "lng": 144.96906579145556
   },
   {
-    "entityID": 4875,
+    "entityID": "Pres Church",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50052,7 +50052,7 @@ const directoryData = [
     "lng": 144.96769188442224
   },
   {
-    "entityID": 4877,
+    "entityID": "Rev C P (C of E) Thomas",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50114,7 +50114,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4883,
+    "entityID": "E Birmingham",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50176,7 +50176,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4889,
+    "entityID": "A Merriman",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50208,7 +50208,7 @@ const directoryData = [
     "lng": 144.96473865259938
   },
   {
-    "entityID": 4892,
+    "entityID": "S J Johnson, general store",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50228,7 +50228,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4894,
+    "entityID": "F Serle, wckrwkr",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50238,7 +50238,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4895,
+    "entityID": "Wm. Allamby, furn carrier",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50280,7 +50280,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4899,
+    "entityID": "A. S. Miles, copprsm",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50290,7 +50290,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4900,
+    "entityID": "Church of Christ Chinese mission",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50300,7 +50300,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4901,
+    "entityID": "John Best, boot sole sewer",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50332,7 +50332,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 4904,
+    "entityID": "Mrs Annie Smith",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50342,7 +50342,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4905,
+    "entityID": "Mrs Cecilia Steele",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50372,7 +50372,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4908,
+    "entityID": "Wm Fleming",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50382,7 +50382,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4909,
+    "entityID": "John Couch",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50424,7 +50424,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4913,
+    "entityID": "E Facey, confnr",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50526,7 +50526,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 4923,
+    "entityID": "Percy Smith, stbls",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50646,7 +50646,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4934,
+    "entityID": "James Paterson",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50656,7 +50656,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4935,
+    "entityID": "James Dodds",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50678,7 +50678,7 @@ const directoryData = [
     "lng": 144.96769188442224
   },
   {
-    "entityID": 4937,
+    "entityID": "Minnie Conboy",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50688,7 +50688,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4938,
+    "entityID": "Cath Apostolic church",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50720,7 +50720,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4941,
+    "entityID": "Huey Anguey and sons, gn str",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50780,7 +50780,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4947,
+    "entityID": "Eliz Graham",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50842,7 +50842,7 @@ const directoryData = [
     "lng": 144.96473865259938
   },
   {
-    "entityID": 4953,
+    "entityID": "Wm. Whitfield",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50852,7 +50852,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4954,
+    "entityID": "Joseph Nigro",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50862,7 +50862,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4955,
+    "entityID": "Frank Nigro",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50884,7 +50884,7 @@ const directoryData = [
     "lng": 144.9642381077414
   },
   {
-    "entityID": 4957,
+    "entityID": "Morris Orbuck, dlr",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50894,7 +50894,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4958,
+    "entityID": "Ellen Codling, pawnbroker",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50904,7 +50904,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4959,
+    "entityID": "M Jones, cnfr",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -50914,7 +50914,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4960,
+    "entityID": "Fredk. T. Collier",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51048,7 +51048,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4973,
+    "entityID": "Mrs M. Oakley, frtr",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51068,7 +51068,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4975,
+    "entityID": "John Morgan",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51078,7 +51078,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4976,
+    "entityID": "M S Abraham & Co, millnry & cap mfrs",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51100,7 +51100,7 @@ const directoryData = [
     "lng": 144.9618813330136
   },
   {
-    "entityID": 4978,
+    "entityID": "Rose Talmage",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51122,7 +51122,7 @@ const directoryData = [
     "lng": 144.96135018302905
   },
   {
-    "entityID": 4980,
+    "entityID": "Mary Newton",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51132,7 +51132,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4981,
+    "entityID": "Independent church and mission hall",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51152,7 +51152,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 4983,
+    "entityID": "Robert Bodington, millwright and milling engineer",
     "source": "Directory",
     "year": 1915,
     "pages": "202",
@@ -51394,7 +51394,7 @@ const directoryData = [
     "lng": 144.9603995657422
   },
   {
-    "entityID": 5006,
+    "entityID": "Mrs Frances Stanley",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51404,7 +51404,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5007,
+    "entityID": "E Oldfield, nrse",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51414,7 +51414,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5008,
+    "entityID": "Mary Hegarty",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51444,7 +51444,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5011,
+    "entityID": "Henry R Clark",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51454,7 +51454,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5012,
+    "entityID": "Wm. Williams",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51484,7 +51484,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5015,
+    "entityID": "M A Shinnick",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51504,7 +51504,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5017,
+    "entityID": "Thomas Burrows",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51514,7 +51514,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5018,
+    "entityID": "Jno Butler",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51524,7 +51524,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5019,
+    "entityID": "A Bentwitch",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51534,7 +51534,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5020,
+    "entityID": "Bridget Nolan",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51586,7 +51586,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5025,
+    "entityID": "Victorian Lawn Tennis Court",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51630,7 +51630,7 @@ const directoryData = [
     "lng": 144.96021690828664
   },
   {
-    "entityID": 5029,
+    "entityID": "Robt Fitzpatrick",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51730,7 +51730,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5039,
+    "entityID": "Margt Kilduff",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51750,7 +51750,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5041,
+    "entityID": "Ellen Creagh",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51770,7 +51770,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5043,
+    "entityID": "George Walker",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51790,7 +51790,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5045,
+    "entityID": "Frederick Steabben",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51800,7 +51800,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5046,
+    "entityID": "Sarah Kenny",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51810,7 +51810,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5047,
+    "entityID": "Joseph W. Miller",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51850,7 +51850,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5051,
+    "entityID": "B Nolan, junior",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51892,7 +51892,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 5055,
+    "entityID": "H Sumpton",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51902,7 +51902,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5056,
+    "entityID": "David Brown",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51912,7 +51912,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5057,
+    "entityID": "Michael Reilly",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51922,7 +51922,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5058,
+    "entityID": "H Griffiths",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51932,7 +51932,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5059,
+    "entityID": "Clifford D Percy",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51942,7 +51942,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5060,
+    "entityID": "Francis W Oakley",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51952,7 +51952,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5061,
+    "entityID": "Paul Chin",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -51992,7 +51992,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5065,
+    "entityID": "Reginald Graham",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52022,7 +52022,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5068,
+    "entityID": "Eliz Wood",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52052,7 +52052,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5071,
+    "entityID": "Bridget Crowe",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52062,7 +52062,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5072,
+    "entityID": "Wm H Prentice",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52072,7 +52072,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5073,
+    "entityID": "Isabella Hart",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52082,7 +52082,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5074,
+    "entityID": "Wm Burton",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52092,7 +52092,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5075,
+    "entityID": "Hugh Turner",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52102,7 +52102,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5076,
+    "entityID": "Fredk Jeffery",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52122,7 +52122,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5078,
+    "entityID": "Wm Kiernan",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52132,7 +52132,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5079,
+    "entityID": "Patrick Whelan",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52142,7 +52142,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5080,
+    "entityID": "James O Patterson",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52152,7 +52152,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5081,
+    "entityID": "Michael Harty",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52162,7 +52162,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5082,
+    "entityID": "Mary Anderson",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52172,7 +52172,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5083,
+    "entityID": "Wm D Alderson",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52308,7 +52308,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5096,
+    "entityID": "Chas H Stark",
     "source": "Directory",
     "year": 1920,
     "pages": "201",
@@ -52388,7 +52388,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5104,
+    "entityID": "Geo Anderson",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52428,7 +52428,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5108,
+    "entityID": "Thomas Carroll",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52468,7 +52468,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5112,
+    "entityID": "Frank Grant",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52478,7 +52478,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5113,
+    "entityID": "Joseph A Saw",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52508,7 +52508,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5116,
+    "entityID": "John Dennis",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52538,7 +52538,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5119,
+    "entityID": "R J Edwards, grcr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52570,7 +52570,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5122,
+    "entityID": "Joseph Dyer",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52580,7 +52580,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5123,
+    "entityID": "Thomas Jackson",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52692,7 +52692,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5134,
+    "entityID": "Thomas H Garbutt",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52702,7 +52702,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5135,
+    "entityID": "Margaret Hall",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52752,7 +52752,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5140,
+    "entityID": "Dennis Donnellan",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52762,7 +52762,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5141,
+    "entityID": "John Jackson",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52782,7 +52782,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5143,
+    "entityID": "Wm F Gleeson, hrs collar mkr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52792,7 +52792,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5144,
+    "entityID": "W R Moloney, bootmkr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -52896,7 +52896,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5154,
+    "entityID": "W J Powell, Pty Ltd, engnrs",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53050,7 +53050,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 5169,
+    "entityID": "John L Barrett",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53080,7 +53080,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5172,
+    "entityID": "Frank Glowaski",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53110,7 +53110,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5175,
+    "entityID": "Thomas J Little",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53130,7 +53130,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5177,
+    "entityID": "Peter Grant",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53180,7 +53180,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5182,
+    "entityID": "Arth Stubberfield",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53200,7 +53200,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5184,
+    "entityID": "Charles Lewis",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53210,7 +53210,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5185,
+    "entityID": "Ernest Wapshott",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53272,7 +53272,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5191,
+    "entityID": "John T McCuskey",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53292,7 +53292,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5193,
+    "entityID": "Michael O'Sullivan",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53312,7 +53312,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5195,
+    "entityID": "Jean Hartwell",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53366,7 +53366,7 @@ const directoryData = [
     "lng": 144.96145049396495
   },
   {
-    "entityID": 5200,
+    "entityID": "Bush Inn hotel",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53396,7 +53396,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5203,
+    "entityID": "H Jones, & Co, clothing & hat mfrs",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53436,7 +53436,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5207,
+    "entityID": "J Anderson, paper bag mnfr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53456,7 +53456,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5209,
+    "entityID": "Chris Ryan, mtr & cch pntr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53478,7 +53478,7 @@ const directoryData = [
     "lng": 144.9618813330136
   },
   {
-    "entityID": 5211,
+    "entityID": "Phillip Woolley",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53488,7 +53488,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5212,
+    "entityID": "Jas E Hogan",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53498,7 +53498,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5213,
+    "entityID": "James Matthews",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53540,7 +53540,7 @@ const directoryData = [
     "lng": 144.96202722798873
   },
   {
-    "entityID": 5217,
+    "entityID": "A H Bown, & Co, hat mnfrs",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53550,7 +53550,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5218,
+    "entityID": "Children's play ground",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53572,7 +53572,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5220,
+    "entityID": "Francis Wilson, grcr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53582,7 +53582,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5221,
+    "entityID": "Henry Wm Watson",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53612,7 +53612,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5224,
+    "entityID": "Baptist mission hall",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53684,7 +53684,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5231,
+    "entityID": "M Cocking",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53768,7 +53768,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5239,
+    "entityID": "Thos McKenna",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -53872,7 +53872,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5249,
+    "entityID": "T Carroll, hrdrsr & tobacconist",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54014,7 +54014,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5263,
+    "entityID": "John Coughlan",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54024,7 +54024,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5264,
+    "entityID": "John Clarke",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54034,7 +54034,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5265,
+    "entityID": "Robt Connor, baker",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54044,7 +54044,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5266,
+    "entityID": "M N Ballard, furn mnfctrs",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54054,7 +54054,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5267,
+    "entityID": "John Buchanan",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54096,7 +54096,7 @@ const directoryData = [
     "lng": 144.96187872815443
   },
   {
-    "entityID": 5271,
+    "entityID": "Thos. Black",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54116,7 +54116,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5273,
+    "entityID": "Jas Goonan",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54136,7 +54136,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5275,
+    "entityID": "William H C Berry",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54146,7 +54146,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5276,
+    "entityID": "Thaddeus Booth",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54166,7 +54166,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5278,
+    "entityID": "Mary Higgins",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54226,7 +54226,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5284,
+    "entityID": "Henley Mills",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54236,7 +54236,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5285,
+    "entityID": "Alf Branch",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54246,7 +54246,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5286,
+    "entityID": "Dora Hyman",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54288,7 +54288,7 @@ const directoryData = [
     "lng": 144.96214946400573
   },
   {
-    "entityID": 5290,
+    "entityID": "M E Fitzsimons, dairy produce",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54320,7 +54320,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5293,
+    "entityID": "R Hewat, hrdrsr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54384,7 +54384,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5299,
+    "entityID": "Frederick Mack",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54404,7 +54404,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5301,
+    "entityID": "Percy Pain",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54414,7 +54414,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5302,
+    "entityID": "Phillip Nunn",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54424,7 +54424,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5303,
+    "entityID": "Roy Morrison",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54496,7 +54496,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5310,
+    "entityID": "J Easton",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54516,7 +54516,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5312,
+    "entityID": "S Ameer, frtr",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54526,7 +54526,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5313,
+    "entityID": "Harris Libovitch",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54536,7 +54536,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5314,
+    "entityID": "Baptist Sunday schl",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54546,7 +54546,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5315,
+    "entityID": "Carlton Free Kindergarten school",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54568,7 +54568,7 @@ const directoryData = [
     "lng": 144.96224521626036
   },
   {
-    "entityID": 5317,
+    "entityID": "Wm Colliver",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54600,7 +54600,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5320,
+    "entityID": "John H Harlock",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54692,7 +54692,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5329,
+    "entityID": "James Crow",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54702,7 +54702,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5330,
+    "entityID": "Nora Hawkins",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -54776,7 +54776,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5337,
+    "entityID": "Michael Donovan",
     "source": "Directory",
     "year": 1920,
     "pages": 204,
@@ -54786,7 +54786,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5338,
+    "entityID": "William Love",
     "source": "Directory",
     "year": 1920,
     "pages": 204,
@@ -54816,7 +54816,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5341,
+    "entityID": "Henry O'Brien",
     "source": "Directory",
     "year": 1920,
     "pages": 204,
@@ -54970,7 +54970,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5356,
+    "entityID": "Jane Robertson",
     "source": "Directory",
     "year": 1920,
     "pages": 204,
@@ -55054,7 +55054,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5364,
+    "entityID": "Jane Lemon Tree Hotel-Burke",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55064,7 +55064,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5365,
+    "entityID": "Wm W Kendrick",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55074,7 +55074,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5366,
+    "entityID": "Thomas Foley, J.P.",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55084,7 +55084,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5367,
+    "entityID": "Michael McDonald",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55134,7 +55134,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5372,
+    "entityID": "Mary McEntee",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55144,7 +55144,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5373,
+    "entityID": "Mrs Catherine Ryan",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55154,7 +55154,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5374,
+    "entityID": "Darwish Malouf",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55176,7 +55176,7 @@ const directoryData = [
     "lng": 144.96840703550365
   },
   {
-    "entityID": 5376,
+    "entityID": "Francis Labattaglia",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55186,7 +55186,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5377,
+    "entityID": "Elizabth Pride, boarding house",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55216,7 +55216,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5380,
+    "entityID": "Mrs Mrgt. Kennedy",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55236,7 +55236,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5382,
+    "entityID": "W G Broyer, physn",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55246,7 +55246,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5383,
+    "entityID": "P Gleeson, cabman",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55266,7 +55266,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5385,
+    "entityID": "Chas Von Geyer",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55296,7 +55296,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5388,
+    "entityID": "University hotel",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55330,7 +55330,7 @@ const directoryData = [
     "lng": 144.96989000158698
   },
   {
-    "entityID": 5391,
+    "entityID": "Erskine hall",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55340,7 +55340,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5392,
+    "entityID": "Annie Conroy",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55350,7 +55350,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5393,
+    "entityID": "Margt Jackson",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55360,7 +55360,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5394,
+    "entityID": "Mrs Margaret Shine",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55370,7 +55370,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5395,
+    "entityID": "Eliz O'Connell",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55390,7 +55390,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5397,
+    "entityID": "A Suckow, costumiere",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55410,7 +55410,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5399,
+    "entityID": "Sarah Malmborg",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55452,7 +55452,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5403,
+    "entityID": "Thos. Davies",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55494,7 +55494,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5407,
+    "entityID": "Ellen Exell",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55504,7 +55504,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5408,
+    "entityID": "Harriet Mills",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55514,7 +55514,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5409,
+    "entityID": "Lena Tie",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55554,7 +55554,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5413,
+    "entityID": "Tasman Stebbings",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55564,7 +55564,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5414,
+    "entityID": "Louisa Doran",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55574,7 +55574,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5415,
+    "entityID": "Henry Gray",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55584,7 +55584,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5416,
+    "entityID": "Wm. Smith",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55594,7 +55594,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5417,
+    "entityID": "St Joseph's Receiving Home",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55626,7 +55626,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5420,
+    "entityID": "J. Luttgens, bootmr",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55646,7 +55646,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5422,
+    "entityID": "Saml Bridge, grer",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55668,7 +55668,7 @@ const directoryData = [
     "lng": 144.96544191768902
   },
   {
-    "entityID": 5424,
+    "entityID": "Carlton Club hotel",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55688,7 +55688,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5426,
+    "entityID": "L Moore-Lane, music teacher",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55708,7 +55708,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5428,
+    "entityID": "Martin Donnellan",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55728,7 +55728,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5430,
+    "entityID": "Wm J Watt, dairy",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55738,7 +55738,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5431,
+    "entityID": "Richard Bryant",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55748,7 +55748,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5432,
+    "entityID": "Ambrose Devine",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55792,7 +55792,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5436,
+    "entityID": "B Wiedemann",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55802,7 +55802,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5437,
+    "entityID": "Frank Briglia",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55812,7 +55812,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5438,
+    "entityID": "Wm Macdonald",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55822,7 +55822,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5439,
+    "entityID": "Richd Gosling",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55862,7 +55862,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5443,
+    "entityID": "Aaron Traub",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -55872,7 +55872,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5444,
+    "entityID": "Jane Alexander",
     "source": "Directory",
     "year": 1920,
     "pages": "207",
@@ -56012,7 +56012,7 @@ const directoryData = [
     "lng": 144.95995501260302
   },
   {
-    "entityID": 5457,
+    "entityID": "A. Mair and Co, timber merchants",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56082,7 +56082,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5464,
+    "entityID": "Buckley & Nunn Ltd stables and garage",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56104,7 +56104,7 @@ const directoryData = [
     "lng": 144.96031414466464
   },
   {
-    "entityID": 5466,
+    "entityID": "A Mair, & Co, strs",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56154,7 +56154,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5471,
+    "entityID": "David Mansfield",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56184,7 +56184,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5474,
+    "entityID": "Robt Weir",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56194,7 +56194,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5475,
+    "entityID": "H J Emery",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56204,7 +56204,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5476,
+    "entityID": "Emily Johnston",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56214,7 +56214,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5477,
+    "entityID": "Thomas Williams",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56300,7 +56300,7 @@ const directoryData = [
     "lng": 144.96087983507917
   },
   {
-    "entityID": 5485,
+    "entityID": "Charles Sanders",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56320,7 +56320,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5487,
+    "entityID": "George A Goater",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56340,7 +56340,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5489,
+    "entityID": "See Shing, frtr",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56350,7 +56350,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5490,
+    "entityID": "Ellen Bear",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56360,7 +56360,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5491,
+    "entityID": "Janet Bruce",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56370,7 +56370,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5492,
+    "entityID": "Frank Conway",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56390,7 +56390,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5494,
+    "entityID": "Jas Leahy",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56420,7 +56420,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5497,
+    "entityID": "B M Crowley",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56430,7 +56430,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5498,
+    "entityID": "Edward J Smith",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56450,7 +56450,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5500,
+    "entityID": "S Sanderson",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56460,7 +56460,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5501,
+    "entityID": "Edwd F Jackson",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56470,7 +56470,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5502,
+    "entityID": "Thomas Larkin",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56570,7 +56570,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5512,
+    "entityID": "Frances Parnell",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56580,7 +56580,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5513,
+    "entityID": "M A Harrison",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56590,7 +56590,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5514,
+    "entityID": "John O'Sullivan",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56676,7 +56676,7 @@ const directoryData = [
     "lng": 144.96002570605359
   },
   {
-    "entityID": 5522,
+    "entityID": "Wm Garrick, grcr",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56686,7 +56686,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5523,
+    "entityID": "Wm Harris",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56696,7 +56696,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5524,
+    "entityID": "J Garbutt, hame mk",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56706,7 +56706,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5525,
+    "entityID": "John Gleeson",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56716,7 +56716,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5526,
+    "entityID": "John Garbutt, chain and hame and saddle tree maker",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56726,7 +56726,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5527,
+    "entityID": "William Barley",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56746,7 +56746,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5529,
+    "entityID": "Felix Francis, phtgr",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56808,7 +56808,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5535,
+    "entityID": "Jas Carr",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56838,7 +56838,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5538,
+    "entityID": "Wm Miller",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56848,7 +56848,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5539,
+    "entityID": "Peter Black",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56858,7 +56858,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5540,
+    "entityID": "Jas Seymour",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56868,7 +56868,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5541,
+    "entityID": "Alfred Gilmore",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56908,7 +56908,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5545,
+    "entityID": "Archd A McIntyre",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -56940,7 +56940,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5548,
+    "entityID": "Bowling green",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57006,7 +57006,7 @@ const directoryData = [
     "lng": 144.9632622778136
   },
   {
-    "entityID": 5554,
+    "entityID": "James Elliott",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57068,7 +57068,7 @@ const directoryData = [
     "lng": 144.963636580966
   },
   {
-    "entityID": 5560,
+    "entityID": "Laing Paterson, and Bruce Ltd, stables",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57088,7 +57088,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5562,
+    "entityID": "Maurice Stack",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57128,7 +57128,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5566,
+    "entityID": "Joseph Myers",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57158,7 +57158,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5569,
+    "entityID": "Theresa Ireland",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57212,7 +57212,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5574,
+    "entityID": "Eliz Reeves",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57222,7 +57222,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5575,
+    "entityID": "Thos Phelan",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57232,7 +57232,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5576,
+    "entityID": "Geo Foster",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -57504,7 +57504,7 @@ const directoryData = [
     "lng": 144.96315545699318
   },
   {
-    "entityID": 5602,
+    "entityID": "W Sibley, fcy gds",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57524,7 +57524,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5604,
+    "entityID": "W Patterson, lorry bldr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57534,7 +57534,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5605,
+    "entityID": "J White, blksmth",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57544,7 +57544,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5606,
+    "entityID": "Carlton Brwry crpntr shop",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57554,7 +57554,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5607,
+    "entityID": "J H Bride, hrdr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57564,7 +57564,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5608,
+    "entityID": "Ying Hie, lndry",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57574,7 +57574,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5609,
+    "entityID": "Eliz Leahy",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57594,7 +57594,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5611,
+    "entityID": "Enrica Salvio, btmkr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57616,7 +57616,7 @@ const directoryData = [
     "lng": 144.96331379819117
   },
   {
-    "entityID": 5613,
+    "entityID": "Solomon Bakeseff, brush mnfr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57688,7 +57688,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5620,
+    "entityID": "M M Friedman",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57768,7 +57768,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5628,
+    "entityID": "Frank Lord",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57778,7 +57778,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5629,
+    "entityID": "E. Smith, boarding house",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57860,7 +57860,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5637,
+    "entityID": "Edward Hayes",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57882,7 +57882,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5639,
+    "entityID": "John E Beech",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57902,7 +57902,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5641,
+    "entityID": "Eclipse Check Book Co",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57912,7 +57912,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5642,
+    "entityID": "Mrs Flor. Aylmer",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57922,7 +57922,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5643,
+    "entityID": "Hannan & Co marine store",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57932,7 +57932,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5644,
+    "entityID": "James Hannan",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -57962,7 +57962,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5647,
+    "entityID": "Albt. E. Price, grcr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58004,7 +58004,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5651,
+    "entityID": "F. W. Lanzendorf",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58064,7 +58064,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5657,
+    "entityID": "John Easton",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58074,7 +58074,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5658,
+    "entityID": "Michael Carey",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58084,7 +58084,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5659,
+    "entityID": "Saml Lipshitz",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58104,7 +58104,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5661,
+    "entityID": "Mary Jones",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58124,7 +58124,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5663,
+    "entityID": "Lydia Edwards",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58184,7 +58184,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5669,
+    "entityID": "Robt V Stebbing",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58204,7 +58204,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5671,
+    "entityID": "Mrs Ellen Green",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58214,7 +58214,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5672,
+    "entityID": "Walter F Samuels",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58254,7 +58254,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5676,
+    "entityID": "Allan E Hodder",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58264,7 +58264,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5677,
+    "entityID": "John Noonan",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58274,7 +58274,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5678,
+    "entityID": "Walter J Burgess",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58314,7 +58314,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5682,
+    "entityID": "John Kelly",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58324,7 +58324,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5683,
+    "entityID": "Susannah Cole",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58334,7 +58334,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5684,
+    "entityID": "Alfred Bond",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58344,7 +58344,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5685,
+    "entityID": "Thomas Bolitho",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58354,7 +58354,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5686,
+    "entityID": "Alfred Bolitho",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58468,7 +58468,7 @@ const directoryData = [
     "lng": 144.96434638802842
   },
   {
-    "entityID": 5697,
+    "entityID": "Albt McCabe",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58478,7 +58478,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5698,
+    "entityID": "Andrew Steele",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58488,7 +58488,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5699,
+    "entityID": "George Moyes",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58498,7 +58498,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5700,
+    "entityID": "Eliz Tulloch",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58508,7 +58508,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5701,
+    "entityID": "Lawrence Tulloch",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58518,7 +58518,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5702,
+    "entityID": "Annie Allen",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58538,7 +58538,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5704,
+    "entityID": "Robert Hackett",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58568,7 +58568,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5707,
+    "entityID": "Robt Watson",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58590,7 +58590,7 @@ const directoryData = [
     "lng": 144.96447018743171
   },
   {
-    "entityID": 5709,
+    "entityID": "James Batley",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58600,7 +58600,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5710,
+    "entityID": "Mary Russell",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58620,7 +58620,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5712,
+    "entityID": "James H Skipper",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58640,7 +58640,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5714,
+    "entityID": "Ellen Dorian",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58650,7 +58650,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5715,
+    "entityID": "M Crawford",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58670,7 +58670,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5717,
+    "entityID": "Dennis O'Brien",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58692,7 +58692,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5719,
+    "entityID": "William Luttgens",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58712,7 +58712,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5721,
+    "entityID": "Thos. Gleeson",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58722,7 +58722,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5722,
+    "entityID": "Edith Gleeson",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58732,7 +58732,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5723,
+    "entityID": "Robert McKean",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58742,7 +58742,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5724,
+    "entityID": "M Lindsay",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58752,7 +58752,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5725,
+    "entityID": "Jno J Treacy",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58762,7 +58762,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5726,
+    "entityID": "L Mockett",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58804,7 +58804,7 @@ const directoryData = [
     "lng": 144.96470638127332
   },
   {
-    "entityID": 5730,
+    "entityID": "W. Baker, dairy",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58834,7 +58834,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5733,
+    "entityID": "Mark Dewhurst",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58844,7 +58844,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5734,
+    "entityID": "Michael Cohen",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58864,7 +58864,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5736,
+    "entityID": "James Walkerden",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58874,7 +58874,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5737,
+    "entityID": "Joseph Hardie",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58904,7 +58904,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5740,
+    "entityID": "Arthur Cobb",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58956,7 +58956,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5745,
+    "entityID": "Mrs D Brown, nurse",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58966,7 +58966,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5746,
+    "entityID": "Alfd. Hickman",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58976,7 +58976,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5747,
+    "entityID": "Amy Warr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58986,7 +58986,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5748,
+    "entityID": "Geo C White",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -58996,7 +58996,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5749,
+    "entityID": "Mary McDonald",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59006,7 +59006,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5750,
+    "entityID": "Mary Twomey",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59058,7 +59058,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5755,
+    "entityID": "John W Brown, monumental mason",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59068,7 +59068,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5756,
+    "entityID": "Harold T Lane",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59088,7 +59088,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5758,
+    "entityID": "Maurice Lane, jun",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59098,7 +59098,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5759,
+    "entityID": "Alfred E. Finlay",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59118,7 +59118,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5761,
+    "entityID": "Leah Allen",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59138,7 +59138,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5763,
+    "entityID": "James Duncan",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59168,7 +59168,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5766,
+    "entityID": "Bay View hotel",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59178,7 +59178,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5767,
+    "entityID": "Michael Sullivan",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59200,7 +59200,7 @@ const directoryData = [
     "lng": 144.9651855407633
   },
   {
-    "entityID": 5769,
+    "entityID": "Female Refuge",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59346,7 +59346,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5783,
+    "entityID": "Wm D Hart, pstryck",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59396,7 +59396,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5788,
+    "entityID": "Hy Sleep, sanitary plumber",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59406,7 +59406,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5789,
+    "entityID": "L Kiernan",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59436,7 +59436,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5792,
+    "entityID": "Lazarus Cruchek, furniture dealer",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59456,7 +59456,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5794,
+    "entityID": "Mrs A. H. Kopmann, cigar manufacturer",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59466,7 +59466,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5795,
+    "entityID": "Solomon Cohen, tailor",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59528,7 +59528,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5801,
+    "entityID": "A Bernard, grocer",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59538,7 +59538,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5802,
+    "entityID": "Hilda Mackay, cstmr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59570,7 +59570,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5805,
+    "entityID": "M Patterson, brdnghse",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59580,7 +59580,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5806,
+    "entityID": "Henry Brown",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59590,7 +59590,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5807,
+    "entityID": "John J Jones",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59696,7 +59696,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5817,
+    "entityID": "Alfred Rye, dlr",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59706,7 +59706,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5818,
+    "entityID": "Andw Johnstone",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59736,7 +59736,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5821,
+    "entityID": "Jos Justice",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59808,7 +59808,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 5828,
+    "entityID": "University grounds",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59818,7 +59818,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5829,
+    "entityID": "Teachers' college",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59828,7 +59828,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5830,
+    "entityID": "Medical School",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59838,7 +59838,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5831,
+    "entityID": "Bacteriological Laboratory",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59848,7 +59848,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5832,
+    "entityID": "Pathological Laboratory",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -59868,7 +59868,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5834,
+    "entityID": "Chemical Laboratory",
     "source": "Directory",
     "year": 1920,
     "pages": "211",
@@ -60006,7 +60006,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5847,
+    "entityID": "Vacant",
     "source": "Directory",
     "year": 1920,
     "pages": "213",
@@ -60038,7 +60038,7 @@ const directoryData = [
     "lng": 144.96621526323165
   },
   {
-    "entityID": 5850,
+    "entityID": "Carlton Paper Box Fctry",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60048,7 +60048,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5851,
+    "entityID": "E Birmingham",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60110,7 +60110,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5857,
+    "entityID": "A Merriman",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60152,7 +60152,7 @@ const directoryData = [
     "lng": 144.96473865259938
   },
   {
-    "entityID": 5861,
+    "entityID": "S J Johnson, general store",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60182,7 +60182,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5864,
+    "entityID": "Wm. Allamby, furn carrier",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60214,7 +60214,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5867,
+    "entityID": "A. S. Miles, copprsm",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60224,7 +60224,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5868,
+    "entityID": "Church of Christ Chinese mission",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60234,7 +60234,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5869,
+    "entityID": "John Best, boot sole sewer",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60266,7 +60266,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 5872,
+    "entityID": "Mrs Annie Smith",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60276,7 +60276,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5873,
+    "entityID": "Mrs Cecilia Steele",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60296,7 +60296,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5875,
+    "entityID": "Wm Fleming",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60306,7 +60306,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 5876,
+    "entityID": "John Couch",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60328,7 +60328,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5878,
+    "entityID": "E Facey, confnr",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60530,7 +60530,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5897,
+    "entityID": "James Paterson",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60540,7 +60540,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5898,
+    "entityID": "James Dodds",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60604,7 +60604,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5904,
+    "entityID": "Huey Anguey and sons, gn str",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60656,7 +60656,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5909,
+    "entityID": "Eliz Graham",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60708,7 +60708,7 @@ const directoryData = [
     "lng": 144.96473865259938
   },
   {
-    "entityID": 5914,
+    "entityID": "Wm. Whitfield",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60718,7 +60718,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5915,
+    "entityID": "Joseph Nigro",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60750,7 +60750,7 @@ const directoryData = [
     "lng": 144.9642381077414
   },
   {
-    "entityID": 5918,
+    "entityID": "Morris Orbuck, dlr",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60760,7 +60760,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5919,
+    "entityID": "Ellen Codling, pawnbroker",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60770,7 +60770,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5920,
+    "entityID": "M Jones, cnfr",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60780,7 +60780,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5921,
+    "entityID": "Fredk. T. Collier",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60914,7 +60914,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5934,
+    "entityID": "Mrs M. Oakley, frtr",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60954,7 +60954,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5938,
+    "entityID": "M S Abraham & Co, millnry & cap mfrs",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60976,7 +60976,7 @@ const directoryData = [
     "lng": 144.9618813330136
   },
   {
-    "entityID": 5940,
+    "entityID": "Rose Talmage",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -60998,7 +60998,7 @@ const directoryData = [
     "lng": 144.96135018302905
   },
   {
-    "entityID": 5942,
+    "entityID": "Mary Newton",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -61008,7 +61008,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5943,
+    "entityID": "Independent church and mission hall",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -61018,7 +61018,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5944,
+    "entityID": "Louey Lom Yick",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -61028,7 +61028,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5945,
+    "entityID": "Robert Bodington, millwright and milling engineer",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -61080,7 +61080,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 5950,
+    "entityID": "Francis H Green",
     "source": "Directory",
     "year": 1920,
     "pages": "214",
@@ -61178,7 +61178,7 @@ const directoryData = [
     "lng": 144.9603995657422
   },
   {
-    "entityID": 5959,
+    "entityID": "Mrs Frances Stanley",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61188,7 +61188,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5960,
+    "entityID": "E Oldfield, nrse",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61198,7 +61198,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5961,
+    "entityID": "Mary Hegarty",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61248,7 +61248,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5966,
+    "entityID": "Wm. Williams",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61278,7 +61278,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5969,
+    "entityID": "M A Shinnick",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61308,7 +61308,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5972,
+    "entityID": "Jno Butler",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61318,7 +61318,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5973,
+    "entityID": "A Bentwitch",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61328,7 +61328,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 5974,
+    "entityID": "Bridget Nolan",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61414,7 +61414,7 @@ const directoryData = [
     "lng": 144.96021690828664
   },
   {
-    "entityID": 5982,
+    "entityID": "Robt Fitzpatrick",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61514,7 +61514,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5992,
+    "entityID": "Margt Kilduff",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61534,7 +61534,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5994,
+    "entityID": "Ellen Crough",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61554,7 +61554,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5996,
+    "entityID": "George Walker",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61574,7 +61574,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5998,
+    "entityID": "Frederick Steabben",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61594,7 +61594,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6000,
+    "entityID": "Joseph W. Miller",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61676,7 +61676,7 @@ const directoryData = [
     "lng": 144.95953202749413
   },
   {
-    "entityID": 6008,
+    "entityID": "H Sumpton",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61716,7 +61716,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6012,
+    "entityID": "Clifford D Percy",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61726,7 +61726,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6013,
+    "entityID": "Francis W Oakley",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61736,7 +61736,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6014,
+    "entityID": "Paul Chin",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61776,7 +61776,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6018,
+    "entityID": "Reginald Graham",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61796,7 +61796,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6020,
+    "entityID": "Eliz Wood",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61836,7 +61836,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6024,
+    "entityID": "Wm H Prentice",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61846,7 +61846,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6025,
+    "entityID": "Isabella Hart",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61866,7 +61866,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6027,
+    "entityID": "Hugh Turner",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61876,7 +61876,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6028,
+    "entityID": "Fredk Jeffery",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61896,7 +61896,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6030,
+    "entityID": "Wm Kiernan",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61906,7 +61906,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6031,
+    "entityID": "Patrick Whelan",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61926,7 +61926,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6033,
+    "entityID": "Michael Harty",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61936,7 +61936,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6034,
+    "entityID": "Mary Anderson",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -61946,7 +61946,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6035,
+    "entityID": "Wm D Alderson",
     "source": "Directory",
     "year": 1925,
     "pages": "230",
@@ -62062,7 +62062,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6046,
+    "entityID": "Chas H Stark",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62142,7 +62142,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6054,
+    "entityID": "Geo Anderson",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62182,7 +62182,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6058,
+    "entityID": "Thomas Carroll",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62222,7 +62222,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6062,
+    "entityID": "Frank Grant",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62232,7 +62232,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6063,
+    "entityID": "Joseph A Saw",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62262,7 +62262,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6066,
+    "entityID": "John Dennis",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62292,7 +62292,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6069,
+    "entityID": "R J Edwards, grcr",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62324,7 +62324,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6072,
+    "entityID": "Joseph Dyer",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62334,7 +62334,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6073,
+    "entityID": "Thomas Jackson",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62416,7 +62416,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6081,
+    "entityID": "Thomas H Garbutt",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62456,7 +62456,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6085,
+    "entityID": "Dennis Donnellan",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62466,7 +62466,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6086,
+    "entityID": "John Jackson",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62486,7 +62486,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6088,
+    "entityID": "Wm F Gleeson, hrs collar mkr",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62496,7 +62496,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6089,
+    "entityID": "W R Moloney, bootmkr",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62600,7 +62600,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6099,
+    "entityID": "W J Powell, Pty Ltd, engnrs",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62754,7 +62754,7 @@ const directoryData = [
     "lng": 144.9584899847628
   },
   {
-    "entityID": 6114,
+    "entityID": "John L Barrett",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62784,7 +62784,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6117,
+    "entityID": "Frank Glowaski",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62814,7 +62814,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6120,
+    "entityID": "Thomas J Little",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62834,7 +62834,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6122,
+    "entityID": "Peter Grant",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62884,7 +62884,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6127,
+    "entityID": "Arth Stubberfield",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62904,7 +62904,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6129,
+    "entityID": "Charles Lewis",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62914,7 +62914,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6130,
+    "entityID": "Ernest Wapshott",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -62988,7 +62988,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6137,
+    "entityID": "John T McCuskey",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -63008,7 +63008,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6139,
+    "entityID": "Michael O'Sullivan",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -63018,7 +63018,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6140,
+    "entityID": "Jean Hartwell",
     "source": "Directory",
     "year": 1925,
     "pages": "230-231",
@@ -63072,7 +63072,7 @@ const directoryData = [
     "lng": 144.96145049396495
   },
   {
-    "entityID": 6145,
+    "entityID": "Bush Inn hotel",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63144,7 +63144,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6152,
+    "entityID": "J Anderson, paper bag mnfr",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63164,7 +63164,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6154,
+    "entityID": "Chris Ryan, mtr & cch pntr",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63186,7 +63186,7 @@ const directoryData = [
     "lng": 144.9618813330136
   },
   {
-    "entityID": 6156,
+    "entityID": "Phillip Woolley",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63196,7 +63196,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6157,
+    "entityID": "Jas E Hogan",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63206,7 +63206,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6158,
+    "entityID": "James Matthews",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63238,7 +63238,7 @@ const directoryData = [
     "lng": 144.96202722798873
   },
   {
-    "entityID": 6161,
+    "entityID": "A H Bown, & Co, hat mnfrs",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63248,7 +63248,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6162,
+    "entityID": "Children's play ground",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63270,7 +63270,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 6164,
+    "entityID": "Francis Wilson, grcr",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63280,7 +63280,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6165,
+    "entityID": "Henry Wm Watson",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63362,7 +63362,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6173,
+    "entityID": "M Cocking",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63446,7 +63446,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6181,
+    "entityID": "Thos McKenna",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63612,7 +63612,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6197,
+    "entityID": "John Clarke",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63632,7 +63632,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6199,
+    "entityID": "M N Ballard, furn mnfctrs",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63642,7 +63642,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6200,
+    "entityID": "John Buchanan",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63674,7 +63674,7 @@ const directoryData = [
     "lng": 144.96187872815443
   },
   {
-    "entityID": 6203,
+    "entityID": "Thos. Black",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63694,7 +63694,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6205,
+    "entityID": "Jas Goonan",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63744,7 +63744,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6210,
+    "entityID": "Mary Higgins",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63774,7 +63774,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6213,
+    "entityID": "Henley Mills",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63784,7 +63784,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6214,
+    "entityID": "Alf Branch",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63794,7 +63794,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6215,
+    "entityID": "Dora Hyman",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63836,7 +63836,7 @@ const directoryData = [
     "lng": 144.96214946400573
   },
   {
-    "entityID": 6219,
+    "entityID": "M E Fitzsimons, dairy produce",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63952,7 +63952,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6230,
+    "entityID": "Percy Pain",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63962,7 +63962,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6231,
+    "entityID": "Phillip Nunn",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -63972,7 +63972,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6232,
+    "entityID": "Roy Morrison",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64074,7 +64074,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6242,
+    "entityID": "S Ameer, frtr",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64084,7 +64084,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6243,
+    "entityID": "Harris Libovitch",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64094,7 +64094,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6244,
+    "entityID": "Baptist Sunday schl",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64116,7 +64116,7 @@ const directoryData = [
     "lng": 144.96224658518025
   },
   {
-    "entityID": 6246,
+    "entityID": "Wm Colliver",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64136,7 +64136,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6248,
+    "entityID": "Carlton Free Kindergarten school",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64168,7 +64168,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6251,
+    "entityID": "James Crow",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64178,7 +64178,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6252,
+    "entityID": "Nora Hawkins",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
@@ -64272,7 +64272,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6261,
+    "entityID": "Wm W Kendrick",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64282,7 +64282,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6262,
+    "entityID": "Thomas Foley, J.P.",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64342,7 +64342,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6268,
+    "entityID": "Mrs Catherine Ryan",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64352,7 +64352,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6269,
+    "entityID": "Darwish Malouf",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64404,7 +64404,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6274,
+    "entityID": "Mrs Mrgt. Kennedy",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64424,7 +64424,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6276,
+    "entityID": "W G Broyer, physn",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64434,7 +64434,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6277,
+    "entityID": "P Gleeson, cabman",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64484,7 +64484,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6282,
+    "entityID": "University hotel",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64612,7 +64612,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 6294,
+    "entityID": "John Training College (Education Dept)",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64646,7 +64646,7 @@ const directoryData = [
     "lng": 144.96989000158698
   },
   {
-    "entityID": 6297,
+    "entityID": "Erskine hall",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64686,7 +64686,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6301,
+    "entityID": "Eliz O'Connell",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64726,7 +64726,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6305,
+    "entityID": "Sarah Malmborg",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64768,7 +64768,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6309,
+    "entityID": "Thos. Davies",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64810,7 +64810,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6313,
+    "entityID": "Ellen Exell",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64820,7 +64820,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6314,
+    "entityID": "Harriet Mills",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64830,7 +64830,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6315,
+    "entityID": "Lena Tie",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64880,7 +64880,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6320,
+    "entityID": "Louisa Doran",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64890,7 +64890,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6321,
+    "entityID": "Henry Gray",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64900,7 +64900,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6322,
+    "entityID": "Wm. Smith",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64910,7 +64910,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6323,
+    "entityID": "St Joseph's Receiving Home",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64952,7 +64952,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6327,
+    "entityID": "J. Luttgens, bootmr",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64972,7 +64972,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6329,
+    "entityID": "Saml Bridge, grer",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -64994,7 +64994,7 @@ const directoryData = [
     "lng": 144.96544191768902
   },
   {
-    "entityID": 6331,
+    "entityID": "Carlton Club hotel",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65024,7 +65024,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6334,
+    "entityID": "Martin Donnellan",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65064,7 +65064,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6338,
+    "entityID": "Ambrose Devine",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65138,7 +65138,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6345,
+    "entityID": "Wm Macdonald",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65148,7 +65148,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6346,
+    "entityID": "Richd Gosling",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65188,7 +65188,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6350,
+    "entityID": "Aaron Traub",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65198,7 +65198,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6351,
+    "entityID": "Jane Alexander",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65320,7 +65320,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6363,
+    "entityID": "Anne O'Farrell",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65352,7 +65352,7 @@ const directoryData = [
     "lng": 144.96175212739325
   },
   {
-    "entityID": 6366,
+    "entityID": "Helen Ingram",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65372,7 +65372,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6368,
+    "entityID": "Cath Grant",
     "source": "Directory",
     "year": 1925,
     "pages": "236",
@@ -65512,7 +65512,7 @@ const directoryData = [
     "lng": 144.95995501260302
   },
   {
-    "entityID": 6381,
+    "entityID": "A. Mair and Co, timber merchants",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65552,7 +65552,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6385,
+    "entityID": "Buckley & Nunn Ltd stables and garage",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65584,7 +65584,7 @@ const directoryData = [
     "lng": 144.96031414466464
   },
   {
-    "entityID": 6388,
+    "entityID": "A Mair, & Co, strs",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65634,7 +65634,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6393,
+    "entityID": "David Mansfield",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65664,7 +65664,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6396,
+    "entityID": "Robt Weir",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65674,7 +65674,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6397,
+    "entityID": "H J Emery",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65800,7 +65800,7 @@ const directoryData = [
     "lng": 144.96087983507917
   },
   {
-    "entityID": 6409,
+    "entityID": "Charles Sanders",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65820,7 +65820,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6411,
+    "entityID": "George A Goater",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65840,7 +65840,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6413,
+    "entityID": "See Shing, frtr",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65850,7 +65850,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6414,
+    "entityID": "Ellen Bear",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65870,7 +65870,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6416,
+    "entityID": "Frank Conway",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65890,7 +65890,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6418,
+    "entityID": "Jas Leahy",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65930,7 +65930,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6422,
+    "entityID": "Edward J Smith",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65950,7 +65950,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6424,
+    "entityID": "S Sanderson",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65960,7 +65960,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6425,
+    "entityID": "Edwd F Jackson",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -65970,7 +65970,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6426,
+    "entityID": "Thomas Larkin",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66080,7 +66080,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6437,
+    "entityID": "Frances Parnell",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66090,7 +66090,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6438,
+    "entityID": "M A Harrison",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66100,7 +66100,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6439,
+    "entityID": "John O'Sullivan",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66186,7 +66186,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6447,
+    "entityID": "Wm Harris",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66196,7 +66196,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6448,
+    "entityID": "J Garbutt, hame mk",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66206,7 +66206,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6449,
+    "entityID": "John Gleeson",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66216,7 +66216,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6450,
+    "entityID": "John Garbutt, chain and hame and saddle tree maker",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66226,7 +66226,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6451,
+    "entityID": "William Barley",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66256,7 +66256,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6454,
+    "entityID": "Felix Francis, phtgr",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66318,7 +66318,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6460,
+    "entityID": "Jas Carr",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66398,7 +66398,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6468,
+    "entityID": "Wm Miller",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66408,7 +66408,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6469,
+    "entityID": "Peter Black",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66418,7 +66418,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6470,
+    "entityID": "Jas Seymour",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66428,7 +66428,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6471,
+    "entityID": "Alfred Gilmore",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66468,7 +66468,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6475,
+    "entityID": "Archd A McIntyre",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66500,7 +66500,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6478,
+    "entityID": "Bowling green",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -66672,7 +66672,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6494,
+    "entityID": "Laing Paterson, and Bruce Ltd, stables",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -66692,7 +66692,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6496,
+    "entityID": "Maurice Stack",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -66732,7 +66732,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6500,
+    "entityID": "Joseph Myers",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -66762,7 +66762,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6503,
+    "entityID": "Theresa Ireland",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -66828,7 +66828,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6509,
+    "entityID": "Eliz Reeves",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -66838,7 +66838,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6510,
+    "entityID": "Thos Phelan",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -66848,7 +66848,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6511,
+    "entityID": "Geo Foster",
     "source": "Directory",
     "year": 1925,
     "pages": "287",
@@ -67172,7 +67172,7 @@ const directoryData = [
     "lng": 144.96315545699318
   },
   {
-    "entityID": 6541,
+    "entityID": "W Sibley, fcy gds",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67192,7 +67192,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6543,
+    "entityID": "W Patterson, lorry bldr",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67202,7 +67202,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6544,
+    "entityID": "J White, blksmth",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67212,7 +67212,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6545,
+    "entityID": "Carlton Brwry crpntr shop",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67222,7 +67222,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6546,
+    "entityID": "J H Bride, hrdr",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67242,7 +67242,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6548,
+    "entityID": "Eliz Leahy",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67284,7 +67284,7 @@ const directoryData = [
     "lng": 144.96331379819117
   },
   {
-    "entityID": 6552,
+    "entityID": "Solomon Bakeseff, brush mnfr",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67366,7 +67366,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6560,
+    "entityID": "M M Friedman",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67446,7 +67446,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6568,
+    "entityID": "Frank Lord",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67550,7 +67550,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 6578,
+    "entityID": "Chas Chapman",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67560,7 +67560,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6579,
+    "entityID": "John E Beech",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67590,7 +67590,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6582,
+    "entityID": "Eclipse Check Book Co",
     "source": "Directory",
     "year": 1925,
     "pages": "239",
@@ -67610,7 +67610,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6584,
+    "entityID": "Hannan & Co marine store",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67620,7 +67620,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6585,
+    "entityID": "James Hannan",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67684,7 +67684,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6591,
+    "entityID": "F. W. Lanzendorf",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67744,7 +67744,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6597,
+    "entityID": "John Easton",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67754,7 +67754,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6598,
+    "entityID": "Michael Carey",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67764,7 +67764,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6599,
+    "entityID": "Saml Lipshitz",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67804,7 +67804,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6603,
+    "entityID": "Lydia Edwards",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67844,7 +67844,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6607,
+    "entityID": "Mrs Ellen Green",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67854,7 +67854,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6608,
+    "entityID": "Walter F Samuels",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67894,7 +67894,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6612,
+    "entityID": "Allan E Hodder",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67904,7 +67904,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6613,
+    "entityID": "John Noonan",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67914,7 +67914,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6614,
+    "entityID": "Walter J Burgess",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67944,7 +67944,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6617,
+    "entityID": "John Kelly",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67954,7 +67954,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6618,
+    "entityID": "Susannah Cole",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67964,7 +67964,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6619,
+    "entityID": "Alfred Bond",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -67984,7 +67984,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6621,
+    "entityID": "Alfred Bolitho",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68108,7 +68108,7 @@ const directoryData = [
     "lng": 144.96434638802842
   },
   {
-    "entityID": 6633,
+    "entityID": "Albt McCabe",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68148,7 +68148,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6637,
+    "entityID": "Lawrence Tulloch",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68158,7 +68158,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6638,
+    "entityID": "Annie Allen",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68178,7 +68178,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6640,
+    "entityID": "Robert Hackett",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68208,7 +68208,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6643,
+    "entityID": "Robt Watson",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68230,7 +68230,7 @@ const directoryData = [
     "lng": 144.96447018743171
   },
   {
-    "entityID": 6645,
+    "entityID": "James Bailey (336 Madeline Street)",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68240,7 +68240,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6646,
+    "entityID": "Mary Russell",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68280,7 +68280,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6650,
+    "entityID": "Ellen Dorian",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68290,7 +68290,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6651,
+    "entityID": "M Crawford",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68350,7 +68350,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6657,
+    "entityID": "Thos. Gleeson",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68360,7 +68360,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6658,
+    "entityID": "Edith Gleeson",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68370,7 +68370,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6659,
+    "entityID": "Robert McKean",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68380,7 +68380,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6660,
+    "entityID": "M Lindsay",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68390,7 +68390,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6661,
+    "entityID": "Jno J Treacy",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68452,7 +68452,7 @@ const directoryData = [
     "lng": 144.96470638127332
   },
   {
-    "entityID": 6667,
+    "entityID": "W. Baker, dairy",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68482,7 +68482,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6670,
+    "entityID": "Mark Dewhurst",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68574,7 +68574,7 @@ const directoryData = [
     "lng": 144.96480238052965
   },
   {
-    "entityID": 6679,
+    "entityID": "George R Growcott, cabinet maker",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68594,7 +68594,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6681,
+    "entityID": "Alfd. Hickman",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68614,7 +68614,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6683,
+    "entityID": "Geo C White",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68624,7 +68624,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6684,
+    "entityID": "Mary McDonald",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68696,7 +68696,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6691,
+    "entityID": "Harold T Lane",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68726,7 +68726,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6694,
+    "entityID": "Alfred E. Finlay",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68746,7 +68746,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6696,
+    "entityID": "Leah Allen",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68766,7 +68766,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6698,
+    "entityID": "James Duncan",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68828,7 +68828,7 @@ const directoryData = [
     "lng": 144.9651855407633
   },
   {
-    "entityID": 6704,
+    "entityID": "Female Refuge",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -68984,7 +68984,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6719,
+    "entityID": "Wm D Hart, pstryck",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69034,7 +69034,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6724,
+    "entityID": "L Kiernan",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69084,7 +69084,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6729,
+    "entityID": "Mrs A. H. Kopmann, cigar manufacturer",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69146,7 +69146,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6735,
+    "entityID": "Hilda Mackay, cstmr",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69186,7 +69186,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6739,
+    "entityID": "M Patterson, brdnghse",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69206,7 +69206,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6741,
+    "entityID": "John J Jones",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69334,7 +69334,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6753,
+    "entityID": "Alfred Rye, dlr",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69344,7 +69344,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6754,
+    "entityID": "Andw Johnstone",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69374,7 +69374,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6757,
+    "entityID": "Jos Justice",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69456,7 +69456,7 @@ const directoryData = [
     "lng": 144.96397653461065
   },
   {
-    "entityID": 6765,
+    "entityID": "University grounds",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69466,7 +69466,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6766,
+    "entityID": "Teachers' college",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69476,7 +69476,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6767,
+    "entityID": "Medical School",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69486,7 +69486,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6768,
+    "entityID": "Bacteriological Laboratory",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69496,7 +69496,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6769,
+    "entityID": "Pathological Laboratory",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69526,7 +69526,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6772,
+    "entityID": "Chemical Laboratory",
     "source": "Directory",
     "year": 1925,
     "pages": "240",
@@ -69674,7 +69674,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6786,
+    "entityID": "Thomas Turner",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -69780,7 +69780,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6796,
+    "entityID": "Banks and Co",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -69800,7 +69800,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6798,
+    "entityID": "Wm Bishop",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -69810,7 +69810,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6799,
+    "entityID": "Charles F. Bishop",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -69918,7 +69918,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6809,
+    "entityID": "Emanuel Martin",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70008,7 +70008,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6818,
+    "entityID": "Samuel Kerr",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70236,7 +70236,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6840,
+    "entityID": "Eliza Dwyer",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70372,7 +70372,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6853,
+    "entityID": "Michael Glavin",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70382,7 +70382,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6854,
+    "entityID": "A Wilson, cnft",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70432,7 +70432,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6859,
+    "entityID": "B. L. Sellers",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70734,7 +70734,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6888,
+    "entityID": "Wm Rae, dairy",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -70776,7 +70776,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6892,
+    "entityID": "Daniel Leahy",
     "source": "Directory",
     "year": 1925,
     "pages": "241-242",
@@ -71038,7 +71038,7 @@ const directoryData = [
     "lng": 144.96621526323165
   },
   {
-    "entityID": 6917,
+    "entityID": "Carlton Paper Box Fctry",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71048,7 +71048,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6918,
+    "entityID": "E Birmingham",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71224,7 +71224,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6935,
+    "entityID": "A. S. Miles, copprsm",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71234,7 +71234,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6936,
+    "entityID": "Church of Christ Chinese mission",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71336,7 +71336,7 @@ const directoryData = [
     "lng": 144.9632482390305
   },
   {
-    "entityID": 6946,
+    "entityID": "Mrs Annie Smith",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71346,7 +71346,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6947,
+    "entityID": "Mrs Cecilia Steele",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71386,7 +71386,7 @@ const directoryData = [
     "cardinality": "North"
   },
   {
-    "entityID": 6951,
+    "entityID": "John Couch",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71598,7 +71598,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6971,
+    "entityID": "James Paterson",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71682,7 +71682,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6979,
+    "entityID": "Huey Anguey and sons, gn str",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71742,7 +71742,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6985,
+    "entityID": "Eliz Graham",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71824,7 +71824,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6993,
+    "entityID": "Frank Nigro",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71856,7 +71856,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6996,
+    "entityID": "Ellen Codling, pawnbroker",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -71886,7 +71886,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 6999,
+    "entityID": "Fredk. T. Collier",
     "source": "Directory",
     "year": 1925,
     "pages": "242",
@@ -72114,7 +72114,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 7021,
+    "entityID": "Independent church and mission hall",
     "source": "Directory",
     "year": 1925,
     "pages": "243",
@@ -72124,7 +72124,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 7022,
+    "entityID": "Louey Lom Yick",
     "source": "Directory",
     "year": 1925,
     "pages": "243",
@@ -72134,7 +72134,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 7023,
+    "entityID": "Robert Bodington, millwright and milling engineer",
     "source": "Directory",
     "year": 1925,
     "pages": "243",
@@ -72186,7 +72186,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 7028,
+    "entityID": "Francis H Green",
     "source": "Directory",
     "year": 1925,
     "pages": "243",
