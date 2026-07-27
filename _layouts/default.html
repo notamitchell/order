@@ -94,7 +94,7 @@
 
             <!-- Themes Sidebar -->
             <aside class="sidebar-menu">
-                <h2>Browse by Theme</h2>
+                <h2>Concepts</h2>
                 <ul class="theme-list">
                     <li><a href="people">People</a></li>
                     <li><a href="places">Places</a></li>
@@ -171,6 +171,7 @@
 
     const rows = data.map((d, i) => ({
       idx: i,
+      source: d.source || '',
       year: d.year,
       pages: d.pages,
       listing: d.listing || '',
@@ -182,6 +183,7 @@
     }));
 
     const columns = [
+      { key:'source',      label:'Source',  cls:'dir-col-source' },
       { key:'year',        label:'Year',    cls:'dir-col-year' },
       { key:'street',      label:'Street',  cls:'' },
       { key:'cardinality', label:'Side',    cls:'dir-col-card' },
@@ -357,6 +359,7 @@
         
           // Render row with link wrapped around the Listing
           return `<tr>
+            <td class="dir-col-source">${escapeHtml(r.source)}</td>
             <td class="dir-col-year">${escapeHtml(r.year)}</td>
             <td>${escapeHtml(r.street)}</td>
             <td class="dir-col-card">${escapeHtml(r.cardinality)}</td>
