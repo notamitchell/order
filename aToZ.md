@@ -1,8 +1,5 @@
 ---
-layout: default
-title: "A to Z"
-EACCPFpath: "N/A"
-overrideCommunityContributionForm: true
+title: "Carlton A to Z"
 ---
 
 # Index: A to Z
