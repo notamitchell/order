@@ -8,49 +8,83 @@ layout: default
 </div>
 
 <script>
- // 1. Select the <p class="loading"> element
 const targetElement = document.querySelector('#facet-list-container p.loading');
 
 if (targetElement && typeof directoryData !== 'undefined') {
-  let htmlBuilder = '';
+  let tocHtml = '<nav class="table-of-contents"><h2>Table of Contents</h2><ul>';
+  let contentHtml = '';
   
-  // Track previous hierarchy values to determine when to print new headers
   let currentSource = null;
   let currentStreet = null;
   let currentCardinality = null;
+  let isListOpen = false;
 
-  // Loop through the dataset in array order
-  directoryData.forEach(item => {
+  // Helper function to safely create URL-friendly IDs for anchor links
+  const createSlug = (str) => String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  directoryData.forEach((item, index) => {
     
+    // Check if hierarchy changed
+    const sourceChanged = item.source !== currentSource;
+    const streetChanged = item.street !== currentStreet;
+    const cardinalityChanged = item.cardinality !== currentCardinality;
+
+    // If headers change and a <ul> is currently open, close it and add "Back to top"
+    if ((sourceChanged || streetChanged || cardinalityChanged) && isListOpen) {
+      contentHtml += `</ul><a href="#toc" class="back-to-top">↑ Back to top</a>`;
+      isListOpen = false;
+    }
+
     // Output <h1> when 'source' changes
-    if (item.source !== currentSource) {
+    if (sourceChanged) {
       currentSource = item.source;
-      currentStreet = null;      // Reset child headers on parent change
+      currentStreet = null;
       currentCardinality = null;
-      htmlBuilder += `<h1>${currentSource}</h1>`;
+      
+      const sourceId = `source-${createSlug(currentSource)}`;
+      tocHtml += `<li><a href="#${sourceId}">${currentSource}</a></li>`;
+      contentHtml += `<h1 id="${sourceId}">${currentSource}</h1>`;
     }
 
     // Output <h2> when 'street' changes
-    if (item.street !== currentStreet) {
+    if (streetChanged) {
       currentStreet = item.street;
-      currentCardinality = null; // Reset child headers on parent change
-      htmlBuilder += `<h2>${currentStreet}</h2>`;
+      currentCardinality = null;
+      
+      const streetId = `street-${createSlug(currentSource)}-${createSlug(currentStreet)}`;
+      contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
     }
 
     // Output <h3> when 'cardinality' changes
-    if (item.cardinality !== currentCardinality) {
+    if (cardinalityChanged) {
       currentCardinality = item.cardinality;
-      htmlBuilder += `<h3>${currentCardinality}</h3>`;
+      
+      const cardId = `card-${createSlug(currentSource)}-${createSlug(currentStreet)}-${createSlug(currentCardinality)}`;
+      contentHtml += `<h3 id="${cardId}">${currentCardinality}</h3>`;
     }
 
-    // Output the listing entry
+    // Open <ul> if not already open
+    if (!isListOpen) {
+      contentHtml += `<ul>`;
+      isListOpen = true;
+    }
+
+    // Output listing as an <li> item
     if (item.listing) {
-      htmlBuilder += `<div class="listing">${item.listing}</div>`;
+      contentHtml += `<li>${item.listing}</li>`;
     }
   });
 
-  // 2. Set the HTML content of the <p> element
-  targetElement.innerHTML = htmlBuilder;
+  // Close final <ul> and add the last "Back to top" link
+  if (isListOpen) {
+    contentHtml += `</ul><a href="#toc" class="back-to-top">↑ Back to top</a>`;
+  }
+
+  tocHtml += '</ul></nav><hr />';
+
+  // Combine TOC and content, then update the container
+  targetElement.id = 'toc'; // Set container ID as anchor target for TOC
+  targetElement.innerHTML = tocHtml + contentHtml;
 }
 
 </script>
