@@ -8,71 +8,105 @@ layout: default
 </div>
 
 <script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   const targetElement = document.querySelector('#facet-list-container p.loading');
 
-  // Verify that the element exists and directoryData was loaded from map-data.js
+  // Inject the Liquid Front Matter variable into JavaScript
+  const pageFacet = "{{ page.facet }}".toLowerCase().trim();
+
   if (targetElement && typeof directoryData !== 'undefined') {
+
+    // 1. Filter the dataset based on page.facet
+    const filteredData = directoryData.filter(item => {
+      if (pageFacet === 'places') {
+        return item.source === 'Directory';
+      } else if (pageFacet === 'people') {
+        return item.source === 'Electoral roll';
+      }
+      return true; // Fallback: show all if facet is neither
+    });
+
     let tocHtml = '<nav class="table-of-contents"><h2>Table of Contents</h2><ul>';
     let contentHtml = '';
     
     let currentSource = null;
     let currentStreet = null;
     let currentCardinality = null;
-    let isListOpen = false;
+    
+    let isListOpen = false;        // Tracks standard <ul> listing groups
+    let currentTocLevel = 0;       // Tracks TOC <ul> indentation levels
 
-    // Helper to safely format anchor target IDs
     const createSlug = (str) => String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-    directoryData.forEach((item) => {
+    // Helper to close nested <ul> tags in the TOC to maintain valid HTML
+    const adjustTocLevel = (targetLevel) => {
+      while (currentTocLevel < targetLevel) {
+        tocHtml += '<ul>';
+        currentTocLevel++;
+      }
+      while (currentTocLevel > targetLevel) {
+        tocHtml += '</ul>';
+        currentTocLevel--;
+      }
+    };
+
+    filteredData.forEach((item) => {
       
       const sourceChanged = item.source !== currentSource;
       const streetChanged = item.street !== currentStreet;
       const cardinalityChanged = item.cardinality !== currentCardinality;
 
-      // Close current <ul> and append 'Back to top' when headers change
+      // Close open listing <ul> and add 'Back to top' when headers change
       if ((sourceChanged || streetChanged || cardinalityChanged) && isListOpen) {
         contentHtml += `</ul><a href="#toc" class="back-to-top">↑ Back to top</a>`;
         isListOpen = false;
       }
 
-      // Output <h1> when 'source' changes
+      // Handle <h1> (Source)
       if (sourceChanged) {
         currentSource = item.source;
         currentStreet = null;
         currentCardinality = null;
         
         const sourceId = `source-${createSlug(currentSource)}`;
+        
+        adjustTocLevel(1);
         tocHtml += `<li><a href="#${sourceId}">${currentSource}</a></li>`;
         contentHtml += `<h1 id="${sourceId}">${currentSource}</h1>`;
       }
 
-      // Output <h2> when 'street' changes
+      // Handle <h2> (Street)
       if (streetChanged) {
         currentStreet = item.street;
         currentCardinality = null;
         
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentStreet)}`;
+        
+        adjustTocLevel(2);
+        tocHtml += `<li><a href="#${streetId}">${currentStreet}</a></li>`;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
 
-      // Output <h3> when 'cardinality' changes
+      // Handle <h3> (Cardinality)
       if (cardinalityChanged) {
         currentCardinality = item.cardinality;
         
         const cardId = `card-${createSlug(currentSource)}-${createSlug(currentStreet)}-${createSlug(currentCardinality)}`;
+        
+        adjustTocLevel(3);
+        tocHtml += `<li><a href="#${cardId}">${currentCardinality}</a></li>`;
         contentHtml += `<h3 id="${cardId}">${currentCardinality}</h3>`;
       }
 
-      // Open new <ul> tag
+      // Open <ul> for listing items
       if (!isListOpen) {
         contentHtml += `<ul>`;
         isListOpen = true;
       }
 
-      // Format listing as a link containing the URL-encoded entityID
+      // Render listing link
       if (item.listing) {
-        // Fallback checks entityID, entity_id, or id depending on your exact key name
         const rawId = item.entityID || item.entity_id || item.id || '';
         const encodedId = encodeURIComponent(rawId);
         
@@ -80,17 +114,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Close the final <ul> block
+    // Close final listing block
     if (isListOpen) {
       contentHtml += `</ul><a href="#toc" class="back-to-top">↑ Back to top</a>`;
     }
 
-    tocHtml += '</ul></nav><hr />';
+    // Close remaining open TOC sub-lists
+    adjustTocLevel(0);
 
-    // Set the anchor target for returning to the top
+    tocHtml += '</nav><hr />';
+
+    // Set container ID as target for "Back to top" links
     targetElement.id = 'toc';
     targetElement.innerHTML = tocHtml + contentHtml;
   }
 });
-
+</script>
 </script>
