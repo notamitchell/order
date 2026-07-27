@@ -2,7 +2,6 @@ theme: jekyll-theme-cayman
 
 defaults:
   # Applies to every page unless a more specific rule below overrides it.
-  # Entry-style pages will flip this to false explicitly.
   - scope:
       path: ""
       type: "pages"
