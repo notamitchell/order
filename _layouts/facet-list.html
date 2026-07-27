@@ -28,86 +28,73 @@ layout: default
   const data = (typeof directoryData !== 'undefined') ? directoryData : [];
   const rows = data.filter(d => d.source === expectedSource);
 
-  // Group rows into one entry per distinct person/place, tracking every
-  // year that entity shows up so the list doesn't repeat a name per year.
-  const grouped = new Map();
-
-  rows.forEach(d => {
-    let key, label;
-    if (facet === 'people') {
-      const surname = d['Surname'] || '';
-      const given = d['Given Names'] || '';
-      key = `${surname}|${given}`.toLowerCase();
-      label = `${given} ${surname}`.trim();
-    } else {
-      key = `${d.street || ''}|${d.listing || ''}`.toLowerCase();
-      label = d.listing || d.street || '';
-    }
-    if (!key.trim().replace(/\|/g, '')) return;
-
-    if (!grouped.has(key)) {
-      grouped.set(key, { label, entityID: d.entityID, years: new Set() });
-    }
-    if (d.year) grouped.get(key).years.add(d.year);
-  });
-
-  const allItems = [...grouped.values()].sort((a, b) => a.label.localeCompare(b.label));
-
-  // --- Simple search + pagination, matching the site's existing conventions ---
-  const state = { search: '', page: 1, perPage: 200 };
+  // Fixed compass order; anything else (blank, unusual values) sorts after, alphabetically.
+  const CARDINALITY_ORDER = ['North', 'East', 'South', 'West'];
+  function cardinalityRank(c){
+    const i = CARDINALITY_ORDER.indexOf(c);
+    return i === -1 ? CARDINALITY_ORDER.length : i;
+  }
 
   function escapeHtml(s){
     return (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
-
-  function render(){
-    const filtered = state.search
-      ? allItems.filter(item => item.label.toLowerCase().includes(state.search))
-      : allItems;
-
-    const totalPages = Math.max(1, Math.ceil(filtered.length / state.perPage));
-    if (state.page > totalPages) state.page = totalPages;
-    const start = (state.page - 1) * state.perPage;
-    const pageItems = filtered.slice(start, start + state.perPage);
-
-    const listHtml = pageItems.length
-      ? pageItems.map(item => {
-          const years = item.years.size ? ` <span class="facet-years">(${[...item.years].sort().join(', ')})</span>` : '';
-          const link = item.entityID ? `civic?id=${encodeURIComponent(item.entityID)}` : null;
-          const name = escapeHtml(item.label);
-          return `<li>${link ? `<a href="${link}">${name}</a>` : name}${years}</li>`;
-        }).join('')
-      : '<li class="facet-no-results">No entries match your search.</li>';
-
-    const pagerHtml = totalPages > 1 ? `
-      <div class="facet-pagination">
-        <button type="button" data-page="${state.page - 1}" ${state.page === 1 ? 'disabled' : ''}>‹ Prev</button>
-        <span>Page ${state.page} of ${totalPages}</span>
-        <button type="button" data-page="${state.page + 1}" ${state.page === totalPages ? 'disabled' : ''}>Next ›</button>
-      </div>` : '';
-
-    container.innerHTML = `
-      <div class="facet-toolbar">
-        <input type="text" id="facetSearchInput" placeholder="Search ${facet}…" value="${escapeHtml(state.search)}">
-        <span class="facet-count">${filtered.length.toLocaleString()} ${facet}</span>
-      </div>
-      <ul class="facet-list-items">${listHtml}</ul>
-      ${pagerHtml}
-    `;
-
-    document.getElementById('facetSearchInput').addEventListener('input', (e) => {
-      state.search = e.target.value.trim().toLowerCase();
-      state.page = 1;
-      render();
-    });
-    container.querySelectorAll('[data-page]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.page = Number(btn.dataset.page);
-        render();
-      });
-    });
+  function slugify(s){
+    return (s || 'unknown').toString().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
   }
 
-  render();
+  // Build a Year -> Street -> Cardinality -> [rows] tree
+  const tree = new Map();
+  rows.forEach(d => {
+    const year = d.year || 'Unknown year';
+    const street = d.street || 'Unknown street';
+    const card = d.cardinality || 'Unspecified';
+
+    if (!tree.has(year)) tree.set(year, new Map());
+    const streets = tree.get(year);
+    if (!streets.has(street)) streets.set(street, new Map());
+    const cards = streets.get(street);
+    if (!cards.has(card)) cards.set(card, []);
+    cards.get(card).push(d);
+  });
+
+  const years = [...tree.keys()].sort((a, b) => {
+    if (a === 'Unknown year') return 1;
+    if (b === 'Unknown year') return -1;
+    return a - b;
+  });
+
+  if (years.length === 0) {
+    container.innerHTML = '<p>No entries found.</p>';
+    return;
+  }
+
+  // Table of contents: one link per year
+  let tocHtml = '<nav class="facet-toc"><p>' +
+    years.map(y => `<a href="#year-${slugify(y)}">${escapeHtml(y)}</a>`).join(' | ') +
+    '</p></nav>';
+
+  let bodyHtml = '';
+  years.forEach(year => {
+    bodyHtml += `<h1 id="year-${slugify(year)}">${escapeHtml(year)}</h1>`;
+
+    const streets = [...tree.get(year).keys()].sort((a, b) => a.localeCompare(b));
+    streets.forEach(street => {
+      bodyHtml += `<h2>${escapeHtml(street)}</h2>`;
+
+      const cards = [...tree.get(year).get(street).keys()]
+        .sort((a, b) => cardinalityRank(a) - cardinalityRank(b));
+      cards.forEach(card => {
+        bodyHtml += `<h3>${escapeHtml(card)}</h3><ul class="facet-list-items">`;
+        tree.get(year).get(street).get(card).forEach(d => {
+          const label = escapeHtml(d.listing || street);
+          const link = d.entityID ? `civic?id=${encodeURIComponent(d.entityID)}` : null;
+          bodyHtml += `<li>${link ? `<a href="${link}">${label}</a>` : label}</li>`;
+        });
+        bodyHtml += '</ul>';
+      });
+    });
+  });
+
+  container.innerHTML = tocHtml + bodyHtml;
 })();
 </script>
