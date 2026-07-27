@@ -8,18 +8,6 @@ layout: default
 </div>
 
 <script>
-(function(){
-  // Which raw "source" value in directoryData corresponds to each facet.
-  // Add a new line here whenever a new facet page is introduced.
-  const FACET_SOURCE = {
-    people: "Electoral roll",
-    places: "Directory"
-  };
-
-  const facet = "{{ page.facet }}";
-  const expectedSource = FACET_SOURCE[facet];
-  const container = document.getElementById('facet-list-container');
-
  // 1. Select the <p class="loading"> element
 const targetElement = document.querySelector('#facet-list-container p.loading');
 
@@ -64,5 +52,5 @@ if (targetElement && typeof directoryData !== 'undefined') {
   // 2. Set the HTML content of the <p> element
   targetElement.innerHTML = htmlBuilder;
 }
-})();
+
 </script>
