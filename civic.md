@@ -1,7 +1,5 @@
 ---
-layout: default
-title: "Entry"
-EACCPFpath: "civic"
+title: "Carlton Entry"
 ---
 
 ## Entry for Civic and Community Impact project
