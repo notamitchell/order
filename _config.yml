@@ -1,1 +1,20 @@
 theme: jekyll-theme-cayman
+
+defaults:
+  # Applies to every page unless a more specific rule below overrides it.
+  # Entry-style pages will flip this to false explicitly.
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: default
+      overrideCommunityContributionForm: true
+
+  # The civic encyclopedia-entry page: needs the entry layout, XML lookup path,
+  # and the contribution form turned on.
+  - scope:
+      path: "civic.md"
+    values:
+      layout: entry
+      EACCPFpath: "civic"
+      overrideCommunityContributionForm: false
