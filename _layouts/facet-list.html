@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (targetElement && typeof directoryData !== 'undefined') {
 
-    // 1. Filter the dataset based on page.facet
+    // Filter the dataset based on page.facet
     const filteredData = directoryData.filter(item => {
       if (pageFacet === 'places') {
         return item.source === 'Directory';
@@ -26,100 +26,69 @@ document.addEventListener('DOMContentLoaded', () => {
       return true; // Fallback: show all if facet is neither
     });
 
-    let tocHtml = '<nav class="table-of-contents"><h2>Table of Contents</h2><ul>';
+    let tocHtml = '<nav class="table-of-contents"><h2>Table of Contents</h2>';
     let contentHtml = '';
     
     let currentSource = null;
     let currentStreet = null;
     let currentCardinality = null;
-    
-    let isListOpen = false;        // Tracks standard <ul> listing groups
-    let currentTocLevel = 0;       // Tracks TOC <ul> indentation levels
 
     const createSlug = (str) => String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
-    // Helper to close nested <ul> tags in the TOC to maintain valid HTML
-    const adjustTocLevel = (targetLevel) => {
-      while (currentTocLevel < targetLevel) {
-        tocHtml += '<ul>';
-        currentTocLevel++;
-      }
-      while (currentTocLevel > targetLevel) {
-        tocHtml += '</ul>';
-        currentTocLevel--;
-      }
-    };
-
-    filteredData.forEach((item) => {
+    filteredData.forEach((item, index) => {
       
       const sourceChanged = item.source !== currentSource;
       const streetChanged = item.street !== currentStreet;
       const cardinalityChanged = item.cardinality !== currentCardinality;
 
-      // Close open listing <ul> and add 'Back to top' when headers change
-      if ((sourceChanged || streetChanged || cardinalityChanged) && isListOpen) {
-        contentHtml += `</ul><a href="#toc" class="back-to-top">↑ Back to top</a>`;
-        isListOpen = false;
+      // Add 'Back to top' before starting a new group (except before the very first header)
+      if ((sourceChanged || streetChanged || cardinalityChanged) && index > 0) {
+        contentHtml += `<p class="back-to-top-container"><a href="#toc" class="back-to-top">↑ Back to top</a></p>`;
       }
 
-      // Handle <h1> (Source)
+      // Handle <h1> (Source) - TOC Indent: 0px
       if (sourceChanged) {
         currentSource = item.source;
         currentStreet = null;
         currentCardinality = null;
         
         const sourceId = `source-${createSlug(currentSource)}`;
-        
-        adjustTocLevel(1);
-        tocHtml += `<li><a href="#${sourceId}">${currentSource}</a></li>`;
+        tocHtml += `<p style="margin-left: 0px;"><a href="#${sourceId}">${currentSource}</a></p>`;
         contentHtml += `<h1 id="${sourceId}">${currentSource}</h1>`;
       }
 
-      // Handle <h2> (Street)
+      // Handle <h2> (Street) - TOC Indent: 15px
       if (streetChanged) {
         currentStreet = item.street;
         currentCardinality = null;
         
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentStreet)}`;
-        
-        adjustTocLevel(2);
-        tocHtml += `<li><a href="#${streetId}">${currentStreet}</a></li>`;
+        tocHtml += `<p style="margin-left: 15px;"><a href="#${streetId}">${currentStreet}</a></p>`;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
 
-      // Handle <h3> (Cardinality)
+      // Handle <h3> (Cardinality) - TOC Indent: 30px
       if (cardinalityChanged) {
         currentCardinality = item.cardinality;
         
         const cardId = `card-${createSlug(currentSource)}-${createSlug(currentStreet)}-${createSlug(currentCardinality)}`;
-        
-        adjustTocLevel(3);
-        tocHtml += `<li><a href="#${cardId}">${currentCardinality}</a></li>`;
+        tocHtml += `<p style="margin-left: 30px;"><a href="#${cardId}">${currentCardinality}</a></p>`;
         contentHtml += `<h3 id="${cardId}">${currentCardinality}</h3>`;
       }
 
-      // Open <ul> for listing items
-      if (!isListOpen) {
-        contentHtml += `<ul>`;
-        isListOpen = true;
-      }
-
-      // Render listing link
+      // Render listing entry as a paragraph
       if (item.listing) {
         const rawId = item.entityID || item.entity_id || item.id || '';
         const encodedId = encodeURIComponent(rawId);
         
-        contentHtml += `<li><a href="civic?id=${encodedId}">${item.listing}</a></li>`;
+        contentHtml += `<p class="listing-item"><a href="civic?id=${encodedId}">${item.listing}</a></p>`;
       }
     });
 
-    // Close final listing block
-    if (isListOpen) {
-      contentHtml += `</ul><a href="#toc" class="back-to-top">↑ Back to top</a>`;
+    // Final "Back to top" link at the very bottom
+    if (filteredData.length > 0) {
+      contentHtml += `<p class="back-to-top-container"><a href="#toc" class="back-to-top">↑ Back to top</a></p>`;
     }
-
-    // Close remaining open TOC sub-lists
-    adjustTocLevel(0);
 
     tocHtml += '</nav><hr />';
 
