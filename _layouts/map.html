@@ -113,7 +113,6 @@
         }
         .leaflet-tooltip-top:before { border-top-color: rgba(30,18,9,0.88); }
 
-
         /* Leaflet internally masks vector shapes using overflow:hidden. 
            This container directive forces the map canvas to render vectors outer bounds */
         .leaflet-zoom-animated svg {
@@ -156,6 +155,7 @@
 </svg>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="UoM_Landuse_2026.js"></script>
 <script src="map-data.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -164,24 +164,24 @@
 const mapConfig = [
     { id:7316,  source:'vic', label:'Plan of Melbourne, Hotham, Carlton, Fitzroy and East Melbourne (1866)',             visibleByDefault:false },
     { id:82967, source:'net', label:'Melbourne and its suburbs (1855)', visibleByDefault:false  },
-    { id:80116, source:'net', label:'Bibbs Map PROV (c1857-67)',       visibleByDefault:false },
+    //{ id:80116, source:'net', label:'Bibbs Map PROV (c1857-67)',       visibleByDefault:false },
     { id:83032, source:'net', label:'Morgan\'s Official street directory. Melbourne & Suburbs (1951).',       visibleByDefault:false },
     { id:7342,  source:'vic', label:'City of Melbourne Block Plan compiled for use in City Surveyor\'s office (1910)',             visibleByDefault:false },
     { id:7265,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7265',             visibleByDefault:false },
-    { id:82968, source:'net', label:'Mapwarper Net 82968',       visibleByDefault:false },
-    { id:82969, source:'net', label:'Mapwarper Net 82969',       visibleByDefault:false },
-    { id:82971, source:'net', label:'Mapwarper Net 82971',       visibleByDefault:false },
-    { id:82973, source:'net', label:'Mapwarper Net 82973',       visibleByDefault:false },
-    { id:82976, source:'net', label:'Mapwarper Net 82976',       visibleByDefault:false },
-    { id:82978, source:'net', label:'Mapwarper Net 82978',       visibleByDefault:false },
-    { id:82979, source:'net', label:'Mapwarper Net 82979',       visibleByDefault:false },
-    { id:82904, source:'net', label:'Mapwarper Net 82904',       visibleByDefault:false },
-    { id:7242,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7242',             visibleByDefault:false },
-    { id:4331,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/4331',             visibleByDefault:false },
-    { id:11775, source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/11775',            visibleByDefault:false },
-    { id:7231,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7231',             visibleByDefault:false },
-    { id:7981,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7981',             visibleByDefault:false },
-    { id:7452,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7452',             visibleByDefault:false },
+    //{ id:82968, source:'net', label:'Mapwarper Net 82968',       visibleByDefault:false },
+    //{ id:82969, source:'net', label:'Mapwarper Net 82969',       visibleByDefault:false },
+    //{ id:82971, source:'net', label:'Mapwarper Net 82971',       visibleByDefault:false },
+    //{ id:82973, source:'net', label:'Mapwarper Net 82973',       visibleByDefault:false },
+    //{ id:82976, source:'net', label:'Mapwarper Net 82976',       visibleByDefault:false },
+    //{ id:82978, source:'net', label:'Mapwarper Net 82978',       visibleByDefault:false },
+    //{ id:82979, source:'net', label:'Mapwarper Net 82979',       visibleByDefault:false },
+    //{ id:82904, source:'net', label:'Mapwarper Net 82904',       visibleByDefault:false },
+    //{ id:7242,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7242',             visibleByDefault:false },
+    //{ id:4331,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/4331',             visibleByDefault:false },
+    //{ id:11775, source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/11775',            visibleByDefault:false },
+    //{ id:7231,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7231',             visibleByDefault:false },
+    //{ id:7981,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7981',             visibleByDefault:false },
+    //{ id:7452,  source:'vic', label:'https://mapwarper.prov.vic.gov.au/maps/7452',             visibleByDefault:false },
 ];
 
 
@@ -554,6 +554,55 @@ function rebuildCrossYearLines() {
 }
 
 // ═══════════════════════════════════════════════════════════
+//  GEOJSON LAYER — UoM Land Use
+// ═══════════════════════════════════════════════════════════
+
+// Style function for GeoJSON features
+function getUoMStyle(feature) {
+    return {
+        fillColor: '#3388ff',
+        weight: 2,
+        opacity: 0.8,
+        color: '#0066cc',
+        fillOpacity: 0.3
+    };
+}
+
+// Popup content for each feature
+function onEachFeature(feature, layer) {
+    const props = feature.properties;
+    let popupContent = `<strong>${props.building_name || 'Property'}</strong><br>`;
+    popupContent += `Address: ${props.street_address || 'N/A'}<br>`;
+    popupContent += `Suburb: ${props.SUBURB || 'N/A'}<br>`;
+    popupContent += `Status: ${props.UOM_STATUS || 'N/A'}<br>`;
+    popupContent += `Area: ${props.PROPERTY_TITLE_LAND_AREA || 'N/A'} m²`;
+    
+    layer.bindPopup(popupContent);
+    layer.bindTooltip(props.building_name || props.street_address || 'Property', { sticky: true });
+}
+
+// Create GeoJSON layer
+const uomLanduseLayer = L.geoJSON(uomLanduseData, {
+    style: getUoMStyle,
+    onEachFeature: onEachFeature
+});
+
+// Add hover effects
+uomLanduseLayer.on('mouseover', function(e) {
+    e.layer.setStyle({
+        fillOpacity: 0.7,
+        weight: 3
+    });
+});
+
+uomLanduseLayer.on('mouseout', function(e) {
+    uomLanduseLayer.resetStyle(e.layer);
+});
+
+// Add to a layer group for control panel visibility
+const uomLayerGroup = L.layerGroup([uomLanduseLayer]);
+
+// ═══════════════════════════════════════════════════════════
 //  MODAL
 // ═══════════════════════════════════════════════════════════
 const modal    = document.getElementById('details-modal');
@@ -616,7 +665,7 @@ function openModal(entry) {
     const lat = pos ? pos.lat : entry.lat;
     const lng = pos ? pos.lng : entry.lng;
 
-    if (lat !== undefined && lng !== undefined) {
+       if (lat !== undefined && lng !== undefined) {
         mCoords.innerText = `${Number(lat).toFixed(7)}, ${Number(lng).toFixed(7)}${entry._computed ? ' (estimated)' : ''}`;
     } else {
         mCoords.innerText = 'Unknown';
@@ -700,6 +749,25 @@ const CustomControl = L.Control.extend({
             L.DomEvent.on(sl, 'input',  () => layer.setOpacity(sl.value/100));
         });
 
+        const geoJsonTitle = L.DomUtil.create('div', 'panel-section-title', container);
+        geoJsonTitle.innerText = 'University of Melbourne';
+
+        const geoJsonRow = L.DomUtil.create('label', 'layer-control-row', container);
+        const geoJsonCb = L.DomUtil.create('input', '', geoJsonRow);
+        geoJsonCb.type = 'checkbox';
+        geoJsonCb.checked = true;
+
+        const geoJsonSpan = L.DomUtil.create('span', '', geoJsonRow);
+        geoJsonSpan.innerText = 'UoM Properties';
+
+        L.DomEvent.on(geoJsonCb, 'change', () => {
+            if (geoJsonCb.checked) {
+                uomLayerGroup.addTo(map);
+            } else {
+                map.removeLayer(uomLayerGroup);
+            }
+        });
+
         return container;
     }
 });
@@ -711,6 +779,7 @@ map.addControl(new CustomControl());
 initPositions();
 yearGroups[YEARS[YEARS.length - 1]].addTo(map); // Latest year visible by default
 rebuildCrossYearLines();
+uomLayerGroup.addTo(map); // Add UoM GeoJSON layer to map by default
 </script>
 </body>
 </html>
