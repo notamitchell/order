@@ -7,16 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  </head>
-<link rel="stylesheet" type="text/css" href="styles/defaultStyles.css">
+    <link rel="stylesheet" type="text/css" href="styles/site.css">
 </head>
     <body>
 
     <div class="wrapper">
         
-        <!-- Banner Image Component -->
-        <header class="banner-container">
-            <img src="images/dq000147.jpg" alt="Banner, source: https://handle.slv.vic.gov.au/10381/92019">
+        <!-- Banner Image Component: starts on the bottom third of the
+             source image, then drifts upward as the page scrolls
+             (see scripts/banner-parallax.js) -->
+        <header class="banner-container" role="img" aria-label="Banner, source: https://handle.slv.vic.gov.au/10381/92019">
+            <div class="banner-image"></div>
         </header>
 
         <!-- Top Navigation Bar -->
@@ -123,6 +124,7 @@
     </div>
     
 
+<script src="scripts/banner-parallax.js"></script>
 <script src="map-data.js"></script>
 <script>
 (function(){
