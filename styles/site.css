@@ -1,0 +1,885 @@
+/* ============================================================
+
+   Sections:
+     1. Palette & tokens
+     2. Reset
+     3. Banner (with scroll parallax)
+     4. Top navigation
+     5. Search / directory panel
+     6. Page layout & typography (Home, A-Z, People, Places, etc.)
+     7. Footer
+     8. Map page chrome            (used by map.html only)
+     9. 3D Map page chrome         (used by map3d.html only)
+   ============================================================ */
+
+/* 1. PALETTE & TOKENS ------------------------------------------------- */
+:root {
+    /* Paper / surfaces, lightest to deepest */
+    --paper:        #f7f5ea;   /* page background: warm cream */
+    --paper-deep:   #efead2;   /* panels, cards: deeper parchment */
+    --paper-line:   #e2dcc0;   /* hairline rules on paper */
+
+    /* Sage, sampled straight from the map's ground tone */
+    --sage-light:   #dee4c3;
+    --sage:         #c3c9a6;
+    --sage-dark:    #9aa084;
+
+    /* Ink, sampled from the survey lines & lettering */
+    --ink:          #32351f;   /* headings, nav, primary text */
+    --ink-soft:     #565a3c;   /* body copy */
+    --ink-faint:    #7d8161;   /* labels, meta, placeholders */
+    --ink-deepest:  #1c1e12;   /* full-bleed dark surfaces (3D map) */
+
+    /* Moss accent — a saturated step off the map's own ink, used
+       in place of the old unrelated teal/gold for links & hover states */
+    --moss:         #5c6b34;
+    --moss-deep:    #454f26;
+    --moss-bright:  #b9c98a;   /* light accent for dark surfaces */
+
+    --font-serif: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
+    --font-mono:  'Courier Prime', 'Courier New', monospace;
+    --font-ui:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* 2. RESET ------------------------------------------------------------ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-ui);
+    color: var(--ink-soft);
+    background-color: var(--sage-dark);
+    line-height: 1.6;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--paper);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 3. BANNER (with scroll parallax) ------------------------------------
+   The banner starts on the bottom third of the source image, then
+   drifts upward — more slowly than the page scrolls — as the user
+   scrolls down, revealing more of the map above it. Driven by the
+   .banner-image background-position, set from scripts/banner-parallax.js
+   via the --banner-shift custom property. Degrades gracefully to a
+   static bottom-third crop with JS disabled. */
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: clamp(160px, 30vw, 360px);
+    overflow: hidden;
+    display: block;
+    background-color: var(--ink);
+}
+
+.banner-image {
+    position: absolute;
+    inset: 0;
+    background-image: url("../images/dq000147.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Rest state: bottom third of the image visible */
+    background-position: center calc(100% - var(--banner-shift, 0%));
+}
+
+/* 4. TOP NAVIGATION ----------------------------------------------------- */
+.main-nav {
+    background-color: var(--ink);
+    border-bottom: 4px solid var(--moss);
+    padding: 0 20px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nav-links li a {
+    display: block;
+    color: var(--paper);
+    text-decoration: none;
+    padding: 14px 20px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-links li a:hover {
+    background-color: var(--moss-deep);
+    color: var(--moss-bright);
+}
+
+.nav-directory-toggle {
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-directory-toggle .nav-caret {
+    font-size: 0.7em;
+    transition: transform 0.2s ease;
+}
+
+.nav-directory-toggle[aria-expanded="true"] {
+    background-color: var(--moss-deep);
+    color: var(--moss-bright);
+}
+
+.nav-directory-toggle[aria-expanded="true"] .nav-caret {
+    transform: rotate(180deg);
+}
+
+/* 5. SEARCH / DIRECTORY PANEL — ledger/archival theme ------------------- */
+.directory-panel-wrapper {
+    --panel-paper:     var(--paper-deep);
+    --panel-ink:       var(--ink);
+    --panel-ink-soft:  var(--ink-soft);
+    --panel-accent:    var(--moss);
+    --panel-accent-2:  var(--sage-dark);
+    --panel-rule:      rgba(50, 53, 31, 0.18);
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+    background-color: var(--panel-paper);
+    border-bottom: 0 solid var(--panel-accent-2);
+}
+
+.directory-panel-wrapper.open {
+    grid-template-rows: 1fr;
+    border-bottom-width: 4px;
+}
+
+.directory-panel-wrapper > .directory-panel {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.directory-panel-inner {
+    padding: 26px 40px 34px;
+    position: relative;
+    font-family: var(--font-mono);
+    color: var(--panel-ink);
+}
+
+.directory-stamp {
+    position: absolute;
+    top: 24px; right: 40px;
+    font-family: var(--font-serif);
+    font-size: 10px;
+    color: var(--panel-ink-soft);
+    border: 1px solid var(--panel-rule);
+    padding: 5px 9px;
+    transform: rotate(2deg);
+    text-align: center;
+    line-height: 1.4;
+}
+
+.directory-close {
+    position: absolute;
+    top: 18px; left: 40px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--panel-ink-soft);
+    cursor: pointer;
+    padding: 2px 8px;
+}
+.directory-close:hover { color: var(--panel-accent); }
+
+.directory-masthead-text {
+    text-align: center;
+    padding-top: 4px;
+}
+
+.directory-eyebrow {
+    font-family: var(--font-mono);
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: var(--panel-accent);
+    margin-bottom: 8px;
+}
+
+.directory-h1 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: clamp(24px, 3.6vw, 34px);
+    margin: 0;
+    letter-spacing: 0.01em;
+    color: var(--panel-ink);
+}
+.directory-h1 em { font-style: italic; color: var(--panel-accent); }
+
+.directory-subtitle {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--panel-ink-soft);
+    margin: 6px 0 0;
+    font-size: 13px;
+}
+
+.directory-rule {
+    height: 5px;
+    margin: 14px auto 22px;
+    max-width: 520px;
+    border-top: 2px solid var(--panel-ink);
+    border-bottom: 1px solid var(--panel-ink);
+}
+
+.directory-toolbar {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(4, 1fr) auto;
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 18px;
+}
+
+.dir-field label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--panel-accent);
+    margin-bottom: 5px;
+}
+
+.dir-field input[type="text"],
+.dir-field select {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 8px 10px;
+    background: var(--paper);
+    border: 1px solid var(--panel-ink);
+    color: var(--panel-ink);
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.dir-field select {
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--panel-ink) 50%), linear-gradient(135deg, var(--panel-ink) 50%, transparent 50%);
+    background-position: calc(100% - 15px) center, calc(100% - 10px) center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+}
+
+.dir-field input:focus,
+.dir-field select:focus {
+    outline: 2px solid var(--panel-accent-2);
+    outline-offset: 1px;
+}
+
+.directory-reset {
+    font-size: 11px;
+    padding: 9px 14px;
+    background: var(--panel-paper);
+    border: 1px solid var(--panel-ink);
+    color: var(--panel-ink);
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+}
+
+.directory-reset:hover {
+    background: var(--panel-ink);
+    color: var(--panel-paper);
+}
+
+.directory-result-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 12px;
+    color: var(--panel-ink-soft);
+    margin-bottom: 8px;
+}
+
+.directory-result-line strong { color: var(--panel-ink); }
+
+.dir-trace-notice { color: var(--panel-accent); font-weight: 600; }
+
+.dir-trace-notice button {
+    background: none;
+    border: none;
+    color: var(--panel-accent-2);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    margin-left: 6px;
+}
+
+.directory-table-wrap {
+    border: 1px solid var(--panel-rule);
+    max-height: 420px;
+    overflow: auto;
+    background: var(--panel-paper);
+}
+
+.directory-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.directory-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: var(--panel-ink);
+    color: var(--panel-paper);
+    text-align: left;
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.directory-table thead th:hover { background-color: var(--panel-accent); }
+.directory-table thead th.active { background-color: var(--panel-accent); }
+
+.directory-table thead th .dir-arrow {
+    margin-left: 5px;
+    opacity: 0.7;
+    font-size: 9px;
+}
+
+.directory-table tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--panel-rule);
+    vertical-align: top;
+}
+
+.directory-table tbody tr:nth-child(even) { background-color: rgba(50, 53, 31, 0.035); }
+.directory-table tbody tr:hover { background-color: rgba(154, 160, 132, 0.25); }
+
+.dir-col-year { font-weight: 700; color: var(--panel-accent); white-space: nowrap; }
+.dir-col-card { white-space: nowrap; color: var(--panel-accent-2); font-style: italic; font-family: var(--font-serif); }
+.dir-col-type { white-space: nowrap; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--panel-ink-soft); }
+.dir-col-pages { white-space: nowrap; text-align: right; color: var(--panel-ink-soft); }
+
+.directory-table td:nth-child(2),
+.directory-table td:nth-child(5) {
+    font-family: var(--font-serif);
+    font-size: 14px;
+}
+
+.dir-trace-btn {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 10px;
+    padding: 1px 6px;
+    border: 1px solid var(--panel-accent);
+    color: var(--panel-accent);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    font-family: var(--font-mono);
+    vertical-align: middle;
+}
+
+.dir-trace-btn:hover { background-color: var(--panel-accent); color: var(--panel-paper); }
+
+.directory-no-results {
+    padding: 40px 20px;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--panel-ink-soft);
+    font-size: 15px;
+}
+
+.directory-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.directory-pagination button {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 6px 12px;
+    background: var(--panel-paper);
+    border: 1px solid var(--panel-ink);
+    color: var(--panel-ink);
+    cursor: pointer;
+}
+
+.directory-pagination button:hover:not(:disabled) {
+    background-color: var(--panel-ink);
+    color: var(--panel-paper);
+}
+
+.directory-pagination button:disabled { opacity: 0.35; cursor: default; }
+
+.directory-pagination .dir-page-indicator {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 12px;
+    padding: 0 8px;
+    color: var(--panel-ink-soft);
+}
+
+@media (max-width: 768px) {
+    .directory-panel-inner { padding: 60px 20px 24px; }
+    .directory-toolbar { grid-template-columns: 1fr 1fr; }
+    .directory-reset { grid-column: 1 / -1; }
+    .directory-stamp { display: none; }
+    .directory-close { top: 14px; left: 14px; }
+}
+
+/* 6. PAGE LAYOUT & TYPOGRAPHY -------------------------------------------- */
+.layout-container {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    padding: 40px;
+}
+
+@media (max-width: 768px) {
+    .layout-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 30px;
+    }
+}
+
+.main-content h1 {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    font-weight: normal;
+    border-bottom: 1px solid var(--paper-line);
+    padding-bottom: 10px;
+}
+
+.main-content p {
+    margin-bottom: 20px;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+}
+
+.main-content a { color: var(--moss); }
+.main-content a:hover { color: var(--moss-deep); }
+
+.sidebar-menu {
+    background-color: var(--paper-deep);
+    border: 1px solid var(--sage);
+    border-radius: 6px;
+    padding: 24px;
+    align-self: start;
+}
+
+.sidebar-menu h2 {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--moss);
+    font-weight: normal;
+}
+
+.theme-list {
+    list-style: none;
+}
+
+.theme-list li {
+    border-bottom: 1px solid var(--paper-line);
+}
+
+.theme-list li:last-child {
+    border-bottom: none;
+}
+
+.theme-list a {
+    display: block;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 8px 4px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.theme-list a:hover {
+    color: var(--moss-deep);
+    padding-left: 8px;
+    background-color: var(--sage-light);
+}
+
+/* 7. FOOTER ---------------------------------------------------------- */
+.main-footer {
+    background-color: var(--ink);
+    color: var(--sage);
+    padding: 40px 20px;
+    font-size: 0.9rem;
+}
+
+.footer-content {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+.footer-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--sage-light);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: var(--moss-bright);
+}
+
+.footer-attribution {
+    border-top: 1px solid var(--ink-soft);
+    width: 100%;
+    padding-top: 20px;
+    color: var(--sage-dark);
+    font-size: 0.85rem;
+}
+
+/* 8. MAP PAGE CHROME (map.html) --------------------------------------
+   The Leaflet canvas stays full-bleed and dark; only the control
+   panel, tooltips, and modal are retinted to the shared palette. */
+html.map-page, body.map-page, body.map-page #map {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background-color: var(--ink-deepest);
+}
+
+#map {
+    font-family: var(--font-serif);
+}
+
+.leaflet-control-layers {
+    max-height: 85vh; width: 320px; overflow-y: auto;
+    background: rgba(239, 234, 210, 0.97) !important; /* --paper-deep, translucent */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    border-radius: 4px; padding: 10px !important;
+    border: 1px solid var(--sage-dark);
+}
+
+.panel-section-title {
+    font-size: 10px; font-weight: bold; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ink-faint);
+    margin: 12px 0 6px 0; padding-bottom: 3px;
+    border-bottom: 1px solid var(--paper-line);
+}
+
+.layer-control-row {
+    display: flex; flex-direction: column;
+    margin-bottom: 8px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--paper-line);
+}
+.layer-control-row:last-child { border-bottom: none; }
+
+.layer-label-container {
+    display: flex; align-items: center; font-size: 12px;
+    color: var(--ink); cursor: pointer; font-family: var(--font-serif);
+}
+.layer-label-container input { margin-right: 8px; }
+
+.slider-container {
+    display: flex; align-items: center; margin-top: 4px;
+    margin-left: 22px; font-size: 10px; color: var(--ink-faint);
+    font-family: var(--font-ui);
+}
+.opacity-slider { flex-grow: 1; margin: 0 6px; cursor: pointer; }
+
+.year-row {
+    display: flex; align-items: center; margin-bottom: 6px;
+    font-size: 12px; color: var(--ink); cursor: pointer;
+    font-family: var(--font-serif);
+}
+.year-row input { margin-right: 8px; }
+
+.year-swatch {
+    width: 12px; height: 12px; border-radius: 50%;
+    margin-right: 6px; flex-shrink: 0;
+    border: 1.5px solid rgba(0, 0, 0, 0.2);
+}
+
+.control-home-link {
+    display: block; text-align: center;
+    background-color: var(--ink); color: var(--paper) !important;
+    text-decoration: none; font-weight: bold; font-size: 12px;
+    font-family: var(--font-serif); padding: 7px 12px;
+    border-radius: 3px; margin-bottom: 12px;
+    transition: background-color 0.2s; letter-spacing: 0.05em;
+}
+.control-home-link:hover { background-color: var(--moss-deep); }
+
+.custom-modal {
+    display: none; position: fixed; z-index: 2000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(28, 30, 18, 0.55); backdrop-filter: blur(2px);
+    align-items: center; justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--paper); padding: 24px; border-radius: 4px;
+    width: 90%; max-width: 480px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.35); position: relative;
+    border: 1px solid var(--sage-dark); animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-close {
+    position: absolute; top: 14px; right: 16px;
+    font-size: 22px; font-weight: bold;
+    color: var(--sage-dark); cursor: pointer; transition: color 0.2s;
+}
+.modal-close:hover { color: var(--ink); }
+
+#modal-heading {
+    margin-top: 0; color: var(--ink);
+    border-bottom: 2px solid var(--paper-line);
+    padding-bottom: 8px; font-size: 18px; font-family: var(--font-serif);
+}
+
+#modal-meta {
+    font-size: 11px; color: var(--ink-faint); margin-bottom: 10px;
+    font-family: var(--font-ui); letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+#modal-body {
+    font-size: 13px; line-height: 1.6;
+    color: var(--ink-soft); margin-bottom: 14px; font-family: var(--font-serif);
+}
+
+.coords-box {
+    background-color: var(--paper-deep); border: 1px solid var(--sage);
+    border-radius: 3px; padding: 8px; font-family: var(--font-mono);
+    font-size: 11px; color: var(--ink-faint); word-break: break-all;
+    max-height: 80px; overflow-y: auto;
+}
+
+.leaflet-tooltip {
+    font-family: var(--font-serif); font-size: 12px;
+    background: rgba(28, 30, 18, 0.9); color: var(--paper);
+    border: 1px solid var(--ink-faint); border-radius: 3px;
+    padding: 3px 7px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+}
+.leaflet-tooltip-top:before { border-top-color: rgba(28, 30, 18, 0.9); }
+
+/* Leaflet internally masks vector shapes using overflow:hidden.
+   This container directive forces the map canvas to render vectors outer bounds */
+.leaflet-zoom-animated svg {
+    overflow: visible !important;
+}
+
+/* 9. 3D MAP PAGE CHROME (map3d.html) ----------------------------------
+   The WebGL scene stays dark and full-bleed; the cyan sci-fi accent
+   is replaced with --moss-bright so it reads as the same family as
+   the rest of the site instead of an unrelated neon. */
+html.map3d-page, body.map3d-page {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background-color: var(--ink-deepest);
+    font-family: var(--font-ui);
+    color: var(--sage-light);
+}
+
+#canvas-container {
+    width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0; z-index: 1;
+}
+
+#ui-layer {
+    position: absolute; top: 20px; left: 20px;
+    z-index: 10; pointer-events: auto;
+}
+
+#ui-layer h1 {
+    margin: 0 0 5px 0; font-size: 24px; color: var(--moss-bright);
+    font-family: var(--font-serif); font-weight: normal;
+    text-transform: uppercase; letter-spacing: 2px;
+}
+#ui-layer p { margin: 0; font-size: 13px; color: var(--sage); opacity: 0.9; }
+
+.controls-panel {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(28, 30, 18, 0.75);
+    backdrop-filter: blur(4px);
+    padding: 10px 14px;
+    border-radius: 4px;
+    border: 1px solid var(--ink-soft);
+    width: max-content;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--moss-bright);
+}
+.toggle-container input {
+    cursor: pointer;
+    accent-color: var(--moss-bright);
+}
+
+.year-filters {
+    border-top: 1px solid var(--ink-soft);
+    padding-top: 8px;
+    margin-top: 4px;
+}
+.filter-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 12px;
+}
+
+#nav-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(28, 30, 18, 0.75);
+    backdrop-filter: blur(4px);
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--ink-soft);
+    user-select: none;
+    pointer-events: auto;
+}
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 32px);
+    grid-template-rows: repeat(3, 32px);
+    gap: 4px;
+    justify-content: center;
+}
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    background: var(--ink-soft);
+    border: 1px solid var(--moss-bright);
+    color: var(--moss-bright);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+.nav-btn:hover {
+    background: var(--moss-bright);
+    color: var(--ink-deepest);
+    box-shadow: 0 0 8px rgba(185, 201, 138, 0.4);
+}
+.nav-btn:active {
+    transform: scale(0.92);
+}
+.nav-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--sage-dark);
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+
+#info-panel {
+    position: absolute; top: 20px; right: 20px;
+    width: 300px; background: rgba(28, 30, 18, 0.85);
+    backdrop-filter: blur(8px); border: 1px solid var(--ink-soft);
+    border-top: 3px solid var(--moss-bright); border-radius: 4px;
+    padding: 15px; z-index: 10; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+}
+.panel-header { font-size: 11px; text-transform: uppercase; color: var(--sage-dark); letter-spacing: 1px; }
+.node-title { font-size: 16px; font-weight: bold; color: var(--paper); margin: 5px 0 10px 0; font-family: var(--font-serif); }
+.meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; }
+.meta-item span { display: block; color: var(--sage-dark); font-size: 10px; }
+#cross-year-note {
+    display: none; margin-top: 10px; font-size: 11px; color: var(--sage);
+    border-top: 1px solid var(--ink-soft); padding-top: 8px; white-space: pre-line; line-height: 1.6;
+}
+#cross-year-note.visible { display: block; }
+
+#tooltip {
+    position: absolute; background: rgba(28, 30, 18, 0.95);
+    color: var(--moss-bright); padding: 5px 10px; border: 1px solid var(--moss-bright);
+    border-radius: 3px; font-size: 12px; pointer-events: none;
+    display: none; z-index: 20; font-family: var(--font-mono);
+}
+
+@media (max-width: 600px) {
+    #ui-layer { top: 12px; left: 12px; right: 80px; }
+    #ui-layer h1 { font-size: 15px; letter-spacing: 1px; }
+    #ui-layer p { font-size: 11px; }
+    .checkbox-group { grid-template-columns: repeat(3, 1fr); }
+    #nav-controls { display: none; }
+
+    #info-panel {
+        top: auto; right: 0; left: 0; bottom: 0;
+        width: 100%; border-radius: 12px 12px 0 0;
+        border-top: 3px solid var(--moss-bright);
+        transform: translateY(calc(100% - 48px));
+        padding: 12px 16px 24px;
+        box-sizing: border-box;
+    }
+    #info-panel.has-selection { transform: translateY(0); }
+    .panel-header { font-size: 12px; }
+    .node-title { font-size: 15px; }
+    #tooltip { display: none !important; }
+}
