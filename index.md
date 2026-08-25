@@ -18,4 +18,5 @@ The project encompasses the area:
 * East of Elizabeth street and, 
 * North of Victoria street.
 
+
 _Common Ground_ focuses on historical methodology and digital skills with a learn-by-doing approach to co-create an annotatable web interface that transforms missing histories into accessible heritage.
