@@ -12,7 +12,7 @@ Select a letter below to jump directly to that section.
 
 ## A
 
-[Back to Top](#index-a-to-z)
+[ &uarr; Back to Top](#index-a-to-z)
 
 ---
 
@@ -40,7 +40,7 @@ Select a letter below to jump directly to that section.
 
 [Bouverie Street](civic?id=Bouverie Street)
 
-[Back to Top](#index-a-to-z)
+[&uarr; Back to Top](#index-a-to-z)
 
 ---
 
