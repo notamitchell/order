@@ -2,7 +2,7 @@
 title: "Carlton A to Z"
 ---
 
-# Index: A to Z
+# Featured pages: A to Z
 
 Select a letter below to jump directly to that section.
 
@@ -12,7 +12,7 @@ Select a letter below to jump directly to that section.
 
 ## A
 
-[ &uarr; Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -40,7 +40,7 @@ Select a letter below to jump directly to that section.
 
 [Bouverie Street](civic?id=Bouverie Street)
 
-[&uarr; Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -52,25 +52,25 @@ Select a letter below to jump directly to that section.
 
 [Cumberland Place](civic?id=Cumberland Place)
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## D
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## E
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## F
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -80,31 +80,31 @@ Select a letter below to jump directly to that section.
 
 [Grove Place](civic?id=Grove Place)
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## H
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## I
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## J
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## K
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -140,7 +140,7 @@ Select a letter below to jump directly to that section.
 
 [Little Queensberry Street](civic?id=Little Queensberry Street)
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -150,19 +150,19 @@ Select a letter below to jump directly to that section.
 
 [Malvina Place](civic?id=Malvina Place)
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## N
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## O
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -176,7 +176,7 @@ Select a letter below to jump directly to that section.
 
 [Prince of Wales Place](civic?id=Prince of Wales Place)
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
@@ -186,58 +186,58 @@ Select a letter below to jump directly to that section.
 
 [Queensberry Street](civic?id=Queensberry Street)
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## R
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## S
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## T
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## U
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## V
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## W
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## X
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## Y
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
 
 ---
 
 ## Z
 
-[Back to Top](#index-a-to-z)
+_[&uarr; Back to Top](#index-a-to-z)_
