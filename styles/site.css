@@ -10,6 +10,7 @@
      7. Footer
      8. Map page             (used by map.html only)
      9. 3D Map page         (used by map3d.html only)
+    10. Generated facet list (Table of Contents + listings)
    ============================================================ */
 
 /* 1. PALETTE & TOKENS ------------------------------------------------- */
@@ -882,4 +883,201 @@ html.map3d-page, body.map3d-page {
     .panel-header { font-size: 12px; }
     .node-title { font-size: 15px; }
     #tooltip { display: none !important; }
+}
+
+/* 10. GENERATED FACET LIST (Table of Contents + listings) -------------
+   The #facet-list-container is populated at runtime by facet-page.html's
+   inline script with a collapsible <details> Table of Contents followed
+   by the full h1/h2/h3 listing hierarchy and "Back to top" links. */
+.facet-list {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+}
+
+.facet-list .loading {
+    padding: 40px 0;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ink-faint);
+}
+
+/* Collapsible ToC ------------------------------------------------------ */
+.toc-details {
+    background-color: var(--paper-deep);
+    border: 1px solid var(--sage);
+    border-radius: 6px;
+    margin: 24px 0 4px;
+    overflow: hidden;
+}
+
+.toc-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    list-style: none;
+    cursor: pointer;
+    padding: 16px 22px;
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--ink);
+    user-select: none;
+    transition: background-color 0.2s ease;
+}
+
+.toc-summary:hover {
+    background-color: var(--sage-light);
+}
+
+.toc-summary::-webkit-details-marker,
+.toc-summary::marker {
+    display: none;
+    content: '';
+}
+
+.toc-caret {
+    font-size: 0.85em;
+    color: var(--moss);
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.toc-details[open] .toc-caret {
+    transform: rotate(-180deg);
+}
+
+.toc-details[open] .toc-summary {
+    border-bottom: 1px solid var(--sage);
+}
+
+.table-of-contents {
+    padding: 14px 22px 20px;
+    font-family: var(--font-ui);
+}
+
+.table-of-contents p {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.table-of-contents a {
+    color: var(--moss);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.table-of-contents a:hover {
+    color: var(--moss-deep);
+    border-bottom-color: var(--moss-deep);
+}
+
+/* "Jump to listings" — visible whether the ToC is open or collapsed,
+   so people can skip straight to the content without expanding it. */
+.toc-jump {
+    margin: 10px 2px 28px;
+}
+
+.toc-jump-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--sage-dark);
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.toc-jump-link:hover {
+    color: var(--moss-deep);
+    border-bottom-color: var(--moss-deep);
+}
+
+/* Listing content headings ---------------------------------------------- */
+.facet-list h1 {
+    font-family: var(--font-serif);
+    font-weight: normal;
+    color: var(--ink);
+    font-size: 1.9rem;
+    margin: 44px 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--moss);
+}
+
+.facet-list h1:first-of-type {
+    margin-top: 28px;
+}
+
+.facet-list h2 {
+    font-family: var(--font-serif);
+    font-weight: normal;
+    font-style: italic;
+    color: var(--ink);
+    font-size: 1.35rem;
+    margin: 30px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--paper-line);
+}
+
+.facet-list h3 {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin: 18px 0 8px 15px;
+}
+
+.listing-item {
+    margin: 0 0 4px 30px;
+    font-size: 0.98rem;
+}
+
+.listing-item a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 3px 6px;
+    margin-left: -6px;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.listing-item a:hover {
+    background-color: var(--sage-light);
+    color: var(--moss-deep);
+}
+
+.back-to-top-container {
+    margin: 18px 0 10px 30px;
+}
+
+.back-to-top {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.back-to-top:hover {
+    color: var(--moss);
+}
+
+@media (max-width: 600px) {
+    .facet-list { padding: 0 18px 40px; }
+    .toc-summary { padding: 14px 16px; font-size: 1.05rem; }
+    .table-of-contents { padding: 10px 16px 16px; }
+    .facet-list h1 { font-size: 1.55rem; }
+    .facet-list h2 { font-size: 1.15rem; }
 }
