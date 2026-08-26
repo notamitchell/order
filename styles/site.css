@@ -903,74 +903,152 @@ html.map3d-page, body.map3d-page {
     color: var(--ink-faint);
 }
 
-/* Collapsible ToC ------------------------------------------------------ */
-.toc-details {
+/* ToC — plain heading (not collapsible) --------------------------------- */
+.toc-heading {
+    font-family: var(--font-serif);
+    font-weight: normal;
+    color: var(--ink);
+    font-size: 1.3rem;
+    margin: 24px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--moss);
+}
+
+.table-of-contents {
+    font-family: var(--font-ui);
+    margin-bottom: 4px;
+}
+
+/* h1 (source) groups — expandable, open by default */
+.toc-h1 {
     background-color: var(--paper-deep);
     border: 1px solid var(--sage);
     border-radius: 6px;
-    margin: 24px 0 4px;
+    margin-bottom: 10px;
     overflow: hidden;
 }
 
-.toc-summary {
+.toc-h1-summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
     list-style: none;
     cursor: pointer;
-    padding: 16px 22px;
+    padding: 12px 18px;
     font-family: var(--font-serif);
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     color: var(--ink);
     user-select: none;
     transition: background-color 0.2s ease;
 }
 
-.toc-summary:hover {
+.toc-h1-summary:hover {
     background-color: var(--sage-light);
 }
 
-.toc-summary::-webkit-details-marker,
-.toc-summary::marker {
+.toc-h1-summary::-webkit-details-marker,
+.toc-h1-summary::marker {
     display: none;
     content: '';
 }
 
-.toc-caret {
-    font-size: 0.85em;
+.toc-h1-summary a {
+    color: inherit;
+    text-decoration: none;
+    flex-grow: 1;
+}
+
+.toc-h1-summary::after {
+    content: '▾';
+    font-size: 0.8em;
     color: var(--moss);
     transition: transform 0.25s ease;
     flex-shrink: 0;
 }
 
-.toc-details[open] .toc-caret {
+.toc-h1[open] > .toc-h1-summary::after {
     transform: rotate(-180deg);
 }
 
-.toc-details[open] .toc-summary {
+.toc-h1[open] > .toc-h1-summary {
     border-bottom: 1px solid var(--sage);
 }
 
-.table-of-contents {
-    padding: 14px 22px 20px;
-    font-family: var(--font-ui);
+.toc-h1-body {
+    padding: 8px 18px 12px;
 }
 
-.table-of-contents p {
-    margin-bottom: 6px;
-    font-size: 0.95rem;
+/* h2 (street) groups — expandable, collapsed by default */
+.toc-h2 {
+    border-bottom: 1px solid var(--paper-line);
+}
+
+.toc-h2:last-child {
+    border-bottom: none;
+}
+
+.toc-h2-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    list-style: none;
+    cursor: pointer;
+    padding: 8px 4px;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    user-select: none;
+    transition: color 0.15s ease;
+}
+
+.toc-h2-summary:hover {
+    color: var(--moss-deep);
+}
+
+.toc-h2-summary::-webkit-details-marker,
+.toc-h2-summary::marker {
+    display: none;
+    content: '';
+}
+
+.toc-h2-summary a {
+    color: inherit;
+    text-decoration: none;
+    flex-grow: 1;
+}
+
+.toc-h2-summary::after {
+    content: '▸';
+    font-size: 0.7em;
+    color: var(--moss);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.toc-h2[open] > .toc-h2-summary::after {
+    transform: rotate(90deg);
+}
+
+.toc-h2-body {
+    padding: 0 0 8px 16px;
+}
+
+/* h3 (cardinality) items — plain links nested inside an h2 group */
+.toc-h3-item {
+    margin-bottom: 4px;
+    font-size: 0.85rem;
     line-height: 1.5;
 }
 
-.table-of-contents a {
-    color: var(--moss);
+.toc-h3-item a {
+    color: var(--ink-faint);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.table-of-contents a:hover {
+.toc-h3-item a:hover {
     color: var(--moss-deep);
     border-bottom-color: var(--moss-deep);
 }
