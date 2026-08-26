@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentCardinality = null;
         
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentStreet)}`;
-        tocHtml += `<p style="margin-left: 15px;"><a href="#${streetId}">${currentStreet}</a></p>`;
+        tocHtml += `<p style="margin-left: 15px;">Jump to section: <a href="#${streetId}">${currentStreet}</a></p>`;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
 
