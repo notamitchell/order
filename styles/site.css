@@ -891,13 +891,12 @@ html.map3d-page, body.map3d-page {
    by the full h1/h2/h3 listing hierarchy and "Back to top" links. */
 .facet-list {
     max-width: 900px;
-    margin: 0 auto;
+    margin: 0;
     padding: 0 40px 60px;
 }
 
 .facet-list .loading {
     padding: 40px 0;
-    text-align: center;
     font-family: var(--font-serif);
     font-style: italic;
     color: var(--ink-faint);
