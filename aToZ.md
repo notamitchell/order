@@ -20,10 +20,6 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## B
 
-Boarding Houses
-
-
-
 [Ballarat Road](civic?id=Ballarat Road)
 
 [Banbridge Place](civic?id=Banbridge Place)
@@ -42,6 +38,8 @@ Boarding Houses
 
 [Berkley Street](civic?id=Berkley Street)
 
+[Boarding Houses](civic?id=Boarding Houses)
+
 [Bouverie Place](civic?id=Bouverie Place)
 
 [Bouverie Street](civic?id=Bouverie Street)
@@ -52,16 +50,17 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## C
 
-Children
-Children
-Chinese
-Churches
-Corkman Hotel
-
-
 [Carlton Brewery](civic?id=Carlton Brewery)
 
 [Church Street](civic?id=Church Street)
+
+[Children](civic?id=Children)
+
+[Chinese](civic?id=Chinese)
+
+[Churches](civic?id=Churches)
+
+[Corkman Hotel](civic?id=Corkman Hotel)
 
 [Cumberland Place](civic?id=Cumberland Place)
 
@@ -71,7 +70,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## D
 
-[D](civic?id=D)
+[Directories](civic?id=Directories)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -79,10 +78,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## E
 
-
-Electoral Rolls
-
-[E](civic?id=E)
+[Electoral Rolls](civic?id=Electoral Rolls)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -90,7 +86,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## F
 
-[F](civic?id=F)
+[Foutains](civic?id=Foutains)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -108,12 +104,9 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## H
 
-[H](civic?id=H)
+[Heritage](civic?id=Heritage)
 
-Heritage
-Hotels
-
-
+[Hotels](civic?id=Hotels)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -121,10 +114,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## I
 
-Italians
-
-
-[I](civic?id=I)
+[Italians](civic?id=Italians)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -132,7 +122,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## J
 
-[J](civic?id=J)
+[Jewish Carlton](civic?id=Jewish Carlton)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -140,7 +130,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## K
 
-[K](civic?id=K)
+[Kindergartens](civic?id=Kindergartens)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
@@ -148,10 +138,9 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## L
 
-Larrikins and Pushes
-
-
 [Lansdowne Place](civic?id=Lansdowne Place)
+
+[Larrikins and Pushes](civic?id=Larrikins and Pushes)
 
 [Leicester Place](civic?id=Leicester Place)
 
@@ -213,15 +202,15 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## P
 
-Parks and Gardens
-Playgrounds
-
+[Parks and Gardens](civic?id=Parks and Gardens)
 
 [Pelham Place](civic?id=Pelham Place)
 
 [Pelham Street](civic?id=Pelham Street)
 
 [Perseverance Hotel](civic?id=41-Perseverance-hotel-Strain-Mrs-Cath-Barry-Street)
+
+[Playgrounds](civic?id=Playgrounds)
 
 [Prince of Wales Place](civic?id=Prince of Wales Place)
 
