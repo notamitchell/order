@@ -99,11 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       contentHtml += `<p class="back-to-top-container"><a href="#toc" class="back-to-top">↑ Back to top</a></p>`;
     }
 
-    // Plain heading (not collapsible) + a "Jump to listings" link that lets
-    // people skip straight past the ToC without expanding anything.
-    const jumpLinkHtml = firstAnchorId
-      ? `<p class="toc-jump"><a href="#${firstAnchorId}" class="toc-jump-link">Jump to listings ↓</a></p>`
-      : '';
+
 
     const tocWrapperHtml = `
       <h2 class="toc-heading">Table of Contents</h2>
