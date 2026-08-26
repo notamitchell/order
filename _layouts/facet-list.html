@@ -2,20 +2,15 @@
 layout: default
 ---
 {{ content }}
-
 <div id="facet-list-container" class="facet-list">
   <p class="loading">Loading list…</p>
 </div>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const targetElement = document.querySelector('#facet-list-container p.loading');
-
   // Inject the Liquid Front Matter variable into JavaScript
   const pageFacet = "{{ page.facet }}".toLowerCase().trim();
-
   if (targetElement && typeof directoryData !== 'undefined') {
-
     // Filter the dataset based on page.facet
     const filteredData = directoryData.filter(item => {
       if (pageFacet === 'places') {
@@ -26,75 +21,85 @@ document.addEventListener('DOMContentLoaded', () => {
       return true; // Fallback: show all if facet is neither
     });
 
-    let tocHtml = '<nav class="table-of-contents"><h2>Table of Contents</h2>';
+    let firstAnchorId = null; // first heading in the content, used by the "Jump to listings" link
+    let tocHtml = '';
     let contentHtml = '';
-    
+
     let currentSource = null;
     let currentStreet = null;
     let currentCardinality = null;
-
     const createSlug = (str) => String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-
     filteredData.forEach((item, index) => {
-      
+
       const sourceChanged = item.source !== currentSource;
       const streetChanged = item.street !== currentStreet;
       const cardinalityChanged = item.cardinality !== currentCardinality;
-
       // Add 'Back to top' before starting a new group (except before the very first header)
       if ((sourceChanged || streetChanged || cardinalityChanged) && index > 0) {
         contentHtml += `<p class="back-to-top-container"><a href="#toc" class="back-to-top">↑ Back to top</a></p>`;
       }
-
       // Handle <h1> (Source) - TOC Indent: 0px
       if (sourceChanged) {
         currentSource = item.source;
         currentStreet = null;
         currentCardinality = null;
-        
+
         const sourceId = `source-${createSlug(currentSource)}`;
+        if (firstAnchorId === null) firstAnchorId = sourceId;
         tocHtml += `<p style="margin-left: 0px;"><a href="#${sourceId}">${currentSource}</a></p>`;
         contentHtml += `<h1 id="${sourceId}">${currentSource}</h1>`;
       }
-
       // Handle <h2> (Street) - TOC Indent: 15px
       if (streetChanged) {
         currentStreet = item.street;
         currentCardinality = null;
-        
+
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentStreet)}`;
         tocHtml += `<p style="margin-left: 15px;">Jump to section: <a href="#${streetId}">${currentStreet}</a></p>`;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
-
       // Handle <h3> (Cardinality) - TOC Indent: 30px
       if (cardinalityChanged) {
         currentCardinality = item.cardinality;
-        
+
         const cardId = `card-${createSlug(currentSource)}-${createSlug(currentStreet)}-${createSlug(currentCardinality)}`;
         tocHtml += `<p style="margin-left: 30px;"><a href="#${cardId}">${currentCardinality}</a></p>`;
         contentHtml += `<h3 id="${cardId}">${currentCardinality}</h3>`;
       }
-
       // Render listing entry as a paragraph
       if (item.listing) {
         const rawId = item.entityID || item.entity_id || item.id || '';
         const encodedId = encodeURIComponent(rawId);
-        
+
         contentHtml += `<p class="listing-item"><a href="civic?id=${encodedId}">${item.listing}</a></p>`;
       }
     });
-
     // Final "Back to top" link at the very bottom
     if (filteredData.length > 0) {
       contentHtml += `<p class="back-to-top-container"><a href="#toc" class="back-to-top">↑ Back to top</a></p>`;
     }
 
-    tocHtml += '</nav><hr />';
+    // Collapsible <details> wrapper, collapsed by default, plus a "Jump to listings"
+    // link that lets people skip straight past the ToC without opening it.
+    const jumpLinkHtml = firstAnchorId
+      ? `<p class="toc-jump"><a href="#${firstAnchorId}" class="toc-jump-link">Jump to listings ↓</a></p>`
+      : '';
+
+    const tocWrapperHtml = `
+      <details class="toc-details">
+        <summary class="toc-summary">
+          <span class="toc-summary-text">Table of Contents</span>
+          <span class="toc-caret" aria-hidden="true">▾</span>
+        </summary>
+        <nav class="table-of-contents">${tocHtml}</nav>
+      </details>
+      ${jumpLinkHtml}
+      <hr />
+    `;
 
     // Set container ID as target for "Back to top" links
     targetElement.id = 'toc';
-    targetElement.innerHTML = tocHtml + contentHtml;
+    targetElement.innerHTML = tocWrapperHtml + contentHtml;
   }
 });
 </script>
