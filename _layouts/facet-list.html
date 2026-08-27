@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (h2Open) { tocHtml += `</div></details>`; h2Open = false; }
 
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentYear)}-${createSlug(currentStreet)}`;
-        tocHtml += `<details class="toc-h2"><summary class="toc-h2-summary"><a href="#${streetId}">${currentStreet}</a></summary><div class="toc-h2-body">`;
+        tocHtml += `<details class="toc-h2"><summary class="toc-h2-summary"><a href="#${streetId}">${currentStreet} listings</a></summary><div class="toc-h2-body">`;
         h2Open = true;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
