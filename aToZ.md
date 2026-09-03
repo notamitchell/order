@@ -80,6 +80,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## E
 
+[Early Purchasers and Developers of Land](civic?id=Early Purchasers and Developers of Land)
+
 [Electoral Rolls](civic?id=Electoral Rolls)
 
 _[&uarr; Back to Top](#index-a-to-z)_
@@ -124,7 +126,7 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## J
 
-[Jewish Carlton](civic?id=Jewish Carlton)
+[Jewish Residents and Landowners](civic?id=Jewish Residents and Landowners)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
