@@ -236,6 +236,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## S
 
+[Spanish Flu in Carlton](civic?id=Spanish Flu in Carlton)
+
 _[&uarr; Back to Top](#index-a-to-z)_
 
 ---
