@@ -120,6 +120,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## I
 
+[Inspector of Nuisances](civic?id=Inspector of Nuisances)
+
 [Italians](civic?id=Italians)
 
 [Italian Flower Sellers](civic?id=Italian Flower Sellers)
