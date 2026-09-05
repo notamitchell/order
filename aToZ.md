@@ -86,6 +86,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Electoral Rolls](civic?id=Electoral Rolls)
 
+[Emu Hotel](civic?id=Emu Hotel)
+
 _[&uarr; Back to Top](#index-a-to-z)_
 
 ---
