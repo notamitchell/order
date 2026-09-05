@@ -50,6 +50,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## C
 
+[Captain William Ratcliffe](civic?id=Captain William Ratcliffe)
+
 [Carlton Brewery](civic?id=Carlton Brewery)
 
 [Cesspits](civic?id=Cesspits)
@@ -287,6 +289,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 ## W
 
 [Wanda Renata Pasquali](civic?id=Wanda Renata Pasquali)
+
+William Ratcliffe, see: [Captain William Ratcliffe](civic?id=Captain William Ratcliffe)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
