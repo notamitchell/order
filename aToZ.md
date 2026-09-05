@@ -234,6 +234,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Queensberry Street](civic?id=Queensberry Street)
 
+[Queer History](civic?id=Queer History)
+
 _[&uarr; Back to Top](#index-a-to-z)_
 
 ---
@@ -245,6 +247,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 ---
 
 ## S
+
+[Sex Work (male)](civic?id=Sex%20Work%20%28male%29)
 
 [Spanish Flu in Carlton](civic?id=Spanish Flu in Carlton)
 
