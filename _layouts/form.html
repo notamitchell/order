@@ -10,6 +10,9 @@
 
   <!-- Quill WYSIWYG Editor Styles -->
   <link href="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css" rel="stylesheet">
+  <!-- Quill Table Module -->
+<link href="https://cdn.jsdelivr.net/npm/quill-table@0.2.0/dist/quill-table.css" rel="stylesheet">
+
   
   <style>
     body {
@@ -158,6 +161,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/quill@2/dist/quill.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quill-table@0.2.0/dist/quill-table.js"></script>
+
 
 
 <script>
@@ -204,21 +209,22 @@
     }
   }
   
-  const quill = new Quill('#editor-container', {
-      modules: {
-        toolbar: [
-          [{ 'header': [1, 2, 3, false] }], // Adds heading size dropdown
-          ['bold', 'italic', 'underline'],
-          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-          ['table'], // Adds table insert button
-          ['link'],
-          ['clean']
-        ],
-        table: true // Enables the core table module functionality
-      },
-      placeholder: 'Type or paste the entry content here...',
-      theme: 'snow'
-    });
+const quill = new Quill('#editor-container', {
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['table'],
+        ['link'],
+        ['clean']
+      ],
+      table: true
+    },
+    placeholder: 'Type or paste the entry content here...',
+    theme: 'snow'
+  });
+
 
   const form = document.getElementById('submissionForm');
   const submitBtn = document.getElementById('submitBtn');
