@@ -58,6 +58,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Cesspits](civic?id=Cesspits)
 
+[Charity Organisation Society](civic?id=Charity Organisation Society)
+
 [Church Street](civic?id=Church Street)
 
 [Children](civic?id=Children)
@@ -253,6 +255,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 ---
 
 ## R
+
+[Rate Books](civic?id=Rate Books)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
