@@ -100,6 +100,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## F
 
+[Fair Rents Board](civic?id=Fair Rents Board)
+
 [Foutains](civic?id=Foutains)
 
 _[&uarr; Back to Top](#index-a-to-z)_
@@ -119,6 +121,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 ## H
 
 [Heritage](civic?id=Heritage)
+
+[Heritage Surveys](civic?id=Heritage Surveys)
 
 [Hotels](civic?id=Hotels)
 
@@ -264,6 +268,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## S
 
+[Sands & McDougall Directories](civic?id=Sands %26 McDougall Directories)
+
 [Sex Work (male)](civic?id=Sex%20Work%20%28male%29)
 
 [Spanish Flu in Carlton](civic?id=Spanish Flu in Carlton)
@@ -278,6 +284,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Terraces](civic?id=Terraces)
 
+[Town Clerk's Files](civic?id=Town Clerk%27s Files)
+
 _[&uarr; Back to Top](#index-a-to-z)_
 
 ---
@@ -289,6 +297,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 ---
 
 ## V
+
+[Victorian Police Gazette](civic?id=Victorian Police Gazette)
 
 _[&uarr; Back to Top](#index-a-to-z)_
 
