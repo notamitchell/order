@@ -3346,7 +3346,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 329,
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1900,
     "pages": "173",
@@ -16092,7 +16092,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": "Emu htl",
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1905,
     "pages": "179",
@@ -29544,7 +29544,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": "Emu htl",
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1910,
     "pages": "187",
@@ -41978,7 +41978,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4091,
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -42028,7 +42028,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 4096,
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1915,
     "pages": "190",
@@ -54256,7 +54256,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 5287,
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1920,
     "pages": "202",
@@ -63804,7 +63804,7 @@ const directoryData = [
     "cardinality": "West"
   },
   {
-    "entityID": 6216,
+    "entityID": "Emu Hotel",
     "source": "Directory",
     "year": 1925,
     "pages": "231",
