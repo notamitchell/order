@@ -45,7 +45,7 @@
     <description>
       <places></places>
       <biogHist>
-        <abstract><![CDATA[<p>This is all of the Directory listings:</p><p><br /></p><p><a href="places" target="_blank">https://notamitchell.github.io/order/places</a></p>]]></abstract>
+        <abstract><![CDATA[<p>This is all of the Directory listings:</p><p><br /></p><p><a href="places" >https://notamitchell.github.io/order/places</a></p>]]></abstract>
       </biogHist>
     </description>
     <relations>
