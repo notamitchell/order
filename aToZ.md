@@ -134,6 +134,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 ## I
 
+[Indigenous History](civic?id=Indigenous History)
+
 [Inspector of Nuisances](civic?id=Inspector of Nuisances)
 
 [Italians](civic?id=Italians)
