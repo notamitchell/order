@@ -54,6 +54,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Carlton Brewery](civic?id=Carlton Brewery)
 
+Carlton Inn, see: [Corkman Hotel](civic?id=Corkman%20Hotel)
+
 [Carlton Rifle Company](civic?id=Carlton Rifle Company)
 
 [Cesspits](civic?id=Cesspits)
