@@ -45,7 +45,7 @@
     <description>
       <places></places>
       <biogHist>
-        <abstract><p>Please see <a href="civic?id=Corkman%20Hotel" target="_blank">Corkman Hotel</a>. </p></abstract>
+        <abstract><![CDATA[<p>Please see <a href="civic?id=Corkman%20Hotel">Corkman Hotel</a>. </p>]]></abstract>
       </biogHist>
     </description>
     <relations>
