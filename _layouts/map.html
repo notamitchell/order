@@ -633,7 +633,7 @@ const CustomControl = L.Control.extend({
             const row  = L.DomUtil.create('div', 'layer-control-row', container);
             const lbl  = L.DomUtil.create('label', 'layer-label-container', row);
             const cb   = L.DomUtil.create('input', '', lbl); cb.type = 'checkbox'; cb.checked = config.visibleByDefault;
-            const span = L.DomUtil.create('span', '', lbl); span.innerText = config.label;
+            const span = L.DomUtil.create('span', '', lbl); span.innerHTML = config.label;
             const sc   = L.DomUtil.create('div', 'slider-container', row);
             sc.innerHTML = '<span>0%</span>';
             const sl   = L.DomUtil.create('input', 'opacity-slider', sc);
