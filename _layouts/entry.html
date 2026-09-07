@@ -117,7 +117,7 @@ function slugifyId(text) {
       const occupationText = occupations.join(", ");
 
       const abstractNode = xml.getElementsByTagNameNS(ns, "abstract")[0];
-      const abstractHtml = abstractNode ? abstractNode.innerHTML : "No description available.";
+      const abstractHtml = abstractNode ? abstractNode.textContent : "No description available.";
 
       let authorName = "";
       const events = xml.getElementsByTagNameNS(ns, "maintenanceEvent");
