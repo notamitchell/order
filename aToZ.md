@@ -150,6 +150,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Jewish Residents and Landowners](civic?id=Jewish Residents and Landowners)
 
+John Fullerton, see: [Inspector of Nuisances](civic?id=Inspector of Nuisances)
+
 _[&uarr; Back to Top](#index-a-to-z)_
 
 ---
