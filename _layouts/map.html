@@ -654,7 +654,7 @@ const CustomControl = L.Control.extend({
         geoJsonCb.checked = true;
 
         const geoJsonSpan = L.DomUtil.create('span', '', geoJsonRow);
-        geoJsonSpan.innerText = 'UoM Properties';
+        geoJsonSpan.innerHTML = 'University of Melbourne properties (<a href="https://spatialdata-uom.opendata.arcgis.com/datasets/UOM::uom-land-parcels-parkville/about">2026</a>)';
 
         L.DomEvent.on(geoJsonCb, 'change', () => {
             if (geoJsonCb.checked) {
