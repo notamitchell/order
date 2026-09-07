@@ -224,9 +224,9 @@ function slugifyId(text) {
           </section>
           ` : ''}
 
-          <section class="biography-text" style="display:none;">
+          <section class="biography-text">
             <div>${abstractHtml}</div>
-            ${authorName ? `<p class="author-credit" style="margin-top: 20px; font-style: italic; text-align: right; color: #666;">By ${authorName}</p>` : ''}
+            ${authorName ? `<p class="author-credit" style="display:none; margin-top: 20px; font-style: italic; text-align: right; color: #666;">By ${authorName}</p>` : ''}
           </section>
 
           ${digitalObjectsHtml ? `<hr /><section class="digital-resources" style="margin-top: 20px;"><h3>Images & Artifacts</h3>${digitalObjectsHtml}</section>` : ''}
