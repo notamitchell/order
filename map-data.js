@@ -6396,7 +6396,7 @@ const directoryData = [
     "cardinality": "South"
   },
   {
-    "entityID": 626,
+    "entityID": "Corkman Hotel",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -6408,7 +6408,7 @@ const directoryData = [
     "lng": 144.9613387106681
   },
   {
-    "entityID": 627,
+    "entityID": "Corkman Hotel",
     "source": "Directory",
     "year": 1900,
     "pages": "184",
@@ -32098,7 +32098,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 3130,
+    "entityID": "Corkman Hotel",
     "source": "Directory",
     "year": 1910,
     "pages": "199",
@@ -44613,7 +44613,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 4348,
+    "entityID": "Corkman Hotel",
     "source": "Directory",
     "year": 1915,
     "pages": "196",
@@ -56266,7 +56266,7 @@ const directoryData = [
     "lng": null
   },
   {
-    "entityID": 5482,
+    "entityID": "Corkman Hotel",
     "source": "Directory",
     "year": 1920,
     "pages": "208",
@@ -65756,7 +65756,7 @@ const directoryData = [
     "cardinality": "East"
   },
   {
-    "entityID": 6405,
+    "entityID": "Corkman Hotel",
     "source": "Directory",
     "year": 1925,
     "pages": "237",
@@ -87250,7 +87250,7 @@ const directoryData = [
 {"entityID": 8638, "source": "Directory", "type": "", "year": 1930, "listing": "150 Steele, Fredk", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": ""},
 {"entityID": 8639, "source": "Directory", "type": "", "year": 1930, "listing": "152 Badley, Jos.", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": ""},
 {"entityID": 8640, "source": "Directory", "type": "", "year": 1930, "listing": "160 Copsey, Regd. G.", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": ""},
-{"entityID": 8641, "source": "Directory", "type": "", "year": 1930, "listing": "160 Carlton Inn – Copsey, Mrs Ellen", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": ""},
+{"entityID": "Corkman Hotel", "source": "Directory", "type": "", "year": 1930, "listing": "160 Carlton Inn – Copsey, Mrs Ellen", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": ""},
 {"entityID": 8642, "source": "Directory", "type": "Intersection", "year": 1930, "listing": "Intersection Leicester street and Pelham street", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": "", "lat": -37.8021472, "lng": 144.9606747},
 {"entityID": 8643, "source": "Directory", "type": "", "year": 1930, "listing": "Leicester, A. E., mtr car pntrs & trmmrs", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": ""},
 {"entityID": 8644, "source": "Directory", "type": "Intersection", "year": 1930, "listing": "Intersection Leicester street and Little Pelham street", "street": "Leicester Street", "cardinality": "East", "Occupation": "", "Notes": "", "lat": -37.8018065, "lng": 144.9608798},
