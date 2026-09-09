@@ -293,7 +293,7 @@ quill.clipboard.addMatcher('table', (node, delta) => {
     const authorNameInput = document.getElementById('authorName').value.trim();
     const articleTitleInput = document.getElementById('articleTitle').value.trim();
     const prefilledIdInput = document.getElementById('prefilledId').value.trim();
-    const richTextHTML = cleanEditorHTML(quill.root.innerHTML);
+    const richTextHTML = "<![CDATA[" + cleanEditorHTML(quill.root.innerHTML) + "]]>";
     const plainText = quill.getText().trim();
 
     // --- Basic Validation ---
