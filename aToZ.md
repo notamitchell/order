@@ -210,6 +210,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 
 [Malvina Place](civic?id=Malvina Place)
 
+[Mary Mather (Pelham Hotel)](civic?id=Mary%20Mather%20%28Pelham%20Hotel%29)
+
 [Melbourne and Metropolitan Board of Works maps](civic?id=MMBW)
 
 _[&uarr; Back to Top](#index-a-to-z)_
@@ -237,6 +239,8 @@ _[&uarr; Back to Top](#index-a-to-z)_
 [Parks and Gardens](civic?id=Parks and Gardens)
 
 [Pelham Place](civic?id=Pelham Place)
+
+[Pelham Hotel](civic?id=Pelham Hotel)
 
 [Pelham Street](civic?id=Pelham Street)
 
