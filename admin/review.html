@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAFAF8;
+    --paper-raised: #F1F0EB;
+    --ink: #1B1E23;
+    --ink-soft: #565C66;
+    --line: #DAD8D0;
+    --slate: #3E4C59;
+    --add-bg: #E4EFE7;
+    --add-text: #1F5138;
+    --del-bg: #F5E6E3;
+    --del-text: #7A2E20;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); line-height: 1.5; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--slate); }
+  header {
+    padding: 28px 40px 20px; border-bottom: 1px solid var(--line);
+    max-width: 900px; margin: 0 auto;
+  }
+  header h1 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  header p { margin: 0; color: var(--ink-soft); font-size: 0.9rem; }
+  main { max-width: 900px; margin: 0 auto; padding: 32px 40px 80px; }
+
+  button, .btn {
+    font-family: var(--sans); font-size: 0.9rem; font-weight: 500;
+    border-radius: 4px; border: 1px solid var(--line); background: var(--paper);
+    color: var(--ink); padding: 9px 16px; cursor: pointer; text-decoration: none;
+    display: inline-block;
+  }
+  button:hover, .btn:hover { border-color: var(--slate); }
+  .btn.primary { background: var(--slate); border-color: var(--slate); color: var(--paper); }
+  .btn.primary:hover { background: var(--ink); border-color: var(--ink); }
+  .btn.ghost { border: none; background: none; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+
+  .empty, .error {
+    color: var(--ink-soft); border: 1px dashed var(--line); border-radius: 6px;
+    padding: 28px; font-size: 0.95rem;
+  }
+  .error { border-color: var(--del-text); color: var(--del-text); border-style: solid; background: var(--del-bg); }
+
+  .pr-row {
+    display: flex; justify-content: space-between; align-items: center; gap: 20px;
+    padding: 18px 0; border-bottom: 1px solid var(--line);
+  }
+  .pr-row:first-child { padding-top: 0; }
+  .pr-row .title { font-family: var(--serif); font-size: 1.1rem; margin: 0 0 4px; }
+  .pr-row .meta { font-size: 0.85rem; color: var(--ink-soft); }
+
+  .back-link { display: inline-block; margin-bottom: 20px; font-size: 0.9rem; }
+
+  .file-block { border: 1px solid var(--line); border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+  .file-block .file-header {
+    background: var(--paper-raised); padding: 12px 16px; font-family: var(--mono);
+    font-size: 0.85rem; border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  .preview-frame { width: 100%; height: 600px; border: none; background: #fff; display: block; }
+
+  .action-bar {
+    display: flex; flex-wrap: wrap; gap: 10px; padding: 14px 16px;
+    border-top: 1px solid var(--line); background: var(--paper-raised);
+  }
+  .decision-bar {
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 12px;
+  }
+  .decision-bar .note { font-size: 0.85rem; color: var(--ink-soft); }
+  .spinner-text { color: var(--ink-soft); font-size: 0.9rem; padding: 20px 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Document Review</h1>
+  <p id="subtitle"></p>
+</header>
+
+<main id="app"></main>
+
+<script>
+/* ============================== CONFIG ============================== */
+const CONFIG = {
+  REPO_OWNER: "notamitchell",
+  REPO_NAME: "order",
+  XML_PATH_PREFIX: "civic/",   // only PRs touching files under this path are shown
+};
+/* ===================================================================== */
+
+const API = "https://api.github.com";
+const RAW = "https://raw.githubusercontent.com";
+const $app = document.getElementById("app");
+document.getElementById("subtitle").textContent =
+  `${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}`;
+
+async function ghApi(path) {
+  const res = await fetch(API + path);
+  if (res.status === 403) {
+    const remaining = res.headers.get("x-ratelimit-remaining");
+    if (remaining === "0") {
+      const reset = new Date(Number(res.headers.get("x-ratelimit-reset")) * 1000);
+      throw new Error(`GitHub is temporarily limiting requests from this network. Try again after ${reset.toLocaleTimeString()}.`);
+    }
+  }
+  if (!res.ok) throw new Error(`GitHub API error (${res.status})`);
+  return res.json();
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/* ------------------------------ Views ------------------------------ */
+
+function repoUrl(path = "") {
+  return `https://github.com/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}${path}`;
+}
+
+async function render() {
+  const params = new URLSearchParams(window.location.search);
+  const prNumber = params.get("pr");
+  try {
+    if (prNumber) await renderPrDetail(Number(prNumber));
+    else await renderPrList();
+  } catch (e) {
+    $app.innerHTML = `<div class="error">${escapeHtml(e.message)}</div>`;
+  }
+}
+
+async function renderPrList() {
+  $app.innerHTML = `<p class="spinner-text">Loading documents awaiting review&hellip;</p>`;
+  const prs = await ghApi(`/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/pulls?state=open&per_page=50`);
+
+  const withXmlFiles = [];
+  for (const pr of prs) {
+    const files = await ghApi(`/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/pulls/${pr.number}/files?per_page=100`);
+    const xmlFiles = files.filter((f) => f.filename.startsWith(CONFIG.XML_PATH_PREFIX) && f.filename.endsWith(".xml"));
+    if (xmlFiles.length) withXmlFiles.push({ pr, xmlFiles });
+  }
+
+  if (!withXmlFiles.length) {
+    $app.innerHTML = `<div class="empty">Nothing waiting on you right now. New submissions will show up here — refresh to check again.</div>
+      <button style="margin-top:16px;" onclick="render()">Refresh</button>`;
+    return;
+  }
+
+  $app.innerHTML = `
+    <div style="margin-bottom:16px;"><button onclick="render()">Refresh</button></div>
+    ${withXmlFiles.map(({ pr, xmlFiles }) => `
+      <div class="pr-row">
+        <div>
+          <p class="title">${escapeHtml(pr.title)}</p>
+          <p class="meta">Submitted ${timeAgo(pr.created_at)} &middot; ${xmlFiles.length} document${xmlFiles.length > 1 ? "s" : ""}</p>
+        </div>
+        <button data-pr="${pr.number}">Review</button>
+      </div>
+    `).join("")}
+  `;
+
+  $app.querySelectorAll("button[data-pr]").forEach((btn) => {
+    btn.onclick = () => {
+      const u = new URL(window.location.href);
+      u.searchParams.set("pr", btn.dataset.pr);
+      history.pushState({}, "", u);
+      render();
+    };
+  });
+}
+
+async function renderPrDetail(prNumber) {
+  $app.innerHTML = `<p class="spinner-text">Loading&hellip;</p>`;
+  const repoPath = `/repos/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}`;
+  const pr = await ghApi(`${repoPath}/pulls/${prNumber}`);
+  const files = await ghApi(`${repoPath}/pulls/${prNumber}/files?per_page=100`);
+  const xmlFiles = files.filter((f) => f.filename.startsWith(CONFIG.XML_PATH_PREFIX) && f.filename.endsWith(".xml"));
+
+  $app.innerHTML = `
+    <a class="back-link ghost btn" href="javascript:void(0)" id="back">&larr; All documents</a>
+    <h2 style="font-family: var(--serif); font-weight: 500; margin-bottom: 4px;">${escapeHtml(pr.title)}</h2>
+    <p class="meta" style="color: var(--ink-soft); margin-top: 0;">Submitted ${timeAgo(pr.created_at)}</p>
+    <div id="files"></div>
+    <div class="decision-bar">
+    </div>
+  `;
+  document.getElementById("back").onclick = () => {
+    const u = new URL(window.location.href);
+    u.searchParams.delete("pr");
+    history.pushState({}, "", u);
+    render();
+  };
+
+  const $files = document.getElementById("files");
+  for (const f of xmlFiles) {
+    const block = document.createElement("div");
+    block.className = "file-block";
+    block.innerHTML = `<div class="file-header">${escapeHtml(f.filename)}</div><div class="spinner-text" style="padding:16px;">Loading preview&hellip;</div>`;
+    $files.appendChild(block);
+    loadFilePreview(block, pr, f);
+  }
+}
+
+async function loadFilePreview(block, pr, file) {
+  const rawFileUrl = `${RAW}/${CONFIG.REPO_OWNER}/${CONFIG.REPO_NAME}/${pr.head.sha}/${file.filename}`;
+  const previewUrl = `https://${CONFIG.REPO_OWNER}.github.io/${CONFIG.REPO_NAME}/civic?id=${encodeURIComponent(rawFileUrl)}&preview=true`;
+  const editUrl = repoUrl(`/edit/${encodeURIComponent(pr.head.ref)}/${file.filename}`);
+
+  block.innerHTML = `
+    <div class="file-header">
+      <span>${escapeHtml(file.filename)}</span>
+
+      <h1>Preview</h1>
+    </div>
+    <iframe src="${previewUrl}" class="preview-frame" title="${escapeHtml(file.filename)} preview"></iframe>
+    <div>
+      <h1>Step 1: Are you logged into Github.com?</h1>
+
+      <p><strong>No?</strong> Please log in to github.com before you do the next steps.</p>
+
+      <p><strong>Yes?</strong> Next step!</p>
+
+      <h1>Step 2: Do you know XML?</h1>
+
+      <p><strong>No?</strong> Skip this. Next step!</p>
+
+      <p><strong>Yes?</strong> Read on!</p>
+
+      <p>You can edit the file and commit the changes here:<p>
+      <p><a href="${editUrl}" target="_blank" rel="noopener">${editUrl}</a></p>
+      <p>Then you still need to "Merge Pull Request" when you are done:</p>
+      <p><a href="${repoUrl(`/pull/${pr.number}`)}" target="_blank" rel="noopener">${repoUrl(`/pull/${pr.number}`)}</a></p>
+
+      <p>Wait a few minutes for the changes to propegate to the website. You're done!</p>
+
+      <h1>Step 3: Do you approve of the article preview shown above?</h1>
+
+      <p><strong>Yes, but it needs some changes?</strong> Our current article revision process is a bit convoluted:</p>
+
+        <ol>
+          <li><strong>Copy the details:</strong> Save the article contents (title, author, and body text) to your computer.</li>
+          <li><strong>Reject the submission:</strong> Disapprove the current article on the platform. "Close Pull Request" here: <a href="${repoUrl(`/pull/${pr.number}`)}" target="_blank" rel="noopener">${repoUrl(`/pull/${pr.number}`)}</a></li>
+          <li><strong>Create a new version:</strong> Create a brand-new article via the web page using the copied details, incorporating your desired changes. Reload this webpage and approve the new article.</li>
+        </ol>
+
+
+      <p><strong>Yes, with no changes needed?</strong> Go to the following URL and click "Merge Pull Request" followed by "Confirm Merge".</p>
+
+      <p><a href="${repoUrl(`/pull/${pr.number}`)}" target="_blank" rel="noopener">${repoUrl(`/pull/${pr.number}`)}</a></p>
+
+      <p>Wait a minute for the changes to propegate and you should be able to see the article on the website. You're done!</p>
+      
+      <p><strong>No?</strong> Go to the following URL where you can use the comment feature to provide your reasoning and then "Close Pull Request":</p>
+
+      <p><a href="${repoUrl(`/pull/${pr.number}`)}" target="_blank" rel="noopener">${repoUrl(`/pull/${pr.number}`)}</a></p>
+
+      <p>You're done!</p>
+
+
+
+
+
+    </div>
+  `;
+}
+
+function timeAgo(iso) {
+  const diff = Date.now() - new Date(iso).getTime();
+  const days = Math.floor(diff / 86400000);
+  if (days === 0) return "today";
+  if (days === 1) return "yesterday";
+  if (days < 30) return `${days} days ago`;
+  const months = Math.floor(days / 30);
+  return `${months} month${months > 1 ? "s" : ""} ago`;
+}
+
+window.addEventListener("popstate", render);
+render();
+</script>
+</body>
+</html>
