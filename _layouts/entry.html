@@ -26,6 +26,8 @@ function slugifyId(text) {
   // 1. Get the ID from the URL parameters (e.g., ?id=EM02472)
   const urlParams = new URLSearchParams(window.location.search);
   const fileId = urlParams.get('id');
+  const isPreview = urlParams.get("preview") === "true";
+  
   const entryContainer = document.getElementById('encyclopedia-entry');
 
   // Helper function to inject the Google Form
@@ -73,7 +75,8 @@ function slugifyId(text) {
   }
 
   if (fileId) {
-    const fileUrl = `./${CONFIG.path}/${slugifyId(fileId)}.xml`;
+    //const fileUrl = `./${CONFIG.path}/${slugifyId(fileId)}.xml`;
+    const fileUrl = isPreview ? fileId : `./${CONFIG.path}/${slugifyId(fileId)}.xml`;
 
     try {
       const response = await fetch(fileUrl);
