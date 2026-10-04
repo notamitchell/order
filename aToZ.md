@@ -6,6 +6,9 @@ title: "Carlton A to Z"
 
 Select a letter below to jump directly to that section.
 
+<span class="az-badge az-badge-new">✦ New</span> added in the last two weeks &nbsp; <span class="az-badge az-badge-missing">✎</span> not yet written, select it to write the page
+{: .az-legend}
+
 - [A](#a)
 - [B](#b)
 - [C](#c)
@@ -369,3 +372,7 @@ _[&uarr; Back to Top](#featured-pages-a-to-z)_
 ## Z
 
 _[&uarr; Back to Top](#featured-pages-a-to-z)_
+
+{% assign civic_entries = site.static_files | where_exp: "f", "f.path contains '/civic/'" | where: "extname", ".xml" | map: "basename" %}
+<script id="az-entries" type="application/json">{{ civic_entries | jsonify }}</script>
+<script src="scripts/az-status.js"></script>
