@@ -357,7 +357,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 - [x] **Give "Suggest new article" a proper page**: `new.md` now has a heading and a short explanation, and the field and button use the site's styles.
 - [x] **People / Places contents**: show the year after each street name, e.g. "Bouverie Street (1905) listings". Sort by street within each year. One long page is fine (#51). (The extra `.facet-list` side padding was removed in #43.)
 - [ ] **Mobile pass**:
-  - [ ] 2D map: collapse the layers panel on phones and use the moss accent colour.
+  - [x] 2D map: collapse the layers panel on phones and use the moss accent colour.
   - [x] 3D map: add a ← Home link and use `100dvh`.
   - [x] Nav: fit all five items on one row on phones.
   - [x] Search on phones: results are cards and filters fold away on the new search page (#44).

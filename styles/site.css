@@ -732,6 +732,37 @@ html.map-page, body.map-page, body.map-page #map {
 }
 .control-home-link:hover { background-color: var(--moss-deep); }
 
+.leaflet-control-layers input { accent-color: var(--moss); }
+.leaflet-control-layers a:not(.control-home-link) { color: var(--moss); }
+
+/* "Layers" button: only on phones, where the panel starts folded away */
+.panel-toggle { display: none; }
+
+@media (max-width: 600px) {
+    .leaflet-control-layers {
+        max-width: calc(100vw - 20px); max-height: 70vh;
+    }
+    .panel-toggle {
+        display: block; width: 100%; margin: 0 0 4px;
+        padding: 7px 12px; border: 0; border-radius: 3px;
+        background: var(--moss); color: var(--paper);
+        font: bold 12px var(--font-serif); letter-spacing: 0.05em;
+        cursor: pointer;
+    }
+    .panel-toggle:hover { background: var(--moss-deep); }
+    .panel-collapsed { width: auto; padding: 6px !important; }
+    .panel-collapsed > :not(.control-home-link):not(.panel-toggle) { display: none; }
+    .panel-collapsed .control-home-link { margin-bottom: 6px; }
+    .panel-collapsed .panel-toggle { margin: 0; }
+}
+
+/* Leaflet's own controls and links: the site's ink and moss, not its blue */
+.leaflet-container a { color: var(--moss); }
+.leaflet-bar a { color: var(--ink); background-color: var(--paper); }
+.leaflet-bar a:hover { background-color: var(--paper-deep); }
+.leaflet-bar a.leaflet-disabled { color: var(--sage-dark); background-color: var(--paper); }
+.leaflet-container .leaflet-control-attribution { background: rgba(247, 245, 234, 0.85); color: var(--ink-soft); }
+
 .custom-modal {
     display: none; position: fixed; z-index: 2000;
     left: 0; top: 0; width: 100%; height: 100%;

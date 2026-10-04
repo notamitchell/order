@@ -396,6 +396,18 @@ const CustomControl = L.Control.extend({
         const homeLink = L.DomUtil.create('a', 'control-home-link', container);
         homeLink.href = '/order'; homeLink.innerText = '← Home';
 
+        // On phones the panel would cover the whole map, so it starts folded
+        // away behind this button (hidden on wider screens by the CSS).
+        const toggle = L.DomUtil.create('button', 'panel-toggle', container);
+        toggle.type = 'button';
+        const setOpen = open => {
+            container.classList.toggle('panel-collapsed', !open);
+            toggle.setAttribute('aria-expanded', open);
+            toggle.innerText = open ? 'Hide layers' : 'Layers';
+        };
+        setOpen(!window.matchMedia('(max-width: 600px)').matches);
+        L.DomEvent.on(toggle, 'click', () => setOpen(container.classList.contains('panel-collapsed')));
+
         const yearTitle = L.DomUtil.create('div', 'panel-section-title', container);
         yearTitle.innerText = 'Years';
 
