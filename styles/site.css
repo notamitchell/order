@@ -305,10 +305,6 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
     border: 1px solid var(--sage-dark); padding: 8px 14px; cursor: pointer;
 }
 .search-more-btn:hover { background: var(--sage-light); }
-.search-hints p { font: 0.78rem var(--font-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); margin: 20px 0 8px; }
-.main-content .search-hints ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.main-content .search-hints li { margin: 0; }
-.search-hints a { font: 0.95rem var(--font-serif); padding: 4px 10px; border: 1px solid var(--paper-line); background: var(--paper-deep); color: var(--ink); text-decoration: none; display: inline-block; }
 .search-empty { margin-top: 24px; padding: 18px; background: var(--paper-deep); border-left: 3px solid var(--moss); }
 .search-empty p { margin: 0 0 6px; }
 
