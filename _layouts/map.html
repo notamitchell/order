@@ -37,17 +37,18 @@
 <script src="scripts/map-common.js"></script>
 <p class="data-status data-status-map" id="mapData" aria-live="polite" hidden></p>
 <script>
-// The map is drawn once every year's file has arrived: unmapped records are
-// placed between mapped ones on the same street, and cross-year links join
-// records from different years. The land parcels overlay is optional; if it
-// fails to load the map is drawn without it.
-Promise.all([
-    CGData.loadWithStatus(document.getElementById('mapData')),
-    CGData.parcels().catch(() => null)
-]).then(([directoryData, uomLanduseData]) => startMap(directoryData, uomLanduseData));
+// The map is set up as soon as the list of data files arrives, and each year
+// is drawn as soon as its file does. Cross-year links join records from
+// different years, so they are added once every year has arrived.
+let mapApi = null;
+MapCommon.loadByYear(document.getElementById('mapData'), {
+    onStart: files => { mapApi = startMap(files); },
+    onYear:  (year, records) => mapApi.addYear(year, records),
+    onAll:   () => mapApi.addCrossYearLinks(),
+});
 
 // Not indented, to keep the history of the code below readable.
-function startMap(directoryData, uomLanduseData) {
+function startMap(files) {
 // ═══════════════════════════════════════════════════════════
 //  HISTORIC MAP TILE LAYERS
 // ═══════════════════════════════════════════════════════════
@@ -85,11 +86,11 @@ const mapConfig = [
 
 
 // ═══════════════════════════════════════════════════════════
-//  CONSTANTS — derived from data
+//  CONSTANTS — derived from the list of data files
 // ═══════════════════════════════════════════════════════════
-const YEARS        = MapCommon.getYears(directoryData);
+const YEARS        = MapCommon.getYears(files);
 const YEAR_COLORS  = MapCommon.getYearColors(YEARS);
-const YEAR_SOURCES = MapCommon.getYearSources(directoryData, YEARS);
+const YEAR_SOURCES = MapCommon.getYearSources(files, YEARS);
 const MAX_ARC_OFFSET  = 0.00072; // constant outer bound (degrees lat)
 
 // ═══════════════════════════════════════════════════════════
@@ -103,8 +104,10 @@ const map = L.map('map', { center:[-37.8009,144.9622], zoom:18, minZoom:2, maxZo
 //  CHAINS  (arc geometry lives in scripts/map-common.js)
 // ═══════════════════════════════════════════════════════════
 // All unique {year, street, side} combinations, and the raw template
-// entries for each (immutable originals)
-const { chains: CHAINS, rawChains } = MapCommon.buildChains(directoryData);
+// entries for each (immutable originals). Filled in by addYear as each
+// year arrives.
+const CHAINS    = [];
+const rawChains = {};
 
 
 const activeYears = new Set([YEARS[YEARS.length - 1]]); // Latest year on by default
@@ -139,7 +142,10 @@ const polyLayers   = {}; // `${year}-${street}-${side}` → L.Polyline
 const yearGroups   = {}; // year → L.LayerGroup (holds markers + polylines for that year)
 
 YEARS.forEach(year => { yearGroups[year] = L.layerGroup(); });
-CHAINS.forEach(({ year, street, side }) => {
+
+// Creates the polylines and markers for some chains (positions set later)
+function createChainLayers(chains) {
+chains.forEach(({ year, street, side }) => {
     const key = `${year}-${street}-${side}`;
     // Placeholder polyline (empty)
     const poly = L.polyline([], { color:YEAR_COLORS[year], weight:1.5, opacity:0.85 })
@@ -161,6 +167,7 @@ CHAINS.forEach(({ year, street, side }) => {
         mk.addTo(yearGroups[year]);
     });
 });
+}
 
 // Cross-year layer (rebuilt on toggle)
 let crossYearLayer = L.layerGroup().addTo(map);
@@ -229,9 +236,9 @@ function getTargetPositions(year, street, side) {
     return MapCommon.computeChain(rawChains[`${year}-${street}-${side}`], offset, side);
 }
 
-// Initialise positions for all chains
-function initPositions() {
-    CHAINS.forEach(({ year, street, side }) => {
+// Initialise positions for some chains
+function initPositions(chains) {
+    chains.forEach(({ year, street, side }) => {
         const key     = `${year}-${street}-${side}`;
         const targets = getTargetPositions(year, street, side);
         targets.forEach((e, idx) => {
@@ -241,11 +248,11 @@ function initPositions() {
             rawChains[key][idx]._computed = !!e._computed;
         });
     });
-    applyPositionsToMap();
+    applyPositionsToMap(chains);
 }
 
-function applyPositionsToMap() {
-    CHAINS.forEach(({ year, street, side }) => {
+function applyPositionsToMap(chains = CHAINS) {
+    chains.forEach(({ year, street, side }) => {
         const key   = `${year}-${street}-${side}`;
         const pts   = [];
         rawChains[key].forEach((entry, idx) => {
@@ -283,8 +290,10 @@ function recomputePositions() {
 // ═══════════════════════════════════════════════════════════
 //  CROSS-YEAR LINES
 // ═══════════════════════════════════════════════════════════
-// Cross-year links: records that share a string entityID
-const crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
+// Cross-year links: records that share a string entityID. Built once every
+// year has arrived (addCrossYearLinks), so a link never skips a year that
+// is still loading.
+let crossYearById = {};
 
 function rebuildCrossYearLines() {
     crossYearLayer.clearLayers();
@@ -331,8 +340,9 @@ function onEachFeature(feature, layer) {
     layer.bindTooltip(props.building_name || props.street_address || 'Property', { sticky: true });
 }
 
-// Create GeoJSON layer
-const uomLanduseLayer = L.geoJSON(uomLanduseData, {
+// Create GeoJSON layer. The parcels are added when they arrive; the overlay
+// is optional, so if they fail to load the map goes on without it.
+const uomLanduseLayer = L.geoJSON(null, {
     attribution: 'Property boundaries: <a href="https://spatialdata-uom.opendata.arcgis.com/datasets/UOM::uom-land-parcels-parkville/about">University of Melbourne Spatial Data</a>',
     style: getUoMStyle,
     onEachFeature: onEachFeature
@@ -352,6 +362,7 @@ uomLanduseLayer.on('mouseout', function(e) {
 
 // Add to a layer group for control panel visibility
 const uomLayerGroup = L.layerGroup([uomLanduseLayer]);
+CGData.parcels().then(data => uomLanduseLayer.addData(data)).catch(() => {});
 
 // ═══════════════════════════════════════════════════════════
 //  MODAL  (shared with the 3D map, see scripts/map-common.js)
@@ -460,10 +471,27 @@ map.getContainer().prepend(map.getContainer().querySelector('.leaflet-control-co
 // ═══════════════════════════════════════════════════════════
 //  BOOT
 // ═══════════════════════════════════════════════════════════
-initPositions();
 yearGroups[YEARS[YEARS.length - 1]].addTo(map); // Latest year visible by default
-rebuildCrossYearLines();
 uomLayerGroup.addTo(map); // Add UoM GeoJSON layer to map by default
+
+return {
+    // Draw one year's records. Unmapped records are placed between mapped
+    // ones from the same year, so they can be drawn straight away. If the
+    // year is shown, the other shown years on the same streets bow out to
+    // make room, as when a year is ticked.
+    addYear(year, records) {
+        const { chains, rawChains: raw } = MapCommon.buildChains(records);
+        Object.assign(rawChains, raw);
+        CHAINS.push(...chains);
+        createChainLayers(chains);
+        if (activeYears.has(year)) recomputePositions();
+        else initPositions(chains);
+    },
+    addCrossYearLinks() {
+        crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
+        rebuildCrossYearLines();
+    },
+};
 }
 </script>
 </body>

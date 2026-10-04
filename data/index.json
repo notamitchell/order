@@ -5,8 +5,10 @@ layout: null
   The list of data files, generated from _data/ every time the site is built.
   scripts/data.js reads it to find out which files exist and which file holds
   a given record. For each file: its source, year and record count, the range
-  of its numeric entityIDs, and every text entityID it uses (text IDs are
-  links the team made between records; see README, Data).
+  of its numeric entityIDs, every text entityID it uses (text IDs are
+  links the team made between records; see README, Data), and the
+  [south, north, west, east] edges of its mapped records (the 3D map sizes
+  its planes from these before the files arrive).
   "v" changes on every build, so browsers fetch fresh copies after a change.
 {%- endcomment -%}
 {%- assign folders = "directory,electoral-roll" | split: "," -%}
@@ -27,8 +29,9 @@ layout: null
 {%- endif -%}
 {%- endfor -%}
 {%- assign linked = text | split: "|" | uniq -%}
+{%- assign lats = recs | map: "lat" | compact | sort -%}{%- assign lngs = recs | map: "lng" | compact | sort -%}
 {%- unless firstFile -%},{%- endunless -%}{%- assign firstFile = false %}
-{"path":"data/{{ folder }}/{{ file[0] }}.json","source":{{ recs[0].source | jsonify }},"year":{{ recs[0].year | jsonify }},"count":{{ recs.size }},"ids":[{{ min | default: "null" }},{{ max | default: "null" }}],"linked":{{ linked | jsonify }}}
+{"path":"data/{{ folder }}/{{ file[0] }}.json","source":{{ recs[0].source | jsonify }},"year":{{ recs[0].year | jsonify }},"count":{{ recs.size }},"ids":[{{ min | default: "null" }},{{ max | default: "null" }}],"linked":{{ linked | jsonify }},"bounds":{% if lats.size > 0 %}[{{ lats.first }},{{ lats.last }},{{ lngs.first }},{{ lngs.last }}]{% else %}null{% endif %}}
 {%- endfor -%}
 {%- endfor %}
 ]}
