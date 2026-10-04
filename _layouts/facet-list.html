@@ -22,6 +22,25 @@ document.addEventListener('DOMContentLoaded', () => {
       return true; // Fallback: show all if facet is neither
     });
 
+    // The data lists side streets where they branch off the main street, so one
+    // street can be split into several runs within a year. Sort by street within
+    // each source/year so every street appears once per year. Years and
+    // cardinalities keep the order they first appear in; listings within a
+    // street/cardinality keep their original order.
+    const firstSeen = new Map();
+    const seen = (key) => { if (!firstSeen.has(key)) firstSeen.set(key, firstSeen.size); return firstSeen.get(key); };
+    const sortedData = filteredData.map((item, index) => ({
+      item,
+      index,
+      group: seen(`g|${item.source}|${item.year}`),
+      card: seen(`c|${item.source}|${item.year}|${item.street}|${item.cardinality}`)
+    })).sort((a, b) =>
+      a.group - b.group ||
+      String(a.item.street || '').localeCompare(String(b.item.street || '')) ||
+      a.card - b.card ||
+      a.index - b.index
+    ).map(entry => entry.item);
+
     let firstAnchorId = null; // first heading in the content, used by the "Jump to listings" link
     let tocHtml = '';
     let contentHtml = '';
@@ -33,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStreet = null;
     let currentCardinality = null;
     const createSlug = (str) => String(str).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    filteredData.forEach((item, index) => {
+    sortedData.forEach((item, index) => {
 
       // A new top-level (h1) group starts whenever the source OR the year changes —
       // years are already grouped together in the data, so this naturally produces
@@ -72,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (h2Open) { tocHtml += `</div></details>`; h2Open = false; }
 
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentYear)}-${createSlug(currentStreet)}`;
-        tocHtml += `<details class="toc-h2"><summary class="toc-h2-summary"><a href="#${streetId}">${currentStreet} listings</a></summary><div class="toc-h2-body">`;
+        tocHtml += `<details class="toc-h2"><summary class="toc-h2-summary"><a href="#${streetId}">${currentStreet} (${currentYear}) listings</a></summary><div class="toc-h2-body">`;
         h2Open = true;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
@@ -96,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (h2Open) { tocHtml += `</div></details>`; }
     if (h1Open) { tocHtml += `</div></details>`; }
     // Final "Back to top" link at the very bottom
-    if (filteredData.length > 0) {
+    if (sortedData.length > 0) {
       contentHtml += `<p class="back-to-top-container"><a href="#toc" class="back-to-top">↑ Back to top</a></p>`;
     }
 
