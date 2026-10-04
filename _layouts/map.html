@@ -327,11 +327,39 @@ function getUoMStyle(feature) {
     };
 }
 
+// Some buildings are recorded once per unit or floor, with the same outline
+// each time (223 Berkeley Street has 71). Drawn separately, their fills stack
+// up into a much darker blue, so features with identical outlines are merged
+// into one, keeping each unit's address for the popup.
+function mergeStackedParcels(data) {
+    const byShape = new Map();
+    for (const feature of data.features) {
+        const key = JSON.stringify(feature.geometry);
+        const address = feature.properties.street_address;
+        const merged = byShape.get(key);
+        if (!merged) {
+            byShape.set(key, { ...feature, properties: { ...feature.properties, addresses: [address] } });
+            continue;
+        }
+        const props = merged.properties;
+        if (address && !props.addresses.includes(address)) props.addresses.push(address);
+        if (props.building_name === 'Various' && feature.properties.building_name) {
+            props.building_name = feature.properties.building_name;
+        }
+    }
+    return { ...data, features: [...byShape.values()] };
+}
+
 // Popup content for each feature
 function onEachFeature(feature, layer) {
     const props = feature.properties;
+    const addresses = (props.addresses || []).filter(Boolean);
     let popupContent = `<strong>${props.building_name || 'Property'}</strong><br>`;
-    popupContent += `Address: ${props.street_address || 'N/A'}<br>`;
+    if (addresses.length > 1) {
+        popupContent += `<details><summary>${addresses.length} units or floors</summary><div style="max-height:9em; overflow-y:auto">${addresses.join('<br>')}</div></details>`;
+    } else {
+        popupContent += `Address: ${props.street_address || 'N/A'}<br>`;
+    }
     popupContent += `Suburb: ${props.SUBURB || 'N/A'}<br>`;
     popupContent += `Status: ${props.UOM_STATUS || 'N/A'}<br>`;
     popupContent += `Area: ${props.PROPERTY_TITLE_LAND_AREA || 'N/A'} m²`;
@@ -362,7 +390,7 @@ uomLanduseLayer.on('mouseout', function(e) {
 
 // Add to a layer group for control panel visibility
 const uomLayerGroup = L.layerGroup([uomLanduseLayer]);
-CGData.parcels().then(data => uomLanduseLayer.addData(data)).catch(() => {});
+CGData.parcels().then(data => uomLanduseLayer.addData(mergeStackedParcels(data))).catch(() => {});
 
 // ═══════════════════════════════════════════════════════════
 //  MODAL  (shared with the 3D map, see scripts/map-common.js)
