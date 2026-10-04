@@ -18,7 +18,10 @@ The aim is a page where an editor can open one of these pages, change it without
               3. "Send for review" + short note
                    │
                    ▼
-            save service ──▶ branch + commit + pull request  ("✏️ Page edit: Featured pages A–Z")
+            save service ──▶ copy to the team's Google Sheet (backup)
+                   │
+                   ▼
+            branch + commit + pull request  ("✏️ Page edit: Featured pages A–Z")
                    │
  Reviewer ──▶ admin/review.html ── lists it next to entry submissions,
                                    shows the rendered page and what changed
@@ -49,7 +52,7 @@ Three decisions shape the design: **how editors edit**, **how a change is saved*
 
 | Option | How it works | Pros | Cons |
 |---|---|---|---|
-| **A. Extend the existing Apps Script** | Add a "page edit" action to the Google Apps Script that already turns contributions into pull requests: it receives the page path, new text, editor's name and note, and opens a PR | Same path as submissions; editors need no GitHub account; the GitHub credentials stay in the script | Changes code that lives outside this repo; anyone who finds the admin page could *propose* an edit (but it still needs review, just like public submissions) |
+| **A. Extend the existing Apps Script** | Add a "page edit" action to the Google Apps Script that already handles contributions. Today it saves a copy of each submission to a Google Sheet in the team's shared Drive folder, then opens a pull request. A page edit would do the same: save the page path, new text, editor's name and note as a row, then open a PR | Same path as submissions; editors need no GitHub account; the GitHub credentials stay in the script; every edit also lands in the Sheet, giving the team a readable backup and log of page changes without opening GitHub | Changes code that lives outside this repo; anyone who finds the admin page could *propose* an edit (but it still needs review, just like public submissions) |
 | **B. Sign in to GitHub in the browser** | Editor signs in (personal token or OAuth); the page commits a branch and opens the PR directly | No new server-side code; edits are attributed to real GitHub users | Every editor needs a GitHub account and a token, which is the step the team finds hardest today; OAuth needs a small sign-in service |
 | **C. Off-the-shelf CMS** ([Decap](https://decapcms.org/) / [Sveltia](https://github.com/sveltia/sveltia-cms)) | CMS provides the editor, saving and its own draft → review → publish board | Mature, includes media uploads | A second review screen separate from `admin/review.html`; needs a sign-in service; poor fit for the XML entries, so editors would use two tools |
 
@@ -75,7 +78,7 @@ Whichever option is chosen, the save should **include the version of the page th
 ## Open questions for the team
 
 - Who should be able to open the page editor: anyone with the link (edits still reviewed), or only signed-in editors?
-- Can the Apps Script be changed, and who maintains it?
+- Who maintains the Apps Script, and should page edits go in the same Google Sheet as submissions or in their own tab?
 - Should the person who made an edit be allowed to accept it, or must a second editor review it?
 - Beyond the A–Z and home page, which pages should be editable (e.g. a future About page)?
 
