@@ -284,6 +284,8 @@ _[&uarr; Back to Top](#featured-pages-a-to-z)_
 
 [Spanish Flu in Carlton](civic?id=Spanish%20Flu%20in%20Carlton)
 
+[Squares in Carlton](civic?id=Squares%20in%20Carlton)
+
 [Street Numbering](civic?id=Street%20Numbering)
 
 _[&uarr; Back to Top](#featured-pages-a-to-z)_
