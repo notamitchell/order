@@ -193,7 +193,8 @@
       return;
     }
     if (!total) {
-      status.textContent = '';
+      // Read out by screen readers; the message below says the same on screen
+      status.innerHTML = `<span class="visually-hidden">No results for “${escapeHtml(q)}”.</span>`;
       resultsEl.innerHTML = `<div class="search-empty"><p>Nothing found for “${escapeHtml(q)}”${state.year || state.street ? ' with these filters' : ''}.</p>
         <p>Know something about it? <a href="civic?id=${encodeURIComponent(q)}">Start an entry for “${escapeHtml(q)}”</a>.</p></div>`;
       return;
@@ -215,7 +216,13 @@
   form.addEventListener('submit', (e) => { e.preventDefault(); state.q = input.value; update(); });
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-src]');
-    if (b) { state.src = b.dataset.src; update(); window.scrollTo({ top: $('searchPage').offsetTop }); }
+    if (!b) return;
+    state.src = b.dataset.src; update(); window.scrollTo({ top: $('searchPage').offsetTop });
+    // "Show all" is replaced by the full list, so move focus to its heading
+    if (b.classList.contains('search-more-btn')) {
+      const h = resultsEl.querySelector('.search-section h2');
+      if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+    }
   });
   yearChips.addEventListener('change', (e) => { state.year = e.target.value; update(); });
   streetSelect.addEventListener('change', () => { state.street = streetSelect.value; update(); });

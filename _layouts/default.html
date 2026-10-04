@@ -11,17 +11,20 @@
 </head>
     <body>
 
+    <a class="skip-link" href="#main">Skip to content</a>
+
     <div class="wrapper">
         
         <!-- Banner Image Component: starts on the bottom third of the
              source image, then drifts upward as the page scrolls
              (see scripts/banner-parallax.js) -->
-        <header class="banner-container" role="img" aria-label="Banner, source: https://handle.slv.vic.gov.au/10381/92019">
-            <div class="banner-image"></div>
+        <header class="banner-container">
+            <!-- Source: State Library Victoria, https://handle.slv.vic.gov.au/10381/92019 -->
+            <div class="banner-image" role="img" aria-label="Historic survey plan of Carlton, showing the street grid, allotments and owners' names, the University Reserve and the Carlton Gardens"></div>
         </header>
 
         <!-- Top Navigation Bar -->
-        <nav class="main-nav">
+        <nav class="main-nav" aria-label="Main">
             <ul class="nav-links">
                 <li><a href="index">Home</a></li>
                 <li><a href="aToZ">Featured pages</a></li>
@@ -35,12 +38,12 @@
         <div class="layout-container">
             
             <!-- Main Copy Placeholder -->
-            <main class="main-content">
+            <main class="main-content" id="main" tabindex="-1">
                {{ content }}
             </main>
 
             <!-- Themes Sidebar -->
-            <aside class="sidebar-menu">
+            <aside class="sidebar-menu" aria-label="Resources">
                 <h2>Resources</h2>
                 <ul class="theme-list">
 

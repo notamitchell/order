@@ -67,6 +67,27 @@ summary:focus-visible,
 
 .main-nav a:focus-visible { outline-offset: -4px; }
 
+/* Places focus is moved to by script or the skip link (tabindex="-1")
+   don't need a ring: they aren't controls */
+[tabindex="-1"]:focus { outline: none; }
+
+/* Form fields: the same ring as links and buttons */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--moss);
+    outline-offset: 2px;
+}
+
+/* "Skip to content": hidden until a keyboard user tabs to it */
+.skip-link {
+    position: absolute; left: 8px; top: -100px; z-index: 3000;
+    padding: 8px 14px; background: var(--ink); color: var(--paper);
+    font-weight: 600; text-decoration: none;
+}
+.skip-link:focus { top: 8px; }
+.skip-link:focus-visible { outline-color: var(--moss-bright); }
+
 body {
     font-family: var(--font-ui);
     color: var(--ink-soft);
@@ -203,7 +224,7 @@ body {
 .search-years .chip input:focus-visible + span { outline: 2px solid var(--moss); outline-offset: 2px; }
 .search-street select {
     display: block; margin-top: 6px; font: 0.9rem var(--font-mono); padding: 5px 8px;
-    border: 1px solid var(--sage-dark); background: var(--paper); color: var(--ink);
+    border: 1px solid var(--ink-faint); background: var(--paper); color: var(--ink);
 }
 
 .search-status { font: 0.85rem var(--font-mono); color: var(--ink-faint); margin: 10px 0 0; }
@@ -500,7 +521,7 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
 }
 
 .new-article-form input[type="text"]:focus {
-    outline: 2px solid var(--sage-dark);
+    outline: 2px solid var(--moss);
     outline-offset: 1px;
 }
 
@@ -731,9 +752,10 @@ html.map-page, body.map-page, body.map-page #map {
 }
 
 .modal-close {
-    position: absolute; top: 14px; right: 16px;
-    font-size: 22px; font-weight: bold;
-    color: var(--sage-dark); cursor: pointer; transition: color 0.2s;
+    position: absolute; top: 10px; right: 12px;
+    font: bold 22px/1 var(--font-ui); padding: 4px 8px;
+    background: none; border: 0;
+    color: var(--ink-faint); cursor: pointer; transition: color 0.2s;
 }
 .modal-close:hover { color: var(--ink); }
 
@@ -760,6 +782,16 @@ html.map-page, body.map-page, body.map-page #map {
     font-size: 11px; color: var(--ink-faint); word-break: break-all;
     max-height: 80px; overflow-y: auto;
 }
+
+/* Markers and the map itself take keyboard focus. The ring is white with a
+   dark edge so it shows on both the dark canvas and the light map tiles. */
+.leaflet-marker-icon:focus-visible,
+.leaflet-container:focus-visible {
+    outline: 2px solid #fff;
+    box-shadow: 0 0 0 4px var(--ink-deepest);
+}
+.leaflet-marker-icon:focus-visible { outline-offset: 2px; }
+.leaflet-container:focus-visible { outline-offset: -6px; }
 
 .leaflet-tooltip {
     font-family: var(--font-serif); font-size: 12px;
@@ -899,7 +931,7 @@ html.map3d-page, body.map3d-page {
 .nav-btn {
     width: 32px;
     height: 32px;
-    background: var(--ink-soft);
+    background: var(--ink);
     border: 1px solid var(--moss-bright);
     color: var(--moss-bright);
     border-radius: 4px;
