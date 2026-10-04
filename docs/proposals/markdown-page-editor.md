@@ -46,7 +46,18 @@ Three decisions shape the design: **how editors edit**, **how a change is saved*
 
 **Front matter** (`title`, `layout`) is shown as a single "Page title" field; `layout` and other settings are hidden and kept as they are.
 
-**Which pages.** Only an allowlist of plain content pages: `aToZ.md` and `index.md` to start. Pages that are just layout switches (`map.md`, `civic.md`, `form.md`, …) are not editable here.
+**Which pages.** Only the A–Z (`aToZ.md`) and the home page (`index.md`) for now. Pages that are just layout switches (`map.md`, `civic.md`, `form.md`, …) are never editable here.
+
+New plain pages, such as a Contact or Acknowledgements page, should be easy to add later. So instead of a fixed list in the code, a page opts in with one line in its front matter:
+
+```yaml
+---
+title: "Acknowledgements"
+editable: true
+---
+```
+
+Jekyll builds a small list of these pages when the site is published, and the editor reads it, so a new page shows up in the editor as soon as it is merged. The Apps Script checks the same flag on the page in GitHub before saving, so the editor can't be used to change any other file. Creating a new page still needs a developer (the file and a navigation link); an "Add a page" button in the editor could come later if new pages become frequent.
 
 ## 2. How a change is saved
 
@@ -83,6 +94,7 @@ Whichever option is chosen, the save should **include the version of the page th
 - **An editor may accept their own page edit.** A second reviewer is not required, so the review step is mainly a preview and a record of what changed.
 - **The A–Z links will be cleaned up** (spaces → `%20`), which removes the main obstacle to a visual editor.
 - **Add an admin landing page.** See below.
+- **Editable pages:** only the A–Z and home page among existing pages, plus new plain pages such as Contact or Acknowledgements when they are added (see *Which pages*).
 
 ### Signing in
 
@@ -108,7 +120,6 @@ It uses the same look as `review.html`. It needs no sign-in itself, because each
 ## Still open
 
 - Should page edits go in the same Google Sheet as submissions or in their own tab?
-- Beyond the A–Z and home page, which pages should be editable (e.g. a future About page)?
 
 ## Noticed while looking
 
