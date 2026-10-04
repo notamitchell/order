@@ -10,6 +10,9 @@
 (function () {
     const NEW_FOR_DAYS = 14;
 
+    // Edit pencil for "not yet written" (same markup as the legend in aToZ.md)
+    const PENCIL = '<svg class="az-pencil" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>';
+
     const dataEl = document.getElementById('az-entries');
     if (!dataEl) return;
 
@@ -65,7 +68,7 @@
         const slug = slugifyId(id);
 
         if (!existing.has(slug)) {
-            addBadge(link, 'missing', '✎', ' (not yet written)',
+            addBadge(link, 'missing', PENCIL, ' (not yet written)',
                 'Not yet written. Select it to write this page.', false);
             continue;
         }
