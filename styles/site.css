@@ -638,6 +638,53 @@ body {
     color: var(--paper);
 }
 
+/* A–Z entry status badges (scripts/az-status.js) */
+.az-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 1px 7px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+    vertical-align: 0.1em;
+    white-space: nowrap;
+    border-radius: 3px;
+}
+
+.az-badge-new {
+    color: var(--paper);
+    background-color: var(--moss);
+    border: 1px solid var(--moss);
+}
+
+.az-badge-missing {
+    padding: 0 5px;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    background-color: transparent;
+    border: 1px dashed var(--sage-dark);
+}
+
+.main-content a.az-link-missing { color: var(--ink-faint); }
+.main-content a.az-link-missing:hover { color: var(--moss-deep); }
+
+.main-content p.az-legend {
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+}
+
+.az-legend .az-badge { margin-left: 0; }
+
+.az-badge .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
 /* "Suggest new article" form (new.html) */
 .new-article-form {
     display: flex;
