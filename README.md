@@ -38,7 +38,7 @@ Common Ground is a static website hosted on **GitHub Pages** and built with **Je
 
 - **Encyclopedia entries** are [EAC-CPF](https://eac.staatsbibliothek-berlin.de/) XML files in `civic/`. The browser fetches them and renders them on the fly.
 - **Historical directory data** (Sands & McDougall directories and electoral rolls) is one large JavaScript file, `map-data.js`. The search panel, the maps and the People/Places lists all read from it.
-- **Public contributions** go through a Google Apps Script web app, which opens a pull request on this repository. The editorial team then merges the pull request (accept) or closes it (reject).
+- **Public contributions** go through a Google Apps Script web app. It saves a copy of each submission to a Google Sheet in the team's shared Google Drive folder, then opens a pull request on this repository. The sheet is a user-friendly backup while the submission process is being settled. The editorial team then merges the pull request (accept) or closes it (reject).
 
 The project is deliberately a **perpetual work in progress**. Gaps in the data and entries that don't exist yet are invitations for the community to contribute, not defects.
 
@@ -58,7 +58,8 @@ Nothing is published until a pull request is merged into `main`. GitHub Pages re
  Contributor ──▶ form (_layouts/form.html, Quill editor)
                    │  POST JSON {authorName, articleTitle, prefilledId, articleText}
                    ▼
-                 Google Apps Script web app ──▶ new branch + civic/<slug>.xml + pull request
+                 Google Apps Script web app ──▶ 1. copy to Google Sheet (team shared Drive, backup)
+                                            ──▶ 2. new branch + civic/<slug>.xml + pull request
                                                          │
  Editor ───────▶ admin/review.html ── lists open PRs touching civic/, previews them ──┐
                                                          │                            │
@@ -172,7 +173,7 @@ Typical record:
 
 | Field | Notes |
 |---|---|
-| `entityID` | Usually a number. A **string** (e.g. `"Bridget O'Neill"`) links the same person or place across years. Many records share a string ID on purpose; the search panel uses these to trace someone through time. |
+| `entityID` | Usually a number. A **string** (e.g. `"Bridget O'Neill"`) means someone on the team has decided that several records are the same person or place, and linked them under a new ID they created for that purpose. Many records share a string ID on purpose; the search panel uses these to trace someone through time. |
 | `source` | `"Directory"` or `"Electoral roll"`. This decides whether a record appears under People or Places. |
 | `year`, `pages`, `listing`, `street`, `type`, `cardinality` | As transcribed. `cardinality` is the side of the street (North/South/East/West). |
 | `lat`, `lng` | Optional. About 1,450 records have coordinates so far, and only these appear on the map. Adding more is ongoing community work. |
@@ -212,7 +213,7 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 | Service / library | Used by | Notes |
 |---|---|---|
 | GitHub Pages | Hosting | Builds from `main`. |
-| Google Apps Script web app | `_layouts/form.html` (`SCRIPT_URL`) | Turns form submissions into branches and pull requests. Its source is kept outside this repo. |
+| Google Apps Script web app | `_layouts/form.html` (`SCRIPT_URL`) | Saves a copy of each submission to a Google Sheet in the team's shared Drive folder (backup), then turns it into a branch and pull request. Its source is kept outside this repo. |
 | GitHub REST API (no sign-in) | `admin/review.html` | Limited to 60 requests/hour per visitor IP address. See [Known issues](#known-issues-and-gotchas). |
 | Quill 1.3.6 | Contribution form | cdn.quilljs.com |
 | Leaflet 1.9.4 | 2D map | cdnjs |
@@ -224,7 +225,7 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 
 - **Every page downloads ~2.6 MB of data** because `default.html` loads `map-data.js` for the search panel. This hurts load times on mobile, and nothing tells the visitor that data is still loading. See roadmap §1.
 - **`map-data.js` is JavaScript, not JSON.** Other tools can't read it directly, a stray comma breaks the whole site, and diffs are huge and hard to review.
-- **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings.
+- **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings (strings are deliberate links made by a person; see the [field reference](#data-map-datajs)).
 - **The A–Z is maintained by hand** as Markdown, and links to many entries that don't exist yet. Those links open the "contribute" form, which is intended, but it isn't obvious. See roadmap §3.
 - **Review page rate limit (unlikely, but confusing if it happens):** `admin/review.html` calls the GitHub API without signing in, which GitHub caps at 60 requests per hour per IP address. Listing submissions uses one request plus one per open pull request. A small editorial team won't normally reach this, but a large backlog of submissions, or several people on one shared network (e.g. a university or library), could. **Symptoms:** the review page shows an error, an empty list, or submissions that won't load, even though they're visible on GitHub. **Fix:** wait up to an hour, or review directly on GitHub in the meantime.
 - **Entries use EAC-CPF loosely.** Every entry is `<entityType>concept</entityType>` (EAC-CPF expects `person`, `corporateBody` or `family`), and most of the schema's structure goes unused. See roadmap §4.
@@ -319,7 +320,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 - [ ] Year slider/filter on the 2D map to show the precinct changing from 1900 to 1930.
 - [ ] Link map markers to entries and entries to map locations (see §4, Places).
 - [ ] Historical base map overlays (e.g. MMBW plans), if suitable public-domain scans are available.
-- [ ] Decide on the future of the 3D map: polish it or retire it.
+- [ ] **Bring the experimental 3D map in line with the 2D map**: same data and features, and refactor so both maps share functions (e.g. data loading, filtering, popups) instead of duplicating code.
 
 ### 7. Look and feel
 
