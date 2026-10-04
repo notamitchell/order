@@ -479,6 +479,7 @@ function onEachFeature(feature, layer) {
 
 // Create GeoJSON layer
 const uomLanduseLayer = L.geoJSON(uomLanduseData, {
+    attribution: 'Property boundaries: <a href="https://spatialdata-uom.opendata.arcgis.com/datasets/UOM::uom-land-parcels-parkville/about">University of Melbourne Spatial Data</a>',
     style: getUoMStyle,
     onEachFeature: onEachFeature
 });
@@ -579,6 +580,14 @@ function getTileUrl(source, id) {
         : `https://mapwarper.net/maps/tile/${id}/{z}/{x}/{y}.png`;
 }
 
+// Shown in Leaflet's attribution control while the layer is on the map.
+const MMBW_SLV_ATTRIBUTION = 'MMBW detail plans: <a href="https://www.slv.vic.gov.au/">State Library Victoria</a>';
+function getTileAttribution(source, id) {
+    return source === 'vic'
+        ? `Georeferenced via <a href="https://mapwarper.prov.vic.gov.au/maps/${id}">PROV Map Warper</a> · <a href="https://prov.vic.gov.au/">Public Record Office Victoria</a>`
+        : `Georeferenced via <a href="https://mapwarper.net/maps/${id}">Map Warper</a> · ${MMBW_SLV_ATTRIBUTION}`;
+}
+
 // Build a lookup for each year's source type(s)
 const YEAR_SOURCES = {};
 YEARS.forEach(year => {
@@ -639,7 +648,7 @@ const CustomControl = L.Control.extend({
             const sl   = L.DomUtil.create('input', 'opacity-slider', sc);
             sl.type = 'range'; sl.min = 0; sl.max = 100; sl.value = 100;
             sc.insertAdjacentHTML('beforeend', '<span>100%</span>');
-            const layer = L.tileLayer(getTileUrl(config.source, config.id), { maxZoom:20, maxNativeZoom:19, opacity:1 });
+            const layer = L.tileLayer(getTileUrl(config.source, config.id), { maxZoom:20, maxNativeZoom:19, opacity:1, attribution:getTileAttribution(config.source, config.id) });
             if (config.visibleByDefault) layer.addTo(map);
             L.DomEvent.on(cb, 'change', () => cb.checked ? layer.addTo(map) : map.removeLayer(layer));
             L.DomEvent.on(sl, 'input',  () => layer.setOpacity(sl.value/100));
