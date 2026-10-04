@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="styles/site.css?v={{ site.time | date: '%s' }}">
 </head>
 <body class="map-page">
+<h1 class="visually-hidden">Map of the directory listings</h1>
 <div id="map"></div>
 {% include map-details-modal.html %}
 
@@ -150,7 +151,12 @@ CHAINS.forEach(({ year, street, side }) => {
     rawChains[key].forEach((entry, idx) => {
         const mk = L.marker([0,0], { icon: makeIcon(entry, YEAR_COLORS[year]) });
         mk.bindTooltip(entry.listing, { direction:'top', offset:[0,-4] });
-        mk.on('click', () => MapCommon.openDetailsModal(entry, currentPos[`${key}-${idx}`]));
+        const openDetails = () => MapCommon.openDetailsModal(entry, currentPos[`${key}-${idx}`]);
+        mk.on('click', openDetails);
+        // Enter or Space on a focused marker opens the details too
+        mk.on('keypress', (e) => {
+            if (e.originalEvent.key === 'Enter' || e.originalEvent.key === ' ') { e.originalEvent.preventDefault(); openDetails(); }
+        });
         markerLayers[`${key}-${idx}`] = mk;
         mk.addTo(yearGroups[year]);
     });
@@ -204,6 +210,11 @@ function makeIcon(entry, color) {
         html = `<div class="${cls}" style="width:6px;height:6px;border-radius:50%;background:${color};border:1px solid rgba(255,255,255,0.65);${shadow}"></div>`;
         size = [6,6];
     }
+    // Hidden text names the marker for keyboard and screen-reader users
+    // (Leaflet makes each marker a focusable button that opens the details)
+    const name = [entry.listing, entry.street, entry.year].filter(Boolean).join(', ')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    html += `<span class="visually-hidden">${name}</span>`;
     return L.divIcon({ html, className:'', iconSize:size, iconAnchor:[size[0]/2,size[1]/2] });
 }
 
@@ -410,6 +421,7 @@ const CustomControl = L.Control.extend({
             sc.innerHTML = '<span>0%</span>';
             const sl   = L.DomUtil.create('input', 'opacity-slider', sc);
             sl.type = 'range'; sl.min = 0; sl.max = 100; sl.value = 100;
+            sl.setAttribute('aria-label', 'Opacity of ' + span.textContent.replace(/\s+/g, ' ').trim());
             sc.insertAdjacentHTML('beforeend', '<span>100%</span>');
             const layer = L.tileLayer(getTileUrl(config.source, config.id), { maxZoom:20, maxNativeZoom:19, opacity:1, attribution:getTileAttribution(config.source, config.id) });
             if (config.visibleByDefault) layer.addTo(map);
@@ -440,6 +452,10 @@ const CustomControl = L.Control.extend({
     }
 });
 map.addControl(new CustomControl());
+// Put the controls before the markers in the Tab order, so keyboard users
+// reach the year and layer checkboxes without tabbing through every marker.
+// (Leaflet positions the controls absolutely, so nothing moves on screen.)
+map.getContainer().prepend(map.getContainer().querySelector('.leaflet-control-container'));
 
 // ═══════════════════════════════════════════════════════════
 //  BOOT

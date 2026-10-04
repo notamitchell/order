@@ -222,6 +222,7 @@ window.MapCommon = (function () {
     // ── Details modal (markup in _includes/map-details-modal.html) ──
     let modalEls = null;
     let modalOpenedAt = 0;
+    let modalReturnFocus = null; // what had focus before the modal opened
 
     function initDetailsModal() {
         const modal = document.getElementById('details-modal');
@@ -233,14 +234,31 @@ window.MapCommon = (function () {
             link:    document.getElementById('modal-link'),
             coords:  document.getElementById('modal-coords'),
         };
-        const close = () => { modal.style.display = 'none'; };
-        document.getElementById('close-modal-btn').onclick = close;
+        const closeBtn = document.getElementById('close-modal-btn');
+        const close = () => {
+            if (modal.style.display !== 'flex') return;
+            modal.style.display = 'none';
+            // Back to the marker the modal was opened from
+            if (modalReturnFocus && document.contains(modalReturnFocus)) modalReturnFocus.focus();
+            modalReturnFocus = null;
+        };
+        closeBtn.onclick = close;
         // On touch screens the tap that opened the modal is followed by a
         // click on the backdrop, so ignore backdrop clicks straight after opening.
         modal.addEventListener('click', e => {
             if (e.target === modal && Date.now() - modalOpenedAt > 400) close();
         });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') close();
+            // Keep Tab inside the modal while it is open
+            if (e.key === 'Tab' && modal.style.display === 'flex') {
+                const items = [...modal.querySelectorAll('a[href], button')];
+                const first = items[0], last = items[items.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                else if (!modal.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+            }
+        });
     }
 
     // pos: { lat, lng } where the entry is drawn (falls back to the entry's own lat/lng)
@@ -290,8 +308,10 @@ window.MapCommon = (function () {
             m.coords.innerText = 'Unknown';
         }
 
+        if (m.modal.style.display !== 'flex') modalReturnFocus = document.activeElement;
         m.modal.style.display = 'flex';
         modalOpenedAt = Date.now();
+        document.getElementById('close-modal-btn').focus();
     }
 
     return {

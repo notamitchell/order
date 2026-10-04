@@ -14,6 +14,8 @@
         <a class="map3d-home-link" href="index">&larr; Home</a>
         <h1>Directory Chronosphere</h1>
         <p id="hint-text">Drag to rotate · Scroll to zoom · Tap a node for details</p>
+        <!-- The nodes can't be reached with the keyboard, so point to pages that can -->
+        <p class="map3d-alt">Using a keyboard? The <a href="map">2D map</a> and <a href="search">search</a> have the same records.</p>
         
         <div class="controls-panel">
             <label class="toggle-container">
@@ -29,18 +31,18 @@
         </div>
     </div>
 
-    <div id="nav-controls">
+    <div id="nav-controls" role="group" aria-label="Map controls">
         <div class="nav-group">
             <div class="nav-label">Pan Map</div>
             <div class="nav-grid">
                 <div></div>
-                <button class="nav-btn" id="nav-pan-up" title="Pan Up">▲</button>
+                <button class="nav-btn" id="nav-pan-up" title="Pan Up" aria-label="Pan Up">▲</button>
                 <div></div>
-                <button class="nav-btn" id="nav-pan-left" title="Pan Left">◀</button>
+                <button class="nav-btn" id="nav-pan-left" title="Pan Left" aria-label="Pan Left">◀</button>
                 <div></div>
-                <button class="nav-btn" id="nav-pan-right" title="Pan Right">▶</button>
+                <button class="nav-btn" id="nav-pan-right" title="Pan Right" aria-label="Pan Right">▶</button>
                 <div></div>
-                <button class="nav-btn" id="nav-pan-down" title="Pan Down">▼</button>
+                <button class="nav-btn" id="nav-pan-down" title="Pan Down" aria-label="Pan Down">▼</button>
                 <div></div>
             </div>
         </div>
@@ -48,10 +50,10 @@
         <div class="nav-group" style="border-top: 1px solid var(--ink-soft); padding-top: 8px;">
             <div class="nav-label">Zoom / Orbit</div>
             <div style="display: flex; gap: 6px;">
-                <button class="nav-btn" id="nav-zoom-in" title="Zoom In">+</button>
-                <button class="nav-btn" id="nav-zoom-out" title="Zoom Out">−</button>
-                <button class="nav-btn" id="nav-rot-left" title="Rotate Left">⟲</button>
-                <button class="nav-btn" id="nav-rot-right" title="Rotate Right">⟳</button>
+                <button class="nav-btn" id="nav-zoom-in" title="Zoom In" aria-label="Zoom In">+</button>
+                <button class="nav-btn" id="nav-zoom-out" title="Zoom Out" aria-label="Zoom Out">−</button>
+                <button class="nav-btn" id="nav-rot-left" title="Rotate Left" aria-label="Rotate Left">⟲</button>
+                <button class="nav-btn" id="nav-rot-right" title="Rotate Right" aria-label="Rotate Right">⟳</button>
             </div>
         </div>
     </div>

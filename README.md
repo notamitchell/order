@@ -361,7 +361,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
   - [x] 3D map: add a ← Home link and use `100dvh`.
   - [x] Nav: fit all five items on one row on phones.
   - [x] Search on phones: results are cards and filters fold away on the new search page (#44).
-- [ ] **Accessibility pass**: keyboard navigation for search and maps, and alt text. (A site-wide focus outline and a darker `--ink-faint` for small labels were added in #43.)
+- [x] **Accessibility pass**: keyboard navigation for search and maps, colour contrast, focus styles and alt text. (A site-wide focus outline and a darker `--ink-faint` for small labels were added in #43; the rest in #54.)
 
 ### 8. Site and content
 
