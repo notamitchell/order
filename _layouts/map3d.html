@@ -13,7 +13,7 @@
     <div id="ui-layer">
         <a class="map3d-home-link" href="index">&larr; Home</a>
         <h1>Directory Chronosphere</h1>
-        <p id="hint-text">Drag to rotate · Scroll to zoom · Tap nodes &amp; links</p>
+        <p id="hint-text">Drag to rotate · Scroll to zoom · Tap a node for details</p>
         
         <div class="controls-panel">
             <label class="toggle-container">
@@ -70,9 +70,12 @@
 
     <div id="tooltip"></div>
 
+    {% include map-details-modal.html %}
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="map-data.js"></script>
+    <script src="scripts/map-common.js"></script>
 
     <script>
         // Global visibility state trackers
@@ -80,26 +83,27 @@
         let layersAreMoving = false;
         const visibleYears = new Set(); 
 
-        // 1. DATA SAMPLING & BOUNDS CALCULATION
-        const knownPoints = directoryData.filter(d => d.lat != null && d.lng != null);
+        // 1. DATA (shared with the 2D map, see scripts/map-common.js)
+        const sortedYears  = MapCommon.getYears(directoryData);
+        const YEAR_COLORS  = MapCommon.getYearColors(sortedYears);
+        const YEAR_SOURCES = MapCommon.getYearSources(directoryData, sortedYears);
+        const { chains: CHAINS, rawChains } = MapCommon.buildChains(directoryData);
+        const crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
 
+        // Bounds of the anchored records, used to fit the map onto each plane
         let minLat = Infinity, maxLat = -Infinity;
         let minLng = Infinity, maxLng = -Infinity;
-        const yearsSet = new Set();
-
-        directoryData.forEach(d => yearsSet.add(d.year));
-        knownPoints.forEach(d => {
+        directoryData.forEach(d => {
+            if (d.lat == null || d.lng == null) return;
             if (d.lat < minLat) minLat = d.lat;
             if (d.lat > maxLat) maxLat = d.lat;
             if (d.lng < minLng) minLng = d.lng;
             if (d.lng > maxLng) maxLng = d.lng;
         });
 
-        const sortedYears = [...yearsSet].sort((a, b) => a - b);
-
-        // DEFAULT STATE: Show only the first year initially
+        // DEFAULT STATE: latest year on, as on the 2D map
         if (sortedYears.length > 0) {
-            visibleYears.add(sortedYears[0]);
+            visibleYears.add(sortedYears[sortedYears.length - 1]);
         }
 
         const isMobile = window.innerWidth <= 600 || ('ontouchstart' in window);
@@ -117,102 +121,14 @@
             return { x, z };
         }
 
-        function bezier(A, ctrl, B, t) {
-            const u = 1 - t;
-            return { 
-                lat: u*u*A.lat + 2*u*t*ctrl.lat + t*t*B.lat,
-                lng: u*u*A.lng + 2*u*t*ctrl.lng + t*t*B.lng 
-            };
-        }
-
-        function applyOffset(midLat, midLng, arcOffset, side) {
-            if (side === 'East' || side === 'West') {
-                return { lat: midLat, lng: midLng + arcOffset };
-            }
-            return { lat: midLat + arcOffset, lng: midLng };
-        }
-
+        // Each year has its own plane, so chains never need to be spread
+        // apart like overlapping years on the 2D map: use one fixed bow,
+        // and lift estimated entries off the plane along the same arc.
+        const ARC_OFFSET = 0.0001;
         const ARC_HEIGHT = 3.5;
 
-        function computeChain(entries, side) {
-            const r = entries.map(e => ({ ...e, _yOffset: 0 }));
-            const n = r.length;
-            const anchors = r.map((e,i) => e.lat != null ? i : -1).filter(i => i >= 0);
-            const arcOffset = (side === 'North' || side === 'East') ? 0.0001 : -0.0001;
-            const arcSign = 1;
-
-            for (let ai = 0; ai < anchors.length - 1; ai++) {
-                const si = anchors[ai], ei = anchors[ai+1];
-                const A  = { lat:r[si].lat, lng:r[si].lng };
-                const B  = { lat:r[ei].lat, lng:r[ei].lng };
-                const ctrl = applyOffset((A.lat+B.lat)/2, (A.lng+B.lng)/2, arcOffset, side);
-                const steps = ei - si;
-                for (let k = 1; k < steps; k++) {
-                    const p = bezier(A, ctrl, B, k/steps);
-                    r[si+k].lat = p.lat; r[si+k].lng = p.lng; r[si+k]._computed = true;
-                    r[si+k]._yOffset = arcSign * ARC_HEIGHT * Math.sin(Math.PI * k / steps);
-                }
-            }
-
-            if (anchors.length > 0) {
-                const lastAi = anchors[anchors.length - 1];
-                const tailCount = n - lastAi - 1;
-                if (tailCount > 0) {
-                    const A = { lat:r[lastAi].lat, lng:r[lastAi].lng };
-                    let dLng = 0, dLat = 0;
-                    if (anchors.length >= 2) {
-                        const prev = anchors[anchors.length - 2];
-                        const len = Math.sqrt(Math.pow(A.lat - r[prev].lat, 2) + Math.pow(A.lng - r[prev].lng, 2)) || 1;
-                        dLat = ((A.lat - r[prev].lat)/len) * 0.00014;
-                        dLng = ((A.lng - r[prev].lng)/len) * 0.00014;
-                    } else {
-                        if (side === 'East' || side === 'West') { dLat = -0.00014; }
-                        else                                    { dLng =  0.00014; }
-                    }
-                    const ghost = { lat: A.lat + dLat*(tailCount+1), lng: A.lng + dLng*(tailCount+1) };
-                    const ctrl  = applyOffset((A.lat+ghost.lat)/2, (A.lng+ghost.lng)/2, arcOffset, side);
-                    for (let k = 1; k <= tailCount; k++) {
-                        const p = bezier(A, ctrl, ghost, k/(tailCount+1));
-                        r[lastAi+k].lat = p.lat; r[lastAi+k].lng = p.lng; r[lastAi+k]._computed = true;
-                        r[lastAi+k]._yOffset = arcSign * ARC_HEIGHT * Math.sin(Math.PI * k / (tailCount + 1));
-                    }
-                }
-            }
-
-            if (anchors.length > 0) {
-                const firstAi = anchors[0];
-                if (firstAi > 0) {
-                    const A = { lat:r[firstAi].lat, lng:r[firstAi].lng };
-                    let dLng = 0, dLat = 0;
-                    if (anchors.length >= 2) {
-                        const next = anchors[1];
-                        const len = Math.sqrt(Math.pow(r[next].lat - A.lat, 2) + Math.pow(r[next].lng - A.lng, 2)) || 1;
-                        dLat = -((r[next].lat - A.lat)/len) * 0.00014;
-                        dLng = -((r[next].lng - A.lng)/len) * 0.00014;
-                    } else {
-                        if (side === 'East' || side === 'West') { dLat =  0.00014; }
-                        else                                    { dLng = -0.00014; }
-                    }
-                    const ghost = { lat: A.lat + dLat*(firstAi+1), lng: A.lng + dLng*(firstAi+1) };
-                    const ctrl  = applyOffset((ghost.lat+A.lat)/2, (ghost.lng+A.lng)/2, arcOffset, side);
-                    for (let k = 0; k < firstAi; k++) {
-                        const t = (firstAi - k) / (firstAi + 1);
-                        const p = bezier(ghost, ctrl, A, t);
-                        r[k].lat = p.lat; r[k].lng = p.lng; r[k]._computed = true;
-                        const tArc = (firstAi - k) / (firstAi + 1);
-                        r[k]._yOffset = arcSign * ARC_HEIGHT * Math.sin(Math.PI * tArc);
-                    }
-                }
-            }
-            return r;
-        }
-
-        const palette = ['#b5451b', '#b8860b', '#2e7d5e', '#7b5ea7', '#2a64a0'];
         function getYearColor(year) {
-            const index = sortedYears.indexOf(year);
-            const pct = sortedYears.length <= 1 ? 0 : index / (sortedYears.length - 1);
-            const paletteIdx = Math.min(Math.floor(pct * (palette.length - 1)), palette.length - 2);
-            return palette[paletteIdx];
+            return YEAR_COLORS[year];
         }
 
         // 2. THREE.JS INITIALIZATION
@@ -324,38 +240,29 @@
                 yearGroup.add(sprite);
             })(year, themeColor);
 
-            const yearRawEntries = directoryData.filter(d => d.year === year);
-            const chainGroups = {};
-            yearRawEntries.forEach(entry => {
-                const key = `${entry.street}-${entry.cardinality}`;
-                if (!chainGroups[key]) chainGroups[key] = [];
-                chainGroups[key].push(entry);
-            });
-
-            Object.keys(chainGroups).forEach(key => {
-                const side = key.split('-')[1];
-                const processedNodes = computeChain(chainGroups[key], side);
+            CHAINS.filter(c => c.year === year).forEach(({ street, side }) => {
+                const key = MapCommon.chainKey(year, street, side);
+                const processedNodes = MapCommon.computeChain(rawChains[key], MapCommon.sideSign(side) * ARC_OFFSET, side);
 
                 const points = [];
-                processedNodes.forEach(node => {
+                processedNodes.forEach((node, idx) => {
                     if(node.lat == null || node.lng == null) return;
                     const localPos = mapCoordsToXY(node.lat, node.lng);
-                    // Vector calculation now sits native at 0 locally; translated directly by the parent group structure
-                    const nodePosVector = new THREE.Vector3(localPos.x, (node._yOffset || 0), localPos.z);
+                    const yOffset = node._computed ? ARC_HEIGHT * Math.sin(Math.PI * node._arcT) : 0;
+                    // Vector sits at 0 locally; the parent group moves it to its layer height
+                    const nodePosVector = new THREE.Vector3(localPos.x, yOffset, localPos.z);
                     points.push(nodePosVector);
-                    
-                    if (node.crossYearId) {
-                        if (!nodePositionCache[node.crossYearId]) nodePositionCache[node.crossYearId] = [];
-                        // Save structural reference elements to the parent group so links can query their live absolute positions
-                        nodePositionCache[node.crossYearId].push({ year, localPosition: nodePosVector, listing: node.listing, parentGroup: yearGroup });
-                    }
+
+                    // Saved against the parent group so links can query their live absolute positions
+                    nodePositionCache[`${key}-${idx}`] = { year, localPosition: nodePosVector, listing: node.listing, parentGroup: yearGroup };
 
                     const nodeSz = isMobile ? 1.1 : 0.7;
                     const sphereSz = isMobile ? 0.7 : 0.35;
                     let geom;
-                    if (node.type === 'Intersection') {
+                    const shape = MapCommon.markerShape(node);
+                    if (shape === 'intersection') {
                         geom = new THREE.BoxGeometry(nodeSz, nodeSz, nodeSz);
-                    } else if (node.type === 'Right-of-way') {
+                    } else if (shape === 'right-of-way') {
                         geom = new THREE.ConeGeometry(nodeSz * 0.55, nodeSz * 1.1, 4);
                     } else {
                         geom = new THREE.SphereGeometry(sphereSz, 8, 8);
@@ -382,7 +289,7 @@
 
                     const mesh = new THREE.Mesh(geom, mat);
                     mesh.position.copy(nodePosVector);
-                    mesh.userData = { ...node };
+                    mesh.userData = { ...node, crossYearId: typeof node.entityID === 'string' ? node.entityID : null };
 
                     yearGroup.add(mesh);
                     interactiveNodes.push(mesh);
@@ -400,8 +307,10 @@
         // Loop 2: Process Cross-Year threads 
         const crossYearMeshMap = {}; 
 
-        Object.keys(nodePositionCache).forEach(crossId => {
-            const sorted = nodePositionCache[crossId].sort((a, b) => a.year - b.year);
+        Object.keys(crossYearById).forEach(crossId => {
+            const sorted = crossYearById[crossId]
+                .map(({ year, street, side, idx }) => nodePositionCache[`${MapCommon.chainKey(year, street, side)}-${idx}`])
+                .filter(Boolean);
             const yearSpan = sorted.length; 
 
             if (sorted.length > 1) {
@@ -441,7 +350,7 @@
         
         // Dynamic Checkbox Injection
         const checkGroupContainer = document.getElementById('year-checkbox-group');
-        sortedYears.forEach(year => {
+        sortedYears.slice().reverse().forEach(year => {
             const label = document.createElement('label');
             label.className = 'toggle-container';
             
@@ -466,10 +375,17 @@
                 }
             });
             
+            const swatch = document.createElement('span');
+            swatch.className = 'year-swatch';
+            swatch.style.background = YEAR_COLORS[year];
+
             const span = document.createElement('span');
             span.innerText = year;
+            // Source names don't fit the phone layout, so they go in a hover title
+            if (YEAR_SOURCES[year]) label.title = YEAR_SOURCES[year];
             
             label.appendChild(checkbox);
+            label.appendChild(swatch);
             label.appendChild(span);
             checkGroupContainer.appendChild(label);
         });
@@ -704,6 +620,13 @@
 
         let lockedSelection = null;
 
+        // Nodes open the same details modal as the 2D map; links only use the info panel
+        function openDetailsFor(obj) {
+            const d = obj.userData;
+            if (d.isCrossYearLine) return;
+            MapCommon.openDetailsModal(d, { lat: d.lat, lng: d.lng });
+        }
+
         window.addEventListener('mousemove', (event) => {
             pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -712,7 +635,7 @@
         });
 
         window.addEventListener('click', (event) => {
-            if(event.target.closest('#ui-layer') || event.target.closest('#info-panel') || event.target.closest('#nav-controls')) return;
+            if(event.target.closest('#ui-layer') || event.target.closest('#info-panel') || event.target.closest('#nav-controls') || event.target.closest('#details-modal')) return;
 
             pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -721,6 +644,7 @@
             if (hits.length > 0) {
                 lockedSelection = hits[0].object;
                 selectObject(lockedSelection, event.clientX, event.clientY);
+                openDetailsFor(lockedSelection);
             } else {
                 lockedSelection = null;
                 resetHighlight();
@@ -735,7 +659,7 @@
         }, { passive: true });
 
         window.addEventListener('touchend', (e) => {
-            if(e.target.closest('#ui-layer') || e.target.closest('#info-panel') || e.target.closest('#nav-controls')) return;
+            if(e.target.closest('#ui-layer') || e.target.closest('#info-panel') || e.target.closest('#nav-controls') || e.target.closest('#details-modal')) return;
 
             const dx = e.changedTouches[0].clientX - touchStartX;
             const dy = e.changedTouches[0].clientY - touchStartY;
@@ -747,6 +671,7 @@
             const hits = getValidHits(raycaster.intersectObjects(interactiveNodes));
             if (hits.length > 0) {
                 selectObject(hits[0].object);
+                openDetailsFor(hits[0].object);
             } else {
                 resetHighlight();
                 infoPanel.classList.remove('has-selection');
@@ -755,6 +680,8 @@
 
         // Initial setup execution mapping configuration values
         recalculateLayerTargets();
+        // Start visible layers at their place instead of sliding in on load
+        sortedYears.forEach(year => { yearGroupsMap[year].position.y = yearGroupsMap[year].userData.targetY; });
 
         // 5. ANIMATION RENDERING LOOP
         let hoveredObj = null;
