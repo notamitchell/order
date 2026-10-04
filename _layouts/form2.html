@@ -9,8 +9,8 @@
 
   <!-- Directory data loader: fetches only the files holding this entry's records -->
   <script src="scripts/data.js?v={{ site.time | date: '%s' }}"></script>
-  <!-- Builds the EAC-CPF 2.0 XML and the preview -->
-  <script src="scripts/eac-cpf.js?v={{ site.time | date: '%s' }}"></script>
+  <!-- Builds the entry as TEI XML (schema/order.odd) and the preview -->
+  <script src="scripts/tei.js?v={{ site.time | date: '%s' }}"></script>
 
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -316,6 +316,9 @@
       .pv-facts { grid-template-columns: 1fr; }
       .pv-facts dd { margin-bottom: 6px; }
     }
+    .pv-table { overflow-x: auto; margin-bottom: 12px; }
+    .pv-table table { border-collapse: collapse; font-size: 14px; }
+    .pv-table td { border: 1px solid var(--paper-line); padding: 5px 8px; vertical-align: top; }
     .pv-chron { border-collapse: collapse; width: 100%; margin-bottom: 12px; font-size: 14px; }
     .pv-chron th, .pv-chron td { border-bottom: 1px solid var(--paper-line); padding: 5px 8px 5px 0; text-align: left; vertical-align: top; }
     .pv-chron th { white-space: nowrap; color: var(--ink); font-weight: normal; font-family: var(--font-mono); }
@@ -360,9 +363,10 @@
       <legend class="label">What is this entry about? <span class="optional-tag">Optional</span></legend>
       <div class="chips">
         <label class="chip"><input type="radio" name="kind" value="person"><span>A person</span></label>
-        <label class="chip"><input type="radio" name="kind" value="corporateBody"><span>A business or organisation</span></label>
+        <label class="chip"><input type="radio" name="kind" value="org"><span>A business or organisation</span></label>
         <label class="chip"><input type="radio" name="kind" value="family"><span>A family</span></label>
-        <label class="chip"><input type="radio" name="kind" value="topic"><span>A place, street or topic</span></label>
+        <label class="chip"><input type="radio" name="kind" value="place"><span>A place, street or building</span></label>
+        <label class="chip"><input type="radio" name="kind" value="topic"><span>A topic</span></label>
         <button type="button" class="clear-kind" id="clearKind" hidden>Clear</button>
       </div>
     </fieldset>
@@ -472,7 +476,7 @@
     <ul class="checks" id="checks"></ul>
     <div id="previewEntry"></div>
     <details class="xml-box">
-      <summary>Show the EAC-CPF XML</summary>
+      <summary>Show the TEI XML</summary>
       <pre id="xmlOut"></pre>
     </details>
   </section>
@@ -486,6 +490,9 @@
 <datalist id="function-terms">
   <option value="Hotel"><option value="Brewery"><option value="Shop"><option value="Factory"><option value="School">
   <option value="Church"><option value="Society"><option value="Bank">
+</datalist>
+<datalist id="use-terms">
+  <option value="Hotel"><option value="Shop"><option value="Stables"><option value="Cottage"><option value="Factory"><option value="Vacant land">
 </datalist>
 <datalist id="place-roles">
   <option value="Residence"><option value="Business premises"><option value="Licensed premises"><option value="Birthplace"><option value="Place of death">
@@ -512,8 +519,9 @@
   /* ---------- Labels that follow "What is this entry about?" ---------- */
   const KIND_TEXT = {
     person:        { from: 'Born', to: 'Died', dates: 'When they were born and died', occ: 'Occupation or trade', occHint: 'e.g. publican, tailor', occList: 'occupation-terms', occLabel: 'Occupation' },
-    corporateBody: { from: 'Opened', to: 'Closed', dates: 'When it opened and closed', occ: 'What it did', occHint: 'e.g. hotel, brewery, school', occList: 'function-terms', occLabel: 'Activity' },
+    org:           { from: 'Opened', to: 'Closed', dates: 'When it opened and closed', occ: 'What it did', occHint: 'e.g. hotel, brewery, school', occList: 'function-terms', occLabel: 'Activity' },
     family:        { from: 'From', to: 'To', dates: 'The years the family was in Carlton', occ: 'Occupation or trade', occHint: 'The family trade or business', occList: 'occupation-terms', occLabel: 'Occupation' },
+    place:         { from: 'From', to: 'To', dates: 'When it was built or named, and demolished', occ: 'What it was used for', occHint: 'e.g. stables, shop, cottage', occList: 'use-terms', occLabel: 'Use' },
     '':            { from: 'From', to: 'To', dates: 'When it started and ended', occ: 'Occupation or trade', occHint: 'Or what a business did', occList: 'occupation-terms', occLabel: 'Occupation' }
   };
   KIND_TEXT.topic = KIND_TEXT[''];
@@ -547,7 +555,7 @@
       { k: 'place', label: 'Place', ph: 'e.g. Carlton Inn', wide: true }] },
     relations: { add: 'Add another', fields: [
       { k: 'name', label: 'Name', ph: 'e.g. John Cozens', list: 'entry-titles', wide: true },
-      { k: 'targetType', label: 'Type', select: [['person', 'Person'], ['corporateBody', 'Business or organisation'], ['family', 'Family'], ['resource', 'Book, record or other source']] },
+      { k: 'targetType', label: 'Type', select: [['person', 'Person'], ['org', 'Business or organisation'], ['family', 'Family'], ['place', 'Place'], ['topic', 'Topic'], ['source', 'Book, record or other source']] },
       { k: 'relationType', label: 'Relationship', ph: 'e.g. Licensee', list: 'relation-types' },
       ...YEARS,
       { k: 'href', label: 'Link', ph: 'Fills in for entries on this site', type: 'url', wide: true }] }
@@ -811,15 +819,15 @@
 
   function showPreview() {
     const entry = collect();
-    const xml = EACCPF.build(entry);
-    const checks = EACCPF.check(entry);
+    const xml = TEIEntry.build(entry);
+    const checks = TEIEntry.check(entry);
     $('checks').replaceChildren(...(checks.length ? checks : [{ level: 'ok', text: 'Everything looks fine.' }]).map((c) => {
       const li = document.createElement('li');
       li.className = c.level;
       li.textContent = c.text;
       return li;
     }));
-    $('previewEntry').innerHTML = EACCPF.render(xml);
+    $('previewEntry').innerHTML = TEIEntry.render(xml);
     $('xmlOut').textContent = xml;
     $('preview').hidden = false;
     return xml;

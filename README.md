@@ -97,7 +97,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `_layouts/search.html`, `scripts/search.js` | Search page (see [Search, facets and maps](#search-facets-and-maps)). |
 | `_layouts/entry.html` | Fetches and renders one EAC-CPF entry, and adds the contribution form. |
 | `_layouts/form.html` | Rich-text contribution form (Quill 1.3.6) that posts to Google Apps Script. |
-| `form2.md`, `_layouts/form2.html` | Test version of the next contribution form (EAC-CPF 2.0, optional extra sections). Not linked from anywhere and sends nothing yet: it previews the entry and downloads the XML. |
+| `form2.md`, `_layouts/form2.html` | Test version of the next contribution form, which writes TEI (roadmap §4). Not linked from anywhere and sends nothing yet: it previews the entry and downloads the XML. |
 | `_layouts/new.html` | "Start a new entry" box that redirects to `civic?id=…`. |
 | `_layouts/facet-list.html` | People / Places listings. |
 | `_layouts/map.html`, `_layouts/map3d.html` | 2D Leaflet map and 3D three.js map. |
@@ -107,7 +107,8 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `_data/directory/<year>.json`, `_data/electoral-roll/<year>.json` | The directory and electoral-roll records, one file per source and year, one record per line. **Edit these.** See [Data](#data-directories-and-electoral-rolls). |
 | `data/` | What the browser downloads, generated from `_data/` by Jekyll: one small page per data file, `data/index.json` (the list of files), and `uom-land-parcels.geojson` (University of Melbourne land parcels). |
 | `scripts/data.js` | Shared data loader used by every page that shows records. |
-| `scripts/eac-cpf.js` | Builds EAC-CPF 2.0 XML from form2, checks it, and renders a preview from the XML. |
+| `scripts/tei.js` | Builds an entry as TEI from form2, checks it, and renders a preview from the XML. |
+| `schema/order.odd`, `schema/order.rng` | The TEI entry format: the customisation (with its documentation) and the schema generated from it. |
 | `tools/convert-map-data.js` | One-off script that split the old `map-data.js` into the files in `_data/`. |
 | `admin/index.html` | Admin landing page for the editorial team, linking to each tool (served at `admin/`). The site footer links here. |
 | `admin/review.html` | Plain-language review page for the editorial team. |
@@ -156,6 +157,17 @@ Entries follow the EAC-CPF schema (`urn:isbn:1-931666-33-4`). For a full example
 - To add an entry to the A–Z, add a link in `aToZ.md` by hand.
 
 Open questions to settle: controlled vocabulary for `entityType` and `localType`, how to cite sources inside entries, how to handle images, how to link entries to directory records, and what to do with entries that have two names (e.g. *Carlton Inn* / *Corkman Hotel*).
+
+### The new entry format (TEI)
+
+Entries are moving to TEI (roadmap §4). The format is described in `schema/order.odd`, and `schema/order.rng` is the schema generated from it. form2 already writes this format. In short, `<TEI type="person|org|family|place|topic">` holds a `teiHeader` (title, authors, sources, one `change` per edit), a `standOff` with the subject's structured facts (`xml:id="subject"`), the chronology and links to other entries, and the article in `text/body`.
+
+To regenerate the schema after editing `order.odd`, you need Java, Saxon HE, the [TEI Stylesheets](https://github.com/TEIC/Stylesheets) and a `p5subset.xml` for TEI P5 4.12.0:
+
+```
+java -jar saxon.jar -s:schema/order.odd -xsl:Stylesheets/odds/odd2odd.xsl -o:order.compiled.odd defaultSource=p5subset.xml
+java -jar saxon.jar -s:order.compiled.odd -xsl:Stylesheets/odds/odd2relax.xsl -o:schema/order.rng
+```
 
 ## Data: directories and electoral rolls
 
@@ -254,7 +266,7 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 - **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings (strings are deliberate links made by a person; see the [field reference](#data-directories-and-electoral-rolls)).
 - **The A–Z is maintained by hand** as Markdown. See roadmap §3.
 - **Review page rate limit (unlikely, but confusing if it happens):** `admin/review.html` calls the GitHub API without signing in, which GitHub caps at 60 requests per hour per IP address. Listing submissions uses one request plus one per open pull request. A small editorial team won't normally reach this, but a large backlog of submissions, or several people on one shared network (e.g. a university or library), could. **Symptoms:** the review page shows an error, an empty list, or submissions that won't load, even though they're visible on GitHub. **Fix:** wait up to an hour, or review directly on GitHub in the meantime.
-- **Entries use EAC-CPF loosely.** Every entry is `<entityType>concept</entityType>` (EAC-CPF expects `person`, `corporateBody` or `family`), and most of the schema's structure goes unused. See roadmap §4.
+- **Entries use EAC-CPF loosely.** Every entry is `<entityType>concept</entityType>` (EAC-CPF expects `person`, `corporateBody` or `family`), and most of the schema's structure goes unused. Entries are moving to TEI instead; see roadmap §4.
 - **No automated checks.** Malformed XML or a broken data file can be merged without anyone noticing. See roadmap §5.
 
 ---
@@ -315,25 +327,27 @@ Goal: editors never need to touch GitHub directly. Done in small, fundable steps
 - [ ] Evaluate a git-based CMS such as [Decap CMS](https://decapcms.org/) or [Sveltia CMS](https://github.com/sveltia/sveltia-cms). These provide Markdown page editing, an editorial approval workflow and media uploads out of the box, and run on GitHub Pages without a server (they may need a small sign-in service). They may cover the Markdown editor and part of the review flow more cheaply than custom tools, but are less suited to the XML entries and the directory data.
 - [ ] Later: revisit whether the Google Apps Script is still the best way to receive submissions, depending on which options above are chosen.
 
-### 4. Making full and correct use of EAC-CPF
+### 4. Moving entries to TEI
 
-Goal: entries become proper, interoperable archival authority records that other systems (e.g. Trove, archives, the Encyclopedia of Melbourne) could understand and link to.
+Goal: entries become valid, documented XML that covers everything the site writes about: people, businesses, families, places and topics. Archives and partners can still have EAC-CPF or Records in Contexts (RiC) data, generated from the TEI files.
 
-- [ ] **Use the right `entityType`**: `person`, `corporateBody` (hotels, breweries, companies, societies) or `family`. Topics like *Cesspits* or *Street Numbering* aren't really EAC-CPF entities, so decide whether they stay as entries with a local type (`localControl` / `localType`, e.g. "Topic", "Street", "Building") or move to a separate format. Using `concept` for everything is the first thing to correct.
-- [ ] **Structured names**: `nameEntry` with proper `part localType="surname"` / `"forename"`, plus alternative and historical names (`nameEntryParallel`, `useDates`), e.g. *Carlton Inn* / *Corkman Hotel*. This would also fix the renderer, which currently assumes the first two `part`s are the family name and the given name.
-- [ ] **Dates**: `existDates` with `dateRange` and `standardDate` attributes, so entries can be sorted, filtered by period and shown on a timeline.
-- [ ] **Places**: `places` / `place` with `placeEntry` and coordinates (`latitude`/`longitude`), linking entries to the map.
-- [ ] **Occupations, functions and legal status**: `occupations`, `functions`, `legalStatuses` (e.g. a hotel's licence).
-- [ ] **Relationships**: `cpfRelation` between entries (licensee ↔ hotel, person ↔ family) and `resourceRelation` to sources and to directory records, displayed on the page as "Related" links.
-- [ ] **Sources and citations**: `sources` / `source` for each entry, shown as a reference list.
-- [ ] **Richer narrative**: structured `biogHist` (`abstract`, `chronList` for dated events), and render them on entry pages.
-- [ ] **Better maintenance records**: one `maintenanceEvent` per edit (created / revised), with the agent who made it, and use `maintenanceStatus` correctly (`new` → `revised`).
-- [ ] Have the submission form and editors produce valid, richer XML. Write a short EAC-CPF style guide (`docs/eac-cpf-guide.md`) with examples for each entity type.
-- [ ] Validate entries against the EAC-CPF schema (see §5).
+Decided on 2026-10-04: entries move from EAC-CPF to [TEI P5](https://tei-c.org/guidelines/p5/) with a project customisation (`schema/order.odd`). EAC-CPF only allows people, families and corporate bodies, so places and topics can't be recorded properly in it. The live contribution form and its Apps Script stay as they are until form2 replaces them.
+
+- [x] **Project customisation** `schema/order.odd`, and the schema generated from it, `schema/order.rng` (TEI P5 4.12.0). It sets the entry types (person, org, family, place, topic) and the text styles the form uses (#66).
+- [ ] **form2 UI** (`/order/form2`, not linked from anywhere): the simple form, optional sections and a *Show all fields* switch, building TEI in the browser with a preview and *Download XML*. The first version is in #66; keep refining it before anything is connected.
+- [ ] **Entry style guide**: generate readable documentation from `order.odd` (TEI Stylesheets `odd2html`), with one worked example per entry type. Tighten the customisation as conventions settle, e.g. fixed lists for `div`, `state` and `relation` types, and drop modules nobody uses.
+- [ ] **Map the collaborators' types**: list the types used in the partners' existing EAC-CPF records (places, concepts and others) and map each to a TEI entry type, then agree the mapping with them.
+- [ ] **Entry pages render TEI** (`_layouts/entry.html`, reusing the renderer in `scripts/tei.js`), while still showing EAC-CPF files until they're converted.
+- [ ] **Convert the existing entries**: a script that turns each `civic/*.xml` into TEI (title, authors, article, dates), then a check by hand of each entry type. Also test by resubmitting existing entries through form2.
+- [ ] **New Apps Script for form2**, written from scratch: check the XML is well-formed, set the entry id, filename and date itself, save a copy to the Sheet and open the pull request.
+- [ ] **Swap form2 into the entry pages** and retire `form.html` and the old script.
+- [ ] **Search, People/Places and the maps read the TEI subject records** (names, addresses, coordinates), so entries appear on the map and alongside their directory listings.
+- [ ] Later: generate EAC-CPF 2.0 (people, businesses, families) or RiC data from the TEI files for archives and partners who want it.
+- [ ] Validate entries against `schema/order.rng` before merging (in an XML editor such as Oxygen, or with `jing`).
 
 ### 5. Quality and safety nets
 
-- [ ] **GitHub Action that runs on every pull request**: check that XML is well-formed and valid EAC-CPF, check that data JSON is valid against the schema, and check that the entry filename matches the `recordId`. Editors would then see a green tick or red cross on each submission.
+- [ ] **GitHub Action that runs on every pull request**: check that XML is well-formed and valid against `schema/order.rng`, check that data JSON is valid against the schema, and check that the entry filename matches the `recordId`. Editors would then see a green tick or red cross on each submission.
 - [ ] Commit a `Gemfile` so local builds match GitHub Pages.
 - [ ] Contributor guide (`CONTRIBUTING.md`) setting out entry conventions as they're agreed.
 
