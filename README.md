@@ -84,7 +84,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 - **Search page** (`search.md` → `_layouts/search.html` + `scripts/search.js`): one box that searches the entries in `civic/` and every directory and electoral-roll record together, using [MiniSearch](https://github.com/lucaong/minisearch) (vendored in `scripts/vendor/`, MIT). Jekyll lists the entry files into the page at build time and the browser fetches them as ordinary site files (no GitHub API calls). Entries are searchable at once; records join the index as each year's file arrives. Results are grouped into Entries, Places (directories) and People (electoral rolls); records that share a text `entityID` collapse into one result with a row of years. Matching is by prefix with small typos allowed, and a `VARIANTS` list at the top of `scripts/search.js` folds historical spellings and abbreviations together (Berkley/Berkeley, htl → hotel, Wm → William, …); add pairs there. The search is kept in the address (`search?q=grocer&year=1910&street=…&src=people`), so it can be shared. If nothing matches, it offers to start a new entry with that name.
 - **People / Places** (`_layouts/facet-list.html`): load only the files for one `source`. `people` shows electoral rolls and `places` shows directories. Results are grouped by source/year → street → side of street, and each year is drawn as soon as its file arrives (oldest first). Within each year the streets are sorted, so each street appears once per year, and the contents list shows the year after each street (e.g. "Bouverie Street (1905) listings").
 - **Map** (`_layouts/map.html`): Leaflet 1.9.4. It plots records that have `lat`/`lng`, with University of Melbourne land parcels (`data/uom-land-parcels.geojson`) as an overlay. Both maps set up their years and controls from `data/index.json` and draw each year as soon as its file arrives. Records without coordinates are placed between mapped ones from the same year and street, so they are drawn with their year; cross-year links are added once every year has arrived.
-- **3D Map** (`_layouts/map3d.html`): three.js r128 with OrbitControls. Experimental.
+- **3D Map** (`_layouts/map3d.html`): three.js r128 with OrbitControls. Experimental. It shows the records only: the historic map layers and land parcels stay on the 2D map.
 - Both maps share `scripts/map-common.js` (data loading, year colours, cross-year links from string `entityID`s, marker shapes) and the details popup in `_includes/map-details-modal.html`, which links to the matching entry.
 - **Featured pages A–Z** (`aToZ.md` + `scripts/az-status.js`): Jekyll lists the files in `civic/` into the page at build time, and the script marks links with no entry yet (pencil icon, "Not yet written") and entries created in the last 14 days ("New"). A legend above the letter index explains both.
 
@@ -169,7 +169,7 @@ Each file is a JSON list with **one record per line**, so a change to a record s
 **How the browser gets them.** Jekyll can read files in `_data/` but doesn't publish them, so on every build it generates:
 
 - `data/directory/1905.json` etc.: compact copies for the browser. Each is a three-line page (`{{ site.data["directory"]["1905"] | jsonify }}`).
-- `data/index.json`: the list of files, with each file's source, year, record count, range of numeric `entityID`s, every text `entityID` it uses, and the edges of its mapped records (`bounds`: south, north, west, east; the 3D map sizes its planes from these). This lets a page find the files it needs, e.g. the contribution form fetches only the files that hold records for that entry.
+- `data/index.json`: the list of files, with each file's source, year, record count, range of numeric `entityID`s, every text `entityID` it uses, and the edges of its mapped records (`bounds`: south, north, west, east; the 3D map sizes its planes from these). The edges leave out records more than about 2 km from the file's middle, so a mistyped coordinate doesn't shrink the 3D map into a corner. This lets a page find the files it needs, e.g. the contribution form fetches only the files that hold records for that entry.
 
 Pages load the data through `scripts/data.js` (`CGData.load(...)`, `CGData.forEntity(id)`), which fetches each file at most once, shows "Loading the 1905 directory… (4 of 9)" while it works, and offers *Try again* if a file fails.
 
@@ -274,7 +274,6 @@ Goal: pages only download the data they need, show visitors what's happening whi
 - [x] Remove `map-data.js` and `UoM_Landuse_2026.js`.
 - [x] Renumber the electoral rolls' numeric `entityID`s from 999999, so they no longer clash with the 1930 directory.
 - [x] Draw the maps year by year as the files arrive. Cross-year links are added once every year has arrived.
-- [ ] Cache the data in the browser between visits (IndexedDB), if the normal browser cache turns out not to be enough.
 
 ### 2. Better search
 

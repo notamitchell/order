@@ -109,22 +109,41 @@
         const CHAINS    = [];
         const rawChains = {};
 
-        // Bounds of the anchored records (from the index), used to fit the
-        // map onto each plane
-        const { minLat, maxLat, minLng, maxLng } = MapCommon.getBoundsFromFiles(files)
+        // Bounds of the anchored records (from the index)
+        const ALL_BOUNDS = MapCommon.getBoundsFromFiles(files)
             || { minLat: 0, maxLat: 0, minLng: 0, maxLng: 0 };
+
+        // The planes are fitted to the years being shown, so a year whose
+        // records cover less ground than the early directories (which reach
+        // north to Lytton Street and east to Rathdown Street) still fills
+        // its plane. Every shown plane shares one fit, so cross-year links
+        // stay upright.
+        let minLat, maxLat, minLng, maxLng, latRange, lngRange;
+        function fitToYears(years) {
+            const b = MapCommon.getBoundsFromFiles(files.filter(f => years.has(f.year))) || ALL_BOUNDS;
+            ({ minLat, maxLat, minLng, maxLng } = b);
+            latRange = maxLat - minLat || 1;
+            lngRange = maxLng - minLng || 1;
+        }
 
         // DEFAULT STATE: latest year on, as on the 2D map
         if (sortedYears.length > 0) {
             visibleYears.add(sortedYears[sortedYears.length - 1]);
         }
+        fitToYears(visibleYears);
 
         const isMobile = window.innerWidth <= 600 || ('ontouchstart' in window);
 
         const PLANE_SIZE = isMobile ? 160 : 130;
         const PLANE_SPACING = 30;    
-        const latRange = maxLat - minLat || 1;
-        const lngRange = maxLng - minLng || 1;
+        // The index's bounds leave out coordinates far from everything else
+        // (most likely mistyped). On the 3D map such records are treated as
+        // unmapped: placed between mapped records on their street like any
+        // other, or left off if their street has no other mapped records.
+        function onPlane(e) {
+            const b = ALL_BOUNDS;
+            return e.lat >= b.minLat && e.lat <= b.maxLat && e.lng >= b.minLng && e.lng <= b.maxLng;
+        }
 
         function mapCoordsToXY(lat, lng) {
             const pctX = (lng - minLng) / lngRange;
@@ -254,25 +273,37 @@
             })(year, themeColor);
         });
 
+        // Moves every node and street line to the current fit (fitToYears)
+        const placedNodes = [];
+        const streetLines = [];
+        function relayout() {
+            placedNodes.forEach(mesh => {
+                const p = mapCoordsToXY(mesh.userData.lat, mesh.userData.lng);
+                mesh.position.x = p.x;
+                mesh.position.z = p.z;
+            });
+            streetLines.forEach(line => {
+                line.geometry.dispose();
+                line.geometry = new THREE.BufferGeometry().setFromPoints(line.userData.meshes.map(m => m.position));
+            });
+        }
+
         // Draws one year's records on its plane
         function addYearNodes(year, chains) {
             const themeColor = getYearColor(year);
             const yearGroup = yearGroupsMap[year];
             chains.forEach(({ street, side }) => {
                 const key = MapCommon.chainKey(year, street, side);
-                const processedNodes = MapCommon.computeChain(rawChains[key], MapCommon.sideSign(side) * ARC_OFFSET, side);
+                const entries = rawChains[key].map(e => e.lat == null || onPlane(e) ? e : { ...e, lat: null, lng: null });
+                const processedNodes = MapCommon.computeChain(entries, MapCommon.sideSign(side) * ARC_OFFSET, side);
 
-                const points = [];
+                const chainMeshes = [];
                 processedNodes.forEach((node, idx) => {
                     if(node.lat == null || node.lng == null) return;
                     const localPos = mapCoordsToXY(node.lat, node.lng);
                     const yOffset = node._computed ? ARC_HEIGHT * Math.sin(Math.PI * node._arcT) : 0;
                     // Vector sits at 0 locally; the parent group moves it to its layer height
                     const nodePosVector = new THREE.Vector3(localPos.x, yOffset, localPos.z);
-                    points.push(nodePosVector);
-
-                    // Saved against the parent group so links can query their live absolute positions
-                    nodePositionCache[`${key}-${idx}`] = { year, localPosition: nodePosVector, listing: node.listing, parentGroup: yearGroup };
 
                     const nodeSz = isMobile ? 1.1 : 0.7;
                     const sphereSz = isMobile ? 0.7 : 0.35;
@@ -309,15 +340,23 @@
                     mesh.position.copy(nodePosVector);
                     mesh.userData = { ...node, crossYearId: typeof node.entityID === 'string' ? node.entityID : null };
 
+                    // Saved against the parent group so links can query their live absolute
+                    // positions (the mesh's own position, so a refit moves the links too)
+                    nodePositionCache[`${key}-${idx}`] = { year, localPosition: mesh.position, listing: node.listing, parentGroup: yearGroup };
+
                     yearGroup.add(mesh);
                     interactiveNodes.push(mesh);
+                    placedNodes.push(mesh);
+                    chainMeshes.push(mesh);
                 });
 
-                if (points.length > 1) {
-                    const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+                if (chainMeshes.length > 1) {
+                    const lineGeo = new THREE.BufferGeometry().setFromPoints(chainMeshes.map(m => m.position));
                     const lineMat = new THREE.LineBasicMaterial({ color: new THREE.Color(themeColor), transparent: true, opacity: 0.4 });
                     const streetLine = new THREE.Line(lineGeo, lineMat);
+                    streetLine.userData.meshes = chainMeshes;
                     yearGroup.add(streetLine);
+                    streetLines.push(streetLine);
                 }
             });
         }
@@ -391,6 +430,8 @@
                 }
                 
                 // Trigger dynamic restructuring updates
+                fitToYears(visibleYears);
+                relayout();
                 recalculateLayerTargets();
                 
                 if (currentSelected && !currentSelected.userData.isCrossYearLine && currentSelected.userData.year === targetYear) {
