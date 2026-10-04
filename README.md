@@ -22,7 +22,7 @@
 - [Repository layout](#repository-layout)
 - [Running the site locally](#running-the-site-locally)
 - [Content: encyclopedia entries (EAC-CPF XML)](#content-encyclopedia-entries-eac-cpf-xml)
-- [Data: map-data.js](#data-map-datajs)
+- [Data: directories and electoral rolls](#data-directories-and-electoral-rolls)
 - [Editorial workflows](#editorial-workflows)
 - [Adding a new page or facet](#adding-a-new-page-or-facet)
 - [External services and dependencies](#external-services-and-dependencies)
@@ -38,7 +38,7 @@
 Common Ground is a static website hosted on **GitHub Pages** and built with **Jekyll**, using the `jekyll-theme-cayman` theme with a custom layout. It has no server or database of its own:
 
 - **Encyclopedia entries** are [EAC-CPF](https://eac.staatsbibliothek-berlin.de/) XML files in `civic/`. The browser fetches them and renders them on the fly.
-- **Historical directory data** (Sands & McDougall directories and electoral rolls) is one large JavaScript file, `map-data.js`. The search page, the maps and the People/Places lists all read from it.
+- **Historical directory data** (Sands & McDougall directories and electoral rolls) is one JSON file per source and year in `_data/`. Jekyll publishes compact copies in `data/` plus an index, and each page loads only the files it needs through `scripts/data.js`.
 - **Public contributions** go through a Google Apps Script web app. It saves a copy of each submission to a Google Sheet in the team's shared Google Drive folder, then opens a pull request on this repository. The sheet is a user-friendly backup while the submission process is being settled. The editorial team then merges the pull request (accept) or closes it (reject).
 
 The project is deliberately a **perpetual work in progress**. Gaps in the data and entries that don't exist yet are invitations for the community to contribute, not defects.
@@ -52,8 +52,8 @@ Nothing is published until a pull request is merged into `main`. GitHub Pages re
  Visitor ──────▶ │  index / search / aToZ / people / places / map / map3d / civic?id=…            │
                  │        │                                   │                                  │
                  │        ▼                                   ▼                                  │
-                 │   map-data.js (directoryData)        civic/<slug>.xml  (fetched + parsed     │
-                 │   UoM_Landuse_2026.js (map only)      in the browser by _layouts/entry.html) │
+                 │   data/index.json + data/<source>/   civic/<slug>.xml  (fetched + parsed     │
+                 │   <year>.json via scripts/data.js     in the browser by _layouts/entry.html) │
                  └──────────────────────────────────────────────────────────────────────────────┘
 
  Contributor ──▶ form (_layouts/form.html, Quill editor)
@@ -81,9 +81,9 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 
 ### Search, facets and maps
 
-- **Search page** (`search.md` → `_layouts/search.html` + `scripts/search.js`): one box that searches the entries in `civic/` and every `directoryData` record together, using [MiniSearch](https://github.com/lucaong/minisearch) (vendored in `scripts/vendor/`, MIT). Jekyll lists the entry files into the page at build time and the browser fetches them as ordinary site files (no GitHub API calls). Results are grouped into Entries, Places (directories) and People (electoral rolls); records that share a text `entityID` collapse into one result with a row of years. Matching is by prefix with small typos allowed, and a `VARIANTS` list at the top of `scripts/search.js` folds historical spellings and abbreviations together (Berkley/Berkeley, htl → hotel, Wm → William, …); add pairs there. The search is kept in the address (`search?q=grocer&year=1910&street=…&src=people`), so it can be shared. If nothing matches, it offers to start a new entry with that name.
-- **People / Places** (`_layouts/facet-list.html`): filter `directoryData` by `source`. `people` shows electoral rolls and `places` shows directories. Results are grouped by source/year → street → side of street. Within each year the streets are sorted, so each street appears once per year, and the contents list shows the year after each street (e.g. "Bouverie Street (1905) listings").
-- **Map** (`_layouts/map.html`): Leaflet 1.9.4. It plots records that have `lat`/`lng`, with University of Melbourne land parcels (`UoM_Landuse_2026.js`) as an overlay.
+- **Search page** (`search.md` → `_layouts/search.html` + `scripts/search.js`): one box that searches the entries in `civic/` and every directory and electoral-roll record together, using [MiniSearch](https://github.com/lucaong/minisearch) (vendored in `scripts/vendor/`, MIT). Jekyll lists the entry files into the page at build time and the browser fetches them as ordinary site files (no GitHub API calls). Entries are searchable at once; records join the index as each year's file arrives. Results are grouped into Entries, Places (directories) and People (electoral rolls); records that share a text `entityID` collapse into one result with a row of years. Matching is by prefix with small typos allowed, and a `VARIANTS` list at the top of `scripts/search.js` folds historical spellings and abbreviations together (Berkley/Berkeley, htl → hotel, Wm → William, …); add pairs there. The search is kept in the address (`search?q=grocer&year=1910&street=…&src=people`), so it can be shared. If nothing matches, it offers to start a new entry with that name.
+- **People / Places** (`_layouts/facet-list.html`): load only the files for one `source`. `people` shows electoral rolls and `places` shows directories. Results are grouped by source/year → street → side of street, and each year is drawn as soon as its file arrives (oldest first). Within each year the streets are sorted, so each street appears once per year, and the contents list shows the year after each street (e.g. "Bouverie Street (1905) listings").
+- **Map** (`_layouts/map.html`): Leaflet 1.9.4. It plots records that have `lat`/`lng`, with University of Melbourne land parcels (`data/uom-land-parcels.geojson`) as an overlay. Both maps load every year before drawing, because records without coordinates are placed between mapped ones on the same street.
 - **3D Map** (`_layouts/map3d.html`): three.js r128 with OrbitControls. Experimental.
 - Both maps share `scripts/map-common.js` (data loading, year colours, cross-year links from string `entityID`s, marker shapes) and the details popup in `_includes/map-details-modal.html`, which links to the matching entry.
 - **Featured pages A–Z** (`aToZ.md` + `scripts/az-status.js`): Jekyll lists the files in `civic/` into the page at build time, and the script marks links with no entry yet (pencil icon, "Not yet written") and entries created in the last 14 days ("New"). A legend above the letter index explains both.
@@ -93,7 +93,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | Path | What it is |
 |---|---|
 | `_config.yml` | Jekyll config. Sets the theme and per-page defaults (layout, `EACCPFpath`, `facet`, whether the contribution form shows). |
-| `_layouts/default.html` | Site shell: header, navigation, sidebar and footer. Does **not** load `map-data.js`; layouts that need the data load it themselves. |
+| `_layouts/default.html` | Site shell: header, navigation, sidebar and footer. Does **not** load any data; layouts that need it load it through `scripts/data.js`. |
 | `_layouts/search.html`, `scripts/search.js` | Search page (see [Search, facets and maps](#search-facets-and-maps)). |
 | `_layouts/entry.html` | Fetches and renders one EAC-CPF entry, and adds the contribution form. |
 | `_layouts/form.html` | Rich-text contribution form (Quill 1.3.6) that posts to Google Apps Script. |
@@ -103,11 +103,13 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `scripts/map-common.js`, `_includes/map-details-modal.html` | Functions and the details popup shared by both maps. |
 | `*.md` (root) | One small file per page. Mostly front matter that picks a layout. `aToZ.md` is the hand-maintained index of featured pages. |
 | `civic/*.xml` | Published encyclopedia entries (EAC-CPF). |
-| `map-data.js` | All directory and electoral-roll records, as `const directoryData = [...]` (~2.6 MB, ~9,200 records). |
-| `UoM_Landuse_2026.js` | GeoJSON of University of Melbourne land parcels, as `const uomLanduseData = {...}`. |
+| `_data/directory/<year>.json`, `_data/electoral-roll/<year>.json` | The directory and electoral-roll records, one file per source and year, one record per line. **Edit these.** See [Data](#data-directories-and-electoral-rolls). |
+| `data/` | What the browser downloads, generated from `_data/` by Jekyll: one small page per data file, `data/index.json` (the list of files), and `uom-land-parcels.geojson` (University of Melbourne land parcels). |
+| `scripts/data.js` | Shared data loader used by every page that shows records. |
+| `tools/convert-map-data.js` | One-off script that split the old `map-data.js` into the files in `_data/`. |
 | `admin/index.html` | Admin landing page for the editorial team, linking to each tool (served at `admin/`). The site footer links here. |
 | `admin/review.html` | Plain-language review page for the editorial team. |
-| `admin/carlton-data-editor.html` | Browser-based editor for `map-data.js`. |
+| `admin/carlton-data-editor.html` | Browser-based editor for the directory and electoral-roll files. |
 | `scripts/az-status.js` | Marks Featured pages links as "New" or "Not yet written". |
 | `scripts/banner-parallax.js` | Header banner effect. |
 | `scripts/vendor/` | Third-party scripts saved into the repo (MiniSearch). |
@@ -136,7 +138,7 @@ bundle exec jekyll serve
 Notes:
 
 - Internal links leave out `.html` (e.g. `civic?id=…`). GitHub Pages handles this, and `jekyll serve` normally does too. If a link 404s locally, try adding `.html`.
-- `admin/review.html` reads from the live GitHub repo. `admin/carlton-data-editor.html` first tries to load the **live** `map-data.js` from GitHub Pages, so both show live data even when run locally.
+- `admin/review.html` reads from the live GitHub repo. `admin/carlton-data-editor.html` loads the data from the site it's served from, so locally it shows your local files.
 - Submitting the contribution form locally **creates a real pull request** through the live Apps Script. Close any test pull requests afterwards.
 
 ## Content: encyclopedia entries (EAC-CPF XML)
@@ -151,11 +153,27 @@ Entries follow the EAC-CPF schema (`urn:isbn:1-931666-33-4`). For a full example
 - `<entityType>`: every entry so far uses `concept`, including people and hotels. *TBD: decide whether to use EAC-CPF's `person` / `corporateBody` / `family`.*
 - To add an entry to the A–Z, add a link in `aToZ.md` by hand.
 
-Open questions to settle: controlled vocabulary for `entityType` and `localType`, how to cite sources inside entries, how to handle images, how to link entries to `directoryData` records, and what to do with entries that have two names (e.g. *Carlton Inn* / *Corkman Hotel*).
+Open questions to settle: controlled vocabulary for `entityType` and `localType`, how to cite sources inside entries, how to handle images, how to link entries to directory records, and what to do with entries that have two names (e.g. *Carlton Inn* / *Corkman Hotel*).
 
-## Data: map-data.js
+## Data: directories and electoral rolls
 
-`map-data.js` declares one global array, `directoryData`, which every page uses. The data comes from public-domain sources: the **Sands & McDougall Directories of Victoria** and **Victorian electoral rolls**.
+The records come from public-domain sources: the **Sands & McDougall Directories of Victoria** and **Victorian electoral rolls**. There is one JSON file per source and year:
+
+```
+_data/directory/1900.json … 1930.json
+_data/electoral-roll/1919.json, 1928.json
+```
+
+Each file is a JSON list with **one record per line**, so a change to a record shows up on GitHub as a one-line change. These are the files to edit.
+
+**How the browser gets them.** Jekyll can read files in `_data/` but doesn't publish them, so on every build it generates:
+
+- `data/directory/1905.json` etc.: compact copies for the browser. Each is a three-line page (`{{ site.data["directory"]["1905"] | jsonify }}`).
+- `data/index.json`: the list of files, with each file's source, year, record count, range of numeric `entityID`s and every text `entityID` it uses. This lets a page find the files it needs, e.g. the contribution form fetches only the files that hold records for that entry.
+
+Pages load the data through `scripts/data.js` (`CGData.load(...)`, `CGData.forEntity(id)`), which fetches each file at most once, shows "Loading the 1905 directory… (4 of 9)" while it works, and offers *Try again* if a file fails.
+
+**Adding a new year:** add `_data/<source>/<year>.json`, then copy one of the small pages in `data/<source>/` to `data/<source>/<year>.json` and change the year in it. The index picks it up automatically.
 
 | Source | Years | Records |
 |---|---|---|
@@ -181,7 +199,7 @@ Typical record:
 
 | Field | Notes |
 |---|---|
-| `entityID` | Usually a number. A **string** (e.g. `"Bridget O'Neill"`) means someone on the team has decided that several records are the same person or place, and linked them under a new ID they created for that purpose. Many records share a string ID on purpose; the search page shows each linked group as one result with a row of years, and links it to the entry of the same name if there is one (e.g. the Carlton Inn listings are linked under `"Corkman Hotel"`). |
+| `entityID` | Usually a number: directories count up from 1, electoral rolls from 999999, so the two never share a number (the rolls were renumbered from 7034–8558 when the data was split, because they overlapped the 1930 directory). A **string** (e.g. `"Bridget O'Neill"`) means someone on the team has decided that several records are the same person or place, and linked them under a new ID they created for that purpose. Many records share a string ID on purpose; the search page shows each linked group as one result with a row of years, and links it to the entry of the same name if there is one (e.g. the Carlton Inn listings are linked under `"Corkman Hotel"`). |
 | `source` | `"Directory"` or `"Electoral roll"`. This decides whether a record appears under People or Places. |
 | `year`, `pages`, `listing`, `street`, `type`, `cardinality` | As transcribed. `cardinality` is the side of the street (North/South/East/West). |
 | `lat`, `lng` | Optional. About 1,450 records have coordinates so far, and only these appear on the map. Adding more is ongoing community work. |
@@ -189,7 +207,7 @@ Typical record:
 
 ### Editing the data
 
-Use `admin/carlton-data-editor.html`. It loads the live file, lets you search and edit records, and then downloads a new `map-data.js`. Someone then has to upload that file to GitHub by hand (the editor explains how). Check the downloaded filename is exactly `map-data.js` (browsers sometimes save `map-data (1).js`), and make sure you started from the latest version so you don't overwrite someone else's changes.
+Use `admin/carlton-data-editor.html`. It loads the live data, lets you search and edit records, and then *Download changed files* gives one download per changed year (e.g. `1905.json`). Someone then has to upload each file to its folder on GitHub by hand (the editor links to the upload page and explains how). Check the downloaded filename is exactly the year (browsers sometimes save `1905 (1).json`), and reload the editor before you start so you don't overwrite someone else's changes. Small fixes can also be made directly on GitHub by editing the line for that record.
 
 ## Editorial workflows
 
@@ -207,7 +225,7 @@ The review page walks reviewers through these steps in plain language. If you ch
 
 ### Updating directory/map data
 
-See [Editing the data](#editing-the-data) above. This is separate from entry submissions and needs more care, because a broken `map-data.js` breaks search, the maps and the People/Places pages on every page of the site.
+See [Editing the data](#editing-the-data) above. This is separate from entry submissions and needs more care, because a broken data file breaks search, the maps and the People/Places pages.
 
 ## Adding a new page or facet
 
@@ -231,13 +249,11 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 
 ## Known issues and gotchas
 
-- **Pages that use the data download all ~2.6 MB of it** (search, People/Places, the maps and the contribution form), and nothing tells the visitor that data is still loading. Other pages no longer load it. See roadmap §1.
-- **`map-data.js` is JavaScript, not JSON.** Other tools can't read it directly, a stray comma breaks the whole site, and diffs are huge and hard to review.
-- **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings (strings are deliberate links made by a person; see the [field reference](#data-map-datajs)).
+- **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings (strings are deliberate links made by a person; see the [field reference](#data-directories-and-electoral-rolls)).
 - **The A–Z is maintained by hand** as Markdown. See roadmap §3.
 - **Review page rate limit (unlikely, but confusing if it happens):** `admin/review.html` calls the GitHub API without signing in, which GitHub caps at 60 requests per hour per IP address. Listing submissions uses one request plus one per open pull request. A small editorial team won't normally reach this, but a large backlog of submissions, or several people on one shared network (e.g. a university or library), could. **Symptoms:** the review page shows an error, an empty list, or submissions that won't load, even though they're visible on GitHub. **Fix:** wait up to an hour, or review directly on GitHub in the meantime.
 - **Entries use EAC-CPF loosely.** Every entry is `<entityType>concept</entityType>` (EAC-CPF expects `person`, `corporateBody` or `family`), and most of the schema's structure goes unused. See roadmap §4.
-- **No automated checks.** Malformed XML or a broken `map-data.js` can be merged without anyone noticing. See roadmap §5.
+- **No automated checks.** Malformed XML or a broken data file can be merged without anyone noticing. See roadmap §5.
 
 ---
 
@@ -245,24 +261,20 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 
 This is a living plan, so reorder it as priorities and funding change. Items are grouped by theme and roughly ordered within each group, cheapest and most valuable first. **Bold** items are suggested next steps.
 
-### 1. Data structure and loading (map-data.js → JSON, split by year)
+### 1. Data structure and loading
 
 Goal: pages only download the data they need, show visitors what's happening while it loads, and the data becomes easier to edit, review and reuse.
 
 - [ ] **Agree on a data schema**: consistent `camelCase` field names (`givenNames`, `surname`, `occupation`, …), a clear rule for `entityID` (numeric record ID plus a separate `personId`/`placeId` for linking across years), and which fields are required. Write it up in `data/SCHEMA.md`.
-- [ ] **One-off conversion script** that reads `map-data.js` and writes:
-  - `data/directory/1900.json`, `data/directory/1905.json`, … `data/electoral-roll/1919.json`, …
-  - `data/index.json`: a manifest listing each file with its source, year, record count and field list.
-- [ ] **Shared data loader** (`scripts/data.js`) that every page uses instead of a global variable:
-  - `loadYears([...])` / `loadAll()` fetch only the JSON files a page needs, in parallel.
-  - Results are cached in memory and, where the browser allows, between pages, so moving around the site doesn't download the same data again.
-  - Loading is **lazy**: each page fetches only the years and sources it shows.
-  - Pages can render the first year or source as soon as it arrives, without waiting for everything.
-- [ ] **Loading feedback for visitors**: a consistent "Loading 1905 directory…" indicator or progress bar, disabled filters until their data is ready, and a friendly message with a *Try again* button if a file fails to load (instead of a silently empty page).
-- [x] Stop loading `map-data.js` on every page: only the layouts that use it load it now (#44).
-- [ ] Switch pages over to the shared loader one at a time: maps and People/Places first, then search.
-- [ ] Convert `UoM_Landuse_2026.js` to `data/uom-land-parcels.geojson` in the same way.
-- [ ] Remove `map-data.js` once nothing uses it.
+- [x] **Split the data into JSON files**: one file per source and year in `_data/`, one record per line, with `data/index.json` generated by Jekyll (field names unchanged). Converted by `tools/convert-map-data.js`.
+- [x] **Shared data loader** (`scripts/data.js`): each page fetches only the files it needs, in parallel, at most once per page (the browser's cache covers moving between pages). People/Places and search use each year as soon as it arrives; the contribution form fetches only the files holding that entry's records.
+- [x] **Loading feedback for visitors**: "Loading the 1905 directory… (4 of 9)", and a message with a *Try again* button if a file fails to load.
+- [x] Stop loading the data on every page: only the layouts that use it load it now (#44).
+- [x] Convert `UoM_Landuse_2026.js` to `data/uom-land-parcels.geojson`, loaded only by the 2D map.
+- [x] Remove `map-data.js` and `UoM_Landuse_2026.js`.
+- [x] Renumber the electoral rolls' numeric `entityID`s from 999999, so they no longer clash with the 1930 directory.
+- [ ] Draw the maps year by year as the files arrive (they currently wait for every year, because cross-year links and the placing of unmapped records need them all).
+- [ ] Cache the data in the browser between visits (IndexedDB), if the normal browser cache turns out not to be enough.
 
 ### 2. Better search
 
@@ -311,7 +323,7 @@ Goal: entries become proper, interoperable archival authority records that other
 - [ ] **Dates**: `existDates` with `dateRange` and `standardDate` attributes, so entries can be sorted, filtered by period and shown on a timeline.
 - [ ] **Places**: `places` / `place` with `placeEntry` and coordinates (`latitude`/`longitude`), linking entries to the map.
 - [ ] **Occupations, functions and legal status**: `occupations`, `functions`, `legalStatuses` (e.g. a hotel's licence).
-- [ ] **Relationships**: `cpfRelation` between entries (licensee ↔ hotel, person ↔ family) and `resourceRelation` to sources and to `directoryData` records, displayed on the page as "Related" links.
+- [ ] **Relationships**: `cpfRelation` between entries (licensee ↔ hotel, person ↔ family) and `resourceRelation` to sources and to directory records, displayed on the page as "Related" links.
 - [ ] **Sources and citations**: `sources` / `source` for each entry, shown as a reference list.
 - [ ] **Richer narrative**: structured `biogHist` (`abstract`, `chronList` for dated events), and render them on entry pages.
 - [ ] **Better maintenance records**: one `maintenanceEvent` per edit (created / revised), with the agent who made it, and use `maintenanceStatus` correctly (`new` → `revised`).
@@ -367,7 +379,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 *Proposed. Confirm before publishing.*
 
 - **Written content** (`civic/` entries and site text) is licensed under [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/), unless a page says otherwise.
-- **Historical source data** (Sands & McDougall directories, electoral rolls) is in the public domain. The transcription and geocoding in `map-data.js` are *TBD: same CC BY-NC 4.0, or CC0?*
+- **Historical source data** (Sands & McDougall directories, electoral rolls) is in the public domain. The transcription and geocoding in `_data/` are *TBD: same CC BY-NC 4.0, or CC0?*
 - **University of Melbourne land parcel data** is used under the terms of the [UoM open data portal](https://spatialdata-uom.opendata.arcgis.com/datasets/UOM::uom-land-parcels-parkville/about).
 - **Source code** (layouts, scripts, styles): *TBD.* Creative Commons does not recommend its licences for software, so consider MIT or similar for the code.
 
