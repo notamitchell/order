@@ -169,7 +169,7 @@ Each file is a JSON list with **one record per line**, so a change to a record s
 **How the browser gets them.** Jekyll can read files in `_data/` but doesn't publish them, so on every build it generates:
 
 - `data/directory/1905.json` etc.: compact copies for the browser. Each is a three-line page (`{{ site.data["directory"]["1905"] | jsonify }}`).
-- `data/index.json`: the list of files, with each file's source, year, record count, range of numeric `entityID`s, every text `entityID` it uses, and the edges of its mapped records (`bounds`: south, north, west, east; the 3D map sizes its planes from these). This lets a page find the files it needs, e.g. the contribution form fetches only the files that hold records for that entry.
+- `data/index.json`: the list of files, with each file's source, year, record count, range of numeric `entityID`s, every text `entityID` it uses, and the edges of its mapped records (`bounds`: south, north, west, east; the 3D map sizes its planes from these). The edges leave out records more than about 2 km from the file's middle, so a mistyped coordinate doesn't shrink the 3D map into a corner. This lets a page find the files it needs, e.g. the contribution form fetches only the files that hold records for that entry.
 
 Pages load the data through `scripts/data.js` (`CGData.load(...)`, `CGData.forEntity(id)`), which fetches each file at most once, shows "Loading the 1905 directory… (4 of 9)" while it works, and offers *Try again* if a file fails.
 

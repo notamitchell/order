@@ -126,6 +126,14 @@
         const latRange = maxLat - minLat || 1;
         const lngRange = maxLng - minLng || 1;
 
+        // The index's bounds leave out coordinates far from everything else
+        // (most likely mistyped). On the 3D map such records are treated as
+        // unmapped: placed between mapped records on their street like any
+        // other, or left off if their street has no other mapped records.
+        function onPlane(e) {
+            return e.lat >= minLat && e.lat <= maxLat && e.lng >= minLng && e.lng <= maxLng;
+        }
+
         function mapCoordsToXY(lat, lng) {
             const pctX = (lng - minLng) / lngRange;
             const pctY = (lat - minLat) / latRange;
@@ -260,7 +268,8 @@
             const yearGroup = yearGroupsMap[year];
             chains.forEach(({ street, side }) => {
                 const key = MapCommon.chainKey(year, street, side);
-                const processedNodes = MapCommon.computeChain(rawChains[key], MapCommon.sideSign(side) * ARC_OFFSET, side);
+                const entries = rawChains[key].map(e => e.lat == null || onPlane(e) ? e : { ...e, lat: null, lng: null });
+                const processedNodes = MapCommon.computeChain(entries, MapCommon.sideSign(side) * ARC_OFFSET, side);
 
                 const points = [];
                 processedNodes.forEach((node, idx) => {
