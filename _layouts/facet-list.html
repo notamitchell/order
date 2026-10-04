@@ -62,7 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const sourceId = `source-${createSlug(currentSource)}-${createSlug(currentYear)}`;
         const sourceLabel = `${currentSource} (${currentYear})`;
-        tocHtml += `<details class="toc-h1" open><summary class="toc-h1-summary"><a href="#${sourceId}">${sourceLabel}</a></summary><div class="toc-h1-body">`;
+        // The summary only opens and closes the group; links stay out of it
+        // so keyboard and screen-reader users get one control per line
+        tocHtml += `<details class="toc-h1" open><summary class="toc-h1-summary">${sourceLabel}</summary><div class="toc-h1-body">`
+          + `<p class="toc-h3-item toc-go"><a href="#${sourceId}">Go to ${sourceLabel}</a></p>`;
         contentHtml += `<h1 id="${sourceId}">${sourceLabel}</h1>`;
       }
       // Handle <h2> (Street) - ToC: expandable subsection, collapsed by default
@@ -74,7 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (h2Open) { tocHtml += `</div></details>`; h2Open = false; }
 
         const streetId = `street-${createSlug(currentSource)}-${createSlug(currentYear)}-${createSlug(currentStreet)}`;
-        tocHtml += `<details class="toc-h2"><summary class="toc-h2-summary"><a href="#${streetId}">${currentStreet} (${currentYear}) listings</a></summary><div class="toc-h2-body">`;
+        tocHtml += `<details class="toc-h2"><summary class="toc-h2-summary">${currentStreet} (${currentYear}) listings</summary><div class="toc-h2-body">`
+          + `<p class="toc-h3-item"><a href="#${streetId}">All ${currentStreet} listings</a></p>`;
         h2Open = true;
         contentHtml += `<h2 id="${streetId}">${currentStreet}</h2>`;
       }
@@ -83,8 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
         currentCardinality = item.cardinality;
 
         const cardId = `card-${createSlug(currentSource)}-${createSlug(currentYear)}-${createSlug(currentStreet)}-${createSlug(currentCardinality)}`;
-        tocHtml += `<p class="toc-h3-item"><a href="#${cardId}">${currentCardinality}</a></p>`;
-        contentHtml += `<h3 id="${cardId}">${currentCardinality}</h3>`;
+        const cardLabel = currentCardinality || 'Side not recorded';
+        tocHtml += `<p class="toc-h3-item"><a href="#${cardId}">${cardLabel}</a></p>`;
+        contentHtml += `<h3 id="${cardId}">${cardLabel}</h3>`;
       }
       // Render listing entry as a paragraph
       if (item.listing) {
