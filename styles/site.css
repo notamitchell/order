@@ -1301,12 +1301,13 @@ html.map3d-page, body.map3d-page {
 }
 .data-status-retry:hover { background: var(--moss-deep); }
 
-/* On the maps the message floats over the map until the data is in. */
+/* On the maps the message floats near the foot of the map until the data is
+   in, out of the way of the years already drawn. */
 .data-status.data-status-map {
     position: fixed;
-    top: 50%;
+    bottom: 72px; /* clear of the 3D map's info panel on phones */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     z-index: 2000;
     max-width: calc(100% - 32px);
     margin: 0;

@@ -8,6 +8,9 @@
 window.MapCommon = (function () {
 
     // ── Years, colours and sources ──
+    // These take records or the list of data files (CGData.files()), which
+    // also have a year and a source, so a map can be set up before any
+    // records arrive.
     function getYears(data) {
         return [...new Set(data.map(e => e.year))].sort((a, b) => a - b);
     }
@@ -52,6 +55,51 @@ window.MapCommon = (function () {
             )].join(', ');
         });
         return sources;
+    }
+
+    // { minLat, maxLat, minLng, maxLng } of every mapped record, from the
+    // index's per-file bounds. null if nothing is mapped.
+    function getBoundsFromFiles(files) {
+        const b = files.map(f => f.bounds).filter(Boolean);
+        if (!b.length) return null;
+        return {
+            minLat: Math.min(...b.map(x => x[0])), maxLat: Math.max(...b.map(x => x[1])),
+            minLng: Math.min(...b.map(x => x[2])), maxLng: Math.max(...b.map(x => x[3])),
+        };
+    }
+
+    // ── Loading year by year ──
+    // Loads every data file with the progress message in statusEl, and:
+    //   onStart(files)        once the list of files is known, before any
+    //                         records arrive, to set up the map;
+    //   onYear(year, records) as soon as all of a year's files have arrived
+    //                         (a directory and an electoral roll can share
+    //                         a year), records in index order;
+    //   onAll(records)        once everything has arrived, for whatever
+    //                         needs every year (cross-year links).
+    // Callbacks run in that order, one at a time.
+    function loadByYear(statusEl, { onStart, onYear, onAll }) {
+        // Set up as soon as the list of files is known. If the list fails to
+        // load, loadWithStatus shows the error and its Try again fetches it again.
+        let filesPromise = null;
+        const files = () => filesPromise || (filesPromise = CGData.files().then(
+            list => { onStart(list); return list; },
+            err => { filesPromise = null; throw err; }));
+        files().catch(() => {});
+
+        let queue = Promise.resolve();
+        const run = fn => (queue = queue.then(files).then(fn).catch(err => console.error(err)));
+
+        const byYear = {}; // year → [[position in the index, records]]
+        return CGData.loadWithStatus(statusEl, {}, {
+            onFile: (records, file) => run(list => {
+                const got = byYear[file.year] = byYear[file.year] || [];
+                got.push([list.findIndex(f => f.path === file.path), records]);
+                if (got.length === list.filter(f => f.year === file.year).length) {
+                    onYear(file.year, got.sort((a, b) => a[0] - b[0]).flatMap(g => g[1]));
+                }
+            })
+        }).then(records => run(() => onAll(records)));
     }
 
     // ── Chains: one per year + street + side ──
@@ -316,6 +364,7 @@ window.MapCommon = (function () {
 
     return {
         getYears, getYearColors, getYearSources,
+        getBoundsFromFiles, loadByYear,
         chainKey, buildChains, buildCrossYearIndex,
         bezier, sideSign, applyOffset, computeChain,
         markerShape,

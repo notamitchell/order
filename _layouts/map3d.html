@@ -81,34 +81,38 @@
     <p class="data-status data-status-map" id="mapData" aria-live="polite" hidden></p>
 
     <script>
-        // The map is drawn once every year's file has arrived (cross-year
-        // links join records from different years).
-        CGData.loadWithStatus(document.getElementById('mapData')).then(startMap);
+        // The map is set up as soon as the list of data files arrives, and
+        // each year is drawn as soon as its file does. Cross-year links join
+        // records from different years, so they are added once every year
+        // has arrived.
+        let mapApi = null;
+        MapCommon.loadByYear(document.getElementById('mapData'), {
+            onStart: files => { mapApi = startMap(files); },
+            onYear:  (year, records) => mapApi.addYear(year, records),
+            onAll:   () => mapApi.addCrossYearLinks(),
+        });
 
         // Not indented further, to keep the history of the code below readable.
-        function startMap(directoryData) {
+        function startMap(files) {
         // Global visibility state trackers
         let showCrossYearLinks = false;
         let layersAreMoving = false;
         const visibleYears = new Set(); 
 
         // 1. DATA (shared with the 2D map, see scripts/map-common.js)
-        const sortedYears  = MapCommon.getYears(directoryData);
+        // Years, colours and bounds come from the list of data files, so the
+        // planes can be laid out before any records arrive. The chains are
+        // filled in by addYear as each year arrives.
+        const sortedYears  = MapCommon.getYears(files);
         const YEAR_COLORS  = MapCommon.getYearColors(sortedYears);
-        const YEAR_SOURCES = MapCommon.getYearSources(directoryData, sortedYears);
-        const { chains: CHAINS, rawChains } = MapCommon.buildChains(directoryData);
-        const crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
+        const YEAR_SOURCES = MapCommon.getYearSources(files, sortedYears);
+        const CHAINS    = [];
+        const rawChains = {};
 
-        // Bounds of the anchored records, used to fit the map onto each plane
-        let minLat = Infinity, maxLat = -Infinity;
-        let minLng = Infinity, maxLng = -Infinity;
-        directoryData.forEach(d => {
-            if (d.lat == null || d.lng == null) return;
-            if (d.lat < minLat) minLat = d.lat;
-            if (d.lat > maxLat) maxLat = d.lat;
-            if (d.lng < minLng) minLng = d.lng;
-            if (d.lng > maxLng) maxLng = d.lng;
-        });
+        // Bounds of the anchored records (from the index), used to fit the
+        // map onto each plane
+        const { minLat, maxLat, minLng, maxLng } = MapCommon.getBoundsFromFiles(files)
+            || { minLat: 0, maxLat: 0, minLng: 0, maxLng: 0 };
 
         // DEFAULT STATE: latest year on, as on the 2D map
         if (sortedYears.length > 0) {
@@ -248,8 +252,13 @@
                 sprite.scale.set(26, 8, 1);
                 yearGroup.add(sprite);
             })(year, themeColor);
+        });
 
-            CHAINS.filter(c => c.year === year).forEach(({ street, side }) => {
+        // Draws one year's records on its plane
+        function addYearNodes(year, chains) {
+            const themeColor = getYearColor(year);
+            const yearGroup = yearGroupsMap[year];
+            chains.forEach(({ street, side }) => {
                 const key = MapCommon.chainKey(year, street, side);
                 const processedNodes = MapCommon.computeChain(rawChains[key], MapCommon.sideSign(side) * ARC_OFFSET, side);
 
@@ -311,11 +320,13 @@
                     yearGroup.add(streetLine);
                 }
             });
-        });
+        }
 
-        // Loop 2: Process Cross-Year threads 
+        // Loop 2: Process Cross-Year threads, once every year has arrived
         const crossYearMeshMap = {}; 
 
+        function addCrossYearTubes() {
+        const crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
         Object.keys(crossYearById).forEach(crossId => {
             const sorted = crossYearById[crossId]
                 .map(({ year, street, side, idx }) => nodePositionCache[`${MapCommon.chainKey(year, street, side)}-${idx}`])
@@ -354,6 +365,9 @@
                 interactiveNodes.push(tubeMesh); 
             }
         });
+        updateCrossYearTubesVisibility();
+        rebuildActiveTubeGeometries();
+        }
 
         // 4. UI INTERACTION HANDLERS & TOGGLE IMPLEMENTATION
         
@@ -780,6 +794,16 @@
         });
 
         animate();
+
+        return {
+            addYear(year, records) {
+                const { chains, rawChains: raw } = MapCommon.buildChains(records);
+                Object.assign(rawChains, raw);
+                CHAINS.push(...chains);
+                addYearNodes(year, chains);
+            },
+            addCrossYearLinks: addCrossYearTubes,
+        };
         }
     </script>
 </body>
