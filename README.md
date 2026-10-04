@@ -327,16 +327,17 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 ### 7. Look and feel
 
 - [x] **Fix bulleted and numbered lists on content pages**, e.g. the area list on the home page. Done in #37: list styles for unclassed `ul`/`ol` inside `.main-content` in `styles/site.css`.
-- [ ] **Style Markdown headings and other content**: only `.main-content h1` is styled, so `h2`/`h3`, rules, tables and blockquotes fall back to browser defaults. Add serif rules that use the site's tokens.
-- [ ] **Fix the A–Z page**: replace the cramped letter-bar table (M/N is missing a pipe) with an evenly spaced letter list. Point the Back to Top links at `#featured-pages-a-to-z` instead of `#index-a-to-z`. Optionally mark which links have a published entry.
+- [x] **Style Markdown headings and other content**: `h2`–`h4`, rules, tables, blockquotes and inline code on Markdown pages now use the site's serif and tokens (direct children of `.main-content` only, so entry and facet-list layouts keep their own styles).
+- [x] **Fix the A–Z page**: the cramped letter-bar table is now an evenly spaced row of letter buttons (a Markdown list with `{: .az-index}`), and the Back to Top links point at `#featured-pages-a-to-z` (#41).
+- [ ] On the A–Z page, mark which links have a published entry and which are still wanted.
 - [ ] **Restyle the contribution form to match the site**: use the site's tokens and fonts, size the iframe to its content instead of `min-height: 800px`, and remove the double rule under entry titles.
-- [ ] **Give "Suggest new article" a proper page**: `new.md` needs a heading, a short explanation and site-styled controls.
+- [x] **Give "Suggest new article" a proper page**: `new.md` now has a heading and a short explanation, and the field and button use the site's styles.
 - [ ] **People / Places contents**: show the year after each street name, e.g. "Bouverie Street (1905) listings". Sort by street within each year, and remove the extra `.facet-list` side padding on phones. One long page is fine.
 - [ ] **Mobile pass**:
-  - 2D map: collapse the layers panel on phones and use the moss accent colour.
-  - 3D map: add a ← Home link and use `100dvh`.
-  - Nav: fit all five items on one row on phones.
-  - Search panel on phones: wait for the search redesign (§2).
+  - [ ] 2D map: collapse the layers panel on phones and use the moss accent colour.
+  - [x] 3D map: add a ← Home link and use `100dvh`.
+  - [x] Nav: fit all five items on one row on phones.
+  - [ ] Search panel on phones: wait for the search redesign (§2).
 - [ ] **Accessibility pass**: keyboard navigation for search and maps, contrast, focus styles and alt text.
 
 ### 8. Site and content
@@ -345,7 +346,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 - [ ] Add an About page, Acknowledgement of Country, credits and licence to the site.
 - [ ] Cite sources consistently on entry pages, with a "how to cite this page" box.
 - [ ] Support images in entries.
-- [ ] Use one name, "Featured pages", for the A–Z page everywhere (the footer says "A-Z Featured articles").
+- [x] Use one name, "Featured pages", for the A–Z page everywhere, including the footer.
 
 ---
 
