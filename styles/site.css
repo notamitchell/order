@@ -503,11 +503,22 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
 }
 
 .az-badge-missing {
-    padding: 0 5px;
-    font-size: 0.85rem;
+    padding: 2px 4px;
+    line-height: 0;
+    vertical-align: -0.2em;
     color: var(--ink-faint);
     background-color: transparent;
     border: 1px dashed var(--sage-dark);
+}
+
+.az-pencil {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .main-content a.az-link-missing { color: var(--ink-faint); }

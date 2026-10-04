@@ -6,7 +6,7 @@ title: "Carlton A to Z"
 
 Select a letter below to jump directly to that section.
 
-<span class="az-badge az-badge-new">✦ New</span> added in the last two weeks &nbsp; <span class="az-badge az-badge-missing">✎</span> not yet written, select it to write the page
+<span class="az-badge az-badge-new">✦ New</span> added in the last two weeks &nbsp; <span class="az-badge az-badge-missing"><svg class="az-pencil" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></span> not yet written, select it to write the page
 {: .az-legend}
 
 - [A](#a)
