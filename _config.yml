@@ -19,7 +19,7 @@ defaults:
       overrideCommunityContributionForm: false
 
   # Facet-list pages: same layout, each just names which slice of
-  # directoryData it shows. Add a new scope block here for each new facet.
+  # the directory data it shows. Add a new scope block here for each new facet.
   - scope:
       path: "people.md"
     values:

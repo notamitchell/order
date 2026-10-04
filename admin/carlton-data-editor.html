@@ -357,6 +357,12 @@
     font-size:12px;
   }
 
+  .file-list{list-style:none;padding:0;margin:12px 0;}
+  .file-list li{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--border, #E5E2D8);}
+  .file-list li:last-child{border-bottom:0;}
+  .file-list .file-name{font-family:var(--mono);font-size:13px;}
+  .file-list .file-note{font-size:12px;color:var(--ink-soft);flex-basis:100%;}
+
   .upload-screen{
     display:flex;
     align-items:center;
@@ -438,11 +444,11 @@
 <header class="masthead">
   <p class="eyebrow">Carlton &amp; District</p>
   <h1>Street directory &amp; electoral roll data editor</h1>
-  <p class="sub"><span class="intro">Browse, correct and add records from the Sands &amp; McDougall directories and electoral rolls. When you're done, download the updated file and follow the publishing steps to update the live map. </span><a href="./">Admin</a> &middot; <a href="../">Back to the site</a></p>
+  <p class="sub"><span class="intro">Browse, correct and add records from the Sands &amp; McDougall directories and electoral rolls. When you're done, download the changed files and follow the publishing steps to update the live site. </span><a href="./">Admin</a> &middot; <a href="../">Back to the site</a></p>
   <div class="stats">
     <span><b id="statTotal">0</b> records</span>
     <span><b id="statFiltered">0</b> shown</span>
-    <span class="dirty-flag" id="dirtyFlag">● Unsaved changes — remember to download</span>
+    <span class="dirty-flag" id="dirtyFlag">● Unsaved changes — remember to download the changed files</span>
   </div>
 </header>
 
@@ -450,7 +456,7 @@
   <div class="upload-card">
     <h2>Loading data…</h2>
     <p><span class="loading-spinner"></span></p>
-    <p id="loadingMessage" style="font-size:13px;color:var(--ink-soft);margin-top:12px;">Fetching the latest map data from GitHub…</p>
+    <p id="loadingMessage" style="font-size:13px;color:var(--ink-soft);margin-top:12px;">Fetching the latest data from the site…</p>
     <div id="uploadError" class="upload-error"></div>
   </div>
 </div>
@@ -467,10 +473,10 @@
     <option value="Electoral roll">Electoral roll</option>
   </select>
   <button class="btn secondary" id="newRecordBtn">+ New record</button>
-  <button class="btn secondary" id="loadFileBtn">Load a different file…</button>
-  <input type="file" id="fileInput" accept=".js,.json,.txt" style="display:none">
+  <button class="btn secondary" id="loadFileBtn">Load files from your computer…</button>
+  <input type="file" id="fileInput" accept=".json" multiple style="display:none">
   <button class="btn secondary push-right" id="howToBtn">How to publish</button>
-  <button class="btn" id="downloadBtn">Download updated map-data.js</button>
+  <button class="btn" id="downloadBtn">Download changed files</button>
 </div>
 
 <div class="table-wrap">
@@ -535,23 +541,35 @@
       <button class="modal-close" id="howToClose" aria-label="Close">✕</button>
     </div>
     <div class="modal-body instructions">
-      <p>Once you've finished editing, follow these steps to update the live copy on GitHub. You don't need any special software — this is all done in your browser.</p>
+      <p>The data is kept as one file per source and year, e.g. <code>_data/directory/1905.json</code> or <code>_data/electoral-roll/1919.json</code>. You only need to upload the files you changed. You don't need any special software — this is all done in your browser.</p>
       <ol>
-        <li><b>Make sure you started with the current file.</b> This tool has no data of its own — you should have already uploaded the current <code>map-data.js</code> (ideally freshly downloaded from GitHub) before making your edits, so nothing gets overwritten by accident.</li>
-        <li><b>Download the file.</b> Click the <b>"Download updated map-data.js"</b> button above. It will save a file called <code>map-data.js</code> to your computer's Downloads folder.</li>
-        <li><b>Check the filename.</b> Look in your Downloads folder. If your browser saved it as <code>map-data (1).js</code> or similar, rename it back to exactly <code>map-data.js</code> — this matters, as it must match the existing file exactly.</li>
-        <li><b>Open the GitHub repository</b> in your browser and sign in if needed.</li>
-        <li><b>Find the existing <code>map-data.js</code> file</b> in the repository (you may need to open a folder first, depending on where it lives).</li>
-        <li><b>Click into the file</b>, then click the pencil (✏️) "Edit" icon — or, from the folder listing, click <b>Add file → Upload files</b> and drag your downloaded <code>map-data.js</code> into the box. GitHub will recognise it has the same name and offer to replace it.</li>
+        <li><b>Make sure you started from the current data.</b> This tool loads the live data from the site when it opens. If someone else published changes since you opened it, reload the page before editing so you don't overwrite their work.</li>
+        <li><b>Download the changed files.</b> Click <b>"Download changed files"</b>. It lists each file you changed, with a <b>Download</b> button for each, e.g. <code>1905.json</code>.</li>
+        <li><b>Check the filenames.</b> Look in your Downloads folder. If your browser saved a file as <code>1905 (1).json</code> or similar, rename it back to exactly <code>1905.json</code> — it must match the existing file's name.</li>
+        <li><b>Open the upload page</b> for that file's folder: the list gives a link for each one (it opens GitHub's <b>Upload files</b> page for <code>_data/directory</code> or <code>_data/electoral-roll</code>). Sign in if needed.</li>
+        <li><b>Drag your downloaded file into the box.</b> GitHub will recognise it has the same name and replace the old one. Files for the same folder can go up together.</li>
         <li><b>Scroll to the bottom</b> of the page. Under "Commit changes", type a short note describing what you changed, e.g. <i>"Add electoral roll entries for Barry Street, 1928"</i>.</li>
         <li>Make sure <b>"Commit directly to the main branch"</b> is selected, then click <b>Commit changes</b>.</li>
       </ol>
-      <div class="callout">That's it — your changes are now live in the repository. If the map is hosted with GitHub Pages, it can take a minute or two to update after you commit.</div>
-      <p>If you're ever unsure whether your edits "took", you can come back to this tool, click <b>"Load a different file…"</b> and open the file straight from GitHub (use the "Raw" download) to check it matches what you expect.</p>
+      <div class="callout">That's it — your changes are now in the repository. The live site takes a minute or two to update after you commit.</div>
+      <p>If you add a record for a year that has no file yet, the list will say so: a new year also needs a small page file before the site will show it, so ask a developer to add it (the README explains how).</p>
+      <p>If you're ever unsure whether your edits "took", reload this page once the site has updated and check the records look as you expect.</p>
     </div>
   </div>
 </div>
 
+<!-- Download modal: one button per changed file -->
+<div class="modal-overlay" id="downloadOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="downloadTitle">
+    <div class="modal-header">
+      <h2 id="downloadTitle">Download changed files</h2>
+      <button class="modal-close" id="downloadClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body instructions" id="downloadBody"></div>
+  </div>
+</div>
+
+<script src="../scripts/data.js"></script>
 <script>
 'use strict';
 
@@ -597,11 +615,45 @@ let page = 1;
 let pageSize = 50;
 let dirty = false;
 let editingUid = null;  // null = creating new
+let baselines = {};     // file key (e.g. "directory/1905") → its text as last loaded or downloaded
+
+const FOLDERS = { 'Directory': 'directory', 'Electoral roll': 'electoral-roll' };
+const REPO_UPLOAD = 'https://github.com/notamitchell/order/upload/main/_data/';
 
 const collator = new Intl.Collator(undefined, {numeric:true, sensitivity:'base'});
 
+/* ============ FILES ============
+   One file per source and year. Records keep the order they were loaded in,
+   so an unchanged file downloads exactly as it was. */
+function fileKey(r){ return `${FOLDERS[r.source] || 'directory'}/${r.year}`; }
+
+// Same format as tools/convert-map-data.js: a JSON list, one record per line.
+function serialize(list){
+  return '[\n' + list.map(r => {
+    const clean = Object.assign({}, r);
+    delete clean._uid;
+    return JSON.stringify(clean);
+  }).join(',\n') + '\n]\n';
+}
+
+function fileTexts(){
+  const groups = {};
+  records.forEach(r => { (groups[fileKey(r)] = groups[fileKey(r)] || []).push(r); });
+  const out = {};
+  Object.keys(groups).forEach(k => { out[k] = serialize(groups[k]); });
+  return out;
+}
+
+function changedFiles(){
+  const now = fileTexts();
+  const keys = new Set([...Object.keys(now), ...Object.keys(baselines)]);
+  return [...keys].sort().filter(k => now[k] !== baselines[k])
+    .map(k => ({ key: k, text: now[k], isNew: !(k in baselines), isEmpty: !(k in now) }));
+}
+
 function loadFromArray(arr){
   records = arr.map(r => Object.assign({_uid: nextUid++}, r));
+  baselines = fileTexts();
   applyFilterSort();
   page = 1;
   setDirty(false);
@@ -611,49 +663,57 @@ function loadFromArray(arr){
 }
 
 function parseDataFile(text){
-  let txt = text.trim();
-  txt = txt.replace(/^const\s+directoryData\s*=\s*/, '').replace(/;\s*$/, '');
-  const arr = JSON.parse(txt);
-  if(!Array.isArray(arr)) throw new Error('File does not contain an array of records.');
+  const arr = JSON.parse(text);
+  if(!Array.isArray(arr)) throw new Error('File does not contain a list of records.');
   return arr;
 }
 
-/* ============ AUTO-LOAD FROM URL ============ */
+// Reads JSON files chosen from the computer. Their records replace the
+// records of the same source and year; other years are kept.
+async function readChosenFiles(fileList){
+  const loaded = [];
+  for(const file of fileList){
+    try {
+      loaded.push(parseDataFile(await file.text()));
+    } catch(err){
+      throw new Error(`${file.name}: ${err.message}`);
+    }
+  }
+  const incoming = loaded.flat();
+  const replaced = new Set(incoming.map(fileKey));
+  return records.filter(r => !replaced.has(fileKey(r))).map(r => { const c = Object.assign({}, r); delete c._uid; return c; }).concat(incoming);
+}
+
+/* ============ AUTO-LOAD FROM THE SITE ============ */
 async function autoLoadFromURL(){
-  const url = 'https://notamitchell.github.io/order/map-data.js';
   const errBox = document.getElementById('uploadError');
   const loadingMsg = document.getElementById('loadingMessage');
-  
+
   try {
-    const response = await fetch(url);
-    if(!response.ok) throw new Error(`HTTP ${response.status}`);
-    const text = await response.text();
-    const arr = parseDataFile(text);
+    const arr = await CGData.load({}, {
+      onFile: (recs, file, { loaded, total }) => {
+        loadingMsg.textContent = `Loaded ${CGData.label(file)} (${loaded} of ${total})…`;
+      }
+    });
     loadFromArray(arr);
   } catch(err){
-    errBox.textContent = `Could not load from GitHub: ${err.message}. You can still load a file manually below.`;
-    loadingMsg.innerHTML = `<label for="fileInputInitial" class="btn green upload-btn" style="margin-top:12px;">Choose map-data.js…</label>
-      <input type="file" id="fileInputInitial" accept=".js,.json,.txt" style="display:none">
-      <p class="hint" style="margin-top:16px;">Tip: if you're not sure where to find it, open the repository on GitHub, click <code>map-data.js</code>, click the "Raw" button, then save that page to your computer.</p>`;
+    errBox.textContent = `Could not load the data from the site: ${err.message} You can still load the files from your computer below.`;
+    loadingMsg.innerHTML = `<label for="fileInputInitial" class="btn green upload-btn" style="margin-top:12px;">Choose data files…</label>
+      <input type="file" id="fileInputInitial" accept=".json" multiple style="display:none">
+      <p class="hint" style="margin-top:16px;">Tip: the files are in the <code>_data/directory</code> and <code>_data/electoral-roll</code> folders on GitHub. Open a file, click the "Download raw file" button, and choose all the files you downloaded here.</p>`;
     document.getElementById('fileInputInitial').addEventListener('change', handleFileInputInitial);
   }
 }
 
-function handleFileInputInitial(e){
-  const file = e.target.files[0];
+async function handleFileInputInitial(e){
   const errBox = document.getElementById('uploadError');
   errBox.textContent = '';
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const arr = parseDataFile(reader.result);
-      loadFromArray(arr);
-    } catch(err){
-      errBox.textContent = 'Could not read that file: ' + err.message;
-    }
-  };
-  reader.readAsText(file);
+  if(!e.target.files.length) return;
+  try {
+    loadFromArray(await readChosenFiles([...e.target.files]));
+  } catch(err){
+    errBox.textContent = 'Could not read that file: ' + err.message;
+  }
   e.target.value = '';
 }
 
@@ -678,9 +738,16 @@ function distinctStringEntityIDs(){
   return [...s].sort(collator.compare);
 }
 
-function nextNumericEntityID(){
-  let max = 0;
-  records.forEach(r => { if(typeof r.entityID === 'number' && r.entityID > max) max = r.entityID; });
+/* Numeric IDs: the directories count up from 1 and the electoral rolls from
+   999999, so the two never clash (decided 2026-10-04). */
+const ELECTORAL_ID_START = 999999;
+function nextNumericEntityID(source){
+  const electoral = source === 'Electoral roll';
+  let max = electoral ? ELECTORAL_ID_START - 1 : 0;
+  records.forEach(r => {
+    if(typeof r.entityID !== 'number' || (r.entityID >= ELECTORAL_ID_START) !== electoral) return;
+    if(r.entityID > max) max = r.entityID;
+  });
   return max + 1;
 }
 
@@ -940,7 +1007,7 @@ function field(id, labelText, required, inputHtml, hintHtml){
 function buildForm(rec){
   const isNew = !rec;
   const source = rec ? rec.source : 'Directory';
-  const entityID = rec ? rec.entityID : nextNumericEntityID();
+  const entityID = rec ? rec.entityID : nextNumericEntityID(source);
   const streets = distinctStreets();
   const streetsDatalist = streets.map(s => `<option value="${escapeHtml(s)}">`).join('');
   const idsDatalist = distinctStringEntityIDs().map(s => `<option value="${escapeHtml(s)}">`).join('');
@@ -1019,6 +1086,15 @@ function buildForm(rec){
 
   toggleSourceFields();
   document.getElementById('f_source').addEventListener('change', toggleSourceFields);
+  if(isNew){
+    // A new record's suggested ID follows the source, unless it was changed by hand.
+    let suggested = String(entityID);
+    document.getElementById('f_source').addEventListener('change', (e) => {
+      const idField = document.getElementById('f_entityID');
+      if(idField.value.trim() !== suggested) return;
+      suggested = idField.value = String(nextNumericEntityID(e.target.value));
+    });
+  }
   document.getElementById('f_street').addEventListener('input', updateStreetHint);
   document.getElementById('f_lat').addEventListener('input', updateCoordHint);
   document.getElementById('f_lng').addEventListener('input', updateCoordHint);
@@ -1148,6 +1224,14 @@ document.getElementById('saveEdit').addEventListener('click', () => {
     });
   }
 
+  // Keep any fields the form doesn't show (e.g. Notes) when editing a record.
+  if(editingUid !== null){
+    const old = records.find(r => r._uid === editingUid);
+    const formFields = new Set(['entityID','source','year','pages','listing','street','type','cardinality','lat','lng','Occupation',
+      'Registration Number','Surname','Given Names','Address','Street Number','Gender','_uid']);
+    Object.keys(old).forEach(k => { if(!formFields.has(k) && rec[k] === undefined) rec[k] = old[k]; });
+  }
+
   if(editingUid === null){
     rec._uid = nextUid++;
     records.push(rec);
@@ -1161,59 +1245,91 @@ document.getElementById('saveEdit').addEventListener('click', () => {
   render();
 });
 
+// Fields in the usual order; any others (e.g. Notes) follow at the end.
 function reorderDirectory(rec){
   const order = ['entityID','source','year','pages','listing','street','type','cardinality','lat','lng','Occupation'];
   const out = {};
   order.forEach(k => { if(rec[k] !== undefined) out[k] = rec[k]; });
+  Object.keys(rec).forEach(k => { if(!(k in out) && rec[k] !== undefined) out[k] = rec[k]; });
   return out;
 }
 function reorderElectoral(rec){
   const order = ['entityID','source','type','year','listing','Registration Number','Surname','Given Names','Address','Street Number','street','cardinality','Occupation','Gender','lat','lng'];
   const out = {};
   order.forEach(k => { if(rec[k] !== undefined && rec[k] !== '') out[k] = rec[k]; });
+  Object.keys(rec).forEach(k => { if(!(k in out) && rec[k] !== undefined && rec[k] !== '') out[k] = rec[k]; });
   return out;
 }
 
 /* ============ EXPORT / DOWNLOAD ============ */
-document.getElementById('downloadBtn').addEventListener('click', () => {
-  const out = records.map(r => {
-    const clean = Object.assign({}, r);
-    delete clean._uid;
-    return clean.source === 'Directory' ? reorderDirectory(clean) : reorderElectoral(clean);
-  });
-  const text = 'const directoryData = ' + JSON.stringify(out, null, 2) + ';\n';
-  const blob = new Blob([text], {type:'text/javascript'});
+const downloadOverlay = document.getElementById('downloadOverlay');
+
+function downloadFile(change){
+  const year = change.key.split('/')[1];
+  const blob = new Blob([change.text], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'map-data.js';
+  a.download = `${year}.json`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  setDirty(false);
-});
+  baselines[change.key] = change.text;
+  setDirty(changedFiles().length > 0);
+}
+
+function showDownloads(){
+  const body = document.getElementById('downloadBody');
+  const changes = changedFiles();
+  if(!changes.length){
+    body.innerHTML = '<p>Nothing has changed since the data was loaded (or since your last download).</p>';
+    downloadOverlay.classList.add('show');
+    return;
+  }
+  body.innerHTML = `<p>Download each file, then upload it to its folder on GitHub (see <b>How to publish</b>).</p><ul class="file-list"></ul>`;
+  const list = body.querySelector('.file-list');
+  changes.forEach(change => {
+    const [folder, year] = change.key.split('/');
+    const li = document.createElement('li');
+    if(change.isEmpty){
+      li.innerHTML = `<span class="file-name">_data/${folder}/${year}.json</span>
+        <span class="file-note">Every record in this file has moved to another year. Ask a developer to remove the file.</span>`;
+    } else {
+      li.innerHTML = `<button class="btn small">Download ${year}.json</button>
+        <span>then <a href="${REPO_UPLOAD}${folder}" target="_blank" rel="noopener">upload it to <span class="file-name">_data/${folder}/</span></a></span>
+        ${change.isNew ? '<span class="file-note">This is a new year: it also needs a page file before the site shows it. Ask a developer (see the README).</span>' : ''}`;
+      li.querySelector('button').addEventListener('click', (e) => {
+        downloadFile(change);
+        e.target.textContent = `Downloaded ${year}.json`;
+        e.target.disabled = true;
+      });
+    }
+    list.appendChild(li);
+  });
+  downloadOverlay.classList.add('show');
+}
+
+document.getElementById('downloadBtn').addEventListener('click', showDownloads);
+document.getElementById('downloadClose').addEventListener('click', () => downloadOverlay.classList.remove('show'));
+downloadOverlay.addEventListener('click', (e) => { if(e.target === downloadOverlay) downloadOverlay.classList.remove('show'); });
 
 /* ============ LOAD DIFFERENT FILE ============ */
 document.getElementById('loadFileBtn').addEventListener('click', () => {
   if(dirty && !confirm('You have unsaved changes that will be lost if you load a new file. Continue?')) return;
   document.getElementById('fileInput').click();
 });
-document.getElementById('fileInput').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const arr = parseDataFile(reader.result);
-      loadFromArray(arr);
-      alert(`Loaded ${arr.length} records from ${file.name}.`);
-    } catch(err){
-      alert('Could not read that file as a map-data.js dataset:\n' + err.message);
-    }
-  };
-  reader.readAsText(file);
+document.getElementById('fileInput').addEventListener('change', async (e) => {
+  const files = [...e.target.files];
   e.target.value = '';
+  if(!files.length) return;
+  try {
+    const arr = await readChosenFiles(files);
+    loadFromArray(arr);
+    alert(`Loaded ${files.map(f => f.name).join(', ')}. Records for those years were replaced; other years are unchanged.`);
+  } catch(err){
+    alert('Could not read that file as a data file:\n' + err.message);
+  }
 });
 
 /* ============ HOW-TO MODAL ============ */

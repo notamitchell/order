@@ -1,0 +1,34 @@
+---
+layout: null
+---
+{%- comment -%}
+  The list of data files, generated from _data/ every time the site is built.
+  scripts/data.js reads it to find out which files exist and which file holds
+  a given record. For each file: its source, year and record count, the range
+  of its numeric entityIDs, and every text entityID it uses (text IDs are
+  links the team made between records; see README, Data).
+  "v" changes on every build, so browsers fetch fresh copies after a change.
+{%- endcomment -%}
+{%- assign folders = "directory,electoral-roll" | split: "," -%}
+{"v":"{{ site.time | date: '%s' }}","files":[
+{%- assign firstFile = true -%}
+{%- for folder in folders -%}
+{%- for file in site.data[folder] -%}
+{%- assign recs = file[1] -%}
+{%- assign min = nil -%}{%- assign max = nil -%}{%- assign text = "" -%}
+{%- for r in recs -%}
+{%- assign n = r.entityID | plus: 0 -%}
+{%- assign ns = n | append: "" -%}{%- assign is = r.entityID | append: "" -%}
+{%- if ns == is -%}
+{%- if min == nil or n < min -%}{%- assign min = n -%}{%- endif -%}
+{%- if max == nil or n > max -%}{%- assign max = n -%}{%- endif -%}
+{%- else -%}
+{%- assign text = text | append: is | append: "|" -%}
+{%- endif -%}
+{%- endfor -%}
+{%- assign linked = text | split: "|" | uniq -%}
+{%- unless firstFile -%},{%- endunless -%}{%- assign firstFile = false %}
+{"path":"data/{{ folder }}/{{ file[0] }}.json","source":{{ recs[0].source | jsonify }},"year":{{ recs[0].year | jsonify }},"count":{{ recs.size }},"ids":[{{ min | default: "null" }},{{ max | default: "null" }}],"linked":{{ linked | jsonify }}}
+{%- endfor -%}
+{%- endfor %}
+]}
