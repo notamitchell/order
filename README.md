@@ -37,7 +37,7 @@
 Common Ground is a static website hosted on **GitHub Pages** and built with **Jekyll**, using the `jekyll-theme-cayman` theme with a custom layout. It has no server or database of its own:
 
 - **Encyclopedia entries** are [EAC-CPF](https://eac.staatsbibliothek-berlin.de/) XML files in `civic/`. The browser fetches them and renders them on the fly.
-- **Historical directory data** (Sands & McDougall directories and electoral rolls) is one large JavaScript file, `map-data.js`. The search panel, the maps and the People/Places lists all read from it.
+- **Historical directory data** (Sands & McDougall directories and electoral rolls) is one large JavaScript file, `map-data.js`. The search page, the maps and the People/Places lists all read from it.
 - **Public contributions** go through a Google Apps Script web app. It saves a copy of each submission to a Google Sheet in the team's shared Google Drive folder, then opens a pull request on this repository. The sheet is a user-friendly backup while the submission process is being settled. The editorial team then merges the pull request (accept) or closes it (reject).
 
 The project is deliberately a **perpetual work in progress**. Gaps in the data and entries that don't exist yet are invitations for the community to contribute, not defects.
@@ -80,7 +80,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 
 ### Search, facets and maps
 
-- **Search panel** (in `_layouts/default.html`): free-text search plus filters for year, street, type and side of street. It searches `directoryData` only. If nothing matches, it offers to start a new entry with that name.
+- **Search page** (`search.md` → `_layouts/search.html` + `scripts/search.js`): one box that searches the entries in `civic/` and every `directoryData` record together, using [MiniSearch](https://github.com/lucaong/minisearch) (vendored in `scripts/vendor/`, MIT). Jekyll lists the entry files into the page at build time and the browser fetches them as ordinary site files (no GitHub API calls). Results are grouped into Entries, Places (directories) and People (electoral rolls); records that share a text `entityID` collapse into one result with a row of years. Matching is by prefix with small typos allowed, and a `VARIANTS` list at the top of `scripts/search.js` folds historical spellings and abbreviations together (Berkley/Berkeley, htl → hotel, Wm → William, …); add pairs there. The search is kept in the address (`search?q=grocer&year=1910&street=…&src=people`), so it can be shared. If nothing matches, it offers to start a new entry with that name.
 - **People / Places** (`_layouts/facet-list.html`): filter `directoryData` by `source`. `people` shows electoral rolls and `places` shows directories. Results are grouped by source/year → street → side of street.
 - **Map** (`_layouts/map.html`): Leaflet 1.9.4. It plots records that have `lat`/`lng`, with University of Melbourne land parcels (`UoM_Landuse_2026.js`) as an overlay.
 - **3D Map** (`_layouts/map3d.html`): three.js r128 with OrbitControls. Experimental.
@@ -90,7 +90,8 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | Path | What it is |
 |---|---|
 | `_config.yml` | Jekyll config. Sets the theme and per-page defaults (layout, `EACCPFpath`, `facet`, whether the contribution form shows). |
-| `_layouts/default.html` | Site shell: header, navigation and the search panel. **Loads `map-data.js` on every page.** |
+| `_layouts/default.html` | Site shell: header, navigation, sidebar and footer. Does **not** load `map-data.js`; layouts that need the data load it themselves. |
+| `_layouts/search.html`, `scripts/search.js` | Search page (see [Search, facets and maps](#search-facets-and-maps)). |
 | `_layouts/entry.html` | Fetches and renders one EAC-CPF entry, and adds the contribution form. |
 | `_layouts/form.html` | Rich-text contribution form (Quill 1.3.6) that posts to Google Apps Script. |
 | `_layouts/new.html` | "Start a new entry" box that redirects to `civic?id=…`. |
@@ -103,6 +104,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `admin/review.html` | Plain-language review page for the editorial team. |
 | `admin/carlton-data-editor.html` | Browser-based editor for `map-data.js`. |
 | `scripts/banner-parallax.js` | Header banner effect. |
+| `scripts/vendor/` | Third-party scripts saved into the repo (MiniSearch). |
 | `styles/site.css` | Site styles. |
 | `images/` | Static images. |
 
@@ -173,7 +175,7 @@ Typical record:
 
 | Field | Notes |
 |---|---|
-| `entityID` | Usually a number. A **string** (e.g. `"Bridget O'Neill"`) means someone on the team has decided that several records are the same person or place, and linked them under a new ID they created for that purpose. Many records share a string ID on purpose; the search panel uses these to trace someone through time. |
+| `entityID` | Usually a number. A **string** (e.g. `"Bridget O'Neill"`) means someone on the team has decided that several records are the same person or place, and linked them under a new ID they created for that purpose. Many records share a string ID on purpose; the search page shows each linked group as one result with a row of years, and links it to the entry of the same name if there is one (e.g. the Carlton Inn listings are linked under `"Corkman Hotel"`). |
 | `source` | `"Directory"` or `"Electoral roll"`. This decides whether a record appears under People or Places. |
 | `year`, `pages`, `listing`, `street`, `type`, `cardinality` | As transcribed. `cardinality` is the side of the street (North/South/East/West). |
 | `lat`, `lng` | Optional. About 1,450 records have coordinates so far, and only these appear on the map. Adding more is ongoing community work. |
@@ -223,7 +225,7 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 
 ## Known issues and gotchas
 
-- **Every page downloads ~2.6 MB of data** because `default.html` loads `map-data.js` for the search panel. This hurts load times on mobile, and nothing tells the visitor that data is still loading. See roadmap §1.
+- **Pages that use the data download all ~2.6 MB of it** (search, People/Places, the maps and the contribution form), and nothing tells the visitor that data is still loading. Other pages no longer load it. See roadmap §1.
 - **`map-data.js` is JavaScript, not JSON.** Other tools can't read it directly, a stray comma breaks the whole site, and diffs are huge and hard to review.
 - **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings (strings are deliberate links made by a person; see the [field reference](#data-map-datajs)).
 - **The A–Z is maintained by hand** as Markdown, and links to many entries that don't exist yet. Those links open the "contribute" form, which is intended, but it isn't obvious. See roadmap §3.
@@ -248,21 +250,22 @@ Goal: pages only download the data they need, show visitors what's happening whi
 - [ ] **Shared data loader** (`scripts/data.js`) that every page uses instead of a global variable:
   - `loadYears([...])` / `loadAll()` fetch only the JSON files a page needs, in parallel.
   - Results are cached in memory and, where the browser allows, between pages, so moving around the site doesn't download the same data again.
-  - Loading is **lazy**: e.g. the search panel loads its data when it is first opened, not on every page view.
+  - Loading is **lazy**: each page fetches only the years and sources it shows.
   - Pages can render the first year or source as soon as it arrives, without waiting for everything.
 - [ ] **Loading feedback for visitors**: a consistent "Loading 1905 directory…" indicator or progress bar, disabled filters until their data is ready, and a friendly message with a *Try again* button if a file fails to load (instead of a silently empty page).
-- [ ] Switch pages over one at a time: maps and People/Places first, then the search panel. After that, stop loading `map-data.js` on every page.
+- [x] Stop loading `map-data.js` on every page: only the layouts that use it load it now (#44).
+- [ ] Switch pages over to the shared loader one at a time: maps and People/Places first, then search.
 - [ ] Convert `UoM_Landuse_2026.js` to `data/uom-land-parcels.geojson` in the same way.
 - [ ] Remove `map-data.js` once nothing uses it.
 
 ### 2. Better search
 
-- [ ] **Build a search index of entries and directory data together**, so one search box finds both "Corkman Hotel" (the entry) and every directory listing for it. Options: [Pagefind](https://pagefind.app/) (static, runs at build time, would need a GitHub Action) or [MiniSearch](https://github.com/lucaong/minisearch) / [Lunr](https://lunrjs.com/) indexes built in the browser or ahead of time.
-- [ ] **Fuzzy matching for historical spellings** (Berkley/Berkeley, Leister/Leicester, Mrs/Mrs.), with a small list of known variants.
-- [ ] Search results grouped by type (Entries / People / Places), with snippets and highlighted matches.
-- [ ] "Trace this person/place across years" as a timeline view, built on the shared IDs that already exist.
-- [ ] Shareable search URLs (`?q=…&year=…&street=…`).
-- [ ] Load the search index only when the search panel is opened (see §1).
+- [x] **Build a search index of entries and directory data together**, so one search box finds both "Corkman Hotel" (the entry) and every directory listing for it. Options: [Pagefind](https://pagefind.app/) (static, runs at build time, would need a GitHub Action) or [MiniSearch](https://github.com/lucaong/minisearch) / [Lunr](https://lunrjs.com/) indexes built in the browser or ahead of time. Done in #44 with MiniSearch, built in the browser on the new search page. Revisit Pagefind if entries reach the hundreds.
+- [x] **Fuzzy matching for historical spellings** (Berkley/Berkeley, Leister/Leicester, Mrs/Mrs.), with a small list of known variants (#44; the list is `VARIANTS` in `scripts/search.js`).
+- [x] Search results grouped by type (Entries / People / Places), with snippets and highlighted matches (#44).
+- [x] "Trace this person/place across years": linked records show as one result with a row of years, and open to list each year's listing and page (#44).
+- [x] Shareable search URLs (`?q=…&year=…&street=…`) (#44).
+- [x] Load the search index only when the search page is opened (#44).
 
 ### 3. Editorial tools (towards a proper GUI for a non-technical team)
 
@@ -337,7 +340,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
   - [ ] 2D map: collapse the layers panel on phones and use the moss accent colour.
   - [x] 3D map: add a ← Home link and use `100dvh`.
   - [x] Nav: fit all five items on one row on phones.
-  - [ ] Search panel on phones: wait for the search redesign (§2).
+  - [x] Search on phones: results are cards and filters fold away on the new search page (#44).
 - [ ] **Accessibility pass**: keyboard navigation for search and maps, and alt text. (A site-wide focus outline and a darker `--ink-faint` for small labels were added in #43.)
 
 ### 8. Site and content

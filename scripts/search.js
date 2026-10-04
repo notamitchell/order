@@ -1,0 +1,222 @@
+/* Site search: entries + directory and electoral-roll records in one index.
+   Used by _layouts/search.html. Reads directoryData (map-data.js) and the
+   entry list Jekyll writes into window.ENTRY_FILES. */
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const input = $('searchInput'), form = $('searchForm'), status = $('searchStatus');
+  const resultsEl = $('searchResults'), yearChips = $('yearChips'), streetSelect = $('streetSelect');
+  const PER_SECTION = 8;
+
+  // Historical spellings and directory abbreviations, folded to one form so
+  // either spelling finds both. Add pairs here as the team finds them.
+  const VARIANTS = {
+    berkeley: 'berkley', leister: 'leicester', htl: 'hotel', hotl: 'hotel',
+    wm: 'william', jno: 'john', thos: 'thomas', chas: 'charles', geo: 'george',
+    jas: 'james', saml: 'samuel', st: 'street', sts: 'street', grcr: 'grocer',
+    bootmkr: 'bootmaker', mrs: 'mrs', mr: 'mr'
+  };
+  const fold = (term) => {
+    const t = term.toLowerCase().replace(/[.'’]/g, '');
+    return t ? (VARIANTS[t] || t) : null;
+  };
+
+  const SOURCES = { 'Directory': 'places', 'Electoral roll': 'people' };
+  const state = { q: '', src: 'all', year: '', street: '' };
+  let index, groups = {}, entries = {}, recordGroup = [];
+
+  const escapeHtml = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const slugify = (s) => String(s).trim().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_\-]/g, '').replace(/\-\-+/g, '-');
+
+  // ---- URL state -------------------------------------------------------
+  function readUrl() {
+    const p = new URLSearchParams(location.search);
+    state.q = p.get('q') || ''; state.src = p.get('src') || 'all';
+    state.year = p.get('year') || ''; state.street = p.get('street') || '';
+  }
+  function writeUrl() {
+    const p = new URLSearchParams();
+    if (state.q) p.set('q', state.q);
+    if (state.src !== 'all') p.set('src', state.src);
+    if (state.year) p.set('year', state.year);
+    if (state.street) p.set('street', state.street);
+    history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
+  }
+
+  // ---- Load ------------------------------------------------------------
+  async function loadEntries() {
+    const files = window.ENTRY_FILES || [];
+    const parsed = await Promise.all(files.map(async (name) => {
+      try {
+        const xml = new DOMParser().parseFromString(await (await fetch(`civic/${name}.xml`)).text(), 'application/xml');
+        const title = xml.getElementsByTagName('part')[0]?.textContent.trim() || name.replace(/-/g, ' ');
+        const html = xml.getElementsByTagName('abstract')[0]?.textContent || '';
+        const text = new DOMParser().parseFromString(html, 'text/html').body.textContent.replace(/\s+/g, ' ').trim();
+        return { name, title, text };
+      } catch (e) { return null; }
+    }));
+    parsed.filter(Boolean).forEach((e) => { entries[e.name] = e; });
+  }
+
+  function buildIndex() {
+    index = new MiniSearch({
+      fields: ['title', 'text', 'name', 'listing', 'street', 'occupation'],
+      storeFields: ['kind'],
+      processTerm: fold,
+      searchOptions: {
+        boost: { title: 4, listing: 2 },
+        prefix: true,
+        fuzzy: (term) => (term.length > 4 ? 0.2 : false),
+        combineWith: 'AND',
+        processTerm: fold
+      }
+    });
+    const docs = Object.values(entries).map((e) => ({ id: 'e:' + e.name, kind: 'entry', title: e.title, text: e.text }));
+
+    // Records that share a text entityID were linked by the team as one person or
+    // place; they become one result with a row of years.
+    directoryData.forEach((r, i) => {
+      const kind = SOURCES[r.source] || 'places';
+      const key = typeof r.entityID === 'string' ? 'g:' + r.entityID : 'r:' + i;
+      (groups[key] = groups[key] || { key, kind, records: [] }).records.push(r);
+      recordGroup[i] = groups[key];
+      docs.push({ id: 'd:' + i, kind, name: typeof r.entityID === 'string' ? r.entityID : '', listing: r.listing, street: r.street, occupation: r.Occupation || '' });
+    });
+    index.addAll(docs);
+    Object.values(groups).forEach((g) => g.records.sort((a, b) => a.year - b.year));
+  }
+
+  function fillFilters() {
+    const years = [...new Set(directoryData.map((r) => r.year))].sort();
+    yearChips.insertAdjacentHTML('beforeend', ['', ...years].map((y) =>
+      `<label class="chip"><input type="radio" name="year" value="${y}"${String(state.year) === String(y) ? ' checked' : ''}><span>${y || 'Any'}</span></label>`).join(''));
+    [...new Set(directoryData.map((r) => r.street))].filter(Boolean).sort().forEach((s) => {
+      streetSelect.add(new Option(s, s, false, s === state.street));
+    });
+  }
+
+  // ---- Search ----------------------------------------------------------
+  function run() {
+    const q = state.q.trim();
+    const sections = { entries: [], places: [], people: [] };
+    if (q) {
+      const seen = {};
+      index.search(q).forEach((hit) => {
+        const n = hit.id.split(':');
+        if (n[0] === 'e') { sections.entries.push({ entry: entries[n.slice(1).join(':')], terms: hit.terms, score: hit.score }); return; }
+        const r = directoryData[+n[1]];
+        if (state.year && String(r.year) !== state.year) return;
+        if (state.street && r.street !== state.street) return;
+        const g = recordGroup[+n[1]];
+        if (seen[g.key]) { seen[g.key].hits.add(r); return; }
+        seen[g.key] = { group: g, hits: new Set([r]), terms: hit.terms, score: hit.score };
+        sections[g.kind].push(seen[g.key]);
+      });
+    }
+    render(q, sections);
+  }
+
+  function highlight(text, terms) {
+    let out = escapeHtml(text);
+    terms.forEach((t) => {
+      if (t.length < 2) return;
+      out = out.replace(new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig'), '<mark>$1</mark>');
+    });
+    return out;
+  }
+  function snippet(text, terms) {
+    const lower = text.toLowerCase();
+    const at = Math.max(0, Math.min(...terms.map((t) => { const i = lower.indexOf(t); return i < 0 ? Infinity : i; }).concat([0])) - 60);
+    const cut = text.slice(at, at + 220);
+    return (at > 0 ? '… ' : '') + highlight(cut, terms) + (at + 220 < text.length ? ' …' : '');
+  }
+
+  function entryCard({ entry, terms }) {
+    const linked = groups['g:' + entry.title];
+    const years = linked ? [...new Set(linked.records.map((r) => r.year))] : [];
+    return `<li class="result result-entry">
+      <a class="result-title" href="civic?id=${encodeURIComponent(entry.title)}">${highlight(entry.title, terms)}</a>
+      <p class="result-snippet">${snippet(entry.text, terms)}</p>
+      ${years.length ? `<p class="result-meta">Also in the directories: ${years.join(' · ')}</p>` : ''}
+    </li>`;
+  }
+
+  function recordCard({ group, hits, terms }) {
+    const recs = group.records;
+    const shown = [...hits].sort((a, b) => b.year - a.year)[0];
+    const name = group.key.startsWith('g:') ? group.key.slice(2) : null;
+    const hasEntry = name && entries[slugify(name)];
+    const years = recs.map((r) => `<li${hits.has(r) ? ' class="hit"' : ''}><span class="yr">${r.year}</span> ${highlight(r.listing, terms)} <span class="pg">${r.pages ? 'p. ' + escapeHtml(r.pages) : ''}</span></li>`).join('');
+    const link = hasEntry
+      ? `<a class="result-action" href="civic?id=${encodeURIComponent(name)}">Read the entry →</a>`
+      : `<a class="result-action quiet" href="civic?id=${encodeURIComponent(shown.entityID)}">Start an entry</a>`;
+    return `<li class="result result-record">
+      <div class="result-head">
+        <span class="result-title">${highlight(shown.listing, terms)}</span>
+        <span class="result-where">${escapeHtml(shown.street)}${shown.cardinality ? ', ' + escapeHtml(shown.cardinality.toLowerCase()) + ' side' : ''}</span>
+      </div>
+      <p class="result-years">${[...new Set(recs.map((r) => r.year))].map((y) => `<span class="${[...hits].some((h) => h.year === y) ? 'on' : ''}">${y}</span>`).join('')}</p>
+      ${recs.length > 1 ? `<details class="result-trace"><summary>Across ${recs.length} listings</summary><ol>${years}</ol></details>` : ''}
+      ${link}
+    </li>`;
+  }
+
+  const LABELS = { entries: 'Entries', places: 'Places · directories', people: 'People · electoral rolls' };
+  function render(q, sections) {
+    Object.keys(sections).forEach((k) => {
+      const n = sections[k].length;
+      document.querySelector(`[data-count="${k}"]`).textContent = q ? n.toLocaleString() : '';
+    });
+    document.querySelectorAll('.search-tabs [data-src]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.src === state.src));
+    const active = [state.year, state.street].filter(Boolean).length;
+    $('filterBadge').textContent = active ? `(${active})` : '';
+
+    if (!q) {
+      status.textContent = '';
+      resultsEl.innerHTML = `<div class="search-hints"><p>Try</p><ul>${['Corkman', 'grocer', 'Griffiths', 'Pelham Street', 'bootmaker 1910'].map((t) => `<li><a href="?q=${encodeURIComponent(t)}">${t}</a></li>`).join('')}</ul></div>`;
+      return;
+    }
+    const keys = state.src === 'all' ? ['entries', 'places', 'people'] : [state.src];
+    const total = keys.reduce((n, k) => n + sections[k].length, 0);
+    if (!total) {
+      status.textContent = '';
+      resultsEl.innerHTML = `<div class="search-empty"><p>Nothing found for “${escapeHtml(q)}”${state.year || state.street ? ' with these filters' : ''}.</p>
+        <p>Know something about it? <a href="civic?id=${encodeURIComponent(q)}">Start an entry for “${escapeHtml(q)}”</a>.</p></div>`;
+      return;
+    }
+    status.textContent = `${total.toLocaleString()} results for “${q}”`;
+    resultsEl.innerHTML = keys.filter((k) => sections[k].length).map((k) => {
+      const list = sections[k];
+      const limit = state.src === 'all' ? PER_SECTION : list.length;
+      const cards = list.slice(0, limit).map(k === 'entries' ? entryCard : recordCard).join('');
+      const more = list.length > limit ? `<button type="button" class="search-more-btn" data-src="${k}">Show all ${list.length.toLocaleString()} ${LABELS[k].split(' ·')[0].toLowerCase()}</button>` : '';
+      return `<section class="search-section"><h2>${LABELS[k]} <span>${list.length.toLocaleString()}</span></h2><ol class="results">${cards}</ol>${more}</section>`;
+    }).join('');
+  }
+
+  // ---- Wire up ---------------------------------------------------------
+  function update() { writeUrl(); run(); }
+  let t;
+  input.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { state.q = input.value; update(); }, 150); });
+  form.addEventListener('submit', (e) => { e.preventDefault(); state.q = input.value; update(); });
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-src]');
+    if (b) { state.src = b.dataset.src; update(); window.scrollTo({ top: $('searchPage').offsetTop }); }
+  });
+  yearChips.addEventListener('change', (e) => { state.year = e.target.value; update(); });
+  streetSelect.addEventListener('change', () => { state.street = streetSelect.value; update(); });
+
+  (async function init() {
+    readUrl();
+    input.value = state.q;
+    if (state.year || state.street) $('searchMore').open = true;
+    if (typeof directoryData === 'undefined' || typeof MiniSearch === 'undefined') {
+      status.innerHTML = 'Search could not load. <a href="">Try again</a>.';
+      return;
+    }
+    await loadEntries();
+    buildIndex();
+    fillFilters();
+    run();
+    input.focus();
+  })();
+})();
