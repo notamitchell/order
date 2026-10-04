@@ -101,7 +101,7 @@ A new `admin/index.html` (so `…/order/admin/` works as an address) with a shor
 - **Review submissions and page edits**: `admin/review.html`
 - **Edit site pages**: `admin/pages.html` (new)
 - **Edit directory and map data**: `admin/carlton-data-editor.html`
-- Links to the Google Sheet and to the help in the README.
+- A link to the help in the README. (The Google Sheet is not linked, to keep it private: the team already has the link.)
 
 It uses the same look as `review.html`. It needs no sign-in itself, because each tool checks access when it saves.
 
