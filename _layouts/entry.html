@@ -136,7 +136,7 @@ function slugifyId(text) {
       const fullName = givenName ? `${givenName} ${familyName}` : familyName;
 
       if (fullName) {
-        document.title = `${document.title} - ${fullName}`;
+        document.title = `Common Ground - ${fullName}`;
       }  
 
       const fromDate = xml.getElementsByTagNameNS(ns, "fromDate")[0]?.textContent || "";

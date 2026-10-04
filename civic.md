@@ -1,5 +1,5 @@
 ---
-title: "Carlton Entry"
+title: "Entry"
 ---
 
 ## _Common Ground_
