@@ -253,19 +253,19 @@ Goal: pages only download the data they need, show visitors what's happening whi
   - Loading is **lazy**: each page fetches only the years and sources it shows.
   - Pages can render the first year or source as soon as it arrives, without waiting for everything.
 - [ ] **Loading feedback for visitors**: a consistent "Loading 1905 directory…" indicator or progress bar, disabled filters until their data is ready, and a friendly message with a *Try again* button if a file fails to load (instead of a silently empty page).
-- [x] Stop loading `map-data.js` on every page: only the layouts that use it load it now (#PR).
+- [x] Stop loading `map-data.js` on every page: only the layouts that use it load it now (#44).
 - [ ] Switch pages over to the shared loader one at a time: maps and People/Places first, then search.
 - [ ] Convert `UoM_Landuse_2026.js` to `data/uom-land-parcels.geojson` in the same way.
 - [ ] Remove `map-data.js` once nothing uses it.
 
 ### 2. Better search
 
-- [x] **Build a search index of entries and directory data together**, so one search box finds both "Corkman Hotel" (the entry) and every directory listing for it. Options: [Pagefind](https://pagefind.app/) (static, runs at build time, would need a GitHub Action) or [MiniSearch](https://github.com/lucaong/minisearch) / [Lunr](https://lunrjs.com/) indexes built in the browser or ahead of time. Done in #PR with MiniSearch, built in the browser on the new search page. Revisit Pagefind if entries reach the hundreds.
-- [x] **Fuzzy matching for historical spellings** (Berkley/Berkeley, Leister/Leicester, Mrs/Mrs.), with a small list of known variants (#PR; the list is `VARIANTS` in `scripts/search.js`).
-- [x] Search results grouped by type (Entries / People / Places), with snippets and highlighted matches (#PR).
-- [x] "Trace this person/place across years": linked records show as one result with a row of years, and open to list each year's listing and page (#PR).
-- [x] Shareable search URLs (`?q=…&year=…&street=…`) (#PR).
-- [x] Load the search index only when the search page is opened (#PR).
+- [x] **Build a search index of entries and directory data together**, so one search box finds both "Corkman Hotel" (the entry) and every directory listing for it. Options: [Pagefind](https://pagefind.app/) (static, runs at build time, would need a GitHub Action) or [MiniSearch](https://github.com/lucaong/minisearch) / [Lunr](https://lunrjs.com/) indexes built in the browser or ahead of time. Done in #44 with MiniSearch, built in the browser on the new search page. Revisit Pagefind if entries reach the hundreds.
+- [x] **Fuzzy matching for historical spellings** (Berkley/Berkeley, Leister/Leicester, Mrs/Mrs.), with a small list of known variants (#44; the list is `VARIANTS` in `scripts/search.js`).
+- [x] Search results grouped by type (Entries / People / Places), with snippets and highlighted matches (#44).
+- [x] "Trace this person/place across years": linked records show as one result with a row of years, and open to list each year's listing and page (#44).
+- [x] Shareable search URLs (`?q=…&year=…&street=…`) (#44).
+- [x] Load the search index only when the search page is opened (#44).
 - [ ] Link directory listings to the entries written about them. A listing only shows "Read the entry" when its `entityID` is the entry's name (as the Carlton Inn listings are for *Corkman Hotel*). Entries started from a listing (e.g. *Berkley Arms Hotel*) keep the listing's number, so they aren't linked yet. Fix those in the data editor, and later set the link automatically when an entry is started from a listing.
 - [ ] Tidy streets spelled two ways in the data (e.g. "Berkley Street" and "Berkeley Street"), which both appear in the search page's street filter.
 
@@ -342,7 +342,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
   - [ ] 2D map: collapse the layers panel on phones and use the moss accent colour.
   - [x] 3D map: add a ← Home link and use `100dvh`.
   - [x] Nav: fit all five items on one row on phones.
-  - [x] Search on phones: results are cards and filters fold away on the new search page (#PR).
+  - [x] Search on phones: results are cards and filters fold away on the new search page (#44).
 - [ ] **Accessibility pass**: keyboard navigation for search and maps, and alt text. (A site-wide focus outline and a darker `--ink-faint` for small labels were added in #43.)
 
 ### 8. Site and content
