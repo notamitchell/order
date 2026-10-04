@@ -3,28 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlton — Data Editor</title>
+<title>Carlton data editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Same look as the other admin pages (review.html). -->
 <style>
   :root{
-    --paper:#F6F1E4;
-    --paper-alt:#FBF8F0;
-    --header-bg:#EFE7D2;
-    --ink:#26241E;
-    --ink-soft:#5B5644;
-    --rule:#D8CFB8;
-    --rule-strong:#C3B896;
-    --brass:#9C7A32;
-    --brass-dark:#7C5F23;
-    --green:#3F6C51;
-    --green-dark:#2F5540;
-    --red:#B3261E;
-    --red-bg:#FBE7E5;
+    --paper:#FAFAF8;
+    --paper-alt:#F6F5F1;
+    --header-bg:#F1F0EB;
+    --ink:#1B1E23;
+    --ink-soft:#565C66;
+    --rule:#DAD8D0;
+    --rule-strong:#C9C6BC;
+    /* Buttons and accents use the review page's slate; hover goes to ink */
+    --brass:#3E4C59;
+    --brass-dark:#1B1E23;
+    --green:#3E4C59;
+    --green-dark:#1B1E23;
+    --red:#7A2E20;
+    --red-bg:#F5E6E3;
     --amber:#8A5A00;
     --amber-bg:#FDF1D6;
-    --focus:#3F6C9E;
-    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
-    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    --focus:#3E4C59;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -34,34 +38,37 @@
     font-family:var(--sans);
     font-size:14px;
     line-height:1.4;
+    -webkit-font-smoothing:antialiased;
   }
   a{color:var(--brass-dark);}
 
   /* ---- Masthead ---- */
   .masthead{
-    border-bottom:3px double var(--rule-strong);
-    padding:22px 28px 16px;
-    background:var(--header-bg);
+    border-bottom:1px solid var(--rule);
+    padding:28px 28px 20px;
+    background:var(--paper);
   }
   .masthead .eyebrow{
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.12em;
+    font-family:var(--sans);
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--ink-soft);
     margin:0 0 4px;
   }
   .masthead h1{
     font-family:var(--serif);
-    font-weight:700;
-    font-size:26px;
+    font-weight:500;
+    font-size:24px;
     margin:0 0 4px;
-    letter-spacing:.01em;
+    letter-spacing:-.01em;
   }
   .masthead .sub{
-    font-size:13px;
+    font-size:14px;
     color:var(--ink-soft);
     max-width:760px;
+    margin:0;
   }
   .masthead .stats{
     margin-top:10px;
@@ -120,8 +127,8 @@
     font-size:13px;
     font-weight:600;
     padding:8px 14px;
-    border-radius:3px;
-    border:1px solid var(--brass-dark);
+    border-radius:4px;
+    border:1px solid var(--brass);
     background:var(--brass);
     color:#fff;
     cursor:pointer;
@@ -133,7 +140,9 @@
     color:var(--ink);
     border:1px solid var(--rule-strong);
   }
-  .btn.secondary:hover{background:var(--header-bg);}
+  .btn.secondary:hover{background:#fff;border-color:var(--brass);}
+  .btn:focus-visible, .modal-close:focus-visible, .suggest-chip:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  .toolbar .push-right{margin-left:auto;}
   .btn.green{background:var(--green);border-color:var(--green-dark);}
   .btn.green:hover{background:var(--green-dark);}
   .btn:disabled{opacity:.5;cursor:not-allowed;}
@@ -203,8 +212,8 @@
     border-radius:10px;
     letter-spacing:.02em;
   }
-  .badge.dir{background:#E4DEC9;color:#5C4A1E;}
-  .badge.elec{background:#DCE7DF;color:#2F5540;}
+  .badge.dir{background:#E6E8EB;color:#3E4C59;}
+  .badge.elec{background:#E4EFE7;color:#1F5138;}
 
   /* ---- Pagination ---- */
   .pagination{
@@ -414,7 +423,13 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   @media (max-width:640px){
     .field-row{grid-template-columns:1fr;}
-    .toolbar, .masthead, .table-wrap, .pagination{padding-left:14px;padding-right:14px;}
+    .toolbar, .masthead, .table-wrap, .pagination{padding-left:16px;padding-right:16px;}
+    .masthead{padding-top:20px;padding-bottom:14px;}
+    .masthead h1{font-size:20px;}
+    .masthead .sub .intro{display:none;}
+    .masthead .stats{margin-top:6px;}
+    .toolbar{position:static;}
+    .toolbar .push-right{margin-left:0;}
   }
 </style>
 </head>
@@ -422,8 +437,8 @@
 
 <header class="masthead">
   <p class="eyebrow">Carlton &amp; District</p>
-  <h1>Street Directory &amp; Electoral Roll — Data Editor</h1>
-  <p class="sub">Browse, correct and add records from the Sands &amp; McDougall directories and electoral rolls. When you're done, download the updated file and follow the publishing steps to update the live map.</p>
+  <h1>Street directory &amp; electoral roll data editor</h1>
+  <p class="sub"><span class="intro">Browse, correct and add records from the Sands &amp; McDougall directories and electoral rolls. When you're done, download the updated file and follow the publishing steps to update the live map. </span><a href="./">Admin</a> &middot; <a href="../">Back to the site</a></p>
   <div class="stats">
     <span><b id="statTotal">0</b> records</span>
     <span><b id="statFiltered">0</b> shown</span>
@@ -451,17 +466,18 @@
     <option value="Directory">Directory</option>
     <option value="Electoral roll">Electoral roll</option>
   </select>
-  <button class="btn green" id="newRecordBtn">+ New record</button>
+  <button class="btn secondary" id="newRecordBtn">+ New record</button>
   <button class="btn secondary" id="loadFileBtn">Load a different file…</button>
   <input type="file" id="fileInput" accept=".js,.json,.txt" style="display:none">
-  <button class="btn secondary" id="howToBtn">How to publish ▸</button>
-  <button class="btn" id="downloadBtn">⬇ Download updated map-data.js</button>
+  <button class="btn secondary push-right" id="howToBtn">How to publish</button>
+  <button class="btn" id="downloadBtn">Download updated map-data.js</button>
 </div>
 
 <div class="table-wrap">
   <table id="dataTable">
     <thead>
       <tr>
+        <th><span class="sr-only">Edit</span></th>
         <th data-key="entityID">ID<span class="arrow" id="arrow-entityID"></span></th>
         <th data-key="source">Source<span class="arrow" id="arrow-source"></span></th>
         <th data-key="year">Year<span class="arrow" id="arrow-year"></span></th>
@@ -471,7 +487,6 @@
         <th data-key="_person">Listing / Name</th>
         <th data-key="_occupation">Occupation</th>
         <th data-key="_coords">Coords</th>
-        <th></th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -523,7 +538,7 @@
       <p>Once you've finished editing, follow these steps to update the live copy on GitHub. You don't need any special software — this is all done in your browser.</p>
       <ol>
         <li><b>Make sure you started with the current file.</b> This tool has no data of its own — you should have already uploaded the current <code>map-data.js</code> (ideally freshly downloaded from GitHub) before making your edits, so nothing gets overwritten by accident.</li>
-        <li><b>Download the file.</b> Click the <b>"⬇ Download updated map-data.js"</b> button above. It will save a file called <code>map-data.js</code> to your computer's Downloads folder.</li>
+        <li><b>Download the file.</b> Click the <b>"Download updated map-data.js"</b> button above. It will save a file called <code>map-data.js</code> to your computer's Downloads folder.</li>
         <li><b>Check the filename.</b> Look in your Downloads folder. If your browser saved it as <code>map-data (1).js</code> or similar, rename it back to exactly <code>map-data.js</code> — this matters, as it must match the existing file exactly.</li>
         <li><b>Open the GitHub repository</b> in your browser and sign in if needed.</li>
         <li><b>Find the existing <code>map-data.js</code> file</b> in the repository (you may need to open a folder first, depending on where it lives).</li>
@@ -861,7 +876,7 @@ function render(){
     editBtn.textContent = 'Edit';
     editBtn.addEventListener('click', () => openEditModal(r._uid));
     tdActions.appendChild(editBtn);
-    tr.appendChild(tdActions);
+    tr.prepend(tdActions);
 
     tbody.appendChild(tr);
   });
