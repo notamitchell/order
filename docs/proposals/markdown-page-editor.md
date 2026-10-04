@@ -94,6 +94,7 @@ Whichever option is chosen, the save should **include the version of the page th
 - **An editor may accept their own page edit.** A second reviewer is not required, so the review step is mainly a preview and a record of what changed.
 - **The A–Z links will be cleaned up** (spaces → `%20`), which removes the main obstacle to a visual editor.
 - **Add an admin landing page.** See below.
+- **Page edits go in the same Google Sheet tab as submissions.** The Sheet is a quick, browsable backup and log; telling new entries, new versions and page edits apart is handled in code, not in the Sheet.
 - **Editable pages:** only the A–Z and home page among existing pages, plus new plain pages such as Contact or Acknowledgements when they are added (see *Which pages*).
 
 ### Signing in
@@ -116,10 +117,6 @@ A new `admin/index.html` (so `…/order/admin/` works as an address) with a shor
 - Links to the Google Sheet and to the help in the README.
 
 It uses the same look as `review.html`. It needs no sign-in itself, because each tool checks access when it saves.
-
-## Still open
-
-- Should page edits go in the same Google Sheet as submissions or in their own tab?
 
 ## Noticed while looking
 
