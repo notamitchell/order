@@ -5,8 +5,6 @@ overrideCommunityContributionForm: true
 ---
 
 # Common Ground: Community Histories of the Campus Precinct 1850s-1950s
-_Website under construction._
-
 Through a process of community co-design, the Melbourne History Workshop (melbournehistoryworkshop.com) and Carlton Community History Group (cchg.asn.au) have created this website to empower residents, students and community stakeholders to upskill, research, digitise, and map the rich histories of vanished working-class quarters now engrossed as part of The University of Melbourne’s expanded estate.
 
 Common Ground is a collaborative effort to recover histories of vanished communities whose stories remain absent in the material traces of the campus. 

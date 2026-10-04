@@ -365,7 +365,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 
 ### 8. Site and content
 
-- [ ] Replace the "under construction" notice with a permanent, welcoming "this is a work in progress, and you can help" message that links to ways to contribute.
+- [x] Replace the "under construction" notice with a permanent, welcoming "this is a work in progress, and you can help" message that links to ways to contribute. A "Work in progress" strip now sits under the nav on every page.
 - [ ] Add an About page, Acknowledgement of Country, credits and licence to the site.
 - [ ] Cite sources consistently on entry pages, with a "how to cite this page" box.
 - [ ] Support images in entries.
