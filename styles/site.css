@@ -1247,3 +1247,47 @@ html.map3d-page, body.map3d-page {
     .facet-list h1 { font-size: 1.55rem; }
     .facet-list h2 { font-size: 1.15rem; }
 }
+
+/* ── Data loading messages (scripts/data.js) ──────────────────────────────
+   "Loading the 1905 directory… (4 of 9)", and the error with Try again. */
+.data-status {
+    margin: 16px 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--ink-faint);
+}
+.data-status[hidden] { display: none; }
+.data-status-error {
+    font-style: normal;
+    color: var(--ink);
+}
+.data-status-retry {
+    margin-left: 4px;
+    padding: 4px 12px;
+    font: inherit;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--paper);
+    background: var(--moss);
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.data-status-retry:hover { background: var(--moss-deep); }
+
+/* On the maps the message floats over the map until the data is in. */
+.data-status.data-status-map {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    max-width: calc(100% - 32px);
+    margin: 0;
+    padding: 14px 20px;
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
