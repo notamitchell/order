@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- form2 is a test page: nothing links here yet, and search engines skip it -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Contribution Form (test version)</title>
+
+  <!-- Directory data loader: fetches only the files holding this entry's records -->
+  <script src="scripts/data.js?v={{ site.time | date: '%s' }}"></script>
+  <!-- Builds the EAC-CPF 2.0 XML and the preview -->
+  <script src="scripts/eac-cpf.js?v={{ site.time | date: '%s' }}"></script>
+
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="styles/site.css?v={{ site.time | date: '%s' }}">
+
+  <!-- Same look as the live form (_layouts/form.html). On its own the page gets
+       the paper background; inside an iframe it is transparent like form.html. -->
+  <style>
+    body {
+      background: var(--paper);
+      color: var(--ink-soft);
+      font-family: var(--font-ui);
+      padding: 24px 16px 48px;
+    }
+    body.in-frame { background: transparent; padding: 0; }
+    .form-card { max-width: 720px; margin: 0 auto; }
+    body.in-frame .form-card { margin: 0; }
+
+    .test-note {
+      font-size: 13px;
+      background: var(--paper-deep);
+      border: 1px dashed var(--sage-dark);
+      padding: 8px 12px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-family: var(--font-serif);
+      font-weight: normal;
+      color: var(--ink);
+      font-size: 1.25rem;
+      margin-bottom: 6px;
+    }
+    .form-intro { margin-bottom: 20px; font-size: 0.95rem; }
+
+    /* --- Directory record(s) this entry is about (as in form.html) --- */
+    .entity-container { margin-bottom: 24px; }
+    .entity-card {
+      background-color: var(--paper);
+      border: 1px solid var(--paper-line);
+      border-left: 3px solid var(--moss);
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+    body:not(.in-frame) .entity-card { background: var(--paper-deep); }
+    .entity-card h3 {
+      font-family: var(--font-serif);
+      font-weight: normal;
+      font-size: 1rem;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .entity-card ul { list-style-type: none; }
+    .entity-card li {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--ink);
+      padding: 4px 0;
+      border-bottom: 1px dashed var(--paper-line);
+      overflow-wrap: anywhere;
+    }
+    .entity-card li:last-child { border-bottom: none; }
+    .entity-card .prop-key {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-faint);
+      margin-right: 4px;
+    }
+    .entity-card .use-address { margin-top: 8px; }
+
+    /* --- Fields --- */
+    .field-group { margin-bottom: 18px; }
+    label, .label {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--moss);
+      margin-bottom: 5px;
+    }
+    .optional-tag {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      border: 1px solid var(--paper-line);
+      background: var(--paper);
+      padding: 1px 6px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    input[type="text"], input[type="url"], select {
+      width: 100%;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      padding: 9px 11px;
+      background: var(--paper);
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      border-radius: 0;
+    }
+    select { font-family: var(--font-ui); }
+    input::placeholder { color: var(--ink-faint); }
+    input:focus, select:focus { outline: 2px solid var(--moss); outline-offset: 1px; }
+    .hint { font-size: 13px; color: var(--ink-faint); margin: -2px 0 8px; }
+
+    /* "What is this entry about?" as one-tap chips */
+    fieldset { border: none; margin-bottom: 18px; }
+    legend { padding: 0; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .chip span {
+      display: inline-block;
+      font-size: 14px;
+      padding: 7px 12px;
+      border: 1px solid var(--sage-dark);
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .chip { margin: 0; }
+    .chip input:checked + span { background: var(--moss); border-color: var(--moss); color: var(--paper); }
+    .chip input:focus-visible + span { outline: 2px solid var(--moss); outline-offset: 2px; }
+    .chip span:hover { border-color: var(--moss); }
+    .clear-kind {
+      font-size: 13px; background: none; border: none; color: var(--moss);
+      text-decoration: underline; cursor: pointer; padding: 7px 4px;
+    }
+
+    /* Quill editor (as in form.html) */
+    .ql-toolbar.ql-snow, .ql-container.ql-snow { border-color: var(--ink); }
+    .ql-toolbar.ql-snow { background: var(--paper-deep); font-family: var(--font-ui); }
+    .ql-container.ql-snow { background: var(--paper); font-family: var(--font-ui); font-size: 15px; color: var(--ink); }
+    .ql-container.ql-snow:focus-within { outline: 2px solid var(--moss); outline-offset: 1px; }
+    .ql-editor.ql-blank::before { color: var(--ink-faint); font-style: normal; }
+    .ql-snow .ql-stroke { stroke: var(--ink-soft); }
+    .ql-snow .ql-fill { fill: var(--ink-soft); }
+    .ql-snow .ql-picker { color: var(--ink-soft); }
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow .ql-picker-label:hover .ql-stroke { stroke: var(--moss); }
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill { fill: var(--moss); }
+    .ql-snow.ql-toolbar button:hover,
+    .ql-snow.ql-toolbar button.ql-active,
+    .ql-snow .ql-picker-label:hover,
+    .ql-snow .ql-picker-item:hover,
+    .ql-snow .ql-picker-item.ql-selected { color: var(--moss); }
+    .ql-snow .ql-picker-options { background: var(--paper); }
+    .ql-snow .ql-tooltip { background: var(--paper); border-color: var(--sage-dark); color: var(--ink-soft); box-shadow: none; }
+    .ql-snow .ql-tooltip a, .ql-editor a { color: var(--moss); }
+    #editor-container { height: 220px; }
+    .ql-table-embed table { border-collapse: collapse; width: 100%; }
+    .ql-table-embed td, .ql-table-embed th { border: 1px solid var(--paper-line); padding: 6px 8px; }
+
+    /* --- The optional box --- */
+    .more {
+      border: 1px solid var(--paper-line);
+      background: var(--paper-deep);
+      padding: 16px;
+      margin: 26px 0 22px;
+    }
+    body.in-frame .more { background: var(--paper); }
+    .more-head { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .more-head h3 {
+      font-family: var(--font-serif);
+      font-weight: normal;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+    .more-head p { font-size: 14px; margin-top: 4px; max-width: 46ch; }
+
+    /* "Show all fields" switch */
+    .switch { display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; letter-spacing: normal; font-size: 14px; color: var(--ink); margin: 0; }
+    .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .switch .track {
+      flex: none; width: 36px; height: 20px; border-radius: 10px;
+      background: var(--sage); border: 1px solid var(--sage-dark); position: relative; transition: background .15s;
+    }
+    .switch .track::after {
+      content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--paper); transition: transform .15s;
+    }
+    .switch input:checked + .track { background: var(--moss); border-color: var(--moss); }
+    .switch input:checked + .track::after { transform: translateX(16px); }
+    .switch input:focus-visible + .track { outline: 2px solid var(--moss); outline-offset: 2px; }
+    .switch small { display: block; font-size: 12px; color: var(--ink-faint); }
+
+    details.section { border-top: 1px solid var(--paper-line); }
+    details.section:last-of-type { border-bottom: 1px solid var(--paper-line); }
+    details.section > summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 2px 10px;
+      padding: 11px 0 11px 2.2ch;
+      position: relative;
+    }
+    details.section > summary::-webkit-details-marker { display: none; }
+    details.section > summary::before {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--moss);
+      position: absolute;
+      left: 0;
+    }
+    details.section[open] > summary::before { content: "−"; }
+    .sum-title { color: var(--ink); font-size: 15px; }
+    .sum-hint { color: var(--ink-faint); font-size: 13px; flex: 1 1 200px; }
+    .sum-count { font-size: 12px; color: var(--moss-deep); background: var(--sage-light); padding: 0 6px; }
+    .sum-count:empty { display: none; }
+    .section-body { padding: 4px 0 16px 2.2ch; }
+    @media (max-width: 480px) {
+      .more { padding: 14px 12px; }
+      .section-body { padding-left: 0; }
+    }
+
+    .advanced-only { display: none !important; }
+    .show-all .advanced-only { display: block !important; }
+    .show-all .row.advanced-only { display: grid !important; }
+    .person-only:not(.is-person) { display: none !important; }
+    .advanced-badge { font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--paper); background: var(--sage-dark); padding: 1px 5px; }
+
+    /* Repeatable rows */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px 12px;
+      padding: 12px;
+      border: 1px solid var(--paper-line);
+      background: var(--paper);
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .row .field-group { margin: 0; min-width: 0; }
+    .row input, .row select { min-width: 0; }
+    .row .wide { grid-column: 1 / -1; }
+    .row .remove-row {
+      grid-column: 1 / -1;
+      justify-self: end;
+      font-size: 13px; background: none; border: none; color: var(--moss);
+      text-decoration: underline; cursor: pointer; padding: 0;
+    }
+    .check-line { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--ink); text-transform: none; letter-spacing: normal; margin-top: 4px; }
+    .check-line input { width: 16px; height: 16px; accent-color: var(--moss); }
+
+    /* Buttons */
+    button.primary, button.secondary, button.small {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      padding: 11px 20px;
+      border: 1px solid var(--moss);
+      cursor: pointer;
+    }
+    button.primary { background: var(--moss); color: var(--paper); }
+    button.primary:hover { background: var(--moss-deep); }
+    button.secondary, button.small { background: var(--paper); color: var(--moss-deep); }
+    button.secondary:hover, button.small:hover { background: var(--sage-light); }
+    button.small { font-size: 13px; padding: 6px 12px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .actions .note { font-size: 13px; color: var(--ink-faint); }
+    @media (max-width: 480px) {
+      .actions button { width: 100%; }
+    }
+
+    /* --- Preview --- */
+    #preview { margin-top: 30px; border-top: 2px solid var(--ink); padding-top: 18px; }
+    #preview > h2 { margin-bottom: 12px; }
+    .checks { list-style: none; margin-bottom: 18px; font-size: 14px; }
+    .checks li { padding: 6px 10px; margin-bottom: 6px; border-left: 3px solid var(--sage-dark); background: var(--paper-deep); }
+    .checks li.error { border-left-color: #8a2c1d; background: #f6e4dc; color: #8a2c1d; }
+    .checks li.ok { border-left-color: var(--moss); background: var(--sage-light); color: var(--moss-deep); }
+    .pv-entry {
+      background: #fff;
+      border: 1px solid var(--paper-line);
+      padding: 22px 20px;
+      color: var(--ink-soft);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .pv-entry h1 { font-family: var(--font-serif); font-weight: normal; color: var(--ink); font-size: 1.6rem; line-height: 1.25; }
+    .pv-entry h2 { font-family: var(--font-serif); font-weight: normal; color: var(--ink); font-size: 1.15rem; margin: 20px 0 6px; }
+    .pv-entry p, .pv-entry ul, .pv-entry ol { margin-bottom: 10px; }
+    .pv-entry ul, .pv-entry ol { padding-left: 22px; }
+    .pv-entry a { color: var(--moss); }
+    .pv-type { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--moss); margin-bottom: 2px !important; }
+    .pv-life { color: var(--ink-faint); }
+    .pv-dates { color: var(--ink-faint); font-size: 0.92em; }
+    .pv-facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 14px 0 18px; padding: 12px 14px; background: var(--paper); border-left: 3px solid var(--moss); font-size: 14px; }
+    .pv-facts dt { color: var(--ink-faint); }
+    .pv-facts dd { color: var(--ink); overflow-wrap: anywhere; }
+    @media (max-width: 480px) {
+      .pv-facts { grid-template-columns: 1fr; }
+      .pv-facts dd { margin-bottom: 6px; }
+    }
+    .pv-chron { border-collapse: collapse; width: 100%; margin-bottom: 12px; font-size: 14px; }
+    .pv-chron th, .pv-chron td { border-bottom: 1px solid var(--paper-line); padding: 5px 8px 5px 0; text-align: left; vertical-align: top; }
+    .pv-chron th { white-space: nowrap; color: var(--ink); font-weight: normal; font-family: var(--font-mono); }
+    .pv-by { font-style: italic; color: var(--ink-faint); text-align: right; margin-top: 16px; }
+    .xml-box { margin-top: 16px; }
+    .xml-box summary { cursor: pointer; color: var(--moss-deep); font-size: 14px; padding: 6px 0; }
+    .xml-box pre {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      background: var(--ink-deepest);
+      color: var(--paper);
+      padding: 14px;
+      overflow: auto;
+      max-height: 480px;
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-card">
+  <p class="test-note"><strong>Test version.</strong> This is the new contribution form. It doesn't send anything yet: use <em>Preview</em> to see how the entry would look, or download the XML.</p>
+
+  <div id="details-container"></div>
+
+  <h2>Suggest Article contents</h2>
+  <p class="form-intro"><i>Instructions go here. Links to editorial guidance, etc. </i></p>
+
+  <form id="form2" novalidate>
+    <div class="field-group">
+      <label for="authorName">Your name</label>
+      <input type="text" id="authorName" name="authorName" placeholder="e.g. Dr. John Smith" autocomplete="name" required>
+    </div>
+
+    <div class="field-group">
+      <label for="articleTitle">Article title</label>
+      <input type="text" id="articleTitle" name="articleTitle" placeholder="e.g. Princes Bridge" required>
+    </div>
+
+    <fieldset class="field-group">
+      <legend class="label">What is this entry about? <span class="optional-tag">Optional</span></legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="kind" value="person"><span>A person</span></label>
+        <label class="chip"><input type="radio" name="kind" value="corporateBody"><span>A business or organisation</span></label>
+        <label class="chip"><input type="radio" name="kind" value="family"><span>A family</span></label>
+        <label class="chip"><input type="radio" name="kind" value="topic"><span>A place, street or topic</span></label>
+        <button type="button" class="clear-kind" id="clearKind" hidden>Clear</button>
+      </div>
+    </fieldset>
+
+    <div class="field-group">
+      <label id="articleLabel">Article text</label>
+      <div id="editor-container" aria-labelledby="articleLabel"></div>
+    </div>
+
+    <!-- Everything in this box is optional -->
+    <section class="more" aria-labelledby="moreHeading">
+      <div class="more-head">
+        <div>
+          <h3 id="moreHeading">Add more detail <span class="optional-tag">Optional</span></h3>
+          <p>Everything in this box is optional. You can send your article without it. Fill in only what you know.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="showAll" role="switch">
+          <span class="track" aria-hidden="true"></span>
+          <span>Show all fields<small>For editors and keen researchers</small></span>
+        </label>
+      </div>
+
+      <details class="section" data-section="dates">
+        <summary><span class="sum-title">Dates</span><span class="sum-hint" data-hint="dates"></span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="field-group"><label for="dateFrom" data-label="from">From</label><input type="text" id="dateFrom" name="dateFrom" placeholder="e.g. 1856"></div>
+            <div class="field-group"><label for="dateTo" data-label="to">To</label><input type="text" id="dateTo" name="dateTo" placeholder="e.g. 1881"></div>
+            <label class="check-line wide"><input type="checkbox" id="dateApprox"> These dates are approximate</label>
+          </div>
+          <p class="hint">A year is enough. You can also write "c. 1856" or "1856-03-04".</p>
+        </div>
+      </details>
+
+      <details class="section" data-section="names">
+        <summary><span class="sum-title">Other names</span><span class="sum-hint">Earlier or later names, e.g. Carlton Inn, later the Corkman Hotel</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <div class="row advanced-only person-only" id="nameParts">
+            <p class="hint wide">Name parts for people <span class="advanced-badge">All fields</span></p>
+            <div class="field-group"><label for="surname">Surname</label><input type="text" id="surname" placeholder="e.g. Cozens"></div>
+            <div class="field-group"><label for="forenames">Forenames</label><input type="text" id="forenames" placeholder="e.g. John"></div>
+          </div>
+          <div class="rows" data-list="otherNames"></div>
+        </div>
+      </details>
+
+      <details class="section" data-section="places">
+        <summary><span class="sum-title">Addresses</span><span class="sum-hint">Where they lived or worked, with years</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <p class="hint">Tip: the directory records at the top of the form have a <em>Use this address</em> button.</p>
+          <div class="rows" data-list="places"></div>
+        </div>
+      </details>
+
+      <details class="section" data-section="occupations">
+        <summary><span class="sum-title" data-label="occupations">Occupation or trade</span><span class="sum-hint" data-hint="occupations"></span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="occupations"></div></div>
+      </details>
+
+      <details class="section" data-section="sources">
+        <summary><span class="sum-title">Sources you used</span><span class="sum-hint">Newspapers, directories, books, archives</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="sources"></div></div>
+      </details>
+
+      <details class="section" data-section="authors">
+        <summary><span class="sum-title">More authors</span><span class="sum-hint">If others wrote this with you</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="authors"></div></div>
+      </details>
+
+      <!-- Only with "Show all fields" -->
+      <details class="section advanced-only" data-section="legal">
+        <summary><span class="sum-title">Legal status</span><span class="sum-hint">e.g. a publican's licence</span><span class="advanced-badge">All fields</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="legalStatuses"></div></div>
+      </details>
+
+      <details class="section advanced-only" data-section="chronology">
+        <summary><span class="sum-title">Chronology</span><span class="sum-hint">Dated events, one per row</span><span class="advanced-badge">All fields</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="chronology"></div></div>
+      </details>
+
+      <details class="section advanced-only" data-section="relations">
+        <summary><span class="sum-title">Related entries</span><span class="sum-hint">People, businesses and families connected to this one</span><span class="advanced-badge">All fields</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <p class="hint">Start typing to pick an entry already on the site; its link fills in.</p>
+          <div class="rows" data-list="relations"></div>
+        </div>
+      </details>
+
+      <details class="section advanced-only" data-section="note">
+        <summary><span class="sum-title">Note for the record</span><span class="sum-hint">What this contribution adds or changes</span><span class="advanced-badge">All fields</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <div class="field-group"><label for="note">Note</label><input type="text" id="note" placeholder="e.g. Resubmitted from the old form with dates and addresses added"></div>
+        </div>
+      </details>
+    </section>
+
+    <div class="actions">
+      <button type="button" class="primary" id="previewBtn">Preview</button>
+      <button type="button" class="secondary" id="downloadBtn">Download XML</button>
+      <span class="note">Nothing is sent from this test version.</span>
+    </div>
+  </form>
+
+  <section id="preview" hidden aria-live="polite">
+    <h2>Preview</h2>
+    <ul class="checks" id="checks"></ul>
+    <div id="previewEntry"></div>
+    <details class="xml-box">
+      <summary>Show the EAC-CPF XML</summary>
+      <pre id="xmlOut"></pre>
+    </details>
+  </section>
+</div>
+
+<datalist id="occupation-terms">
+  <option value="Publican"><option value="Licensee"><option value="Brewer"><option value="Grocer"><option value="Butcher">
+  <option value="Bootmaker"><option value="Tailor"><option value="Carpenter"><option value="Labourer"><option value="Dressmaker">
+  <option value="Clerk"><option value="Teacher"><option value="Builder">
+</datalist>
+<datalist id="function-terms">
+  <option value="Hotel"><option value="Brewery"><option value="Shop"><option value="Factory"><option value="School">
+  <option value="Church"><option value="Society"><option value="Bank">
+</datalist>
+<datalist id="place-roles">
+  <option value="Residence"><option value="Business premises"><option value="Licensed premises"><option value="Birthplace"><option value="Place of death">
+</datalist>
+<datalist id="relation-types">
+  <option value="Licensee"><option value="Owner"><option value="Occupant"><option value="Family member"><option value="Spouse">
+  <option value="Parent"><option value="Child"><option value="Employer"><option value="Employee"><option value="Earlier name of"><option value="See also">
+</datalist>
+<datalist id="entry-titles"></datalist>
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+<script>
+  // Every entry file on the site, for the "Related entries" picker
+  window.ENTRY_FILES = [{% for f in site.static_files %}{% if f.path contains '/civic/' and f.extname == '.xml' %}"{{ f.basename }}",{% endif %}{% endfor %}];
+</script>
+<script>
+(function () {
+  if (window.parent !== window) document.body.classList.add('in-frame');
+
+  const form = document.getElementById('form2');
+  const $ = (id) => document.getElementById(id);
+  const kindOf = () => (form.querySelector('input[name="kind"]:checked') || {}).value || '';
+
+  /* ---------- Labels that follow "What is this entry about?" ---------- */
+  const KIND_TEXT = {
+    person:        { from: 'Born', to: 'Died', dates: 'When they were born and died', occ: 'Occupation or trade', occHint: 'e.g. publican, tailor', occList: 'occupation-terms', occLabel: 'Occupation' },
+    corporateBody: { from: 'Opened', to: 'Closed', dates: 'When it opened and closed', occ: 'What it did', occHint: 'e.g. hotel, brewery, school', occList: 'function-terms', occLabel: 'Activity' },
+    family:        { from: 'From', to: 'To', dates: 'The years the family was in Carlton', occ: 'Occupation or trade', occHint: 'The family trade or business', occList: 'occupation-terms', occLabel: 'Occupation' },
+    '':            { from: 'From', to: 'To', dates: 'When it started and ended', occ: 'Occupation or trade', occHint: 'Or what a business did', occList: 'occupation-terms', occLabel: 'Occupation' }
+  };
+  KIND_TEXT.topic = KIND_TEXT[''];
+
+  /* ---------- Repeatable rows ---------- */
+  const YEARS = [
+    { k: 'from', label: 'From', ph: 'e.g. 1856' },
+    { k: 'to', label: 'To', ph: 'e.g. 1881' }
+  ];
+  const LISTS = {
+    otherNames: { add: 'Add another name', fields: [
+      { k: 'name', label: 'Name', ph: 'e.g. Carlton Inn', wide: true }, ...YEARS] },
+    places: { add: 'Add another address', fields: [
+      { k: 'address', label: 'Address', ph: 'e.g. 160 Leicester Street, Carlton', wide: true },
+      ...YEARS,
+      { k: 'role', label: 'Role', ph: 'e.g. Licensed premises', list: 'place-roles', advanced: true },
+      { k: 'lat', label: 'Latitude', ph: 'e.g. -37.8041', advanced: true },
+      { k: 'lng', label: 'Longitude', ph: 'e.g. 144.9602', advanced: true }] },
+    occupations: { add: 'Add another', fields: [
+      { k: 'term', label: 'Occupation', ph: 'e.g. Publican', list: 'occupation-terms', wide: true }, ...YEARS] },
+    sources: { add: 'Add another source', fields: [
+      { k: 'text', label: 'Source', ph: 'e.g. Argus, 7 December 1859, p. 3', wide: true },
+      { k: 'href', label: 'Link (if online)', ph: 'e.g. https://trove.nla.gov.au/…', type: 'url', wide: true }] },
+    authors: { add: 'Add another author', fields: [
+      { k: 'name', label: 'Author name', ph: 'e.g. Felice Rocca', wide: true }] },
+    legalStatuses: { add: 'Add another', fields: [
+      { k: 'term', label: 'Legal status', ph: "e.g. Publican's licence", wide: true }, ...YEARS] },
+    chronology: { add: 'Add another event', fields: [
+      { k: 'date', label: 'Date', ph: 'e.g. 1859' },
+      { k: 'event', label: 'What happened', ph: 'e.g. Licence granted to John Cozens', wide: true },
+      { k: 'place', label: 'Place', ph: 'e.g. Carlton Inn', wide: true }] },
+    relations: { add: 'Add another', fields: [
+      { k: 'name', label: 'Name', ph: 'e.g. John Cozens', list: 'entry-titles', wide: true },
+      { k: 'targetType', label: 'Type', select: [['person', 'Person'], ['corporateBody', 'Business or organisation'], ['family', 'Family'], ['resource', 'Book, record or other source']] },
+      { k: 'relationType', label: 'Relationship', ph: 'e.g. Licensee', list: 'relation-types' },
+      ...YEARS,
+      { k: 'href', label: 'Link', ph: 'Fills in for entries on this site', type: 'url', wide: true }] }
+  };
+  let uid = 0;
+
+  function addRow(listName, values) {
+    const cfg = LISTS[listName];
+    const box = form.querySelector(`[data-list="${listName}"]`);
+    const row = document.createElement('div');
+    row.className = 'row';
+    cfg.fields.forEach((f) => {
+      const id = `f${++uid}`;
+      const wrap = document.createElement('div');
+      wrap.className = `field-group${f.wide ? ' wide' : ''}${f.advanced ? ' advanced-only' : ''}`;
+      const label = document.createElement('label');
+      label.htmlFor = id;
+      label.textContent = f.label;
+      label.dataset.k = f.k;
+      let input;
+      if (f.select) {
+        input = document.createElement('select');
+        f.select.forEach(([v, t]) => input.add(new Option(t, v)));
+      } else {
+        input = document.createElement('input');
+        input.type = f.type || 'text';
+        input.placeholder = f.ph || '';
+        if (f.list) input.setAttribute('list', f.list);
+      }
+      input.id = id;
+      input.dataset.k = f.k;
+      if (values && values[f.k] !== undefined) input.value = values[f.k];
+      wrap.append(label, input);
+      row.append(wrap);
+    });
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'remove-row';
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => {
+      if (box.querySelectorAll('.row').length > 1) row.remove();
+      else row.querySelectorAll('input').forEach((i) => { i.value = ''; });
+      changed();
+    });
+    row.append(remove);
+    box.insertBefore(row, box.querySelector('.add-row'));
+    applyKindLabels();
+    return row;
+  }
+
+  Object.keys(LISTS).forEach((name) => {
+    const box = form.querySelector(`[data-list="${name}"]`);
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'small add-row';
+    add.textContent = `+ ${LISTS[name].add}`;
+    add.addEventListener('click', () => { addRow(name).querySelector('input, select').focus(); });
+    box.append(add);
+    addRow(name);
+  });
+
+  function readList(name) {
+    return [...form.querySelectorAll(`[data-list="${name}"] .row`)].map((row) => {
+      const out = {};
+      row.querySelectorAll('[data-k]').forEach((i) => { if (i.tagName !== 'LABEL') out[i.dataset.k] = i.value; });
+      return out;
+    });
+  }
+
+
+  function applyKindLabels() {
+    const kind = kindOf();
+    const t = KIND_TEXT[kind];
+    form.querySelector('[data-label="from"]').textContent = t.from;
+    form.querySelector('[data-label="to"]').textContent = t.to;
+    form.querySelector('[data-hint="dates"]').textContent = t.dates;
+    form.querySelector('[data-label="occupations"]').textContent = t.occ;
+    form.querySelector('[data-hint="occupations"]').textContent = t.occHint;
+    form.querySelectorAll('[data-list="occupations"] label[data-k="term"]').forEach((l) => { l.textContent = t.occLabel; });
+    form.querySelectorAll('[data-list="occupations"] input[data-k="term"]').forEach((i) => { i.setAttribute('list', t.occList); });
+    $('nameParts').classList.toggle('is-person', kind === 'person');
+    $('clearKind').hidden = !kind;
+  }
+  form.querySelectorAll('input[name="kind"]').forEach((r) => r.addEventListener('change', () => { applyKindLabels(); changed(); }));
+  $('clearKind').addEventListener('click', () => {
+    form.querySelectorAll('input[name="kind"]').forEach((r) => { r.checked = false; });
+    applyKindLabels(); changed();
+  });
+
+  /* ---------- "Show all fields" ---------- */
+  function setShowAll(on) {
+    form.classList.toggle('show-all', on);
+    $('showAll').checked = on;
+    // Opening everything shows editors the whole record at once; switching
+    // back closes only the sections that are still empty.
+    form.querySelectorAll('details.section').forEach((d) => {
+      if (on) d.open = true;
+      else if (!d.querySelector('.sum-count').textContent) d.open = false;
+    });
+  }
+  $('showAll').addEventListener('change', (e) => setShowAll(e.target.checked));
+
+  /* ---------- Section counts ("2 added") ---------- */
+  function updateCounts() {
+    form.querySelectorAll('details.section').forEach((d) => {
+      let n = 0;
+      const rows = d.querySelectorAll('.rows .row');
+      if (rows.length) {
+        rows.forEach((r) => { if ([...r.querySelectorAll('input')].some((i) => i.value.trim())) n++; });
+      } else {
+        n = [...d.querySelectorAll('input[type="text"]')].some((i) => i.value.trim()) ? 1 : 0;
+      }
+      if (d.dataset.section === 'names' && ($('surname').value.trim() || $('forenames').value.trim())) n = Math.max(n, 1);
+      d.querySelector('.sum-count').textContent = n ? (rows.length ? `${n} added` : 'Added') : '';
+    });
+  }
+
+  /* ---------- Directory records (as in form.html), with "Use this address" ---------- */
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetId = urlParams.get('id');
+  if (urlParams.get('title')) $('articleTitle').value = urlParams.get('title');
+  else if (targetId && !/^\d+$/.test(targetId)) $('articleTitle').value = targetId.replace(/-/g, ' ');
+  if (urlParams.has('advanced')) setShowAll(true);
+
+  if (targetId && window.CGData) {
+    CGData.forEntity(targetId).then(showRecords).catch(() => {});
+  }
+
+  function addressOf(record) {
+    if (!record.street) return '';
+    const num = String(record.listing || '').match(/^\s*(\d+[a-z]?(?:\s*-\s*\d+[a-z]?)?)\b/i);
+    return `${num ? num[1].replace(/\s+/g, '') + ' ' : ''}${record.street}, Carlton`;
+  }
+
+  function useAddress(record) {
+    const details = form.querySelector('details[data-section="places"]');
+    details.open = true;
+    const rows = [...form.querySelectorAll('[data-list="places"] .row')];
+    const empty = rows.find((r) => ![...r.querySelectorAll('input')].some((i) => i.value.trim()));
+    const row = empty || addRow('places');
+    const set = (k, v) => { const i = row.querySelector(`[data-k="${k}"]:not(label)`); if (i && v !== undefined && v !== null) i.value = v; };
+    set('address', addressOf(record));
+    set('from', record.year);
+    set('to', record.year);
+    // Six decimal places is about 10 cm, plenty for a street address
+    if (record.lat != null && record.lng != null) {
+      set('lat', Number(record.lat).toFixed(6));
+      set('lng', Number(record.lng).toFixed(6));
+    }
+    changed();
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function showRecords(records) {
+    if (!records.length) return;
+    const container = document.createElement('div');
+    container.className = 'entity-container';
+    records.forEach((record, index) => {
+      const card = document.createElement('div');
+      card.className = 'entity-card';
+      if (records.length > 1) {
+        const h = document.createElement('h3');
+        h.textContent = `Item #${index + 1}`;
+        card.append(h);
+      }
+      const ul = document.createElement('ul');
+      for (const [key, value] of Object.entries(record)) {
+        if (value === null || value === undefined) continue;
+        const li = document.createElement('li');
+        const k = document.createElement('span');
+        k.className = 'prop-key';
+        k.textContent = key.charAt(0).toUpperCase() + key.slice(1) + ':';
+        li.append(k, ' ', String(value));
+        ul.append(li);
+      }
+      card.append(ul);
+      if (record.street) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'small use-address';
+        b.textContent = 'Use this address';
+        b.addEventListener('click', () => useAddress(record));
+        card.append(b);
+      }
+      container.append(card);
+    });
+    $('details-container').replaceChildren(container);
+  }
+
+  /* ---------- Related entries: pick an entry already on the site ---------- */
+  const entryNames = (window.ENTRY_FILES || []).map((f) => ({ file: f, name: f.replace(/-/g, ' ') }));
+  $('entry-titles').replaceChildren(...entryNames.map((e) => new Option(e.name)));
+  form.addEventListener('change', (e) => {
+    if (e.target.dataset.k !== 'name' || !e.target.closest('[data-list="relations"]')) return;
+    const match = entryNames.find((x) => x.name.toLowerCase() === e.target.value.trim().toLowerCase());
+    const href = e.target.closest('.row').querySelector('input[data-k="href"]');
+    if (match && !href.value) {
+      href.value = new URL(`civic?id=${encodeURIComponent(match.file)}`, document.baseURI).href;
+      changed();
+    }
+  });
+
+  /* ---------- Quill (same setup as form.html) ---------- */
+  const BlockEmbed = Quill.import('blots/block/embed');
+  class TableBlot extends BlockEmbed {
+    static create(value) { const node = super.create(); node.innerHTML = value; return node; }
+    static value(node) { return node.innerHTML; }
+  }
+  TableBlot.blotName = 'tableHTML';
+  TableBlot.tagName = 'div';
+  TableBlot.className = 'ql-table-embed';
+  Quill.register(TableBlot);
+
+  const Link = Quill.import('formats/link');
+  class NoTargetLink extends Link {
+    static create(value) { const node = super.create(value); node.removeAttribute('target'); node.removeAttribute('rel'); return node; }
+  }
+  Quill.register(NoTargetLink, true);
+
+  const quill = new Quill('#editor-container', {
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+      ]
+    },
+    formats: ['header', 'bold', 'italic', 'underline', 'list', 'link', 'tableHTML'],
+    placeholder: 'Type or paste the entry content here...',
+    theme: 'snow'
+  });
+  quill.clipboard.addMatcher('table', (node) => {
+    const Delta = Quill.import('delta');
+    return new Delta().insert({ tableHTML: node.outerHTML });
+  });
+
+  /* ---------- Collect, build, preview ---------- */
+  function collect() {
+    const title = $('articleTitle').value.trim();
+    return {
+      recordId: title.replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-'),
+      title,
+      kind: kindOf(),
+      surname: form.classList.contains('show-all') ? $('surname').value : '',
+      forenames: form.classList.contains('show-all') ? $('forenames').value : '',
+      authors: [$('authorName').value, ...readList('authors').map((a) => a.name)],
+      dates: { from: $('dateFrom').value, to: $('dateTo').value, approximate: $('dateApprox').checked },
+      otherNames: readList('otherNames'),
+      places: readList('places'),
+      occupations: readList('occupations'),
+      legalStatuses: readList('legalStatuses'),
+      chronology: readList('chronology'),
+      relations: readList('relations'),
+      sources: readList('sources'),
+      articleHtml: quill.getText().trim() ? quill.root.innerHTML : '',
+      note: $('note').value
+    };
+  }
+
+  function showPreview() {
+    const entry = collect();
+    const xml = EACCPF.build(entry);
+    const checks = EACCPF.check(entry);
+    $('checks').replaceChildren(...(checks.length ? checks : [{ level: 'ok', text: 'Everything looks fine.' }]).map((c) => {
+      const li = document.createElement('li');
+      li.className = c.level;
+      li.textContent = c.text;
+      return li;
+    }));
+    $('previewEntry').innerHTML = EACCPF.render(xml);
+    $('xmlOut').textContent = xml;
+    $('preview').hidden = false;
+    return xml;
+  }
+
+  let timer;
+  function changed() {
+    updateCounts();
+    if ($('preview').hidden) return;
+    clearTimeout(timer);
+    timer = setTimeout(showPreview, 400);
+  }
+  form.addEventListener('input', changed);
+  quill.on('text-change', changed);
+
+  $('previewBtn').addEventListener('click', () => {
+    showPreview();
+    $('preview').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  $('downloadBtn').addEventListener('click', () => {
+    const xml = showPreview();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([xml], { type: 'application/xml' }));
+    a.download = `${collect().recordId || 'entry'}.xml`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+
+  applyKindLabels();
+  updateCounts();
+
+  // Inside an iframe, tell the parent page how tall the form is (as form.html does)
+  function reportHeight() {
+    if (window.parent === window) return;
+    window.parent.postMessage({
+      type: 'contribution-form-height',
+      height: Math.ceil(document.documentElement.getBoundingClientRect().height)
+    }, window.location.origin);
+  }
+  new ResizeObserver(reportHeight).observe(document.documentElement);
+  window.addEventListener('load', reportHeight);
+})();
+</script>
+
+</body>
+</html>

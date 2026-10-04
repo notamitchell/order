@@ -97,6 +97,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `_layouts/search.html`, `scripts/search.js` | Search page (see [Search, facets and maps](#search-facets-and-maps)). |
 | `_layouts/entry.html` | Fetches and renders one EAC-CPF entry, and adds the contribution form. |
 | `_layouts/form.html` | Rich-text contribution form (Quill 1.3.6) that posts to Google Apps Script. |
+| `form2.md`, `_layouts/form2.html` | Test version of the next contribution form (EAC-CPF 2.0, optional extra sections). Not linked from anywhere and sends nothing yet: it previews the entry and downloads the XML. |
 | `_layouts/new.html` | "Start a new entry" box that redirects to `civic?id=…`. |
 | `_layouts/facet-list.html` | People / Places listings. |
 | `_layouts/map.html`, `_layouts/map3d.html` | 2D Leaflet map and 3D three.js map. |
@@ -106,6 +107,7 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `_data/directory/<year>.json`, `_data/electoral-roll/<year>.json` | The directory and electoral-roll records, one file per source and year, one record per line. **Edit these.** See [Data](#data-directories-and-electoral-rolls). |
 | `data/` | What the browser downloads, generated from `_data/` by Jekyll: one small page per data file, `data/index.json` (the list of files), and `uom-land-parcels.geojson` (University of Melbourne land parcels). |
 | `scripts/data.js` | Shared data loader used by every page that shows records. |
+| `scripts/eac-cpf.js` | Builds EAC-CPF 2.0 XML from form2, checks it, and renders a preview from the XML. |
 | `tools/convert-map-data.js` | One-off script that split the old `map-data.js` into the files in `_data/`. |
 | `admin/index.html` | Admin landing page for the editorial team, linking to each tool (served at `admin/`). The site footer links here. |
 | `admin/review.html` | Plain-language review page for the editorial team. |
