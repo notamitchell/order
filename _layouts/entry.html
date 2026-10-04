@@ -27,13 +27,21 @@ function slugifyId(text) {
   const urlParams = new URLSearchParams(window.location.search);
   const fileId = urlParams.get('id');
   const isPreview = urlParams.get("preview") === "true";
+
+  // In preview mode (the submission review page's preview frame), hide the
+  // site chrome so the frame shows the article itself.
+  if (isPreview) {
+    const previewStyle = document.createElement('style');
+    previewStyle.textContent = '.banner-container, .main-nav, #directoryPanelWrapper, .main-footer { display: none !important; }';
+    document.head.appendChild(previewStyle);
+  }
   
   const entryContainer = document.getElementById('encyclopedia-entry');
 
   // Helper function to inject the Google Form
   function showContributionForm(recordId, isExisting = false) {
     // If the override config is active, exit early without displaying the form
-    if (CONFIG.overrideForm) {
+    if (CONFIG.overrideForm || isPreview) {
       return; 
     }
     
