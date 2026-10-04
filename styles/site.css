@@ -27,7 +27,7 @@
     /* Ink, sampled from the survey lines & lettering */
     --ink:          #32351f;   /* headings, nav, primary text */
     --ink-soft:     #565a3c;   /* body copy */
-    --ink-faint:    #7d8161;   /* labels, meta, placeholders */
+    --ink-faint:    #63674a;   /* labels, meta, placeholders (4.5:1+ on paper and panels) */
     --ink-deepest:  #1c1e12;   /* full-bleed dark surfaces (3D map) */
 
     /* Moss accent — a saturated step off the map's own ink, used
@@ -47,6 +47,25 @@
     margin: 0;
     padding: 0;
 }
+
+/* Visible keyboard focus everywhere (mouse clicks don't trigger it) */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--moss);
+    outline-offset: 2px;
+}
+
+/* On dark surfaces (nav, footer, 3D map) the moss outline needs the light accent */
+.main-nav a:focus-visible,
+.main-footer a:focus-visible,
+.map3d-page a:focus-visible,
+.map3d-page button:focus-visible {
+    outline-color: var(--moss-bright);
+}
+
+.main-nav a:focus-visible { outline-offset: -4px; }
 
 body {
     font-family: var(--font-ui);
@@ -756,6 +775,9 @@ body {
     font-size: 0.85rem;
 }
 
+.footer-attribution a { color: var(--paper); }
+.footer-attribution a:hover { color: var(--moss-bright); }
+
 /* 8. MAP PAGE CHROME (map.html) --------------------------------------
    The Leaflet canvas stays full-bleed and dark; only the control
    panel, tooltips, and modal are retinted to the shared palette. */
@@ -1097,7 +1119,7 @@ html.map3d-page, body.map3d-page {
 .facet-list {
     max-width: 900px;
     margin: 0;
-    padding: 0 40px 60px;
+    padding: 0 0 60px;
 }
 
 .facet-list .loading {
@@ -1357,7 +1379,7 @@ html.map3d-page, body.map3d-page {
 }
 
 @media (max-width: 600px) {
-    .facet-list { padding: 0 18px 40px; }
+    .facet-list { padding: 0 0 40px; }
     .toc-summary { padding: 14px 16px; font-size: 1.05rem; }
     .table-of-contents { padding: 10px 16px 16px; }
     .facet-list h1 { font-size: 1.55rem; }

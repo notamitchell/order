@@ -330,15 +330,15 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 - [x] **Style Markdown headings and other content**: `h2`–`h4`, rules, tables, blockquotes and inline code on Markdown pages now use the site's serif and tokens (direct children of `.main-content` only, so entry and facet-list layouts keep their own styles).
 - [x] **Fix the A–Z page**: the cramped letter-bar table is now an evenly spaced row of letter buttons (a Markdown list with `{: .az-index}`), and the Back to Top links point at `#featured-pages-a-to-z` (#41).
 - [ ] On the A–Z page, mark which links have a published entry and which are still wanted.
-- [ ] **Restyle the contribution form to match the site**: use the site's tokens and fonts, size the iframe to its content instead of `min-height: 800px`, and remove the double rule under entry titles.
+- [ ] **Restyle the contribution form to match the site**: use the site's tokens and fonts, and size the iframe to its content instead of `min-height: 800px`. (The double rule under entry titles was removed in #43.)
 - [x] **Give "Suggest new article" a proper page**: `new.md` now has a heading and a short explanation, and the field and button use the site's styles.
-- [ ] **People / Places contents**: show the year after each street name, e.g. "Bouverie Street (1905) listings". Sort by street within each year, and remove the extra `.facet-list` side padding on phones. One long page is fine.
+- [ ] **People / Places contents**: show the year after each street name, e.g. "Bouverie Street (1905) listings". Sort by street within each year. One long page is fine. (The extra `.facet-list` side padding was removed in #43.)
 - [ ] **Mobile pass**:
   - [ ] 2D map: collapse the layers panel on phones and use the moss accent colour.
   - [x] 3D map: add a ← Home link and use `100dvh`.
   - [x] Nav: fit all five items on one row on phones.
   - [ ] Search panel on phones: wait for the search redesign (§2).
-- [ ] **Accessibility pass**: keyboard navigation for search and maps, contrast, focus styles and alt text.
+- [ ] **Accessibility pass**: keyboard navigation for search and maps, and alt text. (A site-wide focus outline and a darker `--ink-faint` for small labels were added in #43.)
 
 ### 8. Site and content
 
