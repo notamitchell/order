@@ -1,6 +1,8 @@
 /* Site search: entries + directory and electoral-roll records in one index.
-   Used by _layouts/search.html. Reads directoryData (map-data.js) and the
-   entry list Jekyll writes into window.ENTRY_FILES. */
+   Used by _layouts/search.html. Reads the directory and electoral-roll files
+   through scripts/data.js and the entry list Jekyll writes into
+   window.ENTRY_FILES. Entries are searchable straight away; records join the
+   index as each year's file arrives. */
 (function () {
   const $ = (id) => document.getElementById(id);
   const input = $('searchInput'), form = $('searchForm'), status = $('searchStatus');
@@ -22,7 +24,7 @@
 
   const SOURCES = { 'Directory': 'places', 'Electoral roll': 'people' };
   const state = { q: '', src: 'all', year: '', street: '' };
-  let index, groups = {}, entries = {}, recordGroup = [];
+  let index, groups = {}, entries = {}, records = [], recordGroup = [], loading = true;
 
   const escapeHtml = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   const slugify = (s) => String(s).trim().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_\-]/g, '').replace(/\-\-+/g, '-');
@@ -55,6 +57,7 @@
       } catch (e) { return null; }
     }));
     parsed.filter(Boolean).forEach((e) => { entries[e.name] = e; });
+    index.addAll(Object.values(entries).map((e) => ({ id: 'e:' + e.name, kind: 'entry', title: e.title, text: e.text })));
   }
 
   function buildIndex() {
@@ -70,11 +73,14 @@
         processTerm: fold
       }
     });
-    const docs = Object.values(entries).map((e) => ({ id: 'e:' + e.name, kind: 'entry', title: e.title, text: e.text }));
+  }
 
-    // Records that share a text entityID were linked by the team as one person or
-    // place; they become one result with a row of years.
-    directoryData.forEach((r, i) => {
+  // Records that share a text entityID were linked by the team as one person or
+  // place; they become one result with a row of years.
+  function addRecords(list) {
+    const docs = [];
+    list.forEach((r) => {
+      const i = records.push(r) - 1;
       const kind = SOURCES[r.source] || 'places';
       const key = typeof r.entityID === 'string' ? 'g:' + r.entityID : 'r:' + i;
       (groups[key] = groups[key] || { key, kind, records: [] }).records.push(r);
@@ -85,11 +91,14 @@
     Object.values(groups).forEach((g) => g.records.sort((a, b) => a.year - b.year));
   }
 
+  // Rebuilt as each file arrives, so the years and streets fill in.
   function fillFilters() {
-    const years = [...new Set(directoryData.map((r) => r.year))].sort();
+    const years = [...new Set(records.map((r) => r.year))].sort();
+    yearChips.querySelectorAll('.chip').forEach((c) => c.remove());
     yearChips.insertAdjacentHTML('beforeend', ['', ...years].map((y) =>
       `<label class="chip"><input type="radio" name="year" value="${y}"${String(state.year) === String(y) ? ' checked' : ''}><span>${y || 'Any'}</span></label>`).join(''));
-    [...new Set(directoryData.map((r) => r.street))].filter(Boolean).sort().forEach((s) => {
+    streetSelect.length = 1; // keep "All streets"
+    [...new Set(records.map((r) => r.street))].filter(Boolean).sort().forEach((s) => {
       streetSelect.add(new Option(s, s, false, s === state.street));
     });
   }
@@ -103,7 +112,7 @@
       index.search(q).forEach((hit) => {
         const n = hit.id.split(':');
         if (n[0] === 'e') { sections.entries.push({ entry: entries[n.slice(1).join(':')], terms: hit.terms, score: hit.score }); return; }
-        const r = directoryData[+n[1]];
+        const r = records[+n[1]];
         if (state.year && String(r.year) !== state.year) return;
         if (state.street && r.street !== state.street) return;
         const g = recordGroup[+n[1]];
@@ -177,13 +186,19 @@
     }
     const keys = state.src === 'all' ? ['entries', 'places', 'people'] : [state.src];
     const total = keys.reduce((n, k) => n + sections[k].length, 0);
+    if (!total && loading) {
+      // The data-status line below says what's still loading.
+      status.textContent = '';
+      resultsEl.innerHTML = '';
+      return;
+    }
     if (!total) {
       status.textContent = '';
       resultsEl.innerHTML = `<div class="search-empty"><p>Nothing found for “${escapeHtml(q)}”${state.year || state.street ? ' with these filters' : ''}.</p>
         <p>Know something about it? <a href="civic?id=${encodeURIComponent(q)}">Start an entry for “${escapeHtml(q)}”</a>.</p></div>`;
       return;
     }
-    status.textContent = `${total.toLocaleString()} results for “${q}”`;
+    status.textContent = `${total.toLocaleString()} results for “${q}”${loading ? ' so far' : ''}`;
     resultsEl.innerHTML = keys.filter((k) => sections[k].length).map((k) => {
       const list = sections[k];
       const limit = state.src === 'all' ? PER_SECTION : list.length;
@@ -209,14 +224,20 @@
     readUrl();
     input.value = state.q;
     if (state.year || state.street) $('searchMore').open = true;
-    if (typeof directoryData === 'undefined' || typeof MiniSearch === 'undefined') {
+    if (typeof CGData === 'undefined' || typeof MiniSearch === 'undefined') {
       status.innerHTML = 'Search could not load. <a href="">Try again</a>.';
       return;
     }
-    await loadEntries();
+    status.textContent = '';
     buildIndex();
-    fillFilters();
-    run();
     input.focus();
+    const data = CGData.loadWithStatus($('searchData'), {}, {
+      onFile: (list) => { addRecords(list); fillFilters(); run(); }
+    });
+    await loadEntries();
+    run();
+    await data;
+    loading = false;
+    run();
   })();
 })();
