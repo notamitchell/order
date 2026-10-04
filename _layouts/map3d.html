@@ -74,10 +74,17 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="map-data.js"></script>
+    <script src="scripts/data.js?v={{ site.time | date: '%s' }}"></script>
     <script src="scripts/map-common.js"></script>
+    <p class="data-status data-status-map" id="mapData" aria-live="polite" hidden></p>
 
     <script>
+        // The map is drawn once every year's file has arrived (cross-year
+        // links join records from different years).
+        CGData.loadWithStatus(document.getElementById('mapData')).then(startMap);
+
+        // Not indented further, to keep the history of the code below readable.
+        function startMap(directoryData) {
         // Global visibility state trackers
         let showCrossYearLinks = false;
         let layersAreMoving = false;
@@ -771,6 +778,7 @@
         });
 
         animate();
+        }
     </script>
 </body>
 </html>

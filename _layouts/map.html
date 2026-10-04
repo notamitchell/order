@@ -32,10 +32,21 @@
 </svg>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-<script src="UoM_Landuse_2026.js"></script>
-<script src="map-data.js"></script>
+<script src="scripts/data.js?v={{ site.time | date: '%s' }}"></script>
 <script src="scripts/map-common.js"></script>
+<p class="data-status data-status-map" id="mapData" aria-live="polite" hidden></p>
 <script>
+// The map is drawn once every year's file has arrived: unmapped records are
+// placed between mapped ones on the same street, and cross-year links join
+// records from different years. The land parcels overlay is optional; if it
+// fails to load the map is drawn without it.
+Promise.all([
+    CGData.loadWithStatus(document.getElementById('mapData')),
+    CGData.parcels().catch(() => null)
+]).then(([directoryData, uomLanduseData]) => startMap(directoryData, uomLanduseData));
+
+// Not indented, to keep the history of the code below readable.
+function startMap(directoryData, uomLanduseData) {
 // ═══════════════════════════════════════════════════════════
 //  HISTORIC MAP TILE LAYERS
 // ═══════════════════════════════════════════════════════════
@@ -437,6 +448,7 @@ initPositions();
 yearGroups[YEARS[YEARS.length - 1]].addTo(map); // Latest year visible by default
 rebuildCrossYearLines();
 uomLayerGroup.addTo(map); // Add UoM GeoJSON layer to map by default
+}
 </script>
 </body>
 </html>

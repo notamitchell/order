@@ -2,7 +2,7 @@
 //  MAP COMMON
 //  Shared by the 2D map (_layouts/map.html) and the 3D map
 //  (_layouts/map3d.html). Everything here works on the
-//  directoryData records from map-data.js and knows nothing
+//  directory and electoral-roll records (scripts/data.js) and knows nothing
 //  about Leaflet or three.js.
 // ═══════════════════════════════════════════════════════════
 window.MapCommon = (function () {
