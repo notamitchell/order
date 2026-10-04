@@ -1,6 +1,6 @@
 # Proposal: a simple editor for Markdown pages
 
-*Status: proposal, for discussion. No code has been changed.*
+*Status: proposal, with the team's first decisions recorded below. No code has been changed.*
 *Roadmap: [§3 Editorial tools → Markdown pages](../../README.md#3-editorial-tools-towards-a-proper-gui-for-a-non-technical-team)*
 
 ## The problem
@@ -70,18 +70,46 @@ Whichever option is chosen, the save should **include the version of the page th
 
 ## Recommendation
 
-1. **Phase 1, smallest useful step:** editor option **A** (text + preview) for `index.md` and `aToZ.md`, saving through the **Apps Script (2A)**, and `review.html` listing and previewing page edits. This proves the save and review path end to end with little risk.
-2. **Phase 2:** the **A–Z list editor (1C)**, since the A–Z is the page that changes most and every new entry needs a line in it. Clean up the A–Z links at the same time.
+0. **Now:** clean up the A–Z links (spaces → `%20`) and fix the Back to Top anchor.
+1. **Phase 1, smallest useful step:** the admin landing page; editor option **A** (text + preview) for `index.md` and `aToZ.md` behind Google sign-in, saving through the **Apps Script (2A)**; and `review.html` listing and previewing page edits. This proves the save and review path end to end with little risk.
+2. **Phase 2:** the **A–Z list editor (1C)**, since the A–Z is the page that changes most and every new entry needs a line in it.
 3. **Phase 3, if editors want it:** switch the general editor to **Toast UI (1B)** once the links are clean.
 4. Revisit a CMS (2C) only if the team later needs media uploads or many more editable pages.
 
-## Open questions for the team
+## Decisions so far (4 October 2026)
 
-- Who should be able to open the page editor: anyone with the link (edits still reviewed), or only signed-in editors?
-- Who maintains the Apps Script, and should page edits go in the same Google Sheet as submissions or in their own tab?
-- Should the person who made an edit be allowed to accept it, or must a second editor review it?
+- **The Apps Script can change.** Mitchell maintains it. Extending it (2A) is the chosen save path; rewriting it from scratch alongside the contribution form is also on the table.
+- **Only signed-in people can open the editor.** See *Signing in* below.
+- **An editor may accept their own page edit.** A second reviewer is not required, so the review step is mainly a preview and a record of what changed.
+- **The A–Z links will be cleaned up** (spaces → `%20`), which removes the main obstacle to a visual editor.
+- **Add an admin landing page.** See below.
+
+### Signing in
+
+Because the team already shares a Google Drive folder, the simplest option is to **sign in with Google** rather than GitHub:
+
+- The editor page shows a "Sign in with Google" button ([Google Identity Services](https://developers.google.com/identity/gsi/web)) and sends the sign-in token with each save.
+- The Apps Script checks the token and that the email is on an **editors list** (a tab in the same Google Sheet, so adding an editor means adding a row).
+- Saves from anyone else are refused, and the editor page shows nothing editable until sign-in succeeds.
+
+The alternative is deploying the Apps Script so only members of the shared Drive can run it, which needs no sign-in code but gives editors a less friendly Google permissions screen. Either way, nobody needs a GitHub account. The page editor itself is still public HTML, so the sign-in check has to happen in the Apps Script, not just in the page.
+
+### Admin landing page
+
+A new `admin/index.html` (so `…/order/admin/` works as an address) with a short description and link for each tool:
+
+- **Review submissions and page edits**: `admin/review.html`
+- **Edit site pages**: `admin/pages.html` (new)
+- **Edit directory and map data**: `admin/carlton-data-editor.html`
+- Links to the Google Sheet and to the help in the README.
+
+It uses the same look as `review.html`. It needs no sign-in itself, because each tool checks access when it saves.
+
+## Still open
+
+- Should page edits go in the same Google Sheet as submissions or in their own tab?
 - Beyond the A–Z and home page, which pages should be editable (e.g. a future About page)?
 
 ## Noticed while looking
 
-The A–Z "Back to Top" links point to `#index-a-to-z`, but the page heading is "Featured pages: A to Z", whose anchor is `#featured-pages-a-to-z`, so those links probably don't jump to the top. Option C would generate these links correctly; it's also a one-line fix on its own.
+The A–Z "Back to Top" links pointed to `#index-a-to-z`, but the page heading's anchor is `#featured-pages-a-to-z`, so they didn't jump to the top. This is fixed together with the link clean-up.
