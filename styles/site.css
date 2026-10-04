@@ -480,6 +480,37 @@ body {
 .main-content a { color: var(--moss); }
 .main-content a:hover { color: var(--moss-deep); }
 
+/* Restore list indentation and bullets that the global reset removes.
+   Only class-less lists (i.e. Markdown/prose), so styled component lists are untouched. */
+.main-content ul:not([class]),
+.main-content ol:not([class]) {
+    margin: 0 0 20px;
+    padding-left: 1.6em;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+}
+
+.main-content ul:not([class]) { list-style: disc; }
+.main-content ol:not([class]) { list-style: decimal; }
+
+.main-content ul:not([class]) > li,
+.main-content ol:not([class]) > li {
+    margin-bottom: 6px;
+    line-height: 1.6;
+}
+
+.main-content ul:not([class]) > li::marker,
+.main-content ol:not([class]) > li::marker { color: var(--moss); }
+
+/* Nested lists: tighter spacing, inherit size */
+.main-content li > ul:not([class]),
+.main-content li > ol:not([class]) {
+    margin: 6px 0 0;
+    font-size: inherit;
+}
+
+.main-content li > ul:not([class]) { list-style: circle; }
+
 .sidebar-menu {
     background-color: var(--paper-deep);
     border: 1px solid var(--sage);
