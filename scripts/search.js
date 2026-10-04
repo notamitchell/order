@@ -124,19 +124,42 @@
     render(q, sections);
   }
 
-  function highlight(text, terms) {
-    let out = escapeHtml(text);
+  // Matches the terms MiniSearch hit on as whole words, plus the spellings
+  // that fold to them, so "Berkeley" is marked when the index term is "berkley".
+  function termPattern(terms) {
+    const alts = new Set();
     terms.forEach((t) => {
       if (t.length < 2) return;
-      out = out.replace(new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig'), '<mark>$1</mark>');
+      alts.add(t);
+      Object.keys(VARIANTS).forEach((k) => { if (VARIANTS[k] === t) alts.add(k); });
     });
-    return out;
+    if (!alts.size) return null;
+    const words = [...alts].sort((a, b) => b.length - a.length).map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    return new RegExp(`(?<![\\p{L}\\p{N}])(?:${words.join('|')})(?![\\p{L}\\p{N}])`, 'giu');
   }
+  function marked(text, re) {
+    let out = '', last = 0;
+    if (re) for (const m of text.matchAll(re)) {
+      out += escapeHtml(text.slice(last, m.index)) + '<mark>' + escapeHtml(m[0]) + '</mark>';
+      last = m.index + m[0].length;
+    }
+    return out + escapeHtml(text.slice(last));
+  }
+  function highlight(text, terms) { return marked(String(text ?? ''), termPattern(terms)); }
+
+  // The passage around the first match, about 80 characters either side and
+  // cut at word breaks. If the body has no match (the hit was on the title),
+  // the opening of the entry is shown instead.
+  const CONTEXT = 80, BLURB = 220;
   function snippet(text, terms) {
-    const lower = text.toLowerCase();
-    const at = Math.max(0, Math.min(...terms.map((t) => { const i = lower.indexOf(t); return i < 0 ? Infinity : i; }).concat([0])) - 60);
-    const cut = text.slice(at, at + 220);
-    return (at > 0 ? '… ' : '') + highlight(cut, terms) + (at + 220 < text.length ? ' …' : '');
+    const re = termPattern(terms);
+    const m = re && [...text.matchAll(re)][0];
+    if (!m) return marked(text.slice(0, BLURB), re) + (text.length > BLURB ? ' …' : '');
+    const from = m.index, to = m.index + m[0].length;
+    let start = Math.max(0, from - CONTEXT), end = Math.min(text.length, to + CONTEXT);
+    if (start > 0) { const s = text.indexOf(' ', start); if (s >= 0 && s < from) start = s + 1; }
+    if (end < text.length) { const e = text.lastIndexOf(' ', end); if (e > to) end = e; }
+    return (start > 0 ? '… ' : '') + marked(text.slice(start, end), re) + (end < text.length ? ' …' : '');
   }
 
   function entryCard({ entry, terms }) {
@@ -181,7 +204,7 @@
 
     if (!q) {
       status.textContent = '';
-      resultsEl.innerHTML = `<div class="search-hints"><p>Try</p><ul>${['Corkman', 'grocer', 'Griffiths', 'Pelham Street', 'bootmaker 1910'].map((t) => `<li><a href="?q=${encodeURIComponent(t)}">${t}</a></li>`).join('')}</ul></div>`;
+      resultsEl.innerHTML = '';
       return;
     }
     const keys = state.src === 'all' ? ['entries', 'places', 'people'] : [state.src];
