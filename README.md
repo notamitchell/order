@@ -7,9 +7,10 @@
 > This page is the technical documentation for the people who build and maintain the site.
 >
 > - **Read about the project:** [About Common Ground](https://notamitchell.github.io/order/)
+> - **Search everything:** [Search](https://notamitchell.github.io/order/search) finds entries, directory listings and electoral-roll records in one box.
 > - **Browse the histories:** [Featured pages A–Z](https://notamitchell.github.io/order/aToZ) · [Map](https://notamitchell.github.io/order/map) · [People](https://notamitchell.github.io/order/people) · [Places](https://notamitchell.github.io/order/places)
 > - **Share a story or add to an entry:** open any entry on the site and use the *Contribute* form at the bottom, or [start a new entry](https://notamitchell.github.io/order/new).
-> - **Editorial team reviewing submissions:** go to the [Submission review page](https://notamitchell.github.io/order/admin/review.html) and follow the steps it gives you.
+> - **Editorial team:** start at the [Admin page](https://notamitchell.github.io/order/admin/), which links to each editorial tool. To review submissions, go to the [Submission review page](https://notamitchell.github.io/order/admin/review.html) and follow the steps it gives you.
 > - **Project partners:** [Melbourne History Workshop](https://melbournehistoryworkshop.com) · [Carlton Community History Group](https://cchg.asn.au)
 
 ---
@@ -48,7 +49,7 @@ Nothing is published until a pull request is merged into `main`. GitHub Pages re
 
 ```
                  ┌──────────────────────────── GitHub Pages (Jekyll) ───────────────────────────┐
- Visitor ──────▶ │  index / aToZ / people / places / map / map3d / civic?id=…                     │
+ Visitor ──────▶ │  index / search / aToZ / people / places / map / map3d / civic?id=…            │
                  │        │                                   │                                  │
                  │        ▼                                   ▼                                  │
                  │   map-data.js (directoryData)        civic/<slug>.xml  (fetched + parsed     │
@@ -61,7 +62,7 @@ Nothing is published until a pull request is merged into `main`. GitHub Pages re
                  Google Apps Script web app ──▶ 1. copy to Google Sheet (team shared Drive, backup)
                                             ──▶ 2. new branch + civic/<slug>.xml + pull request
                                                          │
- Editor ───────▶ admin/review.html ── lists open PRs touching civic/, previews them ──┐
+ Editor ────▶ admin/ ▶ review.html ── lists open PRs touching civic/, previews them ──┐
                                                          │                            │
                                                          ▼                            ▼
                                             Merge on GitHub (accept)   Close on GitHub (reject)
@@ -74,16 +75,18 @@ Nothing is published until a pull request is merged into `main`. GitHub Pages re
 1. turns the `id` into a filename slug (`Corkman-Hotel`);
 2. fetches `civic/Corkman-Hotel.xml`;
 3. parses the EAC-CPF XML (namespace `urn:isbn:1-931666-33-4`) and renders it;
-4. adds the contribution form underneath. If no file exists yet, the form takes the entry's place so the community can create it.
+4. adds the contribution form underneath. If no file exists yet, the form takes the entry's place so the community can create it. The form (`_layouts/form.html`, in an iframe) reports its height to the entry page, which sizes the iframe to fit.
 
-With `preview=true`, `id` can be a full URL, such as a raw file on a pull-request branch. This is how `admin/review.html` previews submissions before they are merged.
+With `preview=true`, `id` can be a full URL, such as a raw file on a pull-request branch. This is how `admin/review.html` previews submissions before they are merged. Preview mode also hides the banner, menu, footer and contribution form, so the review frame shows just the article.
 
 ### Search, facets and maps
 
 - **Search page** (`search.md` → `_layouts/search.html` + `scripts/search.js`): one box that searches the entries in `civic/` and every `directoryData` record together, using [MiniSearch](https://github.com/lucaong/minisearch) (vendored in `scripts/vendor/`, MIT). Jekyll lists the entry files into the page at build time and the browser fetches them as ordinary site files (no GitHub API calls). Results are grouped into Entries, Places (directories) and People (electoral rolls); records that share a text `entityID` collapse into one result with a row of years. Matching is by prefix with small typos allowed, and a `VARIANTS` list at the top of `scripts/search.js` folds historical spellings and abbreviations together (Berkley/Berkeley, htl → hotel, Wm → William, …); add pairs there. The search is kept in the address (`search?q=grocer&year=1910&street=…&src=people`), so it can be shared. If nothing matches, it offers to start a new entry with that name.
-- **People / Places** (`_layouts/facet-list.html`): filter `directoryData` by `source`. `people` shows electoral rolls and `places` shows directories. Results are grouped by source/year → street → side of street.
+- **People / Places** (`_layouts/facet-list.html`): filter `directoryData` by `source`. `people` shows electoral rolls and `places` shows directories. Results are grouped by source/year → street → side of street. Within each year the streets are sorted, so each street appears once per year, and the contents list shows the year after each street (e.g. "Bouverie Street (1905) listings").
 - **Map** (`_layouts/map.html`): Leaflet 1.9.4. It plots records that have `lat`/`lng`, with University of Melbourne land parcels (`UoM_Landuse_2026.js`) as an overlay.
 - **3D Map** (`_layouts/map3d.html`): three.js r128 with OrbitControls. Experimental.
+- Both maps share `scripts/map-common.js` (data loading, year colours, cross-year links from string `entityID`s, marker shapes) and the details popup in `_includes/map-details-modal.html`, which links to the matching entry.
+- **Featured pages A–Z** (`aToZ.md` + `scripts/az-status.js`): Jekyll lists the files in `civic/` into the page at build time, and the script marks links with no entry yet (pencil icon, "Not yet written") and entries created in the last 14 days ("New"). A legend above the letter index explains both.
 
 ## Repository layout
 
@@ -97,12 +100,15 @@ With `preview=true`, `id` can be a full URL, such as a raw file on a pull-reques
 | `_layouts/new.html` | "Start a new entry" box that redirects to `civic?id=…`. |
 | `_layouts/facet-list.html` | People / Places listings. |
 | `_layouts/map.html`, `_layouts/map3d.html` | 2D Leaflet map and 3D three.js map. |
+| `scripts/map-common.js`, `_includes/map-details-modal.html` | Functions and the details popup shared by both maps. |
 | `*.md` (root) | One small file per page. Mostly front matter that picks a layout. `aToZ.md` is the hand-maintained index of featured pages. |
 | `civic/*.xml` | Published encyclopedia entries (EAC-CPF). |
 | `map-data.js` | All directory and electoral-roll records, as `const directoryData = [...]` (~2.6 MB, ~9,200 records). |
 | `UoM_Landuse_2026.js` | GeoJSON of University of Melbourne land parcels, as `const uomLanduseData = {...}`. |
+| `admin/index.html` | Admin landing page for the editorial team, linking to each tool (served at `admin/`). The site footer links here. |
 | `admin/review.html` | Plain-language review page for the editorial team. |
 | `admin/carlton-data-editor.html` | Browser-based editor for `map-data.js`. |
+| `scripts/az-status.js` | Marks Featured pages links as "New" or "Not yet written". |
 | `scripts/banner-parallax.js` | Header banner effect. |
 | `scripts/vendor/` | Third-party scripts saved into the repo (MiniSearch). |
 | `styles/site.css` | Site styles. |
@@ -189,7 +195,7 @@ Use `admin/carlton-data-editor.html`. It loads the live file, lets you search an
 
 ### Reviewing a public submission (editorial team)
 
-1. Open **`admin/review.html`**. It lists open pull requests that add or change files in `civic/`.
+1. Open **`admin/review.html`** (or the [Admin page](https://notamitchell.github.io/order/admin/), then *Review submissions*). It lists open pull requests that add or change files in `civic/`.
 2. Pick a submission to see a live preview of the entry as it would appear on the site.
 3. Sign in to GitHub, then follow the link to the pull request:
    - **Accept:** *Merge pull request* → *Confirm merge*.
@@ -208,7 +214,7 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 - **Simple page:** add `my-page.md` at the root with front matter (`title`, optionally `layout`). It gets `layout: default` automatically.
 - **New facet list** (like People/Places): add `my-facet.md`, add a `scope` block in `_config.yml` with `layout: facet-list` and `facet: "my-facet"`, and add a matching branch to the `filter` in `_layouts/facet-list.html`.
 - **New entry collection** (another folder like `civic/`): add a page using `layout: entry` and set `EACCPFpath` to the folder name in `_config.yml`.
-- **Navigation:** edit the `<nav>` list in `_layouts/default.html`.
+- **Navigation:** edit the `<nav>` list in `_layouts/default.html`. Footer links are in the same file.
 
 ## External services and dependencies
 
@@ -228,7 +234,7 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 - **Pages that use the data download all ~2.6 MB of it** (search, People/Places, the maps and the contribution form), and nothing tells the visitor that data is still loading. Other pages no longer load it. See roadmap §1.
 - **`map-data.js` is JavaScript, not JSON.** Other tools can't read it directly, a stray comma breaks the whole site, and diffs are huge and hard to review.
 - **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings (strings are deliberate links made by a person; see the [field reference](#data-map-datajs)).
-- **The A–Z is maintained by hand** as Markdown, and links to many entries that don't exist yet. Those links open the "contribute" form, which is intended, but it isn't obvious. See roadmap §3.
+- **The A–Z is maintained by hand** as Markdown. See roadmap §3.
 - **Review page rate limit (unlikely, but confusing if it happens):** `admin/review.html` calls the GitHub API without signing in, which GitHub caps at 60 requests per hour per IP address. Listing submissions uses one request plus one per open pull request. A small editorial team won't normally reach this, but a large backlog of submissions, or several people on one shared network (e.g. a university or library), could. **Symptoms:** the review page shows an error, an empty list, or submissions that won't load, even though they're visible on GitHub. **Fix:** wait up to an hour, or review directly on GitHub in the meantime.
 - **Entries use EAC-CPF loosely.** Every entry is `<entityType>concept</entityType>` (EAC-CPF expects `person`, `corporateBody` or `family`), and most of the schema's structure goes unused. See roadmap §4.
 - **No automated checks.** Malformed XML or a broken `map-data.js` can be merged without anyone noticing. See roadmap §5.
@@ -274,13 +280,14 @@ Goal: editors never need to touch GitHub directly. Done in small, fundable steps
 **Markdown pages** (`aToZ.md`, `index.md` and other plain pages)
 
 - [ ] **Editor for Markdown pages**, see the design proposal: [`docs/proposals/markdown-page-editor.md`](docs/proposals/markdown-page-editor.md). Suggested first step: a simple text-and-preview editor for `index.md` and `aToZ.md` that saves through the existing Apps Script, with page edits listed and previewed in `admin/review.html` next to entry submissions. Editors sign in with Google, checked by the Apps Script against an editors list.
-- [ ] **Admin landing page** (`admin/index.html`) linking to each admin tool: review, page editor, data editor, and the team's Google Sheet.
+- [x] **Admin landing page** (`admin/index.html`) linking to each admin tool: review, page editor, data editor, and the team's Google Sheet (#45). The page editor and Google Sheet links are placeholders until they exist.
 - [ ] **Visual editor for Markdown pages**: an admin page that lists the site's editable pages, opens one in a word-processor-style editor (headings, bold/italic, links, bullet lists; no Markdown syntax needed), shows a live preview in the site's own styles, and saves by opening a pull request that goes through the usual review. Front matter (`title`, `layout`) is shown as simple form fields or hidden, so it can't be broken by accident.
   - Candidate editors: [Toast UI Editor](https://ui.toast.com/tui-editor) or [Milkdown](https://milkdown.dev/) (both edit Markdown visually and save clean Markdown), or the off-the-shelf CMS options below.
 - [ ] **A–Z editor**: a dedicated tool for `aToZ.md`. Add, remove, rename and re-letter featured pages from a list; it keeps entries alphabetical, builds the `civic?id=…` links, handles "see also" cross-references (e.g. *Carlton Inn, see: Corkman Hotel*), and flags which links already have a published entry and which are still wanted. Longer term, the A–Z could be generated from data (`civic/` plus a "wanted entries" list) rather than edited as text.
 
 **Entries and submissions**
 
+- [x] Clearer review page: three numbered steps and two buttons, links back to Admin and the site, and the preview shows just the article (#50).
 - [ ] **Accept/Reject buttons on the review page** (through the existing submission service or GitHub sign-in), with a "reason for rejection" box that is posted as a comment for the record.
 - [ ] Edit a submission's text in the review page before accepting it.
 
@@ -288,6 +295,7 @@ Goal: editors never need to touch GitHub directly. Done in small, fundable steps
 
 - [ ] **Data editor saves by pull request**: replace "download, then upload to GitHub by hand" with a *Submit changes* button that opens a pull request, as the contribution form already does. This removes the riskiest manual step and becomes much easier once the data is split into per-year JSON (§1).
 - [ ] **Data-change preview on the review page**: show a readable table of changed records (before → after) instead of a raw diff.
+- [x] Data editor uses the same fonts, colours and buttons as the review page, with one main *Download* button (#50).
 
 **Off-the-shelf options to compare against building our own**
 
@@ -325,17 +333,17 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 - [ ] Year slider/filter on the 2D map to show the precinct changing from 1900 to 1930.
 - [ ] Link map markers to entries and entries to map locations (see §4, Places).
 - [ ] Historical base map overlays (e.g. MMBW plans), if suitable public-domain scans are available.
-- [ ] **Bring the experimental 3D map in line with the 2D map**: same data and features, and refactor so both maps share functions (e.g. data loading, filtering, popups) instead of duplicating code.
+- [x] **Bring the experimental 3D map in line with the 2D map**: same data and features, and refactor so both maps share functions (e.g. data loading, filtering, popups) instead of duplicating code. Done in #46 with `scripts/map-common.js`.
 
 ### 7. Look and feel
 
 - [x] **Fix bulleted and numbered lists on content pages**, e.g. the area list on the home page. Done in #37: list styles for unclassed `ul`/`ol` inside `.main-content` in `styles/site.css`.
 - [x] **Style Markdown headings and other content**: `h2`–`h4`, rules, tables, blockquotes and inline code on Markdown pages now use the site's serif and tokens (direct children of `.main-content` only, so entry and facet-list layouts keep their own styles).
 - [x] **Fix the A–Z page**: the cramped letter-bar table is now an evenly spaced row of letter buttons (a Markdown list with `{: .az-index}`), and the Back to Top links point at `#featured-pages-a-to-z` (#41).
-- [ ] On the A–Z page, mark which links have a published entry and which are still wanted.
-- [ ] **Restyle the contribution form to match the site**: use the site's tokens and fonts, and size the iframe to its content instead of `min-height: 800px`. (The double rule under entry titles was removed in #43.)
+- [x] On the A–Z page, mark which links have a published entry and which are still wanted. Done in #47: "Not yet written" and "New" marks, with a legend.
+- [x] **Restyle the contribution form to match the site**: use the site's tokens and fonts, and size the iframe to its content instead of `min-height: 800px` (#48). (The double rule under entry titles was removed in #43.)
 - [x] **Give "Suggest new article" a proper page**: `new.md` now has a heading and a short explanation, and the field and button use the site's styles.
-- [ ] **People / Places contents**: show the year after each street name, e.g. "Bouverie Street (1905) listings". Sort by street within each year. One long page is fine. (The extra `.facet-list` side padding was removed in #43.)
+- [x] **People / Places contents**: show the year after each street name, e.g. "Bouverie Street (1905) listings". Sort by street within each year. One long page is fine (#51). (The extra `.facet-list` side padding was removed in #43.)
 - [ ] **Mobile pass**:
   - [ ] 2D map: collapse the layers panel on phones and use the moss accent colour.
   - [x] 3D map: add a ← Home link and use `100dvh`.
@@ -350,6 +358,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 - [ ] Cite sources consistently on entry pages, with a "how to cite this page" box.
 - [ ] Support images in entries.
 - [x] Use one name, "Featured pages", for the A–Z page everywhere, including the footer.
+- [x] Footer links to People, Places and the Admin page (which replaces the direct data-editor link) (#49).
 
 ---
 
