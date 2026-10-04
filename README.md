@@ -280,6 +280,7 @@ Goal: editors never need to touch GitHub directly. Done in small, fundable steps
 
 - [ ] **Accept/Reject buttons on the review page** (through the existing submission service or GitHub sign-in), with a "reason for rejection" box that is posted as a comment for the record.
 - [ ] Edit a submission's text in the review page before accepting it.
+- [ ] **New versions of existing entries** (later; new entries come first). Submitting a new version of an entry currently fails in the Apps Script. Agreed approach: keep one file per entry; the script saves the new version over the existing file on a branch named with the date, so branches never collide; the review page shows old and new text side by side so the editor can settle the final wording; and each accepted version adds a dated, attributed `maintenanceEvent` of type `revised` (see §4).
 
 **Directory/map data**
 
