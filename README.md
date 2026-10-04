@@ -227,7 +227,6 @@ See [Editing the data](#editing-the-data) above. This is separate from entry sub
 - **Field names are inconsistent** (`year` vs `Given Names` vs `Occupation`), and `entityID` mixes numbers and strings.
 - **The A–Z is maintained by hand** as Markdown, and links to many entries that don't exist yet. Those links open the "contribute" form, which is intended, but it isn't obvious. See roadmap §3.
 - **Review page rate limit (unlikely, but confusing if it happens):** `admin/review.html` calls the GitHub API without signing in, which GitHub caps at 60 requests per hour per IP address. Listing submissions uses one request plus one per open pull request. A small editorial team won't normally reach this, but a large backlog of submissions, or several people on one shared network (e.g. a university or library), could. **Symptoms:** the review page shows an error, an empty list, or submissions that won't load, even though they're visible on GitHub. **Fix:** wait up to an hour, or review directly on GitHub in the meantime.
-- **Bulleted lists lose their indentation** on content pages, e.g. the area list on the home page. The global reset in `styles/site.css` (`* { margin: 0; padding: 0; }`) removes the browser's default list padding, and no rule restores it inside `.main-content`. See roadmap §7.
 - **Entries use EAC-CPF loosely.** Every entry is `<entityType>concept</entityType>` (EAC-CPF expects `person`, `corporateBody` or `family`), and most of the schema's structure goes unused. See roadmap §4.
 - **No automated checks.** Malformed XML or a broken `map-data.js` can be merged without anyone noticing. See roadmap §5.
 
@@ -324,7 +323,7 @@ Placing records on the map is **ongoing community work**: about 16% of records h
 
 ### 7. Look and feel
 
-- [ ] **Fix bulleted and numbered lists on content pages**, e.g. the area list on the home page. Add list styles for `.main-content ul` / `ol` / `li` (indentation, bullet style, spacing) in `styles/site.css`, to restore what the global reset removes.
+- [x] **Fix bulleted and numbered lists on content pages**, e.g. the area list on the home page. Done in #37: list styles for unclassed `ul`/`ol` inside `.main-content` in `styles/site.css`.
 - [ ] Style review of all Markdown-rendered content: headings, lists, tables, blockquotes, images and horizontal rules, so pages written in the Markdown editor (§3) look right without custom HTML.
 - [ ] Tidy the A–Z page: a sticky or more compact letter bar, consistent separators (some letters are missing `|`), and visual distinction between published and wanted entries.
 - [ ] Consistent styling for the contribution form and entry pages (some styles are currently inline in `entry.html`).
