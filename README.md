@@ -274,7 +274,6 @@ Goal: pages only download the data they need, show visitors what's happening whi
 - [x] Remove `map-data.js` and `UoM_Landuse_2026.js`.
 - [x] Renumber the electoral rolls' numeric `entityID`s from 999999, so they no longer clash with the 1930 directory.
 - [x] Draw the maps year by year as the files arrive. Cross-year links are added once every year has arrived.
-- [ ] Cache the data in the browser between visits (IndexedDB), if the normal browser cache turns out not to be enough.
 
 ### 2. Better search
 
