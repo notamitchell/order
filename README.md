@@ -266,8 +266,6 @@ Goal: pages only download the data they need, show visitors what's happening whi
 - [x] "Trace this person/place across years": linked records show as one result with a row of years, and open to list each year's listing and page (#44).
 - [x] Shareable search URLs (`?q=…&year=…&street=…`) (#44).
 - [x] Load the search index only when the search page is opened (#44).
-- [ ] Link directory listings to the entries written about them. A listing only shows "Read the entry" when its `entityID` is the entry's name (as the Carlton Inn listings are for *Corkman Hotel*). Entries started from a listing (e.g. *Berkley Arms Hotel*) keep the listing's number, so they aren't linked yet. Fix those in the data editor, and later set the link automatically when an entry is started from a listing.
-- [ ] Tidy streets spelled two ways in the data (e.g. "Berkley Street" and "Berkeley Street"), which both appear in the search page's street filter.
 
 ### 3. Editorial tools (towards a proper GUI for a non-technical team)
 
