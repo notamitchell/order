@@ -88,11 +88,23 @@ textarea:focus-visible {
 .skip-link:focus { top: 8px; }
 .skip-link:focus-visible { outline-color: var(--moss-bright); }
 
+/* Red and white checkerboard behind the page, so anyone who lands on
+   this old development copy can tell at a glance it isn't the live site.
+   The .wrapper keeps its own solid paper background, so text stays readable. */
 body {
     font-family: var(--font-ui);
     color: var(--ink-soft);
-    background-color: var(--sage-dark);
+    background-color: #fff;
+    background-image: conic-gradient(#c8102e 25%, #fff 0 50%, #c8102e 0 75%, #fff 0);
+    background-size: 48px 48px;
+    background-attachment: fixed;
     line-height: 1.6;
+}
+
+/* Below the wrapper's max width there's no margin left to show the
+   checkerboard, so leave a narrow strip of it down each side */
+@media (max-width: 1240px) {
+    body { padding: 0 12px; }
 }
 
 .wrapper {
