@@ -39,6 +39,9 @@
     --font-serif: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
     --font-mono:  'Courier Prime', 'Courier New', monospace;
     --font-ui:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    /* Red and white checkerboard marking this as the old development site */
+    --dev-checkerboard: conic-gradient(#c8102e 25%, #fff 0 50%, #c8102e 0 75%, #fff 0) 0 0 / 48px 48px;
 }
 
 /* 2. RESET ------------------------------------------------------------ */
@@ -94,10 +97,7 @@ textarea:focus-visible {
 body {
     font-family: var(--font-ui);
     color: var(--ink-soft);
-    background-color: #fff;
-    background-image: conic-gradient(#c8102e 25%, #fff 0 50%, #c8102e 0 75%, #fff 0);
-    background-size: 48px 48px;
-    background-attachment: fixed;
+    background: var(--dev-checkerboard) fixed #fff;
     line-height: 1.6;
 }
 
@@ -726,7 +726,7 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
 html.map-page, body.map-page, body.map-page #map {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
-    background-color: var(--ink-deepest);
+    background: var(--ink-deepest);
 }
 
 #map {
@@ -907,7 +907,7 @@ html.map3d-page, body.map3d-page {
     width: 100%; height: 100%;
     height: 100dvh; /* fit phone screens without the browser bars causing a scroll */
     overflow: hidden;
-    background-color: var(--ink-deepest);
+    background: var(--ink-deepest);
     font-family: var(--font-ui);
     color: var(--sage-light);
 }
@@ -1407,4 +1407,31 @@ html.map3d-page, body.map3d-page {
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     text-align: center;
+}
+
+/* The 2D and 3D maps fill the whole screen, so there's no page background
+   to show the dev-site checkerboard. Instead a 12px checkerboard frame sits
+   over the edges of the screen; clicks pass straight through it. */
+html.map-page body::after,
+html.map3d-page body::after {
+    content: "";
+    position: fixed; inset: 0; z-index: 9999;
+    pointer-events: none;
+    padding: 12px;
+    background: var(--dev-checkerboard) #fff;
+    /* Cut out everything but the 12px padding ring */
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+
+/* Keep the map controls clear of the frame */
+.map-page .leaflet-top    { top: 12px; }
+.map-page .leaflet-bottom { bottom: 12px; }
+.map-page .leaflet-left   { left: 12px; }
+.map-page .leaflet-right  { right: 12px; }
+
+@media (max-width: 600px) {
+    #ui-layer { top: 22px; left: 22px; }
+    #info-panel { left: 12px; right: 12px; bottom: 12px; width: auto; }
 }
