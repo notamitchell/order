@@ -203,7 +203,7 @@ Typical record:
 | `source` | `"Directory"` or `"Electoral roll"`. This decides whether a record appears under People or Places. |
 | `year`, `pages`, `listing`, `street`, `type`, `cardinality` | As transcribed. `cardinality` is the side of the street (North/South/East/West). |
 | `lat`, `lng` | Optional. About 1,450 records have coordinates so far, and only these appear on the map. Adding more is ongoing community work. |
-| `Surname`, `Given Names`, `Registration Number`, `Address`, `Street Number`, `Gender`, `Occupation`, `Notes` | Electoral-roll fields (Title Case, some with spaces). Some later directory records also have `Occupation` / `Notes`. |
+| `Surname`, `Given Names`, `Registration Number`, `Address`, `Street Number`, `Gender`, `Occupation`, `Notes` | Electoral-roll fields (Title Case, some with spaces). `Registration Number` stays in the data (and the admin data editor can search it), but electoral-roll `listing`s no longer start with it, so the public search never matches it. Some later directory records also have `Occupation` / `Notes`. |
 
 ### Editing the data
 
