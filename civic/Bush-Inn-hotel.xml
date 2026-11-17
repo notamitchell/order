@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="org" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Bush Inn hotel</title>
+        <author>Mitchell Harrop</author>
+        <respStmt key="computer-assisted-additions">
+          <resp>Computer-assisted additions</resp>
+          <name>Carlton Common Ground</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Bush-Inn-hotel</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <listBibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1869">Sands &amp; McDougall Directory, 1869, p. 72</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1920">Sands &amp; McDougall Directory, 1920, p. 202: 2 Bush Inn hotel</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1925">Sands &amp; McDougall Directory, 1925, p. 231: 2 Bush Inn hotel</ref></bibl>
+        </listBibl>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="draft">
+      <change when="2026-10-06" type="created">Contributed through the contribution form by Mitchell Harrop.</change>
+      <change when="2026-10-06" type="revised">Changes suggested by Mitchell Harrop: Typo.</change>
+      <change when="2026-10-27" type="edited">Links, and sections from the directory records, added by Carlton Common Ground (machine-assisted).</change>
+      <change when="2026-10-28" type="revised">Credits tidied: the computer-assisted first draft is credited in the byline.</change>
+      <change when="2026-10-28" type="revised">Sentences that tied the text to the website (search, the form, record links) taken out.</change>
+      <change when="2026-10-29" type="revised">Credits corrected: the entry was started by people, so the computer-assisted sections are credited as additions, not a first draft.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listOrg>
+      <org xml:id="subject">
+        <orgName type="main">Bush Inn hotel</orgName>
+        <place type="address" from="1920" to="1925">
+          <placeName>2 Bouverie Street, Carlton</placeName>
+        </place>
+        <place type="address" from="1905" to="1920">
+          <placeName>170 Victoria Street, Carlton</placeName>
+        </place>
+      </org>
+    </listOrg>
+  </standOff>
+  <text>
+    <body>
+      <p>Bush Inn hotel was a hotel!</p>
+      <div>
+        <head>In the directories</head>
+        <p>The Bush Inn is in the directories from 1869 to 1925, on the corner of <ref target="civic?id=Bouverie%20Street">Bouverie Street</ref> and <ref target="civic?id=Victoria%20Street">Victoria Street</ref>, so it is usually listed under both. It is No. 2 Bouverie Street, and No. 170 Victoria Street from 1905. See <ref target="civic?id=Hotels">Hotels</ref>.</p>
+        <p>The directories list the proprietors as Jeremiah Quinlan (1869 to 1873), William Anderson (1874), <ref target="civic?id=Edward%20Mulcahey">Edward Mulcahey</ref> (1875 to 1880), Aron Lacey (1885), P. Hepburn (1890), <ref target="civic?id=Thomas%20Hunter">Thomas C. Hunter</ref> (1895 to 1915) and <ref target="civic?id=William%20Nash">William C. Nash</ref> (1920). No proprietor is given in 1925.</p>
+      </div>
+      <div>
+        <head>Neighbours</head>
+        <p>The Savings Bank is across Bouverie Street, at No. 176 Victoria Street from 1905 and No. 178 in 1920. In 1925 the <ref target="civic?id=Carlton%20Brewery">Carlton Brewery</ref> (Carlton &amp; United Breweries) is next door in Bouverie Street.</p>
+      </div>
+    </body>
+  </text>
+</TEI>

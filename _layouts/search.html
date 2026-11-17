@@ -2,8 +2,8 @@
 layout: default
 ---
 <section class="search-page" id="searchPage">
-  <h1 class="search-title">Search Common Ground</h1>
-  <p class="search-lede">Entries, the Sands &amp; McDougall directories and the electoral rolls, 1900–1930.</p>
+  <h1 class="search-title">Search Carlton Common Ground</h1>
+  <p class="search-lede">Entries, the Sands &amp; McDougall directories and the electoral rolls, 1857–1945.</p>
 
   <form class="search-box" id="searchForm" role="search">
     <label for="searchInput" class="visually-hidden">Search</label>
@@ -12,12 +12,21 @@ layout: default
     <button type="submit">Search</button>
   </form>
 
+  <fieldset class="search-years search-kinds" id="kindChips">
+    <legend>Looking for</legend>
+    <label class="chip"><input type="radio" name="kind" value="" checked><span>Anything</span></label>
+    <label class="chip"><input type="radio" name="kind" value="person"><span>People</span></label>
+    <label class="chip"><input type="radio" name="kind" value="org"><span>Businesses and organisations</span></label>
+    <label class="chip"><input type="radio" name="kind" value="place"><span>Places</span></label>
+    <label class="chip"><input type="radio" name="kind" value="topic"><span>Topics</span></label>
+  </fieldset>
+
   <div class="search-filters" id="searchFilters">
     <div class="search-tabs" role="group" aria-label="Show">
       <button type="button" data-src="all" aria-pressed="true">All</button>
       <button type="button" data-src="entries">Entries <span data-count="entries"></span></button>
-      <button type="button" data-src="places">Places <span data-count="places"></span></button>
-      <button type="button" data-src="people">People <span data-count="people"></span></button>
+      <button type="button" data-src="directories">Directories <span data-count="directories"></span></button>
+      <button type="button" data-src="rolls">Electoral rolls <span data-count="rolls"></span></button>
     </div>
     <details class="search-more" id="searchMore">
       <summary>Year and street <span id="filterBadge"></span></summary>
@@ -37,7 +46,7 @@ layout: default
 
 <script>
   // Every published entry, listed by Jekyll at build time.
-  window.ENTRY_FILES = [{% for f in site.static_files %}{% if f.path contains '/civic/' and f.extname == '.xml' %}"{{ f.basename }}",{% endif %}{% endfor %}];
+  window.ENTRY_FILES = [{% for f in site.static_files %}{% if f.path contains '/civic/' and f.extname == '.xml' %}{% unless site.site_pages contains f.basename %}"{{ f.basename }}",{% endunless %}{% endif %}{% endfor %}];
 </script>
 <script src="scripts/data.js?v={{ site.time | date: '%s' }}"></script>
 <script src="scripts/vendor/minisearch.min.js"></script>

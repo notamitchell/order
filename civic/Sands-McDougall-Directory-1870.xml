@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="topic" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Sands &amp; McDougall Directory, 1870</title>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Sands-McDougall-Directory-1870</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <listBibl>
+          <bibl><ref target="https://viewer.slv.vic.gov.au/?entity=IE13682410&amp;mode=browse">Sands &amp; McDougall's Melbourne and suburban directory, 1870. Digitised by State Library Victoria.</ref></bibl>
+        </listBibl>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="draft">
+      <change when="2026-10-05" type="created">Page for a source, drafted from State Library Victoria records.</change>
+      <change when="2026-10-10" type="revised">Added the project area.</change>
+      <change when="2026-10-10" type="revised">Kept only the listings inside the project area.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listRelation>
+      <relation type="topic" name="part-of" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directories">
+        <desc>Sands McDougall Directories</desc>
+      </relation>
+    </listRelation>
+  </standOff>
+  <text>
+    <body>
+      <p><hi rend="italic">Sands &amp; McDougall's Melbourne and suburban directory, 1870</hi>. 931 pages.</p>
+      <p>State Library Victoria has digitised this directory, and you can <ref target="https://viewer.slv.vic.gov.au/?entity=IE13682410&amp;mode=browse">read it online</ref>.</p>
+      <p>The 1870 directory has its own Carlton section, under North Melbourne (pp. 73–103), covering the area east of the Elizabeth-street extension between Victoria-street east and Reilly-street, as far east as Nicholson-street. It lists each street house by house, side by side, with the cross streets in order. Rathdowne-street is stored as Rathdown Street to match the later years. A few residents printed under an unnamed right-of-way are kept with the street it runs off, with a note.</p>
+      <p>The project covers the area south of Grattan Street, west of Swanston Street, east of Elizabeth Street and north of Victoria Street, and only the listings inside it are kept here.</p>
+    </body>
+  </text>
+</TEI>
