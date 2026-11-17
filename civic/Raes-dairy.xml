@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="org" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Rae's dairy</title>
+        <respStmt key="computer-assisted-draft">
+          <resp>Computer-assisted first draft</resp>
+          <name>Carlton Common Ground</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Raes-dairy</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <listBibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1905">Sands &amp; McDougall Directory, 1905, p. 199</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1910">Sands &amp; McDougall Directory, 1910, p. 206</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1915">Sands &amp; McDougall Directory, 1915, p. 201</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1920">Sands &amp; McDougall Directory, 1920, p. 213</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1925">Sands &amp; McDougall Directory, 1925, p. 241-242</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1930">Sands &amp; McDougall Directory, 1930, p. 199</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1935">Sands &amp; McDougall Directory, 1935, p. 198</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1940">Sands &amp; McDougall Directory, 1940, p. 221</ref></bibl>
+          <bibl><ref target="https://historicalesque.github.io/carlton/civic?id=Electoral-Rolls">Electoral rolls, 1905, 1919</ref></bibl>
+        </listBibl>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="published">
+      <change when="2026-10-28" type="created">Computer-assisted first draft by Carlton Common Ground, from the directory records.</change>
+      <change when="2026-10-28" type="edited">Electoral-roll records linked, and a section on them added, by Carlton Common Ground (computer-assisted).</change>
+      <change when="2026-10-28" type="revised">Sentences that tied the text to the website (search, the form, record links) taken out.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listOrg>
+      <org xml:id="subject">
+        <orgName type="main">Rae's dairy</orgName>
+      </org>
+    </listOrg>
+  </standOff>
+  <text>
+    <body>
+      <div>
+        <head>In the directories</head>
+        <p>The Rae family ran a dairy at No. 163 <ref target="civic?id=Pelham%20Street">Pelham Street</ref> from 1905 to 1940. It is listed beside the Leicester Street corner. The directories list Mrs A. Rae (1905), Wm. Rae (1910 to 1925) and Mrs Nellie Rae (1930 to 1940).</p>
+      </div>
+      <div>
+        <head>On the electoral rolls</head>
+        <p>William Arthur Rae is on the 1905 <ref target="civic?id=Electoral-Rolls">electoral roll</ref> at 163 Pelham Street as a milkman, and on the 1919 roll as a dairyman. In 1905 James John Rae and John James Rae, milkmen, are at the same address. In 1919 James John Rae, dairyman, is next door at No. 159, and in 1928 he is the dairyman at No. 163.</p>
+        <p>Before the dairy, a William Rae is listed at No. 2 Pelham Street, beside the Carlton Inn, from 1871 to 1885, and at No. 163 in 1890 and 1895, after the street was renumbered. Mrs Agnes Rae is at No. 163 in 1900.</p>
+      </div>
+      <div>
+        <head>Neighbours</head>
+        <p>James J. Rae is listed next door at No. 159 from 1910 to 1920.</p>
+      </div>
+      <div>
+        <head>See also</head>
+        <list rend="bulleted">
+          <item><ref target="civic?id=Pelham%20Street">Pelham Street</ref></item>
+        </list>
+      </div>
+    </body>
+  </text>
+</TEI>

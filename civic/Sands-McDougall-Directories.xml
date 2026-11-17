@@ -1,69 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?oxygen RNGSchema="shared/cpf.rng" type="xml"?>
-<eac-cpf xmlns="urn:isbn:1-931666-33-4" 
-         xmlns:xlink="http://www.w3.org/1999/xlink" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="urn:isbn:1-931666-33-4 http://eac.staatsbibliothek-berlin.de/schema/cpf.xsd">
-  <control>
-    <recordId>Sands-McDougall-Directories</recordId>
-    <maintenanceStatus>new</maintenanceStatus>
-    <maintenanceAgency>
-      <agencyCode>AU-EMEL</agencyCode>
-      <agencyName>eMelbourne - The Encyclopedia of Melbourne Online</agencyName>
-      <descriptiveNote><p></p></descriptiveNote>
-    </maintenanceAgency>
-    <languageDeclaration>
-      <language languageCode="eng">English</language>
-      <script scriptCode="Latn">Latin</script>
-    </languageDeclaration>
-    <conventionDeclaration>
-      <abbreviation>AACR2</abbreviation>
-      <citation>Anglo-American Cataloguing Rules</citation>
-    </conventionDeclaration>
-    <localControl localType="typeOfEntity">
-      <term>Entry</term>
-    </localControl>
-    <maintenanceHistory>
-      <maintenanceEvent>
-        <eventType>created</eventType>
-        <eventDateTime standardDateTime="2026-09-05">2026-09-05</eventDateTime>
-        <agentType>human</agentType>
-        <agent>Mitchell Harrop</agent>
-        <eventDescription>Public contribution via custom rich-text submission form</eventDescription>
-      </maintenanceEvent>
-    </maintenanceHistory>
-  </control>
-  <cpfDescription>
-    <identity>
-      <entityId>Sands-McDougall-Directories</entityId>
-      <entityType>concept</entityType>
-      <nameEntry>
-        <part>Sands &amp; McDougall Directories</part>
-        <authorizedForm>AACR2</authorizedForm>
-      </nameEntry>
-    </identity>
-    <description>
-      <places></places>
-      <biogHist>
-        <abstract><![CDATA[<p>This is all of the Directory listings:</p><p><br /></p><p><a href="places" >https://notamitchell.github.io/order/places</a></p>]]></abstract>
-      </biogHist>
-    </description>
-    <relations>
-      <resourceRelation resourceRelationType="subjectOf">
-        <relationEntry localType="published">'Sands &amp; McDougall Directories', in &lt;span style="font-style:italic"&gt;eMelbourne - The Encyclopedia of Melbourne Online&lt;/span&gt;, School of Historical Studies, Department of History, The University of Melbourne</relationEntry>
-        <objectXMLWrap>
-          <bibref xmlns="urn:isbn:1-931666-22-9">
-            <title render="italic">Sands &amp; McDougall Directories</title>
-            <imprint>
-              <publisher>School of Historical Studies&lt;br /&gt; Department of History, The University of Melbourne</publisher>
-            </imprint>
-            <bibseries>
-              <title render="italic">eMelbourne - The Encyclopedia of Melbourne Online</title>
-            </bibseries>
-            <extptr linktype="simple" href="Sands-McDougall-Directories.xml"></extptr>
-          </bibref>
-        </objectXMLWrap>
-      </resourceRelation>
-    </relations>
-  </cpfDescription>
-</eac-cpf>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="topic" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Sands &amp; McDougall Directories</title>
+        <author>Mitchell Harrop</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Sands-McDougall-Directories</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Contributed through the website. No sources listed.</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="published">
+      <change when="2026-09-05" type="created">Public contribution via custom rich-text submission form by Mitchell Harrop.</change>
+      <change when="2026-10-05" type="converted">Converted from EAC-CPF to TEI.</change>
+      <change when="2026-10-05" type="revised">Linked to a page for each digitised directory.</change>
+      <change when="2026-10-10" type="revised">Linked to the directories held by Melbourne History Resources.</change>
+      <change when="2026-10-10" type="revised">Added the project area.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listRelation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1857">
+        <desc>Sands &amp; Kenny Directory, 1857</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1858">
+        <desc>Sands &amp; Kenny Directory, 1858</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1859">
+        <desc>Sands &amp; Kenny Directory, 1859</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1860">
+        <desc>Sands, Kenny &amp; Co. Directory, 1860</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1861">
+        <desc>Sands, Kenny &amp; Co. Directory, 1861</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1862">
+        <desc>Sands &amp; McDougall Directory, 1862</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1863">
+        <desc>Sands &amp; McDougall Directory, 1863</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1864">
+        <desc>Sands &amp; McDougall Directory, 1864</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1865">
+        <desc>Sands &amp; McDougall Directory, 1865</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1866">
+        <desc>Sands &amp; McDougall Directory, 1866</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1867">
+        <desc>Sands &amp; McDougall Directory, 1867</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1868">
+        <desc>Sands &amp; McDougall Directory, 1868</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1869">
+        <desc>Sands &amp; McDougall Directory, 1869</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1870">
+        <desc>Sands &amp; McDougall Directory, 1870</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1871">
+        <desc>Sands &amp; McDougall Directory, 1871</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1872">
+        <desc>Sands &amp; McDougall Directory, 1872</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1873">
+        <desc>Sands &amp; McDougall Directory, 1873</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1874">
+        <desc>Sands &amp; McDougall Directory, 1874</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1875">
+        <desc>Sands &amp; McDougall Directory, 1875</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1876">
+        <desc>Sands &amp; McDougall Directory, 1876</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1877">
+        <desc>Sands &amp; McDougall Directory, 1877</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1878">
+        <desc>Sands &amp; McDougall Directory, 1878</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1879">
+        <desc>Sands &amp; McDougall Directory, 1879</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1880">
+        <desc>Sands &amp; McDougall Directory, 1880</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1885">
+        <desc>Sands &amp; McDougall Directory, 1885</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1890">
+        <desc>Sands &amp; McDougall Directory, 1890</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1895">
+        <desc>Sands &amp; McDougall Directory, 1895</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1900">
+        <desc>Sands &amp; McDougall Directory, 1900</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1905">
+        <desc>Sands &amp; McDougall Directory, 1905</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1910">
+        <desc>Sands &amp; McDougall Directory, 1910</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1915">
+        <desc>Sands &amp; McDougall Directory, 1915</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1920">
+        <desc>Sands &amp; McDougall Directory, 1920</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1925">
+        <desc>Sands &amp; McDougall Directory, 1925</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1930">
+        <desc>Sands &amp; McDougall Directory, 1930</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1935">
+        <desc>Sands &amp; McDougall Directory, 1935</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1940">
+        <desc>Sands &amp; McDougall Directory, 1940</desc>
+      </relation>
+      <relation type="topic" name="edition" active="#subject" passive="https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1944">
+        <desc>Sands &amp; McDougall Directory, 1944–1945</desc>
+      </relation>
+    </listRelation>
+  </standOff>
+  <text>
+    <body>
+      
+      <p>Melbourne History Resources holds copies of the directories for <ref target="civic?id=Sands-McDougall-Directory-1857">1857</ref>, <ref target="civic?id=Sands-McDougall-Directory-1858">1858</ref>, <ref target="civic?id=Sands-McDougall-Directory-1859">1859</ref>, <ref target="civic?id=Sands-McDougall-Directory-1861">1861</ref>, <ref target="civic?id=Sands-McDougall-Directory-1862">1862</ref>, <ref target="civic?id=Sands-McDougall-Directory-1863">1863</ref>, <ref target="civic?id=Sands-McDougall-Directory-1864">1864</ref>, <ref target="civic?id=Sands-McDougall-Directory-1866">1866</ref>, <ref target="civic?id=Sands-McDougall-Directory-1867">1867</ref>, <ref target="civic?id=Sands-McDougall-Directory-1868">1868</ref>, <ref target="civic?id=Sands-McDougall-Directory-1869">1869</ref>, <ref target="civic?id=Sands-McDougall-Directory-1871">1871</ref>, <ref target="civic?id=Sands-McDougall-Directory-1872">1872</ref>, <ref target="civic?id=Sands-McDougall-Directory-1873">1873</ref>, <ref target="civic?id=Sands-McDougall-Directory-1874">1874</ref>, <ref target="civic?id=Sands-McDougall-Directory-1876">1876</ref>, <ref target="civic?id=Sands-McDougall-Directory-1877">1877</ref>, <ref target="civic?id=Sands-McDougall-Directory-1878">1878</ref> and <ref target="civic?id=Sands-McDougall-Directory-1879">1879</ref>.</p>
+      <p>State Library Victoria has digitised one directory every five years. Each has its own page here: <ref target="civic?id=Sands-McDougall-Directory-1860">1860</ref>, <ref target="civic?id=Sands-McDougall-Directory-1865">1865</ref>, <ref target="civic?id=Sands-McDougall-Directory-1870">1870</ref>, <ref target="civic?id=Sands-McDougall-Directory-1875">1875</ref>, <ref target="civic?id=Sands-McDougall-Directory-1880">1880</ref>, <ref target="civic?id=Sands-McDougall-Directory-1885">1885</ref>, <ref target="civic?id=Sands-McDougall-Directory-1890">1890</ref>, <ref target="civic?id=Sands-McDougall-Directory-1895">1895</ref>, <ref target="civic?id=Sands-McDougall-Directory-1900">1900</ref>, <ref target="civic?id=Sands-McDougall-Directory-1905">1905</ref>, <ref target="civic?id=Sands-McDougall-Directory-1910">1910</ref>, <ref target="civic?id=Sands-McDougall-Directory-1915">1915</ref>, <ref target="civic?id=Sands-McDougall-Directory-1920">1920</ref>, <ref target="civic?id=Sands-McDougall-Directory-1925">1925</ref>, <ref target="civic?id=Sands-McDougall-Directory-1930">1930</ref>, <ref target="civic?id=Sands-McDougall-Directory-1935">1935</ref>, <ref target="civic?id=Sands-McDougall-Directory-1940">1940</ref> and <ref target="civic?id=Sands-McDougall-Directory-1944">1944–1945</ref>.</p>
+      <p>The project covers the area south of Grattan Street, west of Swanston Street, east of Elizabeth Street and north of Victoria Street. Each directory's page gives the page range of its Carlton listings, where it is known.</p>
+    </body>
+  </text>
+</TEI>

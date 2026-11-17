@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="place" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Little Grattan Street</title>
+        <respStmt key="community">
+          <resp>Credited as</resp>
+          <name>Community Contribution</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Little-Grattan-Street</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Contributed through the website. No sources listed.</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="draft">
+      <change when="2026-10-12" type="created">Contributed through the contribution form.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listPlace>
+      <place xml:id="subject">
+        <placeName type="main">Little Grattan Street</placeName>
+      </place>
+    </listPlace>
+  </standOff>
+  <text>
+    <body>
+      <p>Little Grattan Street runs south off Grattan Street, near the intersection of Grattan and Swanston streets.</p>
+      <p>See the State Library Victoria catalogue entry to have a glimpse of Little Grattan Street and the 'slums' there. <ref target="https://viewer.slv.vic.gov.au/?entity=IE724317&amp;mode=browse">https://viewer.slv.vic.gov.au/?entity=IE724317&amp;mode=browse</ref></p>
+    </body>
+  </text>
+</TEI>

@@ -3,29 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Common Ground - Contribution form</title>
-  
+  <title>Contribution Form</title>
+
   <!-- Directory data loader: fetches only the files holding this entry's records -->
   <script src="scripts/data.js?v={{ site.time | date: '%s' }}"></script>
+  <!-- Builds the entry as TEI XML (schema/carlton.odd) and the preview -->
+  <script src="scripts/tei.js?v={{ site.time | date: '%s' }}"></script>
+  <script src="scripts/tei-compare.js?v={{ site.time | date: '%s' }}"></script>
 
-  <!-- Quill WYSIWYG Editor Styles -->
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-  <!-- Site fonts and stylesheet, for the palette tokens (--paper, --ink, --moss…) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="styles/site.css?v={{ site.time | date: '%s' }}">
 
   <!-- This page is shown inside an iframe on entry pages (_layouts/entry.html),
-       inside the "Contribute" box, so it has no card or background of its own. -->
+       inside the "Contribute" box, where it is transparent. Opened on its own
+       (form?id=…) it gets the paper background. -->
   <style>
     body {
-      background: transparent;
+      background: var(--paper);
       color: var(--ink-soft);
+      font-family: var(--font-ui);
+      padding: 24px 16px 48px;
     }
-    .form-card {
-      max-width: 700px;
+    body.in-frame { background: transparent; padding: 0; }
+    .form-card { max-width: 720px; margin: 0 auto; }
+    body.in-frame .form-card { margin: 0; }
+
+    .test-note {
+      font-size: 13px;
+      background: var(--paper-deep);
+      border: 1px dashed var(--sage-dark);
+      padding: 8px 12px;
+      margin-bottom: 20px;
     }
     h2 {
       font-family: var(--font-serif);
@@ -34,15 +45,18 @@
       font-size: 1.25rem;
       margin-bottom: 6px;
     }
-    .form-intro {
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-    }
+    .form-intro { margin-bottom: 20px; font-size: 0.95rem; }
 
-    /* --- Directory record(s) this entry is about --- */
-    .entity-container {
-      margin-bottom: 24px;
-    }
+    /* --- "Suggest changes" from the review page (?review=…) --- */
+    .reviewer { background: var(--paper-deep); border: 1px solid var(--sage-dark); padding: 14px 16px 4px; margin-bottom: 24px; }
+    .reviewer .row { display: grid; grid-template-columns: 1fr 2fr; gap: 0 14px; }
+    @media (max-width: 600px) { .reviewer .row { grid-template-columns: 1fr; } }
+    .review-warning { border: 1px solid #C9A227; background: #FBF5E6; padding: 10px 14px; margin-bottom: 20px; font-size: 0.92rem; }
+    .review-warning ul { margin: 6px 0 0; padding-left: 20px; }
+
+    /* --- Directory record(s) this entry is about (as in the old form) --- */
+    .entity-container { margin-bottom: 24px; }
+    .prefill-note { background: var(--paper-deep); border-left: 3px solid var(--moss); padding: 8px 12px; margin: 0 0 24px; font-size: 14px; }
     .entity-card {
       background-color: var(--paper);
       border: 1px solid var(--paper-line);
@@ -50,6 +64,7 @@
       padding: 12px 16px;
       margin-bottom: 12px;
     }
+    body:not(.in-frame) .entity-card { background: var(--paper-deep); }
     .entity-card h3 {
       font-family: var(--font-serif);
       font-weight: normal;
@@ -57,9 +72,7 @@
       color: var(--ink);
       margin-bottom: 6px;
     }
-    .entity-card ul {
-      list-style-type: none;
-    }
+    .entity-card ul { list-style-type: none; }
     .entity-card li {
       font-family: var(--font-mono);
       font-size: 14px;
@@ -68,9 +81,7 @@
       border-bottom: 1px dashed var(--paper-line);
       overflow-wrap: anywhere;
     }
-    .entity-card li:last-child {
-      border-bottom: none;
-    }
+    .entity-card li:last-child { border-bottom: none; }
     .entity-card .prop-key {
       font-family: var(--font-ui);
       font-size: 11px;
@@ -79,12 +90,22 @@
       color: var(--ink-faint);
       margin-right: 4px;
     }
+    .entity-card .use-address { margin-top: 8px; }
+    .entity-card .check-line, .entity-card .linked-note { margin-top: 8px; }
+    .linked-note { font-size: 13px; color: var(--ink-faint); }
 
-    /* --- Fields: same look as the "Suggest new article" form (new.html) --- */
-    .field-group {
-      margin-bottom: 18px;
-    }
-    label {
+    /* --- Finding other records the entry is about --- */
+    .record-finder { font-size: 14px; }
+    .finder-status { font-size: 13px; color: var(--ink-faint); margin: 6px 0; }
+    .finder-results { list-style: none; padding: 0; margin: 0; }
+    .finder-results li { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; padding: 6px 0; border-bottom: 1px dashed var(--paper-line); }
+    .finder-results .what { font-family: var(--font-mono); color: var(--ink); overflow-wrap: anywhere; }
+    .finder-results .yr { font-family: var(--font-ui); color: var(--ink-faint); margin-right: 6px; }
+    .finder-results .linked-note { white-space: nowrap; }
+
+    /* --- Fields --- */
+    .field-group { margin-bottom: 18px; }
+    label, .label {
       display: block;
       font-size: 11px;
       text-transform: uppercase;
@@ -92,46 +113,67 @@
       color: var(--moss);
       margin-bottom: 5px;
     }
-    input[type="text"] {
+    .optional-tag {
+      display: inline-block;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-faint);
+      border: 1px solid var(--paper-line);
+      background: var(--paper);
+      padding: 1px 6px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    input[type="text"], input[type="url"], select, textarea {
       width: 100%;
       font-family: var(--font-mono);
       font-size: 15px;
-      padding: 10px 12px;
+      padding: 9px 11px;
       background: var(--paper);
       border: 1px solid var(--ink);
       color: var(--ink);
+      border-radius: 0;
     }
-    input[type="text"]::placeholder {
-      color: var(--ink-faint);
+    select { font-family: var(--font-ui); }
+    textarea { font-family: var(--font-ui); line-height: 1.5; resize: vertical; display: block; }
+    input::placeholder, textarea::placeholder { color: var(--ink-faint); }
+    input:focus, select:focus, textarea:focus { outline: 2px solid var(--moss); outline-offset: 1px; }
+    .hint { font-size: 13px; color: var(--ink-faint); margin: -2px 0 8px; }
+
+    /* "What is this entry about?" as one-tap chips */
+    fieldset { border: none; margin-bottom: 18px; }
+    legend { padding: 0; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .chip span {
+      display: inline-block;
+      font-size: 14px;
+      padding: 7px 12px;
+      border: 1px solid var(--sage-dark);
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: normal;
     }
-    input[type="text"]:focus {
-      outline: 2px solid var(--moss);
-      outline-offset: 1px;
+    .chip { margin: 0; }
+    .chip input:checked + span { background: var(--moss); border-color: var(--moss); color: var(--paper); }
+    .chip input:focus-visible + span { outline: 2px solid var(--moss); outline-offset: 2px; }
+    .chip span:hover { border-color: var(--moss); }
+    .clear-kind {
+      font-size: 13px; background: none; border: none; color: var(--moss);
+      text-decoration: underline; cursor: pointer; padding: 7px 4px;
     }
 
-    /* Quill editor: toolbar and text box share the field border */
-    .ql-toolbar.ql-snow,
-    .ql-container.ql-snow {
-      border-color: var(--ink);
-    }
-    .ql-toolbar.ql-snow {
-      background: var(--paper-deep);
-      font-family: var(--font-ui);
-    }
-    .ql-container.ql-snow {
-      background: var(--paper);
-      font-family: var(--font-ui);
-      font-size: 15px;
-      color: var(--ink);
-    }
-    .ql-container.ql-snow:focus-within {
-      outline: 2px solid var(--moss);
-      outline-offset: 1px;
-    }
-    .ql-editor.ql-blank::before {
-      color: var(--ink-faint);
-      font-style: normal;
-    }
+    /* Quill editor (as in the old form) */
+    .ql-toolbar.ql-snow, .ql-container.ql-snow { border-color: var(--ink); }
+    .ql-toolbar.ql-snow { background: var(--paper-deep); font-family: var(--font-ui); }
+    .ql-container.ql-snow { background: var(--paper); font-family: var(--font-ui); font-size: 15px; color: var(--ink); }
+    .ql-container.ql-snow:focus-within { outline: 2px solid var(--moss); outline-offset: 1px; }
+    .ql-editor.ql-blank::before { color: var(--ink-faint); font-style: normal; }
     .ql-snow .ql-stroke { stroke: var(--ink-soft); }
     .ql-snow .ql-fill { fill: var(--ink-soft); }
     .ql-snow .ql-picker { color: var(--ink-soft); }
@@ -146,305 +188,1487 @@
     .ql-snow .ql-picker-item:hover,
     .ql-snow .ql-picker-item.ql-selected { color: var(--moss); }
     .ql-snow .ql-picker-options { background: var(--paper); }
-    .ql-snow .ql-tooltip {
+    .ql-snow .ql-tooltip { background: var(--paper); border-color: var(--sage-dark); color: var(--ink-soft); box-shadow: none; }
+    .ql-snow .ql-tooltip a, .ql-editor a { color: var(--moss); }
+    .ql-snow .ql-editor blockquote { border-left-color: var(--moss); font-family: var(--font-serif); }
+    #editor-container { height: 300px; }
+    /* "Where did you find this?": one source per line, grows with its lines */
+    #references .ql-editor { min-height: 110px; }
+    #references .ql-editor p + p { margin-top: .35em; }
+    .ql-table-embed table { border-collapse: collapse; width: 100%; }
+    .ql-table-embed td, .ql-table-embed th { border: 1px solid var(--paper-line); padding: 6px 8px; }
+    /* Collection images (scripts/glam-embed.js) */
+    .ql-editor .ql-glam-image { margin: 1em 0; text-align: center; }
+    .ql-editor .ql-glam-image img { max-width: 100%; max-height: 260px; height: auto; display: inline-block; }
+    .ql-editor .ql-glam-image figcaption { font-size: 13px; color: var(--ink-faint); margin-top: .3em; }
+
+    /* --- The optional box --- */
+    .more {
+      border: 1px solid var(--paper-line);
+      background: var(--paper-deep);
+      padding: 16px;
+      margin: 26px 0 22px;
+    }
+    body.in-frame .more { background: var(--paper); }
+    .more-head { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .more-head h3 {
+      font-family: var(--font-serif);
+      font-weight: normal;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+    .more-head p { font-size: 14px; margin-top: 4px; max-width: 46ch; }
+
+    /* "Add more detail" switch: shows or hides all of Part B */
+    .more-switch { margin: 26px 0 0; }
+    #partB { display: none; }
+    .show-all #partB { display: block; }
+    .switch { display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; letter-spacing: normal; font-size: 14px; color: var(--ink); margin: 0; }
+    .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .switch .track {
+      flex: none; width: 36px; height: 20px; border-radius: 10px;
+      background: var(--sage); border: 1px solid var(--sage-dark); position: relative; transition: background .15s;
+    }
+    .switch .track::after {
+      content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--paper); transition: transform .15s;
+    }
+    .switch input:checked + .track { background: var(--moss); border-color: var(--moss); }
+    .switch input:checked + .track::after { transform: translateX(16px); }
+    .switch input:focus-visible + .track { outline: 2px solid var(--moss); outline-offset: 2px; }
+    .switch small { display: block; font-size: 12px; color: var(--ink-faint); }
+
+    details.section { border-top: 1px solid var(--paper-line); }
+    details.section:last-of-type { border-bottom: 1px solid var(--paper-line); }
+    details.section > summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 2px 10px;
+      padding: 11px 0 11px 2.2ch;
+      position: relative;
+    }
+    details.section > summary::-webkit-details-marker { display: none; }
+    details.section > summary::before {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--moss);
+      position: absolute;
+      left: 0;
+    }
+    details.section[open] > summary::before { content: "−"; }
+    .sum-title { color: var(--ink); font-size: 15px; }
+    .sum-hint { color: var(--ink-faint); font-size: 13px; flex: 1 1 200px; }
+    .sum-count { font-size: 12px; color: var(--moss-deep); background: var(--sage-light); padding: 0 6px; }
+    .sum-count:empty { display: none; }
+    .section-body { padding: 4px 0 16px 2.2ch; }
+    @media (max-width: 480px) {
+      .more { padding: 14px 12px; }
+      .section-body { padding-left: 0; }
+    }
+
+    .person-only:not(.is-person) { display: none !important; }
+
+    /* Part C: credit and licence */
+    .part-c { margin: 26px 0 18px; padding-top: 18px; border-top: 1px solid var(--paper-line); }
+    .part-c [data-list="authors"] { margin-top: 10px; }
+    .credit-choice { margin: 0; }
+    .credit-opt { border: 1px solid var(--paper-line); background: var(--paper); padding: 12px 14px; margin-top: 10px; }
+    .credit-opt.on { border-color: var(--moss); background: var(--paper-deep); }
+    .radio-line { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; font-weight: 600; color: var(--ink); text-transform: none; letter-spacing: normal; margin: 0; cursor: pointer; }
+    .radio-line input { flex: none; width: 16px; height: 16px; margin-top: 3px; accent-color: var(--moss); }
+    .radio-line small, .keep-line small { display: block; font-weight: normal; font-size: 13px; color: var(--ink-faint); margin-top: 2px; }
+    .radio-line .optional-tag { margin-left: 4px; vertical-align: 2px; }
+    .credit-body { margin: 12px 0 0 26px; }
+    .credit-body .field-group { margin-bottom: 12px; }
+    .keep-line { margin-top: 14px; }
+    .contact-group { margin-top: 18px; }
+    .contact-hint { margin-top: 6px; }
+    .contact-hint a { color: var(--moss); }
+    .private-tag { display: inline-block; font-size: 10px; font-weight: normal; text-transform: uppercase; letter-spacing: 0.1em; color: var(--moss); border: 1px solid var(--moss); padding: 0 5px; margin-left: 4px; vertical-align: 1px; }
+    /* Suggesting changes to a submission: just the names and the keep switch */
+    .review-mode #creditLegend, .review-mode #optCommunity, .review-mode #namedLine, .review-mode #contactGroup { display: none; }
+    .review-mode #optNamed { border: 0; background: none; padding: 0; margin: 0; }
+    .review-mode .credit-body { margin: 0; }
+    @media (max-width: 480px) { .credit-body { margin-left: 0; } }
+    .licence-line { align-items: flex-start; line-height: 1.45; }
+    .licence-line input { flex: none; margin-top: 2px; }
+    .licence-line a, .send-note a, .form-intro a { color: var(--moss); }
+    .licence-summary { font-size: 13px; color: var(--ink-faint); margin: 6px 0 0 24px; }
+    .credit-body > .licence-summary:last-child { margin-bottom: 0; }
+    .licence-summary a { color: var(--moss); }
+    .send-note { font-size: 13px; color: var(--ink-faint); margin-top: 10px; }
+    .byline-hint { margin-top: 8px; }
+
+    /* Repeatable rows */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px 12px;
+      padding: 12px;
+      border: 1px solid var(--paper-line);
       background: var(--paper);
-      border-color: var(--sage-dark);
-      color: var(--ink-soft);
-      box-shadow: none;
+      margin-bottom: 10px;
+      position: relative;
     }
-    .ql-snow .ql-tooltip a { color: var(--moss); }
-    .ql-editor a { color: var(--moss); }
-
-    #editor-container {
-      height: 220px;
+    .row .field-group { margin: 0; min-width: 0; }
+    .row input, .row select { min-width: 0; }
+    .row .wide { grid-column: 1 / -1; }
+    .row .remove-row {
+      grid-column: 1 / -1;
+      justify-self: end;
+      font-size: 13px; background: none; border: none; color: var(--moss);
+      text-decoration: underline; cursor: pointer; padding: 0;
     }
+    .check-line { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--ink); text-transform: none; letter-spacing: normal; margin-top: 4px; }
+    .check-line input { width: 16px; height: 16px; accent-color: var(--moss); }
+    .check-line[hidden] { display: none; }
 
-    button[type="submit"] {
+    /* Buttons */
+    button.primary, button.secondary, button.small {
       font-family: var(--font-mono);
       font-size: 14px;
       padding: 11px 20px;
-      background: var(--moss);
       border: 1px solid var(--moss);
-      color: var(--paper);
       cursor: pointer;
     }
-    button[type="submit"]:hover {
-      background: var(--moss-deep);
-    }
-    button[type="submit"]:disabled {
-      background: var(--sage-dark);
-      border-color: var(--sage-dark);
-      cursor: not-allowed;
-    }
+    button.primary { background: var(--moss); color: var(--paper); }
+    button.primary:hover { background: var(--moss-deep); }
+    button.secondary, button.small { background: var(--paper); color: var(--moss-deep); }
+    button.secondary:hover, button.small:hover { background: var(--sage-light); }
+    /* Greyed out while sending, and for good once it has been sent */
+    button.primary:disabled, button.primary:disabled:hover { background: var(--moss); opacity: 0.45; cursor: not-allowed; }
+    button.small { font-size: 13px; padding: 6px 12px; }
+    /* A quiet extra for editors, styled as a link so the public isn't distracted */
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .actions .note { font-size: 13px; color: var(--ink-faint); }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+    .send-status { margin-top: 14px; padding: 8px 12px; font-size: 14px; border-left: 3px solid var(--sage-dark); background: var(--paper-deep); }
+    .send-status.ok { border-left-color: var(--moss); background: var(--sage-light); color: var(--moss-deep); }
+    .send-status.error { border-left-color: #8a2c1d; background: #f6e4dc; color: #8a2c1d; }
     @media (max-width: 480px) {
-      button[type="submit"] { width: 100%; }
+      .actions button { width: 100%; }
     }
 
-    #status {
-      margin-top: 15px;
-      padding: 10px 14px;
-      display: none;
-      font-size: 14px;
-    }
-    .success {
-      background-color: var(--sage-light);
-      color: var(--moss-deep);
-      border: 1px solid var(--sage-dark);
-    }
-    .error {
-      background-color: #f6e4dc;
-      color: #8a2c1d;
-      border: 1px solid #d9a79a;
-    }
-
-    .ql-table-embed table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .ql-table-embed td,
-    .ql-table-embed th {
-      border: 1px solid var(--paper-line);
-      padding: 6px 8px;
+    /* --- Preview --- */
+    #preview { margin-top: 30px; border-top: 2px solid var(--ink); padding-top: 18px; }
+    #preview > h2 { margin-bottom: 12px; }
+    .checks { list-style: none; margin-bottom: 18px; font-size: 14px; }
+    .checks li { padding: 6px 10px; margin-bottom: 6px; border-left: 3px solid var(--sage-dark); background: var(--paper-deep); }
+    .checks li.error { border-left-color: #8a2c1d; background: #f6e4dc; color: #8a2c1d; }
+    .checks li.ok { border-left-color: var(--moss); background: var(--sage-light); color: var(--moss-deep); }
+    /* The entry styles (.pv-*) are in styles/site.css, shared with entry pages;
+       in the preview the entry sits on a white card. */
+    #previewEntry .pv-entry { background: #fff; border: 1px solid var(--paper-line); padding: 22px 20px; }
+    .xml-box { margin-top: 16px; }
+    .xml-box summary { cursor: pointer; color: var(--moss-deep); font-size: 14px; padding: 6px 0; }
+    .xml-box pre {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.45;
+      background: var(--ink-deepest);
+      color: var(--paper);
+      padding: 14px;
+      overflow: auto;
+      max-height: 480px;
+      white-space: pre;
     }
   </style>
+  <!-- Visual refresh: softer fields and buttons (styles/refresh-form.css) -->
+  <link rel="stylesheet" type="text/css" href="styles/refresh-form.css?v={{ site.time | date: '%s' }}">
 </head>
 <body>
 
 <div class="form-card">
-  <!-- Container for dynamically loaded Directory Data -->
-  <div id="details-container"></div>
+{%- comment %} An empty string is truthy in Liquid; default turns it into false {% endcomment %}
+{%- assign connected = site.contribution_endpoint | default: false %}
+{%- unless connected %}
+  <p class="test-note"><strong>Not connected yet.</strong> This new form doesn't send anything: use <em>Preview</em> to see how the entry would look and its XML.</p>
+{%- endunless %}
 
-  <h2>Suggest Article contents</h2>
-  <p class="form-intro"><i>Instructions go here. Links to editorial guidance, etc. </i></p>
-  
-  <form id="submissionForm">
+  <h2 id="formHeading">Suggest entry contents</h2>
+  <p class="form-intro" id="formIntro">Write what you know, in your own words. A paragraph is plenty. Please say where each fact comes from: a directory year, a newspaper on Trove, a rate book, or “family memory”. The editorial collective reads every suggestion before deciding whether, and how, it appears on the site. <a href="about#contribute" target="_blank" rel="noopener">How to contribute</a></p>
+  <div class="review-warning" id="reviewWarning" hidden></div>
+  <div id="prefillNotes"></div>
+
+  <form id="contributionForm" novalidate>
+    <!-- Only when suggesting changes to a submission (?review=…) -->
+    <div class="reviewer" id="reviewer" hidden>
+      <div class="row">
+        <div class="field-group"><label for="reviewerName">Your name</label><input type="text" id="reviewerName" autocomplete="name" placeholder="e.g. Sam Jones"></div>
+        <div class="field-group"><label for="reviewNote">What did you change? <span class="optional-tag">Optional</span></label><input type="text" id="reviewNote" placeholder="e.g. Added the 1890 address and fixed the licence date"></div>
+      </div>
+    </div>
+
+    <!-- Part A: always shown, short enough for a single fact -->
     <div class="field-group">
-      <label for="authorName">Contributor / Author Name</label>
-      <input type="text" id="authorName" placeholder="e.g. Dr. John Smith" required />
+      <label for="articleTitle">Entry title</label>
+      <input type="text" id="articleTitle" name="articleTitle" placeholder="e.g. Ellen Hogan" required>
+      <p class="hint">For a person, write the name first name first, e.g. Ellen Hogan, not Hogan, Ellen.</p>
+    </div>
+
+    <fieldset class="field-group">
+      <legend class="label">What is this entry about? <span class="optional-tag">Optional</span></legend>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="kind" value="person"><span>A person</span></label>
+        <label class="chip"><input type="radio" name="kind" value="org"><span>A business or organisation</span></label>
+        <label class="chip"><input type="radio" name="kind" value="place"><span>A place, street or building</span></label>
+        <label class="chip"><input type="radio" name="kind" value="topic"><span>A topic</span></label>
+        <button type="button" class="clear-kind" id="clearKind" hidden>Clear</button>
+      </div>
+    </fieldset>
+
+    <p class="hint">Fill in at least one of these three boxes.</p>
+    <div class="field-group">
+      <label for="summary">In a sentence or two, who or what was this?</label>
+      <textarea id="summary" rows="3" placeholder="e.g. Ellen Hogan was publican of the Otago Hotel in Pelham Street in the mid 1870s."></textarea>
     </div>
 
     <div class="field-group">
-      <label for="articleTitle">Proposed Article Title</label>
-      <input type="text" id="articleTitle" placeholder="e.g. Princes Bridge" required />
+      <label id="articleLabel">Tell us everything!</label>
+      <div id="editor-container" aria-labelledby="articleLabel"></div>
     </div>
 
     <div class="field-group">
-      <label>Proposed Article Content</label>
-      <div id="editor-container"></div>
+      <label id="referencesLabel">Where did you find this?</label>
+      <p class="hint" id="referencesHint">One per line. Use the buttons for italics, such as a newspaper’s title, or to add a link. A link at the end of a line is kept as a link.</p>
+      <div id="references" aria-labelledby="referencesLabel" aria-describedby="referencesHint"></div>
     </div>
 
-    <input type="hidden" id="prefilledId" placeholder="e.g. princes-bridge" />
+    <!-- Part B: everything else, behind one switch -->
+    <label class="switch more-switch">
+      <input type="checkbox" id="showAll" role="switch" aria-controls="partB">
+      <span class="track" aria-hidden="true"></span>
+      <span>Add more detail<small>Byline, linked records, sources with links, dates, addresses and more. For the project team and keen researchers.</small></span>
+    </label>
 
-    <button type="submit" id="submitBtn">Submit Contribution</button>
+    <section class="more" id="partB" aria-labelledby="moreHeading">
+      <div class="more-head">
+        <div>
+          <h3 id="moreHeading">More detail <span class="optional-tag">Optional</span></h3>
+          <p>Everything here is optional. Fill in only what you know.</p>
+        </div>
+      </div>
+
+      <details class="section" data-section="byline" data-nocount>
+        <summary><span class="sum-title">Byline</span><span class="sum-hint">How the entry is credited under its title</span></summary>
+        <div class="section-body">
+          <label class="check-line"><input type="checkbox" id="creditCommunity"> Includes a Community Contribution</label>
+          <label class="check-line"><input type="checkbox" id="creditDraft"> Based on a computer-assisted first draft</label>
+          <label class="check-line"><input type="checkbox" id="creditAdditions"> Includes computer-assisted additions</label>
+          <p class="hint byline-hint">Filled in from the current entry. You can untick either, for example after a full redraft; the editorial collective decides whether to accept the change.</p>
+        </div>
+      </details>
+
+      <!-- Other records this entry is about (not when suggesting changes) -->
+      <details class="section" data-section="records" id="recordsSection" data-nocount hidden>
+        <summary><span class="sum-title">Is this entry about other records too?</span><span class="sum-hint">Directory and electoral-roll records</span></summary>
+        <div class="section-body">
+          <div id="records-container"></div>
+          <div class="record-finder" id="recordFinder">
+            <p class="hint">For example, the same shop or person in other years. Records you add are linked to this entry when the editors accept it.</p>
+            <label for="recordSearch">Search the directories and electoral rolls</label>
+            <input type="text" id="recordSearch" placeholder="e.g. 34 Barry Street, or Spiers" autocomplete="off">
+            <p class="finder-status" id="finderStatus" aria-live="polite"></p>
+            <ul class="finder-results" id="finderResults"></ul>
+          </div>
+        </div>
+      </details>
+
+      <details class="section" data-section="recordSources">
+        <summary><span class="sum-title">In the directories and electoral rolls</span><span class="sum-hint">Citations filled in from the linked records</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="recordSources"></div></div>
+      </details>
+
+      <details class="section" data-section="sources">
+        <summary><span class="sum-title">Sources</span><span class="sum-hint">The same list as “Where did you find this?”, with links</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="sources"></div></div>
+      </details>
+
+      <details class="section" data-section="dates">
+        <summary><span class="sum-title">Dates</span><span class="sum-hint" data-hint="dates"></span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <div class="row">
+            <div class="field-group"><label for="dateFrom" data-label="from">From</label><input type="text" id="dateFrom" name="dateFrom" placeholder="e.g. 1856"></div>
+            <div class="field-group"><label for="dateTo" data-label="to">To</label><input type="text" id="dateTo" name="dateTo" placeholder="e.g. 1881"></div>
+            <label class="check-line wide"><input type="checkbox" id="dateApprox"> These dates are approximate</label>
+          </div>
+          <p class="hint">A year is enough. You can also write "c. 1856" or "1856-03-04".</p>
+        </div>
+      </details>
+
+      <details class="section" data-section="names">
+        <summary><span class="sum-title">Other names</span><span class="sum-hint">Earlier or later names, e.g. Carlton Inn, later the Corkman Hotel</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <div class="row person-only" id="nameParts">
+            <p class="hint wide">Name parts for people</p>
+            <div class="field-group"><label for="surname">Surname</label><input type="text" id="surname" placeholder="e.g. Cozens"></div>
+            <div class="field-group"><label for="forenames">Forenames</label><input type="text" id="forenames" placeholder="e.g. John"></div>
+          </div>
+          <div class="rows" data-list="otherNames"></div>
+        </div>
+      </details>
+
+      <details class="section" data-section="places">
+        <summary><span class="sum-title">Addresses</span><span class="sum-hint">Where they lived or worked, with years</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <p class="hint">Tip: the linked records above have a <em>Use this address</em> button.</p>
+          <div class="rows" data-list="places"></div>
+        </div>
+      </details>
+
+      <details class="section" data-section="occupations">
+        <summary><span class="sum-title" data-label="occupations">Occupation or trade</span><span class="sum-hint" data-hint="occupations"></span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="occupations"></div></div>
+      </details>
+
+      <!-- No longer offered; shown only for an entry that already has one, so editing it keeps it -->
+      <details class="section" data-section="legal" hidden>
+        <summary><span class="sum-title">Legal status</span><span class="sum-hint">e.g. a publican's licence</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="legalStatuses"></div></div>
+      </details>
+
+      <details class="section" data-section="chronology">
+        <summary><span class="sum-title">Chronology</span><span class="sum-hint">Dated events, one per row</span><span class="sum-count"></span></summary>
+        <div class="section-body"><div class="rows" data-list="chronology"></div></div>
+      </details>
+
+      <details class="section" data-section="relations">
+        <summary><span class="sum-title">Related entries</span><span class="sum-hint">People, businesses and families connected to this one</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <p class="hint">Start typing to pick an entry already on the site; its link fills in.</p>
+          <div class="rows" data-list="relations"></div>
+        </div>
+      </details>
+
+      <details class="section" data-section="note">
+        <summary><span class="sum-title">Note for the record</span><span class="sum-hint">What this contribution adds or changes</span><span class="sum-count"></span></summary>
+        <div class="section-body">
+          <div class="field-group"><label for="note">Note</label><input type="text" id="note" placeholder="e.g. Resubmitted from the old form with dates and addresses added"></div>
+        </div>
+      </details>
+    </section>
+
+    <!-- Part C: credit and consent, just before Send. Anonymous (credited as
+         “Community Contribution”) is the default; credit by name asks for
+         a name and lets them keep the entry as written. Everyone is asked how
+         we might contact them. -->
+    <div class="part-c">
+      <fieldset class="credit-choice" id="creditChoice">
+        <legend class="label" id="creditLegend">How should we credit this?</legend>
+
+        <div class="credit-opt" id="optCommunity">
+          <label class="radio-line"><input type="radio" name="credit" value="community" id="creditByCommunity" checked> <span>Anonymous: credit as “Community Contribution” <span class="optional-tag">Default</span><small>The usual choice for a correction, a fact or a short addition.</small></span></label>
+          <div class="credit-body">
+            <label class="check-line licence-line" id="licenceLine"><input type="checkbox" id="licenceOk"> <span>I agree that what I’ve written may be published under a CC BY-NC 4.0 licence and credited as “Community Contribution”. <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">Read more</a></span></label>
+            <p class="licence-summary" id="licenceSummary">In short: anyone, including us, may share, copy and build on what you’ve written, as long as they credit it as a “Community Contribution” and don’t use it to make money. Once you’ve sent it, this permission can’t be withdrawn, though you can still <a href="about#takedown" target="_blank" rel="noopener">ask us to take something down</a>.</p>
+          </div>
+        </div>
+
+        <div class="credit-opt" id="optNamed">
+          <label class="radio-line" id="namedLine"><input type="radio" name="credit" value="named" id="creditByName"> <span>Credit me by name<small>For a longer piece, a personal memory, or an article by the project team.</small></span></label>
+          <div class="credit-body" id="namedBody">
+            <div class="field-group">
+              <label for="authorName" id="authorLabel">Your name, as it should appear</label>
+              <input type="text" id="authorName" name="authorName" placeholder="e.g. Andy May" autocomplete="name">
+              <div class="rows" data-list="authors"></div>
+            </div>
+            <label class="check-line licence-line" id="licenceNamedLine"><input type="checkbox" id="licenceNamed"> <span>I agree that what I’ve written may be published under a CC BY-NC 4.0 licence and credited to me by the name above. <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">Read more</a></span></label>
+            <p class="licence-summary" id="licenceNamedSummary">In short: anyone, including us, may share, copy and build on what you’ve written, as long as they credit you by name and don’t use it to make money. Once you’ve sent it, this permission can’t be withdrawn, though you can still <a href="about#takedown" target="_blank" rel="noopener">ask us to take something down</a>.</p>
+            <label class="check-line licence-line keep-line" id="keepLine" hidden><input type="checkbox" id="keepEntry"> <span>Keep this entry as I wrote it<small>Other people won’t be able to suggest changes to it. The editors may still fix small errors, and will check with you before anything else changes.</small></span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Asked of everyone, anonymous or named. Anything in the box will do:
+           it isn't checked as an email address or phone number. -->
+      <div class="field-group contact-group" id="contactGroup">
+        <label for="contactDetails">How might we contact you? <span class="private-tag">Not published</span></label>
+        <input type="text" id="contactDetails" name="contactDetails" placeholder="Email or phone" autocomplete="email" required>
+        <p class="hint contact-hint">Only the editors see this. We won’t contact everyone, but it helps if we have a question about your entry. It isn’t added to the entry. <a href="about#privacy" target="_blank" rel="noopener">How we handle your details</a></p>
+      </div>
+    </div>
+
+    <!-- Honeypot: hidden from people, often filled in by bots -->
+    <div class="hp" aria-hidden="true"><label for="website">Website</label><input type="text" id="website" name="website" tabindex="-1" autocomplete="off"></div>
+
+    <div class="actions">
+{%- if connected %}
+      <button type="button" class="primary" id="sendBtn" disabled>Send to the editors</button>
+      <button type="button" class="secondary" id="previewBtn">Preview</button>
+{%- else %}
+      <button type="button" class="primary" id="previewBtn">Preview</button>
+{%- endif %}
+{%- unless connected %}
+      <span class="note">Nothing is sent until the form is connected.</span>
+{%- endunless %}
+    </div>
+    <p class="send-note" id="sendNote">Suggestions are semi-public once sent (we have a large project team). Please don’t include anything private, and <a href="about#contact" target="_blank" rel="noopener">contact us via email</a> instead.</p>
+    <p id="sendStatus" class="send-status" role="status" hidden></p>
   </form>
 
-  <div id="status"></div>
+  <section id="preview" hidden aria-live="polite">
+    <h2>Preview</h2>
+    <ul class="checks" id="checks"></ul>
+    <div id="previewEntry"></div>
+    <details class="xml-box">
+      <summary>Show the TEI XML</summary>
+      <pre id="xmlOut"></pre>
+    </details>
+  </section>
 </div>
 
+<datalist id="occupation-terms">
+  <option value="Publican"><option value="Licensee"><option value="Brewer"><option value="Grocer"><option value="Butcher">
+  <option value="Bootmaker"><option value="Tailor"><option value="Carpenter"><option value="Labourer"><option value="Dressmaker">
+  <option value="Clerk"><option value="Teacher"><option value="Builder">
+</datalist>
+<datalist id="function-terms">
+  <option value="Hotel"><option value="Brewery"><option value="Shop"><option value="Factory"><option value="School">
+  <option value="Church"><option value="Society"><option value="Bank">
+</datalist>
+<datalist id="use-terms">
+  <option value="Hotel"><option value="Shop"><option value="Stables"><option value="Cottage"><option value="Factory"><option value="Vacant land">
+</datalist>
+<datalist id="place-roles">
+  <option value="Residence"><option value="Business premises"><option value="Licensed premises"><option value="Birthplace"><option value="Place of death">
+</datalist>
+<datalist id="relation-types">
+  <option value="Licensee"><option value="Owner"><option value="Occupant"><option value="Family member"><option value="Spouse">
+  <option value="Parent"><option value="Child"><option value="Employer"><option value="Employee"><option value="Earlier name of"><option value="See also">
+</datalist>
+<datalist id="entry-titles"></datalist>
+
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-
+<script src="scripts/glam-embed.js?v={{ site.time | date: '%s' }}"></script>
 <script>
+  // Every entry file on the site, for the "Related entries" picker
+  window.ENTRY_FILES = [{% for f in site.static_files %}{% if f.path contains '/civic/' and f.extname == '.xml' %}"{{ f.basename }}",{% endif %}{% endfor %}];
+</script>
+<script>
+(function () {
+  if (window.parent !== window) document.body.classList.add('in-frame');
 
-function cleanEditorHTML(html) {
-  return html
-    // collapse empty paragraphs like <p><br></p> or <p></p>
-    .replace(/<p>(\s*<br\s*\/?>\s*)?<\/p>/gi, '')
-    // strip any leftover style attributes Quill format-whitelisting missed
-    .replace(/\s*style="[^"]*"/gi, '');
-}
+  const form = document.getElementById('contributionForm');
+  const $ = (id) => document.getElementById(id);
+  const kindOf = () => (form.querySelector('input[name="kind"]:checked') || {}).value || '';
+
+  /* ---------- Labels that follow "What is this entry about?" ---------- */
+  const KIND_TEXT = {
+    person:        { from: 'Born', to: 'Died', dates: 'When they were born and died', occ: 'Occupation or trade', occHint: 'e.g. publican, tailor', occList: 'occupation-terms', occLabel: 'Occupation' },
+    org:           { from: 'Opened', to: 'Closed', dates: 'When it opened and closed', occ: 'What it did', occHint: 'e.g. hotel, brewery, school', occList: 'function-terms', occLabel: 'Activity' },
+    family:        { from: 'From', to: 'To', dates: 'The years the family was in Carlton', occ: 'Occupation or trade', occHint: 'The family trade or business', occList: 'occupation-terms', occLabel: 'Occupation' },
+    place:         { from: 'From', to: 'To', dates: 'When it was built or named, and demolished', occ: 'What it was used for', occHint: 'e.g. stables, shop, cottage', occList: 'use-terms', occLabel: 'Use' },
+    '':            { from: 'From', to: 'To', dates: 'When it started and ended', occ: 'Occupation or trade', occHint: 'Or what a business did', occList: 'occupation-terms', occLabel: 'Occupation' }
+  };
+  KIND_TEXT.topic = KIND_TEXT[''];
+
+  /* ---------- Repeatable rows ---------- */
+  const YEARS = [
+    { k: 'from', label: 'From', ph: 'e.g. 1856' },
+    { k: 'to', label: 'To', ph: 'e.g. 1881' }
+  ];
+  const LISTS = {
+    otherNames: { add: 'Add another name', fields: [
+      { k: 'name', label: 'Name', ph: 'e.g. Carlton Inn', wide: true }, ...YEARS] },
+    places: { add: 'Add another address', fields: [
+      { k: 'address', label: 'Address', ph: 'e.g. 160 Leicester Street, Carlton', wide: true },
+      ...YEARS,
+      { k: 'role', label: 'Role', ph: 'e.g. Licensed premises', list: 'place-roles' },
+      { k: 'lat', label: 'Latitude', ph: 'e.g. -37.8041' },
+      { k: 'lng', label: 'Longitude', ph: 'e.g. 144.9602' }] },
+    occupations: { add: 'Add another', fields: [
+      { k: 'term', label: 'Occupation', ph: 'e.g. Publican', list: 'occupation-terms', wide: true }, ...YEARS] },
+    recordSources: { add: 'Add another citation', fields: [
+      { k: 'text', label: 'Citation', ph: 'e.g. Sands & McDougall Directory, 1875: 12 Hogan, Mrs E., Otago Hotel', wide: true },
+      { k: 'href', label: 'Link', ph: 'e.g. https://historicalesque.github.io/carlton/civic?id=Sands-McDougall-Directory-1875', type: 'url', wide: true }] },
+    sources: { add: 'Add another source', fields: [
+      { k: 'text', label: 'Source', ph: 'e.g. Argus, 7 December 1859, p. 3', wide: true },
+      { k: 'href', label: 'Link (if online)', ph: 'e.g. https://trove.nla.gov.au/…', type: 'url', wide: true },
+      // The source's bold, italic and inner links, from "Where did you find this?"
+      { k: 'html', hidden: true }] },
+    authors: { add: 'Add another author', fields: [
+      { k: 'name', label: 'Additional names', ph: 'e.g. Felice Rocca', wide: true }] },
+    legalStatuses: { add: 'Add another', fields: [
+      { k: 'term', label: 'Legal status', ph: "e.g. Publican's licence", wide: true }, ...YEARS] },
+    chronology: { add: 'Add another event', fields: [
+      { k: 'date', label: 'Date', ph: 'e.g. 1859' },
+      { k: 'event', label: 'What happened', ph: 'e.g. Licence granted to John Cozens', wide: true },
+      { k: 'place', label: 'Place', ph: 'e.g. Carlton Inn', wide: true }] },
+    relations: { add: 'Add another', fields: [
+      { k: 'name', label: 'Name', ph: 'e.g. John Cozens', list: 'entry-titles', wide: true },
+      { k: 'targetType', label: 'Type', select: [['person', 'Person'], ['org', 'Business or organisation'], ['family', 'Family'], ['place', 'Place'], ['topic', 'Topic'], ['source', 'Book, record or other source']] },
+      { k: 'relationType', label: 'Relationship', ph: 'e.g. Licensee', list: 'relation-types' },
+      ...YEARS,
+      { k: 'href', label: 'Link', ph: 'Fills in for entries on this site', type: 'url', wide: true }] }
+  };
+  let uid = 0;
+
+  function addRow(listName, values) {
+    const cfg = LISTS[listName];
+    const box = form.querySelector(`[data-list="${listName}"]`);
+    const row = document.createElement('div');
+    row.className = 'row';
+    cfg.fields.forEach((f) => {
+      if (f.hidden) {
+        const hidden = document.createElement('input');
+        hidden.type = 'hidden';
+        hidden.dataset.k = f.k;
+        if (values && values[f.k] !== undefined) hidden.value = values[f.k];
+        row.append(hidden);
+        return;
+      }
+      const id = `f${++uid}`;
+      const wrap = document.createElement('div');
+      wrap.className = `field-group${f.wide ? ' wide' : ''}`;
+      const label = document.createElement('label');
+      label.htmlFor = id;
+      label.textContent = f.label;
+      label.dataset.k = f.k;
+      let input;
+      if (f.select) {
+        input = document.createElement('select');
+        f.select.forEach(([v, t]) => input.add(new Option(t, v)));
+      } else {
+        input = document.createElement('input');
+        input.type = f.type || 'text';
+        input.placeholder = f.ph || '';
+        if (f.list) input.setAttribute('list', f.list);
+      }
+      input.id = id;
+      input.dataset.k = f.k;
+      if (values && values[f.k] !== undefined) input.value = values[f.k];
+      wrap.append(label, input);
+      row.append(wrap);
+    });
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'remove-row';
+    remove.textContent = 'Remove';
+    remove.addEventListener('click', () => {
+      if (box.querySelectorAll('.row').length > 1) row.remove();
+      else row.querySelectorAll('input').forEach((i) => { i.value = ''; });
+      if (listName === 'sources') referencesFromRows();
+      changed();
+    });
+    row.append(remove);
+    box.insertBefore(row, box.querySelector('.add-row'));
+    applyKindLabels();
+    return row;
+  }
+
+  Object.keys(LISTS).forEach((name) => {
+    const box = form.querySelector(`[data-list="${name}"]`);
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'small add-row';
+    add.textContent = `+ ${LISTS[name].add}`;
+    add.addEventListener('click', () => { addRow(name).querySelector('input:not([type="hidden"]), select').focus(); });
+    box.append(add);
+    addRow(name);
+  });
+
+  function readList(name) {
+    return [...form.querySelectorAll(`[data-list="${name}"] .row`)].map((row) => {
+      const out = {};
+      row.querySelectorAll('[data-k]').forEach((i) => { if (i.tagName !== 'LABEL') out[i.dataset.k] = i.value; });
+      if (out.html === '') delete out.html;
+      return out;
+    });
+  }
 
 
+  function applyKindLabels() {
+    const kind = kindOf();
+    const t = KIND_TEXT[kind];
+    form.querySelector('[data-label="from"]').textContent = t.from;
+    form.querySelector('[data-label="to"]').textContent = t.to;
+    form.querySelector('[data-hint="dates"]').textContent = t.dates;
+    form.querySelector('[data-label="occupations"]').textContent = t.occ;
+    form.querySelector('[data-hint="occupations"]').textContent = t.occHint;
+    form.querySelectorAll('[data-list="occupations"] label[data-k="term"]').forEach((l) => { l.textContent = t.occLabel; });
+    form.querySelectorAll('[data-list="occupations"] input[data-k="term"]').forEach((i) => { i.setAttribute('list', t.occList); });
+    $('nameParts').classList.toggle('is-person', kind === 'person');
+    $('clearKind').hidden = !kind;
+  }
+  form.querySelectorAll('input[name="kind"]').forEach((r) => r.addEventListener('change', () => { applyKindLabels(); changed(); }));
+  $('clearKind').addEventListener('click', () => {
+    form.querySelectorAll('input[name="kind"]').forEach((r) => { r.checked = false; });
+    applyKindLabels(); changed();
+  });
 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyTaAc0BbSxGt3DSiXgMfI_XoPrkxt_3rJV8foBasiuoLThA12jkPMUUYj9381gMbedIw/exec";
+  /* ---------- "Add more detail": shows or hides all of Part B ---------- */
+  // Always starts closed, even when Part B is already filled in: only the
+  // person using the form opens it
+  $('showAll').checked = false;
+  $('showAll').addEventListener('change', (e) => form.classList.toggle('show-all', e.target.checked));
 
-  // Auto-fill query parameters if present
+  /* ---------- "Where did you find this?" and the Sources rows ----------
+     One list shown two ways: a line per source in Part A, in a small editor
+     with bold, italic and links, and a row with its link in Part B. A link
+     at the end of a line, or around the whole line, becomes the row's link.
+     The row keeps the line's formatting (its hidden "html") until its text
+     is changed in Part B. */
+  const SOURCE_URL = /^(.*?)[\s,;:–-]*(https?:\/\/\S+)$/;
+  const escHtml = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const htmlBody = (html) => new DOMParser().parseFromString(`<body>${html || ''}</body>`, 'text/html').body;
+  const plainText = (html) => {
+    const div = document.createElement('div');
+    div.innerHTML = html || '';
+    return div.textContent.replace(/\u00a0/g, ' ').trim();
+  };
+  // Removes n characters from the end of an element's text, and anything left empty
+  function chopEnd(node, n) {
+    while (n > 0 && node.lastChild) {
+      const last = node.lastChild;
+      const len = last.textContent.length;
+      if (len <= n) { last.remove(); n -= len; } else if (last.nodeType === 3) {
+        last.textContent = last.textContent.slice(0, len - n); n = 0;
+      } else { chopEnd(last, n); n = 0; }
+    }
+  }
+  function sourceFromLine(p) {
+    p.querySelectorAll('br').forEach((br) => br.remove());
+    const all = p.textContent.replace(/\u00a0/g, ' ');
+    // Trailing spaces first, then a link typed or pasted at the end of the line
+    chopEnd(p, all.length - all.trimEnd().length);
+    let href = '';
+    const m = p.textContent.trim().match(SOURCE_URL);
+    const links = [...p.querySelectorAll('a[href]')];
+    if (m && !links.some((a) => a.textContent.includes(m[2]))) {
+      href = m[2];
+      chopEnd(p, p.textContent.trimEnd().length - m[1].trimEnd().length);
+    } else if (links.length === 1 && links[0].textContent.trim() === p.textContent.trim()) {
+      // A link around the whole line
+      href = links[0].getAttribute('href');
+      links[0].replaceWith(...links[0].childNodes);
+    } else if (links.length) href = links[0].getAttribute('href');
+    const text = p.textContent.replace(/\u00a0/g, ' ').trim();
+    const html = p.querySelector('*') ? p.innerHTML.trim() : '';
+    return { text, href, html };
+  }
+  function rowsFromReferences() {
+    const rows = [...refEditor.root.children].map((line) => sourceFromLine(line.cloneNode(true)))
+      .filter((r) => r.text || r.href);
+    form.querySelectorAll('[data-list="sources"] .row').forEach((r) => r.remove());
+    rows.forEach((v) => addRow('sources', v));
+    if (!rows.length) addRow('sources');
+  }
+  function referencesFromRows() {
+    const lines = readList('sources').map((r) => {
+      const text = (r.text || '').trim();
+      const href = (r.href || '').trim();
+      const rich = r.html && plainText(r.html) === text ? r.html : '';
+      const body = rich || escHtml(text);
+      if (!href) return body;
+      if (rich && plainText(r.html) && [...htmlBody(rich).querySelectorAll('a[href]')].some((a) => a.getAttribute('href') === href)) return body;
+      if (!text) return escHtml(href);
+      if (!rich || !htmlBody(rich).querySelector('a[href]')) return `<a href="${escHtml(href)}">${body}</a>`;
+      return `${body} ${escHtml(href)}`;
+    }).filter(Boolean);
+    refEditor.setContents(refEditor.clipboard.convert(lines.map((l) => `<p>${l}</p>`).join('')), 'silent');
+  }
+  // Editing a row's text in Part B drops the formatting it no longer matches;
+  // editing its link changes the line's own link
+  form.addEventListener('input', (e) => {
+    const row = e.target.closest('[data-list="sources"] .row');
+    if (!row) return;
+    const html = row.querySelector('input[data-k="html"]');
+    if (html && html.value && e.target.dataset.k === 'text' && plainText(html.value) !== e.target.value.trim()) html.value = '';
+    if (html && html.value && e.target.dataset.k === 'href') {
+      const body = htmlBody(html.value);
+      const a = body.querySelector('a[href]');
+      if (a) {
+        if (e.target.value.trim()) a.setAttribute('href', e.target.value.trim()); else a.replaceWith(...a.childNodes);
+        html.value = body.innerHTML;
+      }
+    }
+    referencesFromRows();
+  });
+
+  /* ---------- Credit: anonymous (the community) or by name ---------- */
+  // Editors suggesting changes to a submission always see the names
+  const byName = () => !!REVIEW || $('creditByName').checked;
+  // The authors an existing entry already has, kept whichever is chosen
+  let entryAuthors = [];
+  function showCredit() {
+    [['optCommunity', !byName()], ['optNamed', byName()]].forEach(([id, on]) => {
+      $(id).classList.toggle('on', on);
+      $(id).querySelector('.credit-body').hidden = !on;
+    });
+    followCommunity();
+    sendReady();
+  }
+  form.querySelectorAll('input[name="credit"]').forEach((r) => r.addEventListener('change', showCredit));
+
+  /* ---------- Byline credits ---------- */
+  // The community credit is ticked for anyone sending anonymously, and
+  // kept for an entry that already has it, until the box is changed by hand
+  let entryCredits = { community: false, computerDraft: false, computerAdditions: false };
+  let communityTouched = false;
+  function followCommunity() {
+    if (!communityTouched) $('creditCommunity').checked = entryCredits.community || !byName() || !$('authorName').value.trim();
+  }
+  $('creditCommunity').addEventListener('change', () => { communityTouched = true; });
+  $('authorName').addEventListener('input', followCommunity);
+
+  // "Keep this entry as I wrote it": offered for a new entry, and shown
+  // (ticked) on an entry that's already kept, so an editor can untick it
+  function setKept(kept) {
+    $('keepEntry').checked = !!kept;
+    if (kept) {
+      $('keepLine').hidden = false;
+      if (!REVIEW) { $('creditByName').checked = true; showCredit(); }
+    }
+  }
+  function setCredits(credits, fixed) {
+    entryCredits = { community: !!(credits && credits.community), computerDraft: !!(credits && credits.computerDraft),
+      computerAdditions: !!(credits && credits.computerAdditions) };
+    $('creditDraft').checked = entryCredits.computerDraft;
+    $('creditAdditions').checked = entryCredits.computerAdditions;
+    if (fixed) { communityTouched = true; $('creditCommunity').checked = entryCredits.community; } else followCommunity();
+  }
+
+  /* ---------- Licence: Send waits for the tick that goes with the choice ---------- */
+  const licenceAgreed = () => !!REVIEW || (byName() ? $('licenceNamed') : $('licenceOk')).checked;
+  function sendReady() { if ($('sendBtn') && $('sendBtn').textContent !== 'Sent') $('sendBtn').disabled = !licenceAgreed(); }
+  $('licenceOk').addEventListener('change', sendReady);
+  $('licenceNamed').addEventListener('change', sendReady);
+
+  /* ---------- Section markers ("Prefilled", "Added") ---------- */
+  function updateCounts() {
+    form.querySelectorAll('details.section:not([data-nocount])').forEach((d) => {
+      let n = 0;
+      const rows = d.querySelectorAll('.rows .row');
+      if (rows.length) {
+        rows.forEach((r) => { if ([...r.querySelectorAll('input')].some((i) => i.value.trim())) n++; });
+      } else {
+        n = [...d.querySelectorAll('input[type="text"]')].some((i) => i.value.trim()) ? 1 : 0;
+      }
+      if (d.dataset.section === 'names' && ($('surname').value.trim() || $('forenames').value.trim())) n = Math.max(n, 1);
+      d.querySelector('.sum-count').textContent = n ? (d.dataset.prefilled ? 'Prefilled' : 'Added') : '';
+    });
+  }
+  // Sections with something in them once the form has been filled in for the
+  // reader say "Prefilled"; ones they fill in themselves say "Added"
+  function markPrefilled() {
+    form.querySelectorAll('details.section:not([data-nocount])').forEach((d) => {
+      if (d.querySelector('.sum-count').textContent) d.dataset.prefilled = 'true';
+    });
+    updateCounts();
+  }
+
+  /* ---------- Directory records (as in the old form), with "Use this address" ---------- */
   const urlParams = new URLSearchParams(window.location.search);
   const targetId = urlParams.get('id');
+  // Suggesting changes to a submission: ?review=<pull request>&v=<version>&file=civic/<id>.xml
+  const REVIEW = /^\d+$/.test(urlParams.get('review') || '') && /^[0-9a-f]{7,40}$/i.test(urlParams.get('v') || '')
+    && /^civic\/[^/]+\.xml$/.test(urlParams.get('file') || '')
+    ? { pr: Number(urlParams.get('review')), version: urlParams.get('v'), file: urlParams.get('file') } : null;
+  if (urlParams.get('title')) $('articleTitle').value = urlParams.get('title');
+  else if (targetId && !/^\d+$/.test(targetId)) $('articleTitle').value = targetId.replace(/-/g, ' ');
 
-  if (targetId) document.getElementById('prefilledId').value = targetId;
-  if (urlParams.get('title')) document.getElementById('articleTitle').value = urlParams.get('title');
+  // An entry that's already on the site: ?entry=<file name>, from entry.html
+  const ENTRY = /^[\w-]+$/.test(urlParams.get('entry') || '') ? urlParams.get('entry') : '';
+  // Its title is its address on the site, so only a new entry's can change
+  if (ENTRY && !REVIEW) $('articleTitle').readOnly = true;
 
-  // --- Dynamic Directory Data Rendering ---
-  if (targetId && window.CGData) {
-    // Find all records matching the target entityID (comparing both string and number).
-    // If the lookup fails the form still works, just without the records.
-    CGData.forEntity(targetId).then(showRecords).catch(() => {});
+  if (targetId && !REVIEW) {
+    const records = window.CGData ? CGData.forEntity(targetId).catch(() => []) : Promise.resolve([]);
+    const article = ENTRY
+      ? fetch(new URL(`civic/${ENTRY}.xml`, document.baseURI)).then((r) => (r.ok ? r.text() : '')).catch(() => '')
+      : Promise.resolve('');
+    Promise.all([records, article]).then(([recs, xml]) => {
+      showRecords(recs);
+      if (xml) prefillFromEntry(xml, recs);
+      else if (urlParams.has('new')) prefill(recs);
+    });
   }
 
-  function showRecords(matchingEntries) {
-    if (matchingEntries.length > 0) {
-      const detailsContainer = document.getElementById('details-container');
-      
-      let html = '<div class="entity-container">';
-      
-      matchingEntries.forEach((entry, index) => {
-        html += `<div class="entity-card">`;
-        if (matchingEntries.length > 1) {
-          html += `<h3>Item #${index + 1}</h3>`;
-        }
-        html += `<ul>`;
-        
-        // Loop through whatever key-value pairs are found inside the record
-        for (const [key, value] of Object.entries(entry)) {
-          if (value !== null && value !== undefined) {
-            // Capitalize key name (e.g. "entityID" -> "EntityID", "street" -> "Street")
-            const formattedKey = key.charAt(0).toUpperCase() + key.slice(1);
-            html += `<li><span class="prop-key">${formattedKey}:</span> ${value}</li>`;
-          }
-        }
-        
-        html += `</ul></div>`;
-      });
+  function addressOf(record) {
+    if (!record.street) return '';
+    const num = String(record.listing || '').match(/^\s*(\d+[a-z]?(?:\s*-\s*\d+[a-z]?)?)\b/i);
+    return `${num ? num[1].replace(/\s+/g, '') + ' ' : ''}${record.street}, Carlton`;
+  }
 
-      html += '</div>';
-      detailsContainer.innerHTML = html;
+  function useAddress(record) {
+    const details = form.querySelector('details[data-section="places"]');
+    details.open = true;
+    const rows = [...form.querySelectorAll('[data-list="places"] .row')];
+    const empty = rows.find((r) => ![...r.querySelectorAll('input')].some((i) => i.value.trim()));
+    const row = empty || addRow('places');
+    const set = (k, v) => { const i = row.querySelector(`[data-k="${k}"]:not(label)`); if (i && v !== undefined && v !== null) i.value = v; };
+    set('address', addressOf(record));
+    set('from', record.year);
+    set('to', record.year);
+    // Six decimal places is about 10 cm, plenty for a street address
+    if (record.lat != null && record.lng != null) {
+      set('lat', Number(record.lat).toFixed(6));
+      set('lng', Number(record.lng).toFixed(6));
     }
+    changed();
+    row.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-// 1. Define a blot that just stores/renders raw HTML as a single atomic block
-const BlockEmbed = Quill.import('blots/block/embed');
+  /* ---------- Brand new entries: fill in what the records say ---------- */
+  // Only for a record with no entry yet (?new, from entry.html). Directory
+  // listings like "28 Thompson, Mrs W.T." aren't parsed for names or types:
+  // too easy to get wrong. Electoral roll records have clean name fields.
+  const STREET_TYPES = ['intersection', 'right-of-way'];
+  const pageOf = (id) => new URL(`civic?id=${encodeURIComponent(id)}`, document.baseURI).href;
 
-class TableBlot extends BlockEmbed {
-  static create(value) {
-    const node = super.create();
-    node.innerHTML = value; // the raw pasted table markup
-    return node;
-  }
-  static value(node) {
-    return node.innerHTML;
-  }
-}
-TableBlot.blotName = 'tableHTML';
-TableBlot.tagName = 'div';
-TableBlot.className = 'ql-table-embed';
-
-Quill.register(TableBlot);
-
-
-const Link = Quill.import('formats/link');
-
-class NoTargetLink extends Link {
-  static create(value) {
-    const node = super.create(value);
-    node.removeAttribute('target');
-    node.removeAttribute('rel');
-    return node;
-  }
-}
-Quill.register(NoTargetLink, true); // true = force override the built-in 'link' format
-
-
-
-// 2. Initialize Quill 
-const quill = new Quill('#editor-container', {
-  modules: {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['link'],
-      ['clean']
-    ]
-  },
-  formats: [
-    'header', 'bold', 'italic', 'underline',
-    'list', 'link', 'tableHTML'
-  ],
-  placeholder: 'Type or paste the entry content here...',
-  theme: 'snow'
-});
-
-// 3. Intercept pasted <table> elements before Quill's default handling flattens them
-quill.clipboard.addMatcher('table', (node, delta) => {
-  const Delta = Quill.import('delta');
-  return new Delta().insert({ tableHTML: node.outerHTML });
-});
-
-  const form = document.getElementById('submissionForm');
-  const submitBtn = document.getElementById('submitBtn');
-  const statusDiv = document.getElementById('status');
-
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const authorNameInput = document.getElementById('authorName').value.trim();
-    const articleTitleInput = document.getElementById('articleTitle').value.trim();
-    const prefilledIdInput = document.getElementById('prefilledId').value.trim();
-    const richTextHTML = "<![CDATA[" + cleanEditorHTML(quill.root.innerHTML) + "]]>";
-    const plainText = quill.getText().trim();
-
-    // --- Basic Validation ---
-    if (!authorNameInput) {
-      showStatus("Please enter the Contributor / Author Name.", "error");
-      return;
+  function sourceOf(record) {
+    if (record.source === 'Directory') {
+      return {
+        text: `Sands & McDougall Directory, ${record.year}${record.pages ? `, ${/\D/.test(record.pages) ? 'pp.' : 'p.'} ${record.pages}` : ''}: ${record.listing}`,
+        href: pageOf(`Sands-McDougall-Directory-${record.year}`)
+      };
     }
+    const where = String(record.Roll || '').split(/Electoral Roll,\s*/i)[1];
+    const who = [`${record['Given Names'] || ''} ${record.Surname || ''}`.trim(), record.Address, record.Occupation].filter(Boolean).join(', ');
+    return { text: `Electoral roll, ${record.year}${where ? `, ${where}` : ''}: ${who}`, href: pageOf('Electoral-Rolls') };
+  }
 
-    if (!articleTitleInput) {
-      showStatus("Please enter an Article Title.", "error");
-      return;
+  function setRows(listName, values) {
+    form.querySelectorAll(`[data-list="${listName}"] .row`).forEach((r) => r.remove());
+    values.forEach((v) => addRow(listName, v));
+    if (!values.length) addRow(listName);
+    form.querySelector(`details[data-section="${listName}"]`)?.setAttribute('open', '');
+  }
+
+  // What the records say, in the form's own shape
+  function fromRecords(records) {
+    records = records.filter((r) => !STREET_TYPES.includes(String(r.type).toLowerCase())).sort((a, b) => a.year - b.year);
+    const found = { places: [], recordSources: [], occupations: [], voter: null };
+    if (!records.length) return null;
+
+    // One address row per address, covering every year it's listed
+    const places = new Map();
+    records.forEach((r) => {
+      const address = r.source === 'Electoral roll' && r.Address ? `${r.Address}, Carlton` : addressOf(r);
+      if (!address) return;
+      const key = address.toLowerCase();
+      const p = places.get(key) || { address, from: r.year, to: r.year };
+      p.to = r.year;
+      if (r.lat != null && r.lng != null) { p.lat = Number(r.lat).toFixed(6); p.lng = Number(r.lng).toFixed(6); }
+      places.set(key, p);
+    });
+    found.places = [...places.values()].map((p) => ({ ...p, from: String(p.from), to: p.to === p.from ? String(p.from) : String(p.to) }));
+    found.recordSources = records.map(sourceOf);
+
+    // One occupation row per trade, from the directories and electoral
+    // rolls alike, covering every year it's listed. "None given" on the
+    // rolls isn't an occupation, so it's left out.
+    const occupations = new Map();
+    records.forEach((r) => {
+      const term = String(r.Occupation || '').trim();
+      const key = sameKey(term);
+      if (!key || key === 'none given') return;
+      const o = occupations.get(key) || { term: term[0].toUpperCase() + term.slice(1), from: r.year, to: r.year };
+      o.to = r.year;
+      occupations.set(key, o);
+    });
+    found.occupations = [...occupations.values()].map((o) => ({ term: o.term, from: String(o.from), to: String(o.to) }));
+
+    const voters = records.filter((r) => r.source === 'Electoral roll');
+    if (voters.length) found.voter = voters[voters.length - 1];
+    return found;
+  }
+
+  function prefillNote(text) {
+    const note = document.createElement('p');
+    note.className = 'prefill-note';
+    note.textContent = text;
+    $('prefillNotes').append(note);
+  }
+
+  function prefill(records) {
+    const found = fromRecords(records);
+    if (!found) return;
+    setRows('places', found.places);
+    setRows('recordSources', found.recordSources);
+    const v = found.voter;
+    if (v) {
+      form.querySelector('input[name="kind"][value="person"]').checked = true;
+      applyKindLabels();
+      if (!$('articleTitle').value.trim()) $('articleTitle').value = `${v['Given Names'] || ''} ${v.Surname || ''}`.trim();
+      $('surname').value = v.Surname || '';
+      $('forenames').value = v['Given Names'] || '';
     }
+    if (found.occupations.length) setRows('occupations', found.occupations);
+    prefillNote('We’ve filled in some of the form from these records. Please check it, and change anything that’s wrong.');
+    changed();
+    markPrefilled();
+  }
 
-    if (plainText.length === 0) {
-      showStatus("Please write some content before submitting.", "error");
-      return;
-    }
+  /* ---------- Entries already on the site: start from the article ---------- */
+  // The form starts as the published entry, so a contribution adds to it
+  // rather than replacing it with a blank page. The records only add what
+  // the article doesn't already have: where they disagree (an address's
+  // years, an occupation, a name), the article wins, because whoever wrote
+  // it has probably already weighed up the records.
+  const sameKey = (s) => String(s || '').toLowerCase().replace(/,?\s*carlton\b.*$/, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  const linkKey = (s) => { try { return new URL(s, document.baseURI).search || s; } catch (e) { return s || ''; } };
+  const yearOf = (s) => (String(s || '').match(/\b1[89]\d\d\b/) || [''])[0];
 
-    // --- ID Fallback Logic ---
-    const finalId = prefilledIdInput || articleTitleInput;
+  function addMissing(rows, extra, keysOf) {
+    const seen = new Set(rows.flatMap(keysOf));
+    return rows.concat(extra.filter((r) => !keysOf(r).some((k) => seen.has(k))));
+  }
 
-    const payload = {
-      authorName: authorNameInput,
-      articleTitle: articleTitleInput,
-      prefilledId: finalId,
-      articleText: richTextHTML
-    };
-
-    submitBtn.disabled = true;
-    submitBtn.innerText = "Submitting contribution...";
-    statusDiv.style.display = "none";
-
-    try {
-      // POST request to Apps Script Web App
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await response.json();
-
-      if (result.status === "success") {
-        showStatus("🎉 Submission received! We'll review it shortly.", "success");
-        form.reset();
-        quill.setText('');
-      } else {
-        showStatus("Error: " + result.message, "error");
+  function prefillFromEntry(xml, records) {
+    let entry;
+    try { entry = TEIEntry.parse(xml); } catch (e) { return; }
+    const found = fromRecords(records);
+    if (found) {
+      entry.places = addMissing(entry.places, found.places, (p) => [sameKey(p.address)].filter(Boolean));
+      entry.occupations = addMissing(entry.occupations, found.occupations, (o) => [sameKey(o.term)].filter(Boolean));
+      entry.recordSources = addMissing(entry.recordSources, found.recordSources, (s) => [sameKey(s.text), s.href && yearOf(s.text) ? `${linkKey(s.href)} ${yearOf(s.text)}` : '']
+        .filter(Boolean));
+      const v = found.voter;
+      if (v) {
+        if (!entry.kind) entry.kind = 'person';
+        if (!entry.title) entry.title = `${v['Given Names'] || ''} ${v.Surname || ''}`.trim();
+        if (!entry.surname && !entry.forenames && entry.kind === 'person') { entry.surname = v.Surname || ''; entry.forenames = v['Given Names'] || ''; }
       }
-    } catch (err) {
-      showStatus("Submission failed. Please check network connection or let us know if the problem persists.", "error");
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerText = "Submit Contribution";
+    }
+    fillForm(entry);
+    // The entry's authors stay on as co-authors; the first name box is for whoever is adding to it
+    // (A kept entry is only opened by the editors, so its names stay as they are.)
+    entryAuthors = entry.authors;
+    if (!entry.kept) {
+      $('authorName').value = '';
+      fillRows('authors', entry.authors.map((name) => ({ name })));
+    }
+    setCredits(entry.credits);
+    reviewOriginal = xml;
+    checkRoundTrip();
+    // Filled from the entry alone needs no note: the reader sees it's filled in
+    if (found) prefillNote('We’ve filled in the form from the current entry and these records. Where they disagree, we’ve kept what the entry says. Please check it, and change anything that’s wrong.');
+    changed();
+    markPrefilled();
+  }
+
+  /* ---------- Records this entry is about ---------- */
+  // Numbered records ticked here go with the entry. When the editors accept
+  // it, the Apps Script gives them the entry's id, which links them to the
+  // entry on the maps and in search. Records that already have a text id
+  // were linked by the team, and stay as they are.
+  const linkedRecords = new Map(); // numeric entityID → record, ticked
+  const shownRecords = new Set();   // every record with a card, ticked or not
+  const isNumberId = (id) => /^\d+$/.test(String(id));
+  const recordLabel = (r) => `${r.year} ${r.source === 'Directory' ? 'directory' : 'electoral roll'}`;
+
+  function recordCard(record) {
+    const card = document.createElement('div');
+    card.className = 'entity-card';
+    const h = document.createElement('h3');
+    h.textContent = `The ${recordLabel(record)}`;
+    card.append(h);
+    const ul = document.createElement('ul');
+    for (const [key, value] of Object.entries(record)) {
+      if (value === null || value === undefined || key.startsWith('_')) continue;
+      const li = document.createElement('li');
+      const k = document.createElement('span');
+      k.className = 'prop-key';
+      k.textContent = key.charAt(0).toUpperCase() + key.slice(1) + ':';
+      li.append(k, ' ', String(value));
+      ul.append(li);
+    }
+    card.append(ul);
+    shownRecords.add(String(record.entityID));
+    if (isNumberId(record.entityID)) {
+      linkedRecords.set(String(record.entityID), record);
+      const line = document.createElement('label');
+      line.className = 'check-line';
+      const box = document.createElement('input');
+      box.type = 'checkbox';
+      box.checked = true;
+      box.addEventListener('change', () => {
+        if (box.checked) linkedRecords.set(String(record.entityID), record);
+        else linkedRecords.delete(String(record.entityID));
+      });
+      line.append(box, ' This entry is about this record');
+      card.append(line);
+    } else if (record.entityID !== targetId) {
+      const note = document.createElement('p');
+      note.className = 'linked-note';
+      note.textContent = `Already linked to “${record.entityID}”.`;
+      card.append(note);
+    }
+    if (record.street) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'small use-address';
+      b.textContent = 'Use this address';
+      b.addEventListener('click', () => useAddress(record));
+      card.append(b);
+    }
+    return card;
+  }
+
+  function recordsBox() {
+    let container = $('records-container').querySelector('.entity-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.className = 'entity-container';
+      $('records-container').prepend(container);
+    }
+    return container;
+  }
+
+  function showRecords(records) {
+    if (!records.length) return;
+    recordsBox().replaceChildren(...records.map(recordCard));
+  }
+
+  /* ---------- Finding other records ---------- */
+  // Loads every directory and electoral roll the first time it's opened, then
+  // matches every word typed against the listing, street, names and year.
+  let allRecords = null;   // every record, once loaded
+  let loadingRecords = null;
+  const searchText = (r) => [r.year, r.listing, r.street, r['Given Names'], r.Surname, r.Address, r.Occupation]
+    .filter(Boolean).join(' ').toLowerCase();
+
+  function loadAllRecords() {
+    if (allRecords || loadingRecords) return;
+    $('finderStatus').textContent = 'Loading the records…';
+    loadingRecords = CGData.load({}).then((list) => {
+      list.forEach((r) => { r._text = searchText(r); });
+      allRecords = list;
+      findRecords();
+    }).catch((err) => {
+      $('finderStatus').textContent = `${err.message} Close and reopen this box to try again.`;
+    }).finally(() => { loadingRecords = null; });
+  }
+
+  function findRecords() {
+    const words = $('recordSearch').value.toLowerCase().split(/\s+/).filter(Boolean);
+    const results = $('finderResults');
+    results.replaceChildren();
+    if (!allRecords) return;
+    if (!words.length || words.join('').length < 2) { $('finderStatus').textContent = 'Type a name, an address or a year.'; return; }
+    const hits = allRecords.filter((r) => !shownRecords.has(String(r.entityID)) && r.entityID !== targetId && words.every((w) => r._text.includes(w)))
+      .sort((a, b) => isNumberId(b.entityID) - isNumberId(a.entityID) || a.year - b.year);
+    $('finderStatus').textContent = !hits.length ? 'No records match.'
+      : hits.length > 30 ? `${hits.length} records match; here are the first 30. Add more words to narrow it down.`
+      : `${hits.length} record${hits.length === 1 ? '' : 's'} match.`;
+    hits.slice(0, 30).forEach((r) => {
+      const li = document.createElement('li');
+      const what = document.createElement('span');
+      what.className = 'what';
+      const yr = document.createElement('span');
+      yr.className = 'yr';
+      yr.textContent = recordLabel(r);
+      const name = r.source === 'Directory' ? r.listing
+        : [`${r['Given Names'] || ''} ${r.Surname || ''}`.trim(), r.Address, r.Occupation].filter(Boolean).join(', ');
+      what.append(yr, name || '');
+      li.append(what);
+      if (isNumberId(r.entityID)) {
+        const add = document.createElement('button');
+        add.type = 'button';
+        add.className = 'small';
+        add.textContent = 'Add';
+        add.addEventListener('click', () => addRecord(r, li));
+        li.append(add);
+      } else {
+        const note = document.createElement('span');
+        note.className = 'linked-note';
+        note.textContent = `Linked to “${r.entityID}”`;
+        li.append(note);
+      }
+      results.append(li);
+    });
+  }
+
+  // Adds the record's card with the others, and a citation for it
+  function addRecord(record, li) {
+    recordsBox().append(recordCard(record));
+    const citations = [...form.querySelectorAll('[data-list="recordSources"] .row')];
+    const empty = citations.find((r) => ![...r.querySelectorAll('input')].some((i) => i.value.trim()));
+    if (empty) empty.remove();
+    addRow('recordSources', sourceOf(record));
+    form.querySelector('details[data-section="recordSources"]').open = true;
+    li.remove();
+    $('finderStatus').textContent = `Added the ${recordLabel(record)} record, and a citation for it.`;
+    changed();
+  }
+
+  if (!REVIEW && window.CGData) {
+    $('recordsSection').hidden = false;
+    let timer;
+    $('recordsSection').addEventListener('toggle', () => { if ($('recordsSection').open) loadAllRecords(); });
+    $('recordSearch').addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(findRecords, 200); });
+  }
+
+  /* ---------- Related entries: pick an entry already on the site ---------- */
+  const entryNames = (window.ENTRY_FILES || []).map((f) => ({ file: f, name: f.replace(/-/g, ' ') }));
+  $('entry-titles').replaceChildren(...entryNames.map((e) => new Option(e.name)));
+  form.addEventListener('change', (e) => {
+    if (e.target.dataset.k !== 'name' || !e.target.closest('[data-list="relations"]')) return;
+    const match = entryNames.find((x) => x.name.toLowerCase() === e.target.value.trim().toLowerCase());
+    const href = e.target.closest('.row').querySelector('input[data-k="href"]');
+    if (match && !href.value) {
+      href.value = new URL(`civic?id=${encodeURIComponent(match.file)}`, document.baseURI).href;
+      changed();
     }
   });
 
-  function showStatus(text, type) {
-    statusDiv.className = type;
-    statusDiv.innerText = text;
-    statusDiv.style.display = "block";
+  /* ---------- Quill: pasted tables are kept, links open in the same tab ---------- */
+  const BlockEmbed = Quill.import('blots/block/embed');
+  class TableBlot extends BlockEmbed {
+    static create(value) { const node = super.create(); node.innerHTML = value; return node; }
+    static value(node) { return node.innerHTML; }
+  }
+  TableBlot.blotName = 'tableHTML';
+  TableBlot.tagName = 'div';
+  TableBlot.className = 'ql-table-embed';
+  Quill.register(TableBlot);
+
+  const Link = Quill.import('formats/link');
+  class NoTargetLink extends Link {
+    static create(value) { const node = super.create(value); node.removeAttribute('target'); node.removeAttribute('rel'); return node; }
+  }
+  Quill.register(NoTargetLink, true);
+
+  const quill = new Quill('#editor-container', {
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['blockquote'],
+        ['link'],
+        ['clean']
+      ]
+    },
+    formats: ['header', 'bold', 'italic', 'underline', 'list', 'blockquote', 'link', 'tableHTML', 'glam-image'],
+    placeholder: 'Write as much or as little as you know, in your own words.',
+    theme: 'snow'
+  });
+  const refEditor = new Quill('#references', {
+    modules: { toolbar: [['bold', 'italic', 'underline'], ['link'], ['clean']] },
+    formats: ['bold', 'italic', 'underline', 'link'],
+    placeholder: 'e.g. Argus, 7 December 1859, p. 3',
+    theme: 'snow'
+  });
+  refEditor.on('text-change', (delta, old, source) => {
+    if (source === 'silent') return;
+    rowsFromReferences();
+    changed();
+  });
+  quill.clipboard.addMatcher('table', (node) => {
+    const Delta = Quill.import('delta');
+    return new Delta().insert({ tableHTML: node.outerHTML });
+  });
+
+  /* ---------- Collection images: a pasted link becomes its image ----------
+     Each image added to the article also goes in the Sources, unless a
+     source with that link is already there. Removing it from the Sources
+     later is up to the contributor. */
+  const glam = GlamEmbed.attach(quill);
+  function addImageSource(href) {
+    if (!href || readList('sources').some((r) => r.href.trim() === href)) return;
+    const { text } = GlamEmbed.sourceFor(href);
+    const blank = [...form.querySelectorAll('[data-list="sources"] .row')]
+      .find((row) => [...row.querySelectorAll('input')].every((i) => !i.value.trim()));
+    if (blank) {
+      blank.querySelector('input[data-k="text"]').value = text;
+      blank.querySelector('input[data-k="href"]').value = href;
+    } else addRow('sources', { text, href });
+    referencesFromRows();
+    changed();
+  }
+  quill.on('text-change', (delta, old, source) => {
+    if (source !== 'user') return;
+    delta.ops.forEach((op) => { if (op.insert && op.insert['glam-image']) addImageSource(op.insert['glam-image'].href); });
+  });
+
+  /* ---------- Collect, build, preview ---------- */
+  function collect() {
+    const title = $('articleTitle').value.trim();
+    return {
+      recordId: title.replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-'),
+      title,
+      kind: kindOf(),
+      surname: $('surname').value,
+      forenames: $('forenames').value,
+      authors: byName() ? [$('authorName').value, ...readList('authors').map((a) => a.name)] : entryAuthors,
+      kept: byName() && !$('keepLine').hidden && $('keepEntry').checked,
+      credits: { community: $('creditCommunity').checked, computerDraft: $('creditDraft').checked, computerAdditions: $('creditAdditions').checked },
+      dates: { from: $('dateFrom').value, to: $('dateTo').value, approximate: $('dateApprox').checked },
+      otherNames: readList('otherNames'),
+      places: readList('places'),
+      occupations: readList('occupations'),
+      legalStatuses: readList('legalStatuses'),
+      chronology: readList('chronology'),
+      relations: readList('relations'),
+      sources: readList('sources'),
+      recordSources: readList('recordSources'),
+      summary: $('summary').value,
+      articleHtml: quill.getText().trim() ? quill.root.innerHTML : '',
+      note: $('note').value
+    };
   }
 
-  // Tell the entry page how tall the form is, so it can size the iframe to fit
-  // (see the "contribution-form-height" listener in _layouts/entry.html).
+  function showPreview() {
+    const entry = collect();
+    const xml = TEIEntry.build(entry);
+    const checks = TEIEntry.check(entry);
+    $('checks').replaceChildren(...(checks.length ? checks : [{ level: 'ok', text: 'The preview looks fine. Once you send it, the editors will review your suggestion before anything changes on the site.' }]).map((c) => {
+      const li = document.createElement('li');
+      li.className = c.level;
+      li.textContent = c.text;
+      return li;
+    }));
+    $('previewEntry').innerHTML = TEIEntry.render(xml);
+    $('xmlOut').textContent = xml;
+    $('preview').hidden = false;
+    return xml;
+  }
+
+  let timer;
+  function changed() {
+    updateCounts();
+    if ($('preview').hidden) return;
+    clearTimeout(timer);
+    timer = setTimeout(showPreview, 400);
+  }
+  form.addEventListener('input', changed);
+  quill.on('text-change', changed);
+
+  $('previewBtn').addEventListener('click', () => {
+    showPreview();
+    $('preview').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  /* ---------- Send (when _config.yml has contribution_endpoint) ---------- */
+  // The Apps Script in apps-script/Code.gs receives this, sets the file
+  // name, id and date itself, and opens a pull request for the editors.
+  const ENDPOINT = {{ site.contribution_endpoint | default: '' | jsonify }};
+  function sendStatus(text, level) {
+    $('sendStatus').textContent = text;
+    $('sendStatus').className = `send-status ${level || ''}`;
+    $('sendStatus').hidden = false;
+  }
+  if (ENDPOINT) $('sendBtn').addEventListener('click', async () => {
+    // No suggestion is sent without the licence agreement, or by name without one
+    if (!licenceAgreed()) { sendReady(); return; }
+    if (!REVIEW && byName() && !$('authorName').value.trim()) {
+      sendStatus('Please add your name, or choose to be credited as “Community Contribution”.', 'error');
+      $('authorName').focus();
+      return;
+    }
+    if (!REVIEW && !$('contactDetails').value.trim()) {
+      sendStatus('Please tell us how we might contact you. Only the editors see it.', 'error');
+      $('contactDetails').focus();
+      return;
+    }
+    const xml = showPreview();
+    if (TEIEntry.check(collect()).some((c) => c.level === 'error')) {
+      sendStatus('Please fix the problems listed in the preview below, then send again.', 'error');
+      return;
+    }
+    if (REVIEW) return sendReview(xml);
+    // Entries are found by their record's text id (see the map), so a new
+    // entry for a record keeps that id; numeric ids fall back to the title.
+    const sendId = targetId && !/^\d+$/.test(targetId) ? targetId : '';
+    // A new entry named after its title can't take a name that's already used
+    const taken = !sendId && !ENTRY ? await nameTaken($('articleTitle').value) : '';
+    if (taken) {
+      sendStatus(taken, 'error');
+      return;
+    }
+    $('sendBtn').disabled = true;
+    sendStatus('Sending…');
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({
+          formVersion: 3, xml, targetId: sendId, website: $('website').value,
+          // Goes to the private submissions spreadsheet only, never into the entry
+          contact: $('contactDetails').value.trim(),
+          // The numbered records to link to this entry when it's accepted
+          records: [...linkedRecords.keys()].map(Number),
+          newEntry: !sendId && !ENTRY
+        })
+      });
+      const result = await res.json();
+      if (result.status !== 'success') throw new Error(result.message || 'The submission was not accepted.');
+      sendStatus('Thank you! The editorial collective reads every suggestion, though we can’t use them all and it may take us a while.', 'ok');
+      $('sendBtn').textContent = 'Sent';
+    } catch (err) {
+      $('sendBtn').disabled = false;
+      sendStatus(`Sorry, it didn't send: ${err.message} Please try again in a moment.`, 'error');
+    }
+  });
+
+  // The site finds an entry, and the records linked to it, by the file-name
+  // rule (spaces to hyphens, other punctuation dropped), so two names that
+  // give the same file name would collide.
+  const fileNameOf = (text) => String(text).trim().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_\-]/g, '').replace(/--+/g, '-');
+  async function nameTaken(title) {
+    const name = fileNameOf(title);
+    if (!name) return '';
+    if ((window.ENTRY_FILES || []).includes(name)) {
+      return `There is already an entry called “${name.replace(/-/g, ' ')}”. Choose a different title, or open that entry and add to it there.`;
+    }
+    try {
+      const idx = await CGData.index();
+      const group = idx.files.flatMap((f) => f.linked).find((id) => fileNameOf(id) === name);
+      if (group) return `Some records are already linked as “${group}”. Search the site for “${group}” to write that entry instead, or choose a different title.`;
+    } catch (e) { /* the editors can still catch it */ }
+    return '';
+  }
+
+  /* ---------- Suggest changes (from the review page) ---------- */
+  // The submission is loaded into the form; sending it makes a new version of
+  // that same submission, which becomes the version the editors decide on.
+  let reviewOriginal = '';
+
+  function fillRows(listName, values) {
+    form.querySelectorAll(`[data-list="${listName}"] .row`).forEach((r) => r.remove());
+    values.forEach((v) => addRow(listName, v));
+    if (!values.length) addRow(listName);
+    else {
+      const section = form.querySelector(`[data-list="${listName}"]`).closest('details');
+      if (section) section.open = true;
+    }
+  }
+
+  function fillForm(entry) {
+    $('authorName').value = entry.authors[0] || '';
+    fillRows('authors', entry.authors.slice(1).map((name) => ({ name })));
+    $('articleTitle').value = entry.title;
+    const kind = form.querySelector(`input[name="kind"][value="${entry.kind}"]`);
+    if (kind) kind.checked = true;
+    $('surname').value = entry.surname;
+    $('forenames').value = entry.forenames;
+    $('dateFrom').value = entry.dates.from;
+    $('dateTo').value = entry.dates.to;
+    $('dateApprox').checked = entry.dates.approximate;
+    if (entry.dates.from || entry.dates.to) form.querySelector('details[data-section="dates"]').open = true;
+    ['otherNames', 'places', 'occupations', 'sources', 'recordSources', 'legalStatuses', 'chronology', 'relations'].forEach((n) => fillRows(n, entry[n]));
+    form.querySelector('details[data-section="legal"]').hidden = !entry.legalStatuses.some((r) => r.term);
+    referencesFromRows();
+    $('summary').value = entry.summary || '';
+    setCredits(entry.credits, !!REVIEW);
+    setKept(entry.kept);
+    // Not dangerouslyPasteHTML: it also puts the cursor in the editor, which
+    // focuses it and scrolls the entry page down to this form on load.
+    quill.setContents(quill.clipboard.convert(entry.articleHtml || ''));
+    glam.skipExisting();
+    applyKindLabels();
+    updateCounts();
+  }
+
+  // Anything the form can't hold would be lost on sending; say so up front
+  function checkRoundTrip() {
+    try {
+      const rebuilt = TEIEntry.build({ ...collect(), recordId: 'check' });
+      const { rows } = lostParts(reviewOriginal, rebuilt);
+      if (!rows.length) return;
+      $('reviewWarning').innerHTML = `<strong>Some of this entry can't be shown in the form</strong>, so sending would leave it out:<ul>${rows.map((r) => `<li>${r}</li>`).join('')}</ul>`;
+      $('reviewWarning').hidden = false;
+    } catch (e) { /* the check is a courtesy; never block editing */ }
+  }
+  function lostParts(a, b) {
+    const A = TEICompare.facts(a); const B = TEICompare.facts(b);
+    const rows = [];
+    // An older entry's "Summary" and "Details" headings become the summary and detail boxes
+    const moved = (item) => /^Heading: (Summary|Details?)$/i.test(item);
+    A.forEach((f, i) => f.items.forEach((item) => {
+      if (!B[i].items.includes(item) && !moved(item)) rows.push(`${f.field}: ${item.length > 80 ? item.slice(0, 80) + '…' : item}`.replace(/[<&]/g, (ch) => (ch === '<' ? '&lt;' : '&amp;')));
+    }));
+    return { rows };
+  }
+
+  // Keep the entry's history and add one line for this change
+  function withHistory(xml) {
+    const old = reviewOriginal.match(/<revisionDesc\b[\s\S]*?<\/revisionDesc>/);
+    if (!old) return xml;
+    const today = new Date().toISOString().slice(0, 10);
+    const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const who = $('reviewerName').value.trim();
+    const what = $('reviewNote').value.trim();
+    const line = `  <change when="${today}" type="revised">Changes suggested by ${esc(who)}${what ? `: ${esc(what.replace(/\.$/, ''))}` : ''}.</change>\n    </revisionDesc>`;
+    const history = old[0].replace(/\s*<\/revisionDesc>$/, `\n    ${line}`);
+    return xml.replace(/<revisionDesc\b[\s\S]*?<\/revisionDesc>/, history);
+  }
+
+  async function sendReview(xml) {
+    const reviewer = $('reviewerName').value.trim();
+    if (!reviewer) {
+      sendStatus('Please add your name at the top of the form, so the editors know who suggested the changes.', 'error');
+      $('reviewerName').focus();
+      return;
+    }
+    $('sendBtn').disabled = true;
+    sendStatus('Sending…');
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ formVersion: 3, action: 'review', pr: REVIEW.pr, xml: withHistory(xml), reviewer, note: $('reviewNote').value.trim(), website: $('website').value })
+      });
+      const result = await res.json();
+      if (result.status !== 'success') throw new Error(result.message || 'The changes were not accepted.');
+      sendStatus('Thank you! Your changes have been sent to the editors.', 'ok');
+      $('sendBtn').textContent = 'Sent';
+      if (window.parent !== window) window.parent.postMessage({ type: 'review-sent', version: result.version || '' }, window.location.origin);
+    } catch (err) {
+      $('sendBtn').disabled = false;
+      sendStatus(`Sorry, it didn't send: ${err.message} Please try again in a moment.`, 'error');
+    }
+  }
+
+  if (REVIEW) {
+    $('formHeading').textContent = 'Suggest changes';
+    $('formIntro').textContent = 'Change anything below, then send it. Your version becomes the one the editors decide on.';
+    $('reviewer').hidden = false;
+    $('authorLabel').textContent = 'Authors';
+    // The licence was agreed when it was first sent
+    ['licenceNamedLine', 'licenceNamedSummary'].forEach((id) => { $(id).hidden = true; });
+    $('keepLine').hidden = false;
+    $('keepLine').querySelector('span').firstChild.textContent = 'Keep this entry as its author wrote it';
+    $('sendNote').hidden = true;
+    sendReady();
+    form.classList.add('review-mode');
+    fetch(`https://raw.githubusercontent.com/historicalesque/carlton/${REVIEW.version}/${REVIEW.file}`)
+      .then((r) => { if (!r.ok) throw new Error(`could not load the submission (${r.status})`); return r.text(); })
+      .then((xml) => {
+        reviewOriginal = xml;
+        fillForm(TEIEntry.parse(xml));
+        markPrefilled();
+        checkRoundTrip();
+      })
+      .catch((err) => {
+        $('reviewWarning').textContent = `Sorry, ${err.message}. Go back and try again.`;
+        $('reviewWarning').hidden = false;
+      });
+  }
+
+  // Keeping is for a new entry; an existing one shows it only if it's already kept
+  if (!ENTRY && !REVIEW) $('keepLine').hidden = false;
+  showCredit();
+  applyKindLabels();
+  updateCounts();
+
+  // Inside an iframe, tell the entry page how tall the form is, so it can size
+  // the iframe to fit (the "contribution-form-height" listener in _layouts/entry.html)
   function reportHeight() {
     if (window.parent === window) return;
     window.parent.postMessage({
-      type: "contribution-form-height",
+      type: 'contribution-form-height',
       height: Math.ceil(document.documentElement.getBoundingClientRect().height)
     }, window.location.origin);
   }
   new ResizeObserver(reportHeight).observe(document.documentElement);
-  window.addEventListener("load", reportHeight);
+  window.addEventListener('load', reportHeight);
+})();
 </script>
 
 </body>

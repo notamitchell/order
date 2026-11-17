@@ -7,17 +7,38 @@
 // ═══════════════════════════════════════════════════════════
 window.MapCommon = (function () {
 
-    // ── Years, colours and sources ──
+    // ── Layers, colours and labels ──
+    // A layer is one data file: a source and a year, e.g. "1905 Directory"
+    // and "1905 Electoral roll", so each has its own checkbox and colour.
     // These take records or the list of data files (CGData.files()), which
     // also have a year and a source, so a map can be set up before any
     // records arrive.
-    function getYears(data) {
-        return [...new Set(data.map(e => e.year))].sort((a, b) => a - b);
+    function layerOf(e) {
+        return `${e.year} ${e.source}`;
     }
 
-    // Interpolate a colour for each year across a fixed palette:
+    // Oldest first; within a year, in source order (Directory, Electoral roll)
+    function getLayers(data) {
+        const byLayer = {};
+        data.forEach(e => { byLayer[layerOf(e)] = e; });
+        return Object.keys(byLayer).sort((a, b) =>
+            byLayer[a].year - byLayer[b].year || byLayer[a].source.localeCompare(byLayer[b].source));
+    }
+
+    // "1905 Electoral roll" → 1905
+    function layerYear(layer) {
+        return parseInt(layer, 10);
+    }
+
+    // "1905 Electoral roll" → "1905 (Electoral roll)"
+    function layerLabel(layer) {
+        const year = String(layerYear(layer));
+        return `${year} (${layer.slice(year.length + 1)})`;
+    }
+
+    // Interpolate a colour for each layer across a fixed palette:
     // oldest → warm rust, stepping through amber/teal/violet → newest steel blue.
-    // Works for any number of years automatically.
+    // Works for any number of layers automatically.
     const YEAR_PALETTE = [
         [181,  69, 27],  // warm rust
         [184, 134, 11],  // amber
@@ -26,35 +47,24 @@ window.MapCommon = (function () {
         [42, 100, 160],  // steel blue
     ];
 
-    function getYearColors(years) {
+    function getLayerColors(layers) {
         function lerp(a, b, t) { return a + (b - a) * t; }
         function toHex(r, g, b) {
             return '#' + [r, g, b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('');
         }
         const colors = {};
-        years.forEach((year, i) => {
-            const t   = years.length === 1 ? 0 : i / (years.length - 1);
+        layers.forEach((layer, i) => {
+            const t   = layers.length === 1 ? 0 : i / (layers.length - 1);
             const raw = t * (YEAR_PALETTE.length - 1);
             const lo  = Math.floor(raw), hi = Math.min(lo + 1, YEAR_PALETTE.length - 1);
             const f   = raw - lo;
-            colors[year] = toHex(
+            colors[layer] = toHex(
                 lerp(YEAR_PALETTE[lo][0], YEAR_PALETTE[hi][0], f),
                 lerp(YEAR_PALETTE[lo][1], YEAR_PALETTE[hi][1], f),
                 lerp(YEAR_PALETTE[lo][2], YEAR_PALETTE[hi][2], f)
             );
         });
         return colors;
-    }
-
-    // year → "Directory", "Electoral roll" or "Directory, Electoral roll"
-    function getYearSources(data, years) {
-        const sources = {};
-        years.forEach(year => {
-            sources[year] = [...new Set(
-                data.filter(e => e.year === year && e.source).map(e => e.source)
-            )].join(', ');
-        });
-        return sources;
     }
 
     // { minLat, maxLat, minLng, maxLng } of every mapped record, from the
@@ -102,39 +112,68 @@ window.MapCommon = (function () {
         }).then(records => run(() => onAll(records)));
     }
 
-    // ── Chains: one per year + street + side ──
-    function chainKey(year, street, side) {
-        return `${year}-${street}-${side}`;
+    // ── Chains: one per layer + street + side ──
+    function chainKey(layer, street, side) {
+        return `${layer}-${street}-${side}`;
     }
 
-    // Returns { chains: [{ year, street, side }], rawChains: { key → [entry copies] } }
+    // Returns { chains: [{ layer, year, street, side }], rawChains: { key → [entry copies] } }
     function buildChains(data) {
         const chains = [];
         const rawChains = {};
         data.forEach(e => {
-            const key = chainKey(e.year, e.street, e.cardinality);
+            const layer = layerOf(e);
+            const key = chainKey(layer, e.street, e.cardinality);
             if (!rawChains[key]) {
                 rawChains[key] = [];
-                chains.push({ year: e.year, street: e.street, side: e.cardinality });
+                chains.push({ layer, year: e.year, street: e.street, side: e.cardinality });
             }
             rawChains[key].push({ ...e });
+        });
+        chains.forEach(({ layer, street, side, year }) => {
+            if (ALPHABETICAL_YEARS.includes(year)) sortAlongStreet(rawChains[chainKey(layer, street, side)]);
         });
         return { chains, rawChains };
     }
 
+    // The 1857 and 1858 directories list each street alphabetically by
+    // surname, not in street order, and every record has its own point
+    // (docs/SCHEMA.md), so their chains are put in order along the street
+    // before the street line is drawn through them.
+    const ALPHABETICAL_YEARS = [1857, 1858];
+
+    function sortAlongStreet(entries) {
+        const placed = entries.filter(e => e.lat != null && e.lng != null);
+        if (placed.length < entries.length || placed.length < 2) return;
+        const span = k => Math.max(...placed.map(e => e[k])) - Math.min(...placed.map(e => e[k]));
+        // A degree of longitude is about 0.79 of a degree of latitude here
+        const k = span('lng') * 0.79 > span('lat') ? 'lng' : 'lat';
+        entries.sort((a, b) => a[k] - b[k]);
+    }
+
+    // Next door: the listings either side of record idx in its chain (same
+    // year, street and side, in the order the map draws them). Only for the
+    // directories, which list each street house by house; the rolls are in
+    // name order. open(i) shows record i of the chain; null at either end.
+    function chainNeighbours(chain, idx, open) {
+        if (!chain || chain[idx].source !== 'Directory') return null;
+        const at = i => (i >= 0 && i < chain.length ? { entry: chain[i], open: () => open(i) } : null);
+        return { prev: at(idx - 1), next: at(idx + 1) };
+    }
+
     // Cross-year links are records whose entityID is a string (a deliberate
-    // link made by a person). Returns { entityID → [{ year, street, side, idx }] }
+    // link made by a person). Returns { entityID → [{ layer, year, street, side, idx }] }
     // with each group sorted oldest first.
     function buildCrossYearIndex(chains, rawChains) {
         const byId = {};
-        chains.forEach(({ year, street, side }) => {
-            rawChains[chainKey(year, street, side)].forEach((e, idx) => {
+        chains.forEach(({ layer, year, street, side }) => {
+            rawChains[chainKey(layer, street, side)].forEach((e, idx) => {
                 if (typeof e.entityID !== 'string') return;
                 if (!byId[e.entityID]) byId[e.entityID] = [];
-                byId[e.entityID].push({ year, street, side, idx });
+                byId[e.entityID].push({ layer, year, street, side, idx });
             });
         });
-        Object.values(byId).forEach(g => g.sort((a, b) => a.year - b.year));
+        Object.values(byId).forEach(g => g.sort((a, b) => a.year - b.year || a.layer.localeCompare(b.layer)));
         return byId;
     }
 
@@ -203,9 +242,11 @@ window.MapCommon = (function () {
             const tailCount = n - lastAi - 1;
             if (tailCount > 0) {
                 const A = { lat:r[lastAi].lat, lng:r[lastAi].lng };
-                // Street direction: from second-to-last anchor to last, or infer from side
-                // N/S sides run east-west → default forward direction is east (+lng)
-                // E/W sides run north-south → default forward direction is north (-lat, i.e. decreasing lat)
+                // Street direction: from second-to-last anchor to last, or infer from side.
+                // N/S sides run east-west → default forward direction is east (+lng).
+                // E/W sides run north-south → default to south (decreasing lat; Carlton
+                // is in the southern hemisphere), which suits a lane listed from the
+                // street it leaves, e.g. Little Grattan Street south of Grattan Street.
                 let dLng = 0, dLat = 0;
                 if (anchors.length >= 2) {
                     const prev = anchors[anchors.length - 2];
@@ -216,7 +257,7 @@ window.MapCommon = (function () {
                     dLng = (rawLng/len) * 0.00014;
                 } else {
                     // fallback defaults based on street orientation
-                    if (side === 'East' || side === 'West') { dLat = -0.00014; } // north-south street → project northward
+                    if (side === 'East' || side === 'West') { dLat = -0.00014; } // north-south street → project southward
                     else                                    { dLng =  0.00014; } // east-west street  → project eastward
                 }
                 const ghost = { lat: A.lat + dLat*(tailCount+1), lng: A.lng + dLng*(tailCount+1) };
@@ -242,13 +283,16 @@ window.MapCommon = (function () {
                     dLat = -(rawLat/len) * 0.00014;
                     dLng = -(rawLng/len) * 0.00014;
                 } else {
-                    if (side === 'East' || side === 'West') { dLat =  0.00014; } // project southward (back)
+                    // North-south street → project southward too: the anchor is usually where
+                    // the listing meets a cross street to its north (e.g. Barry Street's
+                    // listings up to Grattan Street), so the street runs on south of it
+                    if (side === 'East' || side === 'West') { dLat = -0.00014; }
                     else                                    { dLng = -0.00014; } // project westward (back)
                 }
                 const ghost = { lat: A.lat + dLat*(firstAi+1), lng: A.lng + dLng*(firstAi+1) };
                 const ctrl  = applyOffset((ghost.lat+A.lat)/2, (ghost.lng+A.lng)/2, arcOffset, side);
                 for (let k = 0; k < firstAi; k++) {
-                    const t = (firstAi - k) / (firstAi + 1);
+                    const t = (k + 1) / (firstAi + 1); // first listing furthest from the anchor
                     place(k, bezier(ghost, ctrl, A, t), t);
                 }
             }
@@ -267,6 +311,64 @@ window.MapCommon = (function () {
         return 'place';
     }
 
+    // ── Entries ──
+    // Same rule entry.html uses to turn ?id= into a file name
+    function slugifyId(text) {
+        return String(text)
+            .replace(/\s+/g, '-')
+            .replace(/[^a-zA-Z0-9_\-]/g, '')
+            .replace(/\-\-+/g, '-');
+    }
+
+    // The entityID of the published entry (civic/<slug>.xml) for a record,
+    // or null. Only text entityIDs can name an entry. The list of entries is
+    // window.ENTRY_FILES, written by Jekyll in _includes/map-details-modal.html.
+    function entryFor(entry) {
+        if (typeof entry.entityID !== 'string') return null;
+        return (window.ENTRY_FILES || []).includes(slugifyId(entry.entityID)) ? entry.entityID : null;
+    }
+
+    function escapeHtml(text) {
+        return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // How sure we are of a record's point (coordConfidence, docs/SCHEMA.md),
+    // as a three-dot meter and a few words. A record drawn between its
+    // mapped neighbours (_computed) has no point of its own, and a 'street'
+    // point only says which street it was on.
+    const CONFIDENCE = {
+        high:   { dots: 3, text: 'High confidence' },
+        medium: { dots: 2, text: 'Medium confidence' },
+        low:    { dots: 1, text: 'Low confidence' },
+        street: { dots: 0, text: 'Street only: the spot on the street is not known' },
+    };
+
+    // Drawn faded on the maps: an estimate between neighbours, or a street-only point
+    function isUncertain(entry) {
+        return !!entry._computed || entry.coordConfidence === 'street';
+    }
+
+    function locationHtml(entry) {
+        if (entry._computed) {
+            return `<p class="loc-confidence loc-estimated">${meter(0)} Estimated: drawn between the mapped listings either side of it on the same street</p>`;
+        }
+        if (entry.lat == null || entry.lng == null) return '';
+        const c = CONFIDENCE[entry.coordConfidence];
+        let html = c
+            ? `<p class="loc-confidence loc-${entry.coordConfidence}">${meter(c.dots)} ${c.text}</p>`
+            : `<p class="loc-confidence loc-unrated">${meter(0)} Not yet rated</p>`;
+        const details = [];
+        if (entry.coordSource) details.push(`<strong>Source:</strong> ${escapeHtml(entry.coordSource)}`);
+        if (entry.coordNote) details.push(`<strong>How:</strong> ${escapeHtml(entry.coordNote)}`);
+        if (details.length) html += `<p class="loc-details">${details.join('<br>')}</p>`;
+        return html;
+    }
+
+    function meter(filled) {
+        const dots = [0, 1, 2].map(i => `<span class="loc-dot${i < filled ? ' on' : ''}"></span>`).join('');
+        return `<span class="loc-meter" aria-hidden="true">${dots}</span>`;
+    }
+
     // ── Details modal (markup in _includes/map-details-modal.html) ──
     let modalEls = null;
     let modalOpenedAt = 0;
@@ -280,7 +382,10 @@ window.MapCommon = (function () {
             meta:    document.getElementById('modal-meta'),
             body:    document.getElementById('modal-body'),
             link:    document.getElementById('modal-link'),
+            neighbours: document.getElementById('modal-neighbours'),
             coords:  document.getElementById('modal-coords'),
+            location:  document.getElementById('modal-location'),
+            community: document.getElementById('modal-community'),
         };
         const closeBtn = document.getElementById('close-modal-btn');
         const close = () => {
@@ -310,7 +415,8 @@ window.MapCommon = (function () {
     }
 
     // pos: { lat, lng } where the entry is drawn (falls back to the entry's own lat/lng)
-    function openDetailsModal(entry, pos) {
+    // neighbours: { prev, next } from chainNeighbours, for the next-door buttons
+    function openDetailsModal(entry, pos, neighbours) {
         if (!modalEls) initDetailsModal();
         const m = modalEls;
         m.heading.innerText = entry.listing;
@@ -339,15 +445,49 @@ window.MapCommon = (function () {
             if (details.length > 0) {
                 bodyHtml += `<div class="electoral-details">${details.join('<br>')}</div>`;
             }
+            if (entry.Notes) bodyHtml += `<p><strong>Note:</strong> ${escapeHtml(entry.Notes)}</p>`;
         } else if (source === 'directory') {
             if (entry.type) bodyHtml += `<p><strong>Type:</strong> ${entry.type}</p>`;
+            if (entry.Notes) bodyHtml += `<p><strong>Note:</strong> ${escapeHtml(entry.Notes)}</p>`;
         }
         m.body.innerHTML = bodyHtml;
 
-        // 3. Link to the entry page
-        m.link.innerHTML = `<p><a href="civic?id=${encodeURIComponent(entry.entityID)}">More Information ...</a></p>`;
+        // 2a. Next door: buttons that show the listing either side instead
+        m.neighbours.innerHTML = '';
+        if (neighbours) {
+            ['prev', 'next'].forEach(dir => {
+                const n = neighbours[dir];
+                const label = dir === 'prev' ? 'Previous' : 'Next';
+                const el = document.createElement(n ? 'button' : 'span');
+                el.className = `modal-neighbour modal-neighbour-${dir}`;
+                if (n) {
+                    el.type = 'button';
+                    el.dataset.dir = dir;
+                    el.innerHTML = `<span class="modal-neighbour-label">${dir === 'prev' ? '← ' : ''}${label}${dir === 'next' ? ' →' : ''}</span> ${escapeHtml(n.entry.listing)}`;
+                    el.onclick = () => {
+                        n.open();
+                        // Keep focus on the next-door buttons: the same one, or
+                        // the other at the end of the side
+                        const again = m.neighbours.querySelector(`[data-dir="${dir}"]`) || m.neighbours.querySelector('button');
+                        if (again) again.focus();
+                    };
+                } else {
+                    el.innerHTML = `<span class="modal-neighbour-label">${dir === 'prev' ? 'First' : 'Last'} on this side</span>`;
+                }
+                m.neighbours.append(el);
+            });
+        }
 
-        // 4. Coordinates
+        // 3. Link to the entry page: "Read the entry" when one is published
+        // for this record's entityID, otherwise "Start an entry" (the same
+        // page shows the contribution form), as on the search page.
+        const name = entryFor(entry);
+        const linkText = name ? `Read the entry: ${escapeHtml(name)} →` : 'Start an entry';
+        m.link.innerHTML = `<p><a class="modal-entry-link${name ? '' : ' quiet'}" href="civic?id=${encodeURIComponent(name || entry.entityID)}">${linkText}</a></p>`;
+
+        // 4. Location: how sure we are of the point, where it comes from,
+        // and the coordinates
+        m.location.innerHTML = locationHtml(entry);
         const lat = pos ? pos.lat : entry.lat;
         const lng = pos ? pos.lng : entry.lng;
         if (lat != null && lng != null) {
@@ -355,6 +495,7 @@ window.MapCommon = (function () {
         } else {
             m.coords.innerText = 'Unknown';
         }
+        m.community.innerHTML = `Carlton Common Ground is a community project, and we're always improving the map. Know where this was? <a href="civic?id=${encodeURIComponent(name || entry.entityID)}">Suggest a correction</a>.`;
 
         if (m.modal.style.display !== 'flex') modalReturnFocus = document.activeElement;
         m.modal.style.display = 'flex';
@@ -363,11 +504,12 @@ window.MapCommon = (function () {
     }
 
     return {
-        getYears, getYearColors, getYearSources,
+        layerOf, getLayers, layerYear, layerLabel, getLayerColors,
         getBoundsFromFiles, loadByYear,
-        chainKey, buildChains, buildCrossYearIndex,
+        chainKey, buildChains, buildCrossYearIndex, chainNeighbours,
         bezier, sideSign, applyOffset, computeChain,
-        markerShape,
+        markerShape, isUncertain,
+        entryFor, escapeHtml,
         initDetailsModal, openDetailsModal,
     };
 })();

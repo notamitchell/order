@@ -1,0 +1,829 @@
+/* TEI builder and renderer for entries, used by the contribution form
+   (_layouts/form.html) and by entry pages (_layouts/entry.html).
+
+     TEIEntry.build(entry)  → TEI XML string for one entry (shape below).
+     TEIEntry.check(entry)  → list of warnings for the contributor, e.g. a date
+                              with no year in it. Nothing here blocks sending.
+     TEIEntry.render(xml)   → HTML preview of an entry, read back from the XML
+                              so it shows exactly what was built.
+     TEIEntry.isKept(xml)   → true when the entry is kept as its author wrote
+                              it, so no one else can suggest changes.
+
+   The entry format is documented in schema/carlton.odd, and files can be
+   checked against schema/carlton.rng. In short:
+     <TEI type="person|org|family|place|topic|unknown">
+       <teiHeader>  title, authors and credits (respStmt key="community" /
+                    "computer-assisted-draft" / "computer-assisted-additions"),
+                    directory and electoral-roll
+                    citations (sourceDesc/listBibl), the licence
+                    (publicationStmt/availability, status="restricted" when
+                    the entry is kept as its author wrote it), one <change>
+                    per edit
+       <standOff>   the subject (person / personGrp / org / place, xml:id
+                    "subject"), the chronology (listEvent) and links to other
+                    entries (listRelation)
+       <text>       <body>: <div type="summary">, then <div type="detail">
+                    holding the article (paragraphs, then one <div> per
+                    heading); <back>: <div type="bibliography"> holding the
+                    references (listBibl)
+                    Older entries have untyped paragraphs and divs in <body>
+                    and every source in sourceDesc; they still render.
+
+   entry = {
+     recordId, title,
+     kind: 'person' | 'org' | 'family' | 'place' | 'topic' | '',
+     surname, forenames,                     // people only, optional
+     authors: ['Name', ...], date: 'YYYY-MM-DD',
+     credits: { community, computerDraft, computerAdditions },  // byline flags, true/false
+     kept,                                   // true: kept as written, no suggested changes
+     dates: { from, to, approximate },
+     otherNames:     [{ name, from, to }],
+     places:         [{ address, role, from, to, lat, lng }],
+     occupations:    [{ term, from, to }],   // what a business did, a place's use
+     legalStatuses:  [{ term, from, to }],
+     chronology:     [{ date, event, place }],
+     relations:      [{ name, targetType, relationType, href, from, to }],
+     sources:        [{ text, href, html }], // references, in <back>; html (optional) keeps
+                                             // bold, italic and inner links
+     recordSources:  [{ text, href }],      // directory and roll citations
+     summary,                                // plain text, blank line between paragraphs
+     articleHtml, note,                      // the detail
+     changes:        [{ when, type, text }],  // later edits, optional
+     status          // revisionDesc/@status, "draft" unless given
+   }
+*/
+window.TEIEntry = (function () {
+  const NS = 'http://www.tei-c.org/ns/1.0';
+  const XML_NS = 'http://www.w3.org/XML/1998/namespace';
+  const PUBLISHER = 'Carlton Common Ground';
+  // Rough centre of Carlton, for the "is this coordinate nearby?" check
+  const CARLTON = { lat: -37.800, lng: 144.967 };
+
+  const has = (v) => v !== undefined && v !== null && String(v).trim() !== '';
+  const trim = (v) => (has(v) ? String(v).trim() : '');
+  const filled = (rows, ...keys) => (rows || []).filter((r) => keys.some((k) => has(r[k])));
+  // Each author once, first spelling kept. Editing an entry carries its
+  // authors over, so someone who edits their own entry is listed again.
+  const uniqueNames = (names) => {
+    const seen = new Set();
+    return (names || []).map((n) => trim(n).replace(/\s+/g, ' ')).filter((n) => {
+      const key = n.toLowerCase();
+      if (!n || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  };
+
+  // Directory and electoral-roll citations link to these pages
+  // (civic?id=Sands-McDougall-Directory-1875, civic?id=Electoral-Rolls)
+  const RECORD_PAGE = /Sands-McDougall-Directory-|Electoral-Rolls/;
+  const COMMUNITY = 'Community Contribution';
+  const LICENCE = { name: 'CC BY-NC 4.0', url: 'https://creativecommons.org/licenses/by-nc/4.0/' };
+  const KEPT = 'Kept as the author wrote it: not open for suggested changes.';
+  const ROBOT = 'Computer-assisted first draft: no one has added to it yet';
+
+  /* ---------- Links to the site itself ----------
+     Contributors often paste a page's full address, e.g.
+     https://historicalesque.github.io/carlton/civic?id=Lincoln%20Square.
+     Links to this site are kept relative (civic?id=Lincoln%20Square), so
+     they open in place and keep working wherever the site is served. */
+  const SITE_ROOTS = ['https://historicalesque.github.io/carlton/',
+    document.currentScript ? document.currentScript.src.replace(/scripts\/tei\.js(\?.*)?$/, '') : ''].filter(Boolean);
+  function local(href) {
+    let t = trim(href);
+    if (/^(www\.)?historicalesque\.github\.io\//i.test(t)) t = `https://${t}`;
+    let url;
+    try { url = new URL(t); } catch (e) { return t; }
+    for (const root of SITE_ROOTS) {
+      const base = new URL(root);
+      const path = url.pathname.replace(/^\/+/, '/');
+      if (url.hostname.replace(/^www\./, '') !== base.hostname || !/^https?:$/.test(url.protocol)) continue;
+      if (path === base.pathname.replace(/\/$/, '') || path.startsWith(base.pathname)) {
+        return path.slice(base.pathname.length) + url.search + url.hash || './';
+      }
+    }
+    return t;
+  }
+
+  /* ---------- Dates ----------
+     People type dates loosely ("c. 1856", "March 1856", "1856-03-04").
+     The ISO value goes in @when/@from/@to only when we can read one. */
+  const APPROX = /\b(c\.?|ca\.?|circa|about|around|approx\.?)\s*(?=\d)|~|\?/i;
+
+  function parseDate(text) {
+    const t = trim(text);
+    if (!t) return null;
+    let iso = '';
+    if (/^\d{4}(-\d{2}(-\d{2})?)?$/.test(t)) iso = t;
+    else {
+      const year = t.match(/\b(1[5-9]\d\d|20\d\d)\b/);
+      if (year) iso = year[1];
+    }
+    return { text: t, iso, approximate: APPROX.test(t) };
+  }
+
+  /* @from/@to (or @when) and @cert for a pair of loosely typed dates */
+  function range(from, to, forceApprox) {
+    const f = parseDate(from);
+    const t = parseDate(to);
+    const attrs = {};
+    if (f && t && f.iso && f.iso === t.iso) attrs.when = f.iso;
+    else {
+      if (f && f.iso) attrs.from = f.iso;
+      if (t && t.iso) attrs.to = t.iso;
+    }
+    if (forceApprox || (f && f.approximate) || (t && t.approximate)) attrs.cert = 'low';
+    return attrs;
+  }
+  function when(text) {
+    const d = parseDate(text);
+    return d ? { when: d.iso, cert: d.approximate ? 'low' : '' } : {};
+  }
+
+  /* ---------- A tiny DOM writer, so escaping is always right ---------- */
+  function writer() {
+    const doc = document.implementation.createDocument(NS, 'TEI', null);
+    function el(name, attrs, ...children) {
+      const node = doc.createElementNS(NS, name);
+      for (const [k, v] of Object.entries(attrs || {})) {
+        if (!has(v)) continue;
+        if (k.startsWith('xml:')) node.setAttributeNS(XML_NS, k, String(v));
+        else node.setAttribute(k, String(v));
+      }
+      for (const c of children.flat(Infinity)) {
+        if (c === null || c === undefined || c === false || c === '') continue;
+        node.appendChild(typeof c === 'string' ? doc.createTextNode(c) : c);
+      }
+      return node;
+    }
+    return { doc, el };
+  }
+
+  /* ---------- Article: Quill HTML → TEI ----------
+     Paragraphs before the first heading go straight in <body>; each heading
+     starts a <div> with that heading as its <head>. Bold / italic / underline
+     become <hi rend>, links become <ref target>, lists become <list rend>,
+     block quotes become <quote> (one <p> per line, so lines quoted one after
+     another share a <quote>), pasted tables stay tables, and collection
+     images (scripts/glam-embed.js) become
+       <figure><graphic url="image"/><head><ref target="item">caption</ref></head><figDesc>alt text</figDesc></figure> */
+  const REND = { STRONG: 'bold', B: 'bold', EM: 'italic', I: 'italic', U: 'underline' };
+
+  // A run of HTML text as TEI inline parts: <hi rend>, <ref target>, text
+  function inlineParts(node, el) {
+    const out = [];
+    for (const child of node.childNodes) {
+      if (child.nodeType === 3) {
+        const text = child.textContent.replace(/\u00a0/g, ' ');
+        if (text) out.push(text);
+      } else if (child.nodeType === 1) {
+        const tag = child.tagName;
+        if (tag === 'BR') out.push(' ');
+        else if (tag === 'A' && has(child.getAttribute('href'))) out.push(el('ref', { target: local(child.getAttribute('href')) }, inlineParts(child, el)));
+        else if (REND[tag]) out.push(el('hi', { rend: REND[tag] }, inlineParts(child, el)));
+        else out.push(...inlineParts(child, el));
+      }
+    }
+    return out;
+  }
+  const blank = (parts) => parts.every((p) => typeof p === 'string' ? !p.trim() : !p.textContent.trim());
+  // Trim the outer whitespace of a run of inline parts, e.g. a cell's "1860&nbsp;"
+  function tidy(parts) {
+    const out = parts.slice();
+    if (typeof out[0] === 'string') out[0] = out[0].replace(/^\s+/, '');
+    const last = out.length - 1;
+    if (typeof out[last] === 'string') out[last] = out[last].replace(/\s+$/, '');
+    return out;
+  }
+  const htmlBody = (html) => new DOMParser().parseFromString(`<body>${html || ''}</body>`, 'text/html').body;
+
+  function article(html, el) {
+    const src = htmlBody(html);
+    const intro = [];
+    const divs = [];
+    let current = intro;
+    let quote = null; // the <quote> the previous block quote line went into
+    const inline = (node) => inlineParts(node, el);
+
+    function block(node) {
+      if (node.nodeType === 3) {
+        if (node.textContent.trim()) current.push(el('p', null, node.textContent.trim()));
+        return;
+      }
+      if (node.nodeType !== 1) return;
+      const tag = node.tagName;
+      if (tag !== 'BLOCKQUOTE') quote = null;
+      if (tag === 'BLOCKQUOTE') {
+        // Quill writes each quoted line as its own <blockquote>; pasted HTML may hold <p>s
+        const lines = node.querySelector('p') ? [...node.children].map(inline) : [inline(node)];
+        const paras = lines.filter((parts) => !blank(parts)).map((parts) => el('p', null, tidy(parts)));
+        if (!paras.length) return;
+        if (!quote) { quote = el('quote'); current.push(quote); }
+        paras.forEach((para) => quote.appendChild(para));
+      } else if (/^H[1-6]$/.test(tag)) {
+        const head = tidy(inline(node));
+        current = [];
+        divs.push({ head: blank(head) ? null : head, blocks: current });
+      } else if (tag === 'UL' || tag === 'OL') {
+        const items = [...node.children].filter((li) => li.tagName === 'LI').map(inline).filter((p) => !blank(p));
+        if (items.length) current.push(el('list', { rend: tag === 'OL' ? 'numbered' : 'bulleted' }, items.map((p) => el('item', null, tidy(p)))));
+      } else if (tag === 'TABLE') {
+        const rows = [...node.querySelectorAll('tr')]
+          .map((tr) => [...tr.children].map((td) => tidy(inline(td))))
+          .filter((cells) => cells.some((c) => !blank(c)));
+        if (rows.length) current.push(el('table', null, rows.map((cells) => el('row', null, cells.map((c) => el('cell', null, c))))));
+      } else if (tag === 'FIGURE') {
+        const img = node.querySelector('img');
+        const a = node.querySelector('figcaption a[href]');
+        const url = node.dataset.src || (img && img.getAttribute('src'));
+        if (!/^https?:\/\//i.test(url || '')) return;
+        const href = node.dataset.href || (a && a.getAttribute('href')) || '';
+        const caption = trim(node.dataset.caption || (node.querySelector('figcaption') || {}).textContent) || href;
+        current.push(el('figure', null,
+          el('graphic', { url }),
+          caption ? el('head', null, href ? el('ref', { target: local(href) }, caption) : caption) : null,
+          has(node.dataset.alt) ? el('figDesc', null, trim(node.dataset.alt)) : null));
+      } else if (node.querySelector && node.querySelector('table')) {
+        // Quill wraps pasted tables in <div class="ql-table-embed">
+        [...node.childNodes].forEach(block);
+      } else {
+        const parts = inline(node);
+        if (!blank(parts)) current.push(el('p', null, tidy(parts)));
+      }
+    }
+
+    [...src.childNodes].forEach(block);
+    return [
+      intro,
+      divs.filter((d) => d.head || d.blocks.length).map((d) => el('div', null, d.head ? el('head', null, d.head) : null, d.blocks))
+    ].flat();
+  }
+
+  /* ---------- Build the entry ---------- */
+  function build(entry) {
+    const { doc, el } = writer();
+    const root = doc.documentElement;
+    const kind = ['person', 'org', 'family', 'place', 'topic'].includes(entry.kind) ? entry.kind : 'unknown';
+    root.setAttribute('type', kind);
+    root.setAttributeNS(XML_NS, 'xml:lang', 'en');
+    const today = entry.date || new Date().toISOString().slice(0, 10);
+    const authors = uniqueNames(entry.authors);
+    const title = trim(entry.title) || 'Untitled';
+
+    // teiHeader
+    const bibl = (s) => {
+      if (!has(s.html)) return el('bibl', null,
+        has(s.href) ? el('ref', { target: local(s.href) }, trim(s.text) || trim(s.href)) : trim(s.text));
+      // A source with bold, italic or links of its own ("Where did you find
+      // this?"). Its link wraps the whole source unless it has links already;
+      // a link that isn't one of them follows it.
+      const parts = tidy(inlineParts(htmlBody(s.html), el));
+      if (blank(parts)) return el('bibl', null, has(s.href) ? el('ref', { target: local(s.href) }, trim(s.href)) : null);
+      const refs = parts.filter((p) => typeof p !== 'string')
+        .flatMap((p) => (p.localName === 'ref' ? [p] : [...p.getElementsByTagNameNS(NS, 'ref')]));
+      if (!has(s.href)) return el('bibl', null, parts);
+      if (!refs.length) return el('bibl', null, el('ref', { target: local(s.href) }, parts));
+      if (refs.some((r) => r.getAttribute('target') === local(s.href))) return el('bibl', null, parts);
+      return el('bibl', null, parts, ' ', el('ref', { target: local(s.href) }, trim(s.href)));
+    };
+    const sources = filled(entry.sources, 'text', 'href');
+    const citations = filled(entry.recordSources, 'text', 'href');
+    const credits = entry.credits || {};
+    root.appendChild(el('teiHeader', null,
+      el('fileDesc', null,
+        el('titleStmt', null,
+          el('title', null, title),
+          authors.map((a) => el('author', null, a)),
+          credits.community ? el('respStmt', { key: 'community' },
+            el('resp', null, 'Credited as'), el('name', null, COMMUNITY)) : null,
+          credits.computerDraft ? el('respStmt', { key: 'computer-assisted-draft' },
+            el('resp', null, 'Computer-assisted first draft'), el('name', null, PUBLISHER)) : null,
+          credits.computerAdditions ? el('respStmt', { key: 'computer-assisted-additions' },
+            el('resp', null, 'Computer-assisted additions'), el('name', null, PUBLISHER)) : null),
+        el('publicationStmt', null,
+          el('publisher', null, PUBLISHER),
+          el('idno', { type: 'entry' }, trim(entry.recordId) || 'unassigned'),
+          // "restricted" marks an entry kept as its author wrote it: entry
+          // pages show no contribution form for it (see _layouts/entry.html)
+          el('availability', entry.kept ? { status: 'restricted' } : null,
+            el('licence', { target: LICENCE.url }, LICENCE.name),
+            entry.kept ? el('p', null, KEPT) : null)),
+        el('sourceDesc', null, citations.length
+          ? el('listBibl', null, citations.map(bibl))
+          : el('p', null, 'Contributed through the website.'))),
+      el('revisionDesc', { status: entry.status || 'draft' },
+        el('change', { when: today, type: 'created' },
+          `${trim(entry.note) || 'Contributed through the contribution form'}${authors.length ? ` by ${authors.join(', ')}` : ''}.`),
+        // Later edits, e.g. a conversion: [{ when, type, text }]
+        (entry.changes || []).map((c) => el('change', { when: c.when, type: c.type }, c.text)))
+    ));
+
+    // standOff: the subject
+    const others = filled(entry.otherNames, 'name');
+    const occupations = filled(entry.occupations, 'term');
+    const legal = filled(entry.legalStatuses, 'term');
+    const places = filled(entry.places, 'address', 'lat', 'lng');
+    const dates = entry.dates || {};
+    const lifespan = range(dates.from, dates.to, dates.approximate);
+    const nameEl = { person: 'persName', org: 'orgName', family: 'name', place: 'placeName' }[kind];
+
+    const mainName = kind === 'person' && (has(entry.surname) || has(entry.forenames))
+      ? el('persName', { type: 'main' },
+          has(entry.forenames) ? el('forename', null, trim(entry.forenames)) : null,
+          has(entry.surname) ? el('surname', null, trim(entry.surname)) : null)
+      : nameEl ? el(nameEl, { type: 'main' }, title) : null;
+    const altNames = nameEl ? others.map((n) => el(nameEl, { type: 'alternative', ...range(n.from, n.to) }, trim(n.name))) : [];
+    const state = (type, r) => el('state', { type, ...range(r.from, r.to) }, el('label', null, trim(r.term)));
+    const geo = (p) => (has(p.lat) && has(p.lng) ? el('geo', null, `${trim(p.lat)} ${trim(p.lng)}`) : null);
+    const address = (p) => el('place', { type: trim(p.role) ? p.role.trim().toLowerCase().replace(/\s+/g, '-') : 'address', ...range(p.from, p.to) },
+      el('placeName', null, trim(p.address) || 'Unnamed'), geo(p) ? el('location', null, geo(p)) : null);
+
+    let subject = null;
+    if (kind === 'person') {
+      const birth = parseDate(dates.from);
+      const death = parseDate(dates.to);
+      const approx = dates.approximate ? { cert: 'low' } : {};
+      subject = el('listPerson', null, el('person', { 'xml:id': 'subject' },
+        mainName, altNames,
+        birth ? el('birth', { when: birth.iso, cert: birth.approximate ? 'low' : '', ...approx }, birth.text) : null,
+        death ? el('death', { when: death.iso, cert: death.approximate ? 'low' : '', ...approx }, death.text) : null,
+        occupations.map((r) => el('occupation', range(r.from, r.to), trim(r.term))),
+        legal.map((r) => state('legal', r)),
+        places.map((p) => el('residence', { type: trim(p.role) ? p.role.trim().toLowerCase().replace(/\s+/g, '-') : '', ...range(p.from, p.to) },
+          el('placeName', null, trim(p.address) || 'Unnamed'), geo(p)))));
+    } else if (kind === 'family') {
+      subject = el('listPerson', null, el('personGrp', { 'xml:id': 'subject', role: 'family' },
+        mainName, altNames,
+        Object.keys(lifespan).length ? el('state', { type: 'presence', ...lifespan }, el('label', null, 'In Carlton')) : null,
+        occupations.map((r) => el('occupation', range(r.from, r.to), trim(r.term))),
+        legal.map((r) => state('legal', r)),
+        places.map((p) => el('residence', range(p.from, p.to), el('placeName', null, trim(p.address) || 'Unnamed'), geo(p)))));
+    } else if (kind === 'org') {
+      subject = el('listOrg', null, el('org', { 'xml:id': 'subject', ...lifespan },
+        mainName, altNames,
+        occupations.map((r) => state('activity', r)),
+        legal.map((r) => state('legal', r)),
+        places.map(address)));
+    } else if (kind === 'place') {
+      subject = el('listPlace', null, el('place', { 'xml:id': 'subject', ...lifespan },
+        mainName, altNames,
+        places.map((p) => el('location', { type: 'address', ...range(p.from, p.to) },
+          has(p.address) ? el('address', null, el('addrLine', null, trim(p.address))) : null, geo(p))),
+        occupations.map((r) => state('use', r)),
+        legal.map((r) => state('legal', r))));
+    }
+
+    const chron = filled(entry.chronology, 'event');
+    const relations = filled(entry.relations, 'name');
+    const standOff = [
+      subject,
+      chron.length ? el('listEvent', { type: 'chronology' }, chron.map((c) => el('event', when(c.date),
+        el('label', null, trim(c.event)),
+        has(c.place) ? el('place', null, el('placeName', null, trim(c.place))) : null))) : null,
+      relations.length ? el('listRelation', null, relations.map((r) => el('relation', {
+        type: r.targetType || '',
+        // @name is a single word in TEI, so "Family member" becomes Family-member
+        name: trim(r.relationType).replace(/\s+/g, '-') || 'related',
+        active: '#subject',
+        // Entries are addressed by name on the site (civic?id=…), so a
+        // related entry without a link still gets one.
+        passive: has(r.href) ? local(r.href) : `civic?id=${encodeURIComponent(trim(r.name))}`,
+        ...range(r.from, r.to)
+      }, el('desc', null, trim(r.name))))) : null
+    ].filter(Boolean);
+    if (standOff.length) root.appendChild(el('standOff', null, standOff));
+
+    // text: summary and detail in <body>, references in <back>
+    const summary = trim(entry.summary).split(/\n\s*\n/).map((t) => t.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    const detail = article(entry.articleHtml, el);
+    const body = [
+      summary.length ? el('div', { type: 'summary' }, summary.map((t) => el('p', null, t))) : null,
+      detail.length ? el('div', { type: 'detail' }, detail) : null
+    ].filter(Boolean);
+    root.appendChild(el('text', null,
+      el('body', null, body.length ? body : el('p', null, '')),
+      sources.length ? el('back', null, el('div', { type: 'bibliography' }, el('listBibl', null, sources.map(bibl)))) : null));
+
+    return '<?xml version="1.0" encoding="UTF-8"?>\n'
+      + '<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>\n'
+      + pretty(root, 0) + '\n';
+  }
+
+  /* Indent elements that hold only elements; keep mixed content on one line. */
+  const MIXED = new Set(['p', 'item', 'head', 'figDesc', 'cell', 'ref', 'hi', 'label', 'desc', 'change', 'bibl',
+    'title', 'author', 'persName', 'orgName', 'placeName', 'name', 'occupation', 'birth', 'death', 'addrLine']);
+  function pretty(node, depth) {
+    const pad = '  '.repeat(depth);
+    const kids = [...node.childNodes];
+    const s = new XMLSerializer();
+    let open = s.serializeToString(node.cloneNode(false)).replace(/\s*\/>$|><\/[^>]+>$/, '');
+    if (depth > 0) open = open.replace(` xmlns="${NS}"`, '');
+    const name = node.localName;
+    if (!kids.length) return `${pad}${open}/>`;
+    if (MIXED.has(name) || kids.some((k) => k.nodeType === 3)) {
+      const inner = kids.map((k) => s.serializeToString(k)).join('').replace(new RegExp(` xmlns="${NS}"`, 'g'), '');
+      return `${pad}${open}>${inner}</${name}>`;
+    }
+    return `${pad}${open}>\n${kids.map((k) => pretty(k, depth + 1)).join('\n')}\n${pad}</${name}>`;
+  }
+
+  /* ---------- Checks shown to the contributor ---------- */
+  function check(entry) {
+    const out = [];
+    const need = (v, msg) => { if (!has(v)) out.push({ level: 'error', text: msg }); };
+    need(entry.title, 'Add a title.');
+    if (!has(entry.summary) && !filled(entry.sources, 'text', 'href').length
+        && !trim(new DOMParser().parseFromString(entry.articleHtml || '', 'text/html').body.textContent)) {
+      out.push({ level: 'error', text: 'Write something in at least one of the boxes.' });
+    }
+
+    const dateCheck = (label, from, to) => {
+      const f = parseDate(from); const t = parseDate(to);
+      [f, t].forEach((d) => {
+        if (d && !d.iso) out.push({ level: 'warn', text: `${label}: we couldn't find a year in "${d.text}".` });
+        const y = d && Number(d.iso.slice(0, 4));
+        if (y && (y < 1800 || y > new Date().getFullYear())) out.push({ level: 'warn', text: `${label}: ${y} looks unusual for Carlton. Is it right?` });
+      });
+      if (f && t && f.iso && t.iso && f.iso.slice(0, 4) > t.iso.slice(0, 4)) {
+        out.push({ level: 'warn', text: `${label}: the end date is before the start date.` });
+      }
+    };
+    if (entry.dates) dateCheck('Dates', entry.dates.from, entry.dates.to);
+    filled(entry.otherNames, 'name').forEach((n) => dateCheck(`Other name "${trim(n.name)}"`, n.from, n.to));
+    filled(entry.occupations, 'term').forEach((n) => dateCheck(`"${trim(n.term)}"`, n.from, n.to));
+    filled(entry.legalStatuses, 'term').forEach((n) => dateCheck(`"${trim(n.term)}"`, n.from, n.to));
+    filled(entry.chronology, 'date', 'event').forEach((c) => {
+      if (!has(c.event)) out.push({ level: 'warn', text: `Chronology: the row dated "${trim(c.date)}" has no event, so it's left out.` });
+      else dateCheck('Chronology', c.date, '');
+    });
+
+    const places = filled(entry.places, 'address', 'lat', 'lng');
+    if (places.length && (entry.kind === 'topic' || !entry.kind)) {
+      out.push({ level: 'warn', text: 'Addresses are only kept for a person, business, family or place. Choose what the entry is about, or they\'ll be left out.' });
+    }
+    places.forEach((p) => {
+      const label = `Address "${trim(p.address) || 'without a name'}"`;
+      dateCheck(label, p.from, p.to);
+      if (has(p.lat) !== has(p.lng)) out.push({ level: 'warn', text: `${label}: give both latitude and longitude, or neither.` });
+      if (has(p.lat) && has(p.lng)) {
+        const lat = Number(p.lat); const lng = Number(p.lng);
+        if (!isFinite(lat) || !isFinite(lng)) out.push({ level: 'warn', text: `${label}: coordinates should be numbers, like -37.8004 144.9671.` });
+        else if (Math.hypot((lat - CARLTON.lat) * 111, (lng - CARLTON.lng) * 88) > 5) {
+          out.push({ level: 'warn', text: `${label}: these coordinates are more than 5 km from Carlton.` });
+        }
+      }
+    });
+    if ((entry.kind === 'topic' || !entry.kind)
+        && (filled(entry.otherNames, 'name').length || filled(entry.occupations, 'term').length || filled(entry.legalStatuses, 'term').length
+            || (entry.dates && (has(entry.dates.from) || has(entry.dates.to))))) {
+      out.push({ level: 'warn', text: 'Dates, other names and occupations are only kept for a person, business, family or place. Choose what the entry is about, or they\'ll be left out.' });
+    }
+
+    // A full address, or a page on this site (civic?id=…, people)
+    const urlOk = (u) => /^https?:\/\/\S+$/i.test(local(u)) || /^[\w-]+(\/[\w-]*)*\/?([?#]\S*)?$/.test(local(u));
+    filled(entry.sources, 'href').forEach((s) => {
+      if (!urlOk(s.href)) out.push({ level: 'warn', text: `Source link "${trim(s.href)}" should start with http:// or https://.` });
+    });
+    filled(entry.relations, 'name', 'href').forEach((r) => {
+      if (!has(r.name)) out.push({ level: 'warn', text: 'Related entry: a row has a link but no name, so it\'s left out.' });
+      if (has(r.href) && !urlOk(r.href)) out.push({ level: 'warn', text: `Related entry "${trim(r.name)}": the link should start with http:// or https://.` });
+    });
+    return out;
+  }
+
+  /* ---------- Render an entry back to HTML ---------- */
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // Links to other sites open in a new tab; links within the site (e.g.
+  // civic?id=…, people) open in place. Script and data URLs are dropped.
+  const link = (href, html) => {
+    if (!href || /^\s*(javascript|data|vbscript):/i.test(href)) return html;
+    return /^https?:/i.test(href)
+      ? `<a href="${esc(href)}" target="_blank" rel="noopener">${html}</a>`
+      : `<a href="${esc(href)}">${html}</a>`;
+  };
+
+  function render(xmlText) {
+    const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
+    if (xml.querySelector('parsererror')) return '<p>The XML could not be read.</p>';
+    const all = (ctx, name) => (ctx ? [...ctx.getElementsByTagNameNS(NS, name)] : []);
+    const kids = (ctx, ...names) => (ctx ? [...ctx.children].filter((c) => names.includes(c.localName)) : []);
+    const one = (ctx, name) => all(ctx, name)[0];
+    const text = (ctx) => (ctx ? ctx.textContent.trim() : '');
+
+    function mixed(node) {
+      if (!node) return '';
+      return [...node.childNodes].map((c) => {
+        if (c.nodeType === 3) return esc(c.textContent);
+        if (c.localName === 'hi') {
+          const tag = { italic: 'em', bold: 'strong', underline: 'u' }[c.getAttribute('rend')] || 'span';
+          return `<${tag}>${mixed(c)}</${tag}>`;
+        }
+        if (c.localName === 'ref') return link(c.getAttribute('target'), mixed(c));
+        return mixed(c);
+      }).join('');
+    }
+    function blocks(container) {
+      return [...container.children].map((c) => {
+        switch (c.localName) {
+          case 'p': return c.textContent.trim() ? `<p>${mixed(c)}</p>` : '';
+          case 'head': return `<h2>${mixed(c)}</h2>`;
+          case 'list': {
+            const tag = c.getAttribute('rend') === 'numbered' ? 'ol' : 'ul';
+            return `<${tag}>${kids(c, 'item').map((i) => `<li>${mixed(i)}</li>`).join('')}</${tag}>`;
+          }
+          case 'quote': {
+            const paras = kids(c, 'p').filter((p) => p.textContent.trim());
+            return paras.length ? `<blockquote>${paras.map((p) => `<p>${mixed(p)}</p>`).join('')}</blockquote>` : '';
+          }
+          case 'table':
+            return `<div class="pv-table"><table><tbody>${kids(c, 'row').map((r) =>
+              `<tr>${kids(r, 'cell').map((cell) => `<td>${mixed(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+          case 'figure': {
+            const graphic = kids(c, 'graphic')[0];
+            const url = graphic ? graphic.getAttribute('url') || '' : '';
+            if (!/^https?:\/\//i.test(url)) return '';
+            const head = kids(c, 'head')[0];
+            return `<figure class="pv-figure"><img src="${esc(url)}" alt="${esc(text(kids(c, 'figDesc')[0]))}" loading="lazy">${head ? `<figcaption>${mixed(head)}</figcaption>` : ''}</figure>`;
+          }
+          case 'div': {
+            // <div xml:id="contribute"> becomes a section that about#contribute can link to
+            const id = c.getAttribute('xml:id');
+            if (c.getAttribute('type') === 'summary') return `<div class="pv-summary">${blocks(c)}</div>`;
+            return id ? `<section id="${esc(id)}">${blocks(c)}</section>` : blocks(c);
+          }
+          default: return '';
+        }
+      }).join('');
+    }
+    // "1856 – 1881", "from 1856", "1859"
+    function dates(e) {
+      if (!e) return '';
+      const w = e.getAttribute('when'); const f = e.getAttribute('from'); const t = e.getAttribute('to');
+      const c = e.getAttribute('cert') === 'low' ? 'c. ' : '';
+      if (w) return c + w;
+      if (f && t) return `${c}${f} – ${c}${t}`;
+      return f ? `from ${c}${f}` : t ? `until ${c}${t}` : '';
+    }
+    const withDates = (html, e) => { const d = dates(e); return d ? `${html} <span class="pv-dates">(${esc(d)})</span>` : html; };
+
+    const root = xml.documentElement;
+    const kind = root.getAttribute('type');
+    const typeLabel = { person: 'Person', org: 'Business or organisation', family: 'Family', place: 'Place', topic: 'Topic', unknown: 'Type not given' }[kind] || '';
+    const subject = all(xml, '*').find((e) => e.getAttributeNS(XML_NS, 'id') === 'subject');
+    const nameNames = ['persName', 'orgName', 'placeName', 'name'];
+    const names = kids(subject, ...nameNames);
+    const main = names.find((n) => n.getAttribute('type') === 'main');
+    const nameOf = (n) => {
+      const fore = kids(n, 'forename').map(text); const sur = kids(n, 'surname').map(text);
+      return fore.length || sur.length ? [...fore, ...sur].join(' ') : text(n);
+    };
+    const title = main ? nameOf(main) : text(one(one(xml, 'titleStmt'), 'title'));
+
+    let life = '';
+    const facts = [];
+    if (subject) {
+      if (kind === 'person') {
+        const b = kids(subject, 'birth')[0]; const d = kids(subject, 'death')[0];
+        life = [b ? `Born ${text(b)}` : '', d ? `Died ${text(d)}` : ''].filter(Boolean).join(' · ');
+      } else {
+        const presence = kind === 'family' ? kids(subject, 'state').find((s) => s.getAttribute('type') === 'presence') : subject;
+        life = dates(presence);
+      }
+      names.filter((n) => n !== main).forEach((n) => facts.push(['Also known as', withDates(esc(nameOf(n)), n)]));
+      kids(subject, 'occupation').forEach((o) => facts.push(['Occupation', withDates(esc(text(o)), o)]));
+      kids(subject, 'state').forEach((s) => {
+        const label = { activity: 'What it did', use: 'Used as', legal: 'Legal status' }[s.getAttribute('type')];
+        if (label) facts.push([label, withDates(esc(text(kids(s, 'label')[0])), s)]);
+      });
+      kids(subject, 'residence', 'place', 'location').forEach((p) => {
+        const name = text(kids(p, 'placeName')[0] || one(p, 'addrLine'));
+        const g = text(one(p, 'geo'));
+        const role = p.getAttribute('type');
+        const label = role && !['address'].includes(role) ? role.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase()) : 'Address';
+        facts.push([label, withDates(esc(name || g), p) + (g && name ? ` <span class="pv-dates">· ${esc(g)}</span>` : '')]);
+      });
+    }
+
+    const body = one(xml, 'body');
+    const chron = all(xml, 'listEvent').filter((l) => l.getAttribute('type') === 'chronology').flatMap((l) => kids(l, 'event'));
+    const chronHtml = chron.length ? `<h2>Chronology</h2><table class="pv-chron"><tbody>${chron.map((e) =>
+      `<tr><th scope="row">${esc(dates(e))}</th><td>${mixed(kids(e, 'label')[0])}${one(e, 'placeName') ? ` <span class="pv-dates">(${esc(text(one(e, 'placeName')))})</span>` : ''}</td></tr>`).join('')}</tbody></table>` : '';
+
+    const relations = all(xml, 'relation').map((r) => {
+      const name = text(kids(r, 'desc')[0]);
+      const rt = (r.getAttribute('name') || '').replace(/-/g, ' ');
+      const d = dates(r);
+      return `<li>${link(r.getAttribute('passive'), esc(name))}${rt && rt !== 'related' ? ` <span class="pv-dates">${esc(rt)}</span>` : ''}${d ? ` <span class="pv-dates">(${esc(d)})</span>` : ''}</li>`;
+    }).join('');
+    // References: hand-written ones in <back>, plus any an older entry kept
+    // in sourceDesc. Directory and roll citations get their own heading.
+    const headerBibls = all(one(xml, 'sourceDesc'), 'bibl');
+    const isCitation = (b) => RECORD_PAGE.test((one(b, 'ref') || b).getAttribute('target') || '');
+    const items = (bibls) => bibls.map((b) => `<li>${mixed(b)}</li>`).join('');
+    const sources = items([...all(one(xml, 'back'), 'bibl'), ...headerBibls.filter((b) => !isCitation(b))]);
+    const citations = items(headerBibls.filter(isCitation));
+
+    // Byline: "By Andy May and Community Contributions. Built on a
+    // computer-assisted first draft." Each part only where it applies.
+    // Plural in the byline even for one contribution: it reads better.
+    const titleStmt = one(xml, 'titleStmt');
+    const credited = (key) => kids(titleStmt, 'respStmt').some((r) => r.getAttribute('key') === key);
+    const by = [...kids(titleStmt, 'author').map(text).filter(Boolean), ...(credited('community') ? [`${COMMUNITY}s`] : [])];
+    // Only a computer-assisted draft so far: no named author, no community credit
+    const robot = !by.length && credited('computer-assisted-draft');
+    const byline = [
+      by.length ? `By ${by.length > 1 ? `${by.slice(0, -1).join(', ')} and ${by[by.length - 1]}` : by[0]}.` : '',
+      credited('computer-assisted-draft') ? 'Built on a computer-assisted first draft.' : '',
+      credited('computer-assisted-additions') ? 'With computer-assisted additions.' : ''
+    ].filter(Boolean).join(' ');
+
+    return `
+      <article class="pv-entry">
+        <p class="pv-type">${esc(typeLabel)}</p>
+        <h1>${esc(title)}${robot ? ` <span class="pv-robot" role="img" aria-label="${ROBOT}" title="${ROBOT}">🤖</span>` : ''}</h1>
+        ${byline ? `<p class="pv-byline">${esc(byline)}</p>` : ''}
+        ${life ? `<p class="pv-life">${esc(life)}</p>` : ''}
+        ${facts.length ? `<dl class="pv-facts">${facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>` : ''}
+        <div class="pv-body">${body && body.textContent.trim() ? blocks(body) : '<p><em>No article text yet.</em></p>'}</div>
+        ${chronHtml}
+        ${relations ? `<h2>Related</h2><ul>${relations}</ul>` : ''}
+        ${sources ? `<h2>References</h2><ul>${sources}</ul>` : ''}
+        ${citations ? `<h2>In the directories and electoral rolls</h2><ul class="pv-citations">${citations}</ul>` : ''}
+      </article>`;
+  }
+
+
+  /* ---------- Kept as written ----------
+     An entry its author asked to keep as they wrote it has
+     publicationStmt/availability[@status="restricted"]. Takes the XML as
+     text or as a parsed document. */
+  function isKept(xml) {
+    const doc = typeof xml === 'string' ? new DOMParser().parseFromString(xml, 'application/xml') : xml;
+    return [...doc.getElementsByTagNameNS(NS, 'availability')]
+      .some((a) => a.parentNode.localName === 'publicationStmt' && a.getAttribute('status') === 'restricted');
+  }
+
+  /* ---------- Read an entry back into the form's fields ----------
+     The reverse of build(), for "Suggest changes" on the review page:
+     parse(xml) gives the object collect() would give for that entry. */
+  function parse(xmlText) {
+    const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
+    if (xml.getElementsByTagName('parsererror').length) throw new Error('The entry could not be read.');
+    const all = (ctx, name) => (ctx ? [...ctx.getElementsByTagNameNS(NS, name)] : []);
+    const kids = (ctx, ...names) => (ctx ? [...ctx.children].filter((c) => names.includes(c.localName)) : []);
+    const one = (ctx, name) => all(ctx, name)[0];
+    const text = (ctx) => (ctx ? ctx.textContent.replace(/\s+/g, ' ').trim() : '');
+    const approx = (e) => (e && e.getAttribute('cert') === 'low' ? 'c. ' : '');
+    const years = (e) => {
+      if (!e) return { from: '', to: '' };
+      const w = e.getAttribute('when');
+      if (w) return { from: approx(e) + w, to: approx(e) + w };
+      const f = e.getAttribute('from'); const t = e.getAttribute('to');
+      return { from: f ? approx(e) + f : '', to: t ? approx(e) + t : '' };
+    };
+    const unslug = (s) => (s ? s.replace(/-/g, ' ').replace(/^./, (ch) => ch.toUpperCase()) : '');
+    const geo = (ctx) => { const g = text(one(ctx, 'geo')).split(/\s+/); return g.length === 2 ? { lat: g[0], lng: g[1] } : {}; };
+
+    const root = xml.documentElement;
+    const kind = ['person', 'org', 'family', 'place', 'topic'].includes(root.getAttribute('type')) ? root.getAttribute('type') : '';
+    const titleStmt = one(xml, 'titleStmt');
+    const subject = all(xml, '*').find((e) => e.getAttributeNS(XML_NS, 'id') === 'subject');
+    const names = kids(subject, 'persName', 'orgName', 'placeName', 'name');
+    const main = names.find((n) => n.getAttribute('type') === 'main');
+
+    const entry = {
+      title: text(one(titleStmt, 'title')),
+      kind,
+      surname: text(kids(main, 'surname')[0]),
+      forenames: text(kids(main, 'forename')[0]),
+      authors: uniqueNames(kids(titleStmt, 'author').map(text)),
+      dates: { from: '', to: '', approximate: false },
+      otherNames: names.filter((n) => n.getAttribute('type') === 'alternative').map((n) => ({ name: text(n), ...years(n) })),
+      places: [], occupations: [], legalStatuses: [], chronology: [], relations: [], sources: [], recordSources: [],
+      credits: {
+        community: kids(titleStmt, 'respStmt').some((r) => r.getAttribute('key') === 'community'),
+        computerDraft: kids(titleStmt, 'respStmt').some((r) => r.getAttribute('key') === 'computer-assisted-draft'),
+        computerAdditions: kids(titleStmt, 'respStmt').some((r) => r.getAttribute('key') === 'computer-assisted-additions')
+      },
+      kept: isKept(xml),
+      summary: '',
+      articleHtml: '',
+      note: ''
+    };
+
+    if (subject) {
+      if (kind === 'person') {
+        const b = kids(subject, 'birth')[0]; const d = kids(subject, 'death')[0];
+        entry.dates = { from: text(b), to: text(d), approximate: [b, d].some((e) => e && e.getAttribute('cert') === 'low') };
+      } else {
+        const span = kind === 'family' ? kids(subject, 'state').find((s) => s.getAttribute('type') === 'presence') : subject;
+        if (span) entry.dates = { from: span.getAttribute('from') || span.getAttribute('when') || '', to: span.getAttribute('to') || span.getAttribute('when') || '', approximate: span.getAttribute('cert') === 'low' };
+      }
+      const termRows = (els) => els.map((e) => ({ term: text(kids(e, 'label')[0] || e), ...years(e) }));
+      entry.occupations = termRows([...kids(subject, 'occupation'),
+        ...kids(subject, 'state').filter((s) => ['activity', 'use'].includes(s.getAttribute('type')))]);
+      entry.legalStatuses = termRows(kids(subject, 'state').filter((s) => s.getAttribute('type') === 'legal'));
+      entry.places = kids(subject, 'residence', 'place', 'location').map((p) => {
+        const role = p.getAttribute('type');
+        return {
+          address: text(kids(p, 'placeName')[0] || one(p, 'addrLine')),
+          ...years(p),
+          role: kind === 'place' || !role || role === 'address' ? '' : unslug(role),
+          ...geo(p)
+        };
+      });
+    }
+
+    entry.chronology = all(xml, 'listEvent').filter((l) => l.getAttribute('type') === 'chronology').flatMap((l) => kids(l, 'event')).map((e) => ({
+      date: approx(e) + (e.getAttribute('when') || ''),
+      event: text(kids(e, 'label')[0]),
+      place: text(one(e, 'placeName'))
+    }));
+    entry.relations = all(xml, 'relation').map((r) => ({
+      name: text(kids(r, 'desc')[0]),
+      targetType: r.getAttribute('type') || '',
+      relationType: (r.getAttribute('name') || '').replace(/-/g, ' ').replace(/^related$/, ''),
+      ...years(r),
+      href: r.getAttribute('passive') || ''
+    }));
+    // Older entries keep every source in sourceDesc: the directory and roll
+    // citations stay there, and the rest become references
+    // A source keeps its bold, italic and inner links as HTML, for the form's
+    // "Where did you find this?" editor; a link around the whole source is its href
+    const inlineHtml = (node) => [...node.childNodes].map((ch) => {
+      if (ch.nodeType === 3) return esc(ch.textContent);
+      if (ch.nodeType !== 1) return '';
+      if (ch.localName === 'hi') {
+        const tag = { italic: 'em', bold: 'strong', underline: 'u' }[ch.getAttribute('rend')];
+        return tag ? `<${tag}>${inlineHtml(ch)}</${tag}>` : inlineHtml(ch);
+      }
+      if (ch.localName === 'ref' && ch.getAttribute('target')) return `<a href="${esc(ch.getAttribute('target'))}">${inlineHtml(ch)}</a>`;
+      return inlineHtml(ch);
+    }).join('');
+    const source = (b) => {
+      const ref = one(b, 'ref');
+      const out = { text: text(b), href: ref ? ref.getAttribute('target') || '' : '' };
+      const elements = [...b.children];
+      const whole = elements.length === 1 && elements[0] === ref
+        && [...b.childNodes].every((c) => c === ref || (c.nodeType === 3 && !c.textContent.trim()));
+      const inner = whole ? ref : b;
+      if (inner.getElementsByTagNameNS(NS, '*').length) out.html = inlineHtml(inner).trim();
+      return out;
+    };
+    const headerSources = all(one(xml, 'sourceDesc'), 'bibl').map(source);
+    entry.recordSources = headerSources.filter((s) => RECORD_PAGE.test(s.href));
+    entry.sources = [...all(one(xml, 'back'), 'bibl').map(source), ...headerSources.filter((s) => !RECORD_PAGE.test(s.href))];
+
+    // The article as the HTML Quill edits: headings, paragraphs, lists, quotes, tables
+    const mixed = (node) => [...node.childNodes].map((ch) => {
+      if (ch.nodeType === 3) return esc(ch.textContent);
+      if (ch.nodeType !== 1) return '';
+      if (ch.localName === 'hi') {
+        const tag = { italic: 'em', bold: 'strong', underline: 'u' }[ch.getAttribute('rend')];
+        return tag ? `<${tag}>${mixed(ch)}</${tag}>` : mixed(ch);
+      }
+      if (ch.localName === 'ref' && ch.getAttribute('target')) return `<a href="${esc(ch.getAttribute('target'))}">${mixed(ch)}</a>`;
+      return mixed(ch);
+    }).join('');
+    const blocks = (container) => [...container.children].map((ch) => {
+      switch (ch.localName) {
+        case 'p': return ch.textContent.trim() ? `<p>${mixed(ch)}</p>` : '';
+        case 'head': return `<h2>${mixed(ch)}</h2>`;
+        case 'list': {
+          const tag = ch.getAttribute('rend') === 'numbered' ? 'ol' : 'ul';
+          return `<${tag}>${kids(ch, 'item').map((i) => `<li>${mixed(i)}</li>`).join('')}</${tag}>`;
+        }
+        // Quill keeps one <blockquote> per line
+        case 'quote': return kids(ch, 'p').filter((p) => p.textContent.trim()).map((p) => `<blockquote>${mixed(p)}</blockquote>`).join('');
+        case 'table':
+          return `<table><tbody>${kids(ch, 'row').map((r) => `<tr>${kids(r, 'cell').map((cell) => `<td>${mixed(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+        // The editor's collection image, read from its data-* attributes
+        case 'figure': {
+          const graphic = kids(ch, 'graphic')[0];
+          const head = kids(ch, 'head')[0];
+          const ref = head && kids(head, 'ref')[0];
+          const url = graphic ? graphic.getAttribute('url') || '' : '';
+          return url ? `<figure class="ql-glam-image" data-src="${esc(url)}" data-href="${esc(ref ? ref.getAttribute('target') || '' : '')}" data-caption="${esc(text(head))}" data-alt="${esc(text(kids(ch, 'figDesc')[0]))}"></figure>` : '';
+        }
+        case 'div': return blocks(ch);
+        default: return '';
+      }
+    }).join('');
+    // The summary is plain text; everything else in <body> is the detail.
+    // Older entries may have untyped "Summary" and "Details" sections instead.
+    const body = one(xml, 'body');
+    const headOf = (d) => text(kids(d, 'head')[0]).toLowerCase();
+    const paras = (d) => kids(d, 'p').map(text).filter(Boolean).join('\n\n');
+    const detail = [];
+    for (const ch of body ? [...body.children] : []) {
+      const type = ch.localName === 'div' ? ch.getAttribute('type') || headOf(ch) : '';
+      if ((type === 'summary') && !entry.summary) entry.summary = paras(ch);
+      else if (type === 'detail' || type === 'details') detail.push(...kids(ch, 'head').length && !ch.getAttribute('type') ? [...ch.children].filter((c) => c.localName !== 'head') : [...ch.children]);
+      else detail.push(ch);
+    }
+    entry.articleHtml = detail.map((ch) => blocks({ children: [ch] })).join('');
+    return entry;
+  }
+
+  return { NS, build, check, render, parse, parseDate, isKept };
+})();

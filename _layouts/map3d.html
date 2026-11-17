@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Common Ground - 3D map</title>
+    <title>[DEV] Carlton Common Ground - 3D map</title>
     <link rel="stylesheet" type="text/css" href="styles/site.css?v={{ site.time | date: '%s' }}">
 </head>
 <body class="map3d-page">
+{% include dev-label.html %}
 
     <div id="canvas-container"></div>
     
@@ -24,9 +25,22 @@
             </label>
 
             <div class="year-filters">
-                <div class="filter-title">Visible Years</div>
-                <div id="year-checkbox-group" class="checkbox-group">
+                <button type="button" id="year-panel-toggle" class="filter-title year-panel-toggle" aria-expanded="true" aria-controls="year-panel-body">
+                    Visible Years <span id="year-count"></span>
+                </button>
+                <div id="year-panel-body" class="year-panel-body">
+                    <div class="year-range">
+                        <label>From <select id="range-from"></select></label>
+                        <label>to <select id="range-to"></select></label>
+                        <button type="button" class="year-btn" id="range-show">Show</button>
                     </div>
+                    <div class="year-quick">
+                        <button type="button" class="year-btn" id="years-latest">Latest only</button>
+                        <button type="button" class="year-btn" id="years-clear">Clear</button>
+                    </div>
+                    <div id="year-checkbox-group" class="checkbox-group">
+                        </div>
+                </div>
             </div>
         </div>
     </div>
@@ -97,15 +111,20 @@
         // Global visibility state trackers
         let showCrossYearLinks = false;
         let layersAreMoving = false;
-        const visibleYears = new Set(); 
+        const visibleLayers = new Set(); 
 
         // 1. DATA (shared with the 2D map, see scripts/map-common.js)
         // Years, colours and bounds come from the list of data files, so the
         // planes can be laid out before any records arrive. The chains are
         // filled in by addYear as each year arrives.
-        const sortedYears  = MapCommon.getYears(files);
-        const YEAR_COLORS  = MapCommon.getYearColors(sortedYears);
-        const YEAR_SOURCES = MapCommon.getYearSources(files, sortedYears);
+        // One plane per data file, e.g. "1905 Directory" and "1905 Electoral roll"
+        const sortedLayers  = MapCommon.getLayers(files);
+        const LAYER_COLORS  = MapCommon.getLayerColors(sortedLayers);
+        // The short name on a checkbox and a plane: "1905", or "1905 roll"
+        // for an electoral roll, so a year's two layers can be told apart
+        function shortLabel(layer) {
+            return /Electoral roll$/.test(layer) ? `${MapCommon.layerYear(layer)} roll` : String(MapCommon.layerYear(layer));
+        }
         const CHAINS    = [];
         const rawChains = {};
 
@@ -119,18 +138,18 @@
         // its plane. Every shown plane shares one fit, so cross-year links
         // stay upright.
         let minLat, maxLat, minLng, maxLng, latRange, lngRange;
-        function fitToYears(years) {
-            const b = MapCommon.getBoundsFromFiles(files.filter(f => years.has(f.year))) || ALL_BOUNDS;
+        function fitToLayers(layers) {
+            const b = MapCommon.getBoundsFromFiles(files.filter(f => layers.has(MapCommon.layerOf(f)))) || ALL_BOUNDS;
             ({ minLat, maxLat, minLng, maxLng } = b);
             latRange = maxLat - minLat || 1;
             lngRange = maxLng - minLng || 1;
         }
 
         // DEFAULT STATE: latest year on, as on the 2D map
-        if (sortedYears.length > 0) {
-            visibleYears.add(sortedYears[sortedYears.length - 1]);
+        if (sortedLayers.length > 0) {
+            visibleLayers.add(sortedLayers[sortedLayers.length - 1]);
         }
-        fitToYears(visibleYears);
+        fitToLayers(visibleLayers);
 
         const isMobile = window.innerWidth <= 600 || ('ontouchstart' in window);
 
@@ -159,8 +178,8 @@
         const ARC_OFFSET = 0.0001;
         const ARC_HEIGHT = 3.5;
 
-        function getYearColor(year) {
-            return YEAR_COLORS[year];
+        function getLayerColor(layer) {
+            return LAYER_COLORS[layer];
         }
 
         // 2. THREE.JS INITIALIZATION
@@ -169,7 +188,7 @@
         scene.background = new THREE.Color(0x0b0c10);
         scene.fog = new THREE.FogExp2(0x0b0c10, 0.005);
 
-        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 5000);
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
@@ -179,8 +198,39 @@
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
 
-        camera.position.set(PLANE_SIZE * 1.1, sortedYears.length * PLANE_SPACING * 0.8, PLANE_SIZE * 1.3);
-        controls.target.set(0, (sortedYears.length * PLANE_SPACING) / 2, 0);
+        // The camera looks at the middle of the shown planes, which are
+        // stacked from 0 up, not at every year: with 40 or so layers that
+        // put the camera beyond the far plane and the fog, and the page
+        // looked empty.
+        function stackMiddle() {
+            return Math.max(0, visibleLayers.size - 1) * PLANE_SPACING / 2;
+        }
+        camera.position.set(PLANE_SIZE * 1.1, stackMiddle() * 1.6 + PLANE_SIZE * 0.6, PLANE_SIZE * 1.3);
+        controls.target.set(0, stackMiddle(), 0);
+
+        // Keeps the camera on the shown planes when years are turned on or
+        // off, without changing the angle or distance the viewer chose
+        function followStack() {
+            const lift = stackMiddle() - controls.target.y;
+            camera.position.y += lift;
+            controls.target.y += lift;
+            controls.update();
+        }
+
+        // Moves the camera back far enough to see the whole stack, keeping
+        // its angle, when a range of years is shown at once
+        function frameStack() {
+            followStack();
+            const offset = new THREE.Vector3().subVectors(camera.position, controls.target);
+            const height = Math.max(0, visibleLayers.size - 1) * PLANE_SPACING;
+            offset.setLength(Math.max(PLANE_SIZE * 1.9, height * 1.3 + PLANE_SIZE));
+            camera.position.copy(controls.target).add(offset);
+            controls.update();
+        }
+
+        // The fog thins as the camera moves back, so a zoomed-out stack
+        // isn't lost in it; at the starting distance it's as before
+        const FOG_AT_START = 0.005 * camera.position.distanceTo(controls.target);
 
         scene.add(new THREE.AmbientLight(0xffffff, 0.65));
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.45);
@@ -194,19 +244,19 @@
         const yearGroupsMap = {};
 
         // Loop 1: Map layout floors and process nodes
-        sortedYears.forEach((year, layerIdx) => {
+        sortedLayers.forEach((layer, layerIdx) => {
             const layerY = layerIdx * PLANE_SPACING;
-            const themeColor = getYearColor(year);
+            const themeColor = getLayerColor(layer);
 
             // Group container for layer visibility control
             const yearGroup = new THREE.Group();
-            yearGroup.visible = visibleYears.has(year);
+            yearGroup.visible = visibleLayers.has(layer);
             scene.add(yearGroup);
-            yearGroupsMap[year] = yearGroup;
+            yearGroupsMap[layer] = yearGroup;
 
             // Set dynamic interpolation initial properties
             yearGroup.userData.targetY = layerY;
-            if(!visibleYears.has(year)) {
+            if(!visibleLayers.has(layer)) {
                 yearGroup.position.y = 0; // Collapsed initially if hidden
             } else {
                 yearGroup.position.y = layerY;
@@ -229,7 +279,7 @@
             wireframe.rotation.x = Math.PI / 2;
             yearGroup.add(wireframe);
 
-            (function addYearLabel(year, themeColor) {
+            (function addYearLabel(layer, themeColor) {
                 const canvas = document.createElement('canvas');
                 canvas.width = 512;
                 canvas.height = 160;
@@ -255,13 +305,14 @@
                 ctx.lineWidth = 4;
                 ctx.stroke();
 
-                ctx.font = 'bold 108px "Segoe UI", Arial, sans-serif';
+                const text = shortLabel(layer);
+                ctx.font = `bold ${text.length > 4 ? 72 : 108}px "Segoe UI", Arial, sans-serif`;
                 ctx.fillStyle = themeColor;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.shadowColor = themeColor;
                 ctx.shadowBlur = 18;
-                ctx.fillText(String(year), canvas.width / 2, canvas.height / 2 + 4);
+                ctx.fillText(text, canvas.width / 2, canvas.height / 2 + 4);
 
                 const texture = new THREE.CanvasTexture(canvas);
                 const spriteMat = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
@@ -270,10 +321,10 @@
                 sprite.position.set(-PLANE_SIZE / 2 - 20, 0, 0);
                 sprite.scale.set(26, 8, 1);
                 yearGroup.add(sprite);
-            })(year, themeColor);
+            })(layer, themeColor);
         });
 
-        // Moves every node and street line to the current fit (fitToYears)
+        // Moves every node and street line to the current fit (fitToLayers)
         const placedNodes = [];
         const streetLines = [];
         function relayout() {
@@ -288,12 +339,12 @@
             });
         }
 
-        // Draws one year's records on its plane
-        function addYearNodes(year, chains) {
-            const themeColor = getYearColor(year);
-            const yearGroup = yearGroupsMap[year];
-            chains.forEach(({ street, side }) => {
-                const key = MapCommon.chainKey(year, street, side);
+        // Draws each chain's records on its layer's plane
+        function addChainNodes(chains) {
+            chains.forEach(({ layer, street, side }) => {
+                const themeColor = getLayerColor(layer);
+                const yearGroup = yearGroupsMap[layer];
+                const key = MapCommon.chainKey(layer, street, side);
                 const entries = rawChains[key].map(e => e.lat == null || onPlane(e) ? e : { ...e, lat: null, lng: null });
                 const processedNodes = MapCommon.computeChain(entries, MapCommon.sideSign(side) * ARC_OFFSET, side);
 
@@ -318,7 +369,7 @@
                     }
 
                     let mat;
-                    if (node._computed) {
+                    if (MapCommon.isUncertain(node)) {
                         mat = new THREE.MeshPhongMaterial({
                             color: new THREE.Color(themeColor),
                             transparent: true,
@@ -338,11 +389,11 @@
 
                     const mesh = new THREE.Mesh(geom, mat);
                     mesh.position.copy(nodePosVector);
-                    mesh.userData = { ...node, crossYearId: typeof node.entityID === 'string' ? node.entityID : null };
+                    mesh.userData = { ...node, layer, chainKey: key, chainIdx: idx, crossYearId: typeof node.entityID === 'string' ? node.entityID : null };
 
                     // Saved against the parent group so links can query their live absolute
                     // positions (the mesh's own position, so a refit moves the links too)
-                    nodePositionCache[`${key}-${idx}`] = { year, localPosition: mesh.position, listing: node.listing, parentGroup: yearGroup };
+                    nodePositionCache[`${key}-${idx}`] = { layer, localPosition: mesh.position, listing: node.listing, parentGroup: yearGroup };
 
                     yearGroup.add(mesh);
                     interactiveNodes.push(mesh);
@@ -368,7 +419,7 @@
         const crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
         Object.keys(crossYearById).forEach(crossId => {
             const sorted = crossYearById[crossId]
-                .map(({ year, street, side, idx }) => nodePositionCache[`${MapCommon.chainKey(year, street, side)}-${idx}`])
+                .map(({ layer, street, side, idx }) => nodePositionCache[`${MapCommon.chainKey(layer, street, side)}-${idx}`])
                 .filter(Boolean);
             const yearSpan = sorted.length; 
 
@@ -391,7 +442,8 @@
                     isCrossYearLine: true, 
                     crossId, 
                     yearSpan, 
-                    years: sorted.map(p => p.year), 
+                    layers: sorted.map(p => p.layer),
+                    years: sorted.map(p => shortLabel(p.layer)), 
                     listings: sorted.map(p => p.listing),
                     rawAnchors: sorted // Retain active memory linkage mapping to local coordinate references
                 };
@@ -412,47 +464,93 @@
         
         // Dynamic Checkbox Injection
         const checkGroupContainer = document.getElementById('year-checkbox-group');
-        sortedYears.slice().reverse().forEach(year => {
+        sortedLayers.slice().reverse().forEach(layer => {
             const label = document.createElement('label');
             label.className = 'toggle-container';
             
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.value = year;
-            checkbox.checked = visibleYears.has(year);
+            checkbox.value = layer;
+            checkbox.checked = visibleLayers.has(layer);
             
             checkbox.addEventListener('change', (e) => {
-                const targetYear = parseInt(e.target.value);
-                if (e.target.checked) {
-                    visibleYears.add(targetYear);
-                } else {
-                    visibleYears.delete(targetYear);
-                }
-                
-                // Trigger dynamic restructuring updates
-                fitToYears(visibleYears);
-                relayout();
-                recalculateLayerTargets();
-                
-                if (currentSelected && !currentSelected.userData.isCrossYearLine && currentSelected.userData.year === targetYear) {
-                    clearActiveSelection();
-                }
+                const shown = new Set(visibleLayers);
+                if (e.target.checked) shown.add(e.target.value);
+                else shown.delete(e.target.value);
+                showLayers(shown);
             });
             
             const swatch = document.createElement('span');
             swatch.className = 'year-swatch';
-            swatch.style.background = YEAR_COLORS[year];
+            swatch.style.background = LAYER_COLORS[layer];
 
             const span = document.createElement('span');
-            span.innerText = year;
+            span.innerText = shortLabel(layer);
             // Source names don't fit the phone layout, so they go in a hover title
-            if (YEAR_SOURCES[year]) label.title = YEAR_SOURCES[year];
+            label.title = MapCommon.layerLabel(layer);
             
             label.appendChild(checkbox);
             label.appendChild(swatch);
             label.appendChild(span);
             checkGroupContainer.appendChild(label);
         });
+
+        // Shows just these layers, and ticks their checkboxes to match
+        function showLayers(layers, frame) {
+            visibleLayers.clear();
+            layers.forEach(l => visibleLayers.add(l));
+            checkGroupContainer.querySelectorAll('input').forEach(cb => { cb.checked = visibleLayers.has(cb.value); });
+            updateYearCount();
+
+            fitToLayers(visibleLayers);
+            relayout();
+            recalculateLayerTargets();
+            if (frame) frameStack(); else followStack();
+
+            if (currentSelected && !currentSelected.userData.isCrossYearLine && !visibleLayers.has(currentSelected.userData.layer)) {
+                clearActiveSelection();
+            }
+        }
+
+        const yearCount = document.getElementById('year-count');
+        function updateYearCount() {
+            yearCount.textContent = `(${visibleLayers.size} of ${sortedLayers.length})`;
+        }
+        updateYearCount();
+
+        // From/to pickers: every layer in the range, rolls included
+        const years = [...new Set(sortedLayers.map(MapCommon.layerYear))];
+        const rangeFrom = document.getElementById('range-from');
+        const rangeTo = document.getElementById('range-to');
+        years.forEach(y => {
+            rangeFrom.add(new Option(y, y));
+            rangeTo.add(new Option(y, y));
+        });
+        rangeFrom.value = years[0];
+        rangeTo.value = years[years.length - 1];
+        document.getElementById('range-show').addEventListener('click', () => {
+            let from = +rangeFrom.value, to = +rangeTo.value;
+            if (from > to) [from, to] = [to, from];
+            showLayers(sortedLayers.filter(l => MapCommon.layerYear(l) >= from && MapCommon.layerYear(l) <= to), true);
+            // On a phone the open panel covers the map, so fold it to show the result
+            if (isMobile) setYearPanelOpen(false);
+        });
+        document.getElementById('years-latest').addEventListener('click', () => {
+            showLayers(sortedLayers.slice(-1), true);
+            if (isMobile) setYearPanelOpen(false);
+        });
+        document.getElementById('years-clear').addEventListener('click', () => showLayers([]));
+
+        // The year panel folds away to leave room for the map; folded to
+        // start with on phones, where it would cover most of the screen
+        const yearToggle = document.getElementById('year-panel-toggle');
+        const yearBody = document.getElementById('year-panel-body');
+        function setYearPanelOpen(open) {
+            yearToggle.setAttribute('aria-expanded', String(open));
+            yearBody.hidden = !open;
+        }
+        setYearPanelOpen(!isMobile);
+        yearToggle.addEventListener('click', () => setYearPanelOpen(yearBody.hidden));
 
         const toggleCheckbox = document.getElementById('toggle-links');
         toggleCheckbox.addEventListener('change', (e) => {
@@ -467,9 +565,9 @@
         // Calculate layout targets based exclusively on active selections
         function recalculateLayerTargets() {
             let visibleIndex = 0;
-            sortedYears.forEach(year => {
-                const group = yearGroupsMap[year];
-                if (visibleYears.has(year)) {
+            sortedLayers.forEach(layer => {
+                const group = yearGroupsMap[layer];
+                if (visibleLayers.has(layer)) {
                     group.userData.targetY = visibleIndex * PLANE_SPACING;
                     visibleIndex++;
                 } else {
@@ -491,7 +589,7 @@
                     tube.visible = false;
                     return;
                 }
-                const visibleSpanCount = tube.userData.years.filter(y => visibleYears.has(y)).length;
+                const visibleSpanCount = tube.userData.layers.filter(l => visibleLayers.has(l)).length;
                 tube.visible = visibleSpanCount >= 2;
             });
         }
@@ -586,7 +684,8 @@
         // RAYCASTING AND INTERACTION SELECTION
         const raycaster = new THREE.Raycaster();
         raycaster.params.Mesh.threshold = isMobile ? 1.5 : 0.5;
-        const pointer = new THREE.Vector2();
+        // Off screen until the mouse moves, so nothing is hovered on load
+        const pointer = new THREE.Vector2(-2, -2);
         const tooltip = document.getElementById('tooltip');
         const infoPanel = document.getElementById('info-panel');
         let currentSelected = null;
@@ -627,7 +726,7 @@
                 if (data.isCrossYearLine) {
                     return hit.object.visible;
                 }
-                return visibleYears.has(data.year);
+                return visibleLayers.has(data.layer);
             });
         }
 
@@ -688,7 +787,16 @@
         function openDetailsFor(obj) {
             const d = obj.userData;
             if (d.isCrossYearLine) return;
-            MapCommon.openDetailsModal(d, { lat: d.lat, lng: d.lng });
+            openDetailsAt(d.chainKey, d.chainIdx);
+        }
+
+        // With buttons to the listings either side, drawn or not
+        function openDetailsAt(key, idx) {
+            const chain = rawChains[key];
+            const node = placedNodes.find(n => n.userData.chainKey === key && n.userData.chainIdx === idx);
+            const pos = node ? { lat: node.userData.lat, lng: node.userData.lng } : null;
+            MapCommon.openDetailsModal(node ? node.userData : chain[idx], pos,
+                MapCommon.chainNeighbours(chain, idx, i => openDetailsAt(key, i)));
         }
 
         window.addEventListener('mousemove', (event) => {
@@ -745,7 +853,7 @@
         // Initial setup execution mapping configuration values
         recalculateLayerTargets();
         // Start visible layers at their place instead of sliding in on load
-        sortedYears.forEach(year => { yearGroupsMap[year].position.y = yearGroupsMap[year].userData.targetY; });
+        sortedLayers.forEach(layer => { yearGroupsMap[layer].position.y = yearGroupsMap[layer].userData.targetY; });
 
         // 5. ANIMATION RENDERING LOOP
         let hoveredObj = null;
@@ -753,16 +861,17 @@
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
+            scene.fog.density = FOG_AT_START / Math.max(1, camera.position.distanceTo(controls.target));
 
             // Run interpolation movements across floor layers
             let displacementOccurred = false;
             
-            sortedYears.forEach(year => {
-                const group = yearGroupsMap[year];
+            sortedLayers.forEach(layer => {
+                const group = yearGroupsMap[layer];
                 if (group) {
                     const target = group.userData.targetY;
                     
-                    if (visibleYears.has(year)) {
+                    if (visibleLayers.has(layer)) {
                         group.visible = true;
                     }
 
@@ -777,7 +886,7 @@
                     }
 
                     // Turn off rendering for hidden groups once collapsed back to baseline zero position
-                    if (!visibleYears.has(year) && group.position.y === 0) {
+                    if (!visibleLayers.has(layer) && group.position.y === 0) {
                         group.visible = false;
                     }
                 }
@@ -841,7 +950,7 @@
                 const { chains, rawChains: raw } = MapCommon.buildChains(records);
                 Object.assign(rawChains, raw);
                 CHAINS.push(...chains);
-                addYearNodes(year, chains);
+                addChainNodes(chains);
             },
             addCrossYearLinks: addCrossYearTubes,
         };

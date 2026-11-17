@@ -5,7 +5,7 @@
 
 ## The problem
 
-Plain pages such as the [Featured pages A–Z](https://notamitchell.github.io/order/aToZ) (`aToZ.md`) and the home page (`index.md`) can only be changed by editing Markdown on GitHub. The editorial team is not technical, so in practice these pages only change when a developer has time. The A–Z also has to be updated by hand every time an entry is published.
+Plain pages such as the [Featured pages A–Z](https://historicalesque.github.io/carlton/aToZ) (`aToZ.md`) and the home page (`index.md`) can only be changed by editing Markdown on GitHub. The editorial team is not technical, so in practice these pages only change when a developer has time. The A–Z also has to be updated by hand every time an entry is published.
 
 The aim is a page where an editor can open one of these pages, change it without seeing Markdown or front matter, and send the change into the **same review flow** as public submissions, so nothing goes live without a second pair of eyes.
 
@@ -96,7 +96,7 @@ The alternative is deploying the Apps Script so only members of the shared Drive
 
 ### Admin landing page
 
-A new `admin/index.html` (so `…/order/admin/` works as an address) with a short description and link for each tool:
+A new `admin/index.html` (so `…/carlton/admin/` works as an address) with a short description and link for each tool:
 
 - **Review submissions and page edits**: `admin/review.html`
 - **Edit site pages**: `admin/pages.html` (new)

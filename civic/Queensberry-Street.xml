@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="place" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Queensberry Street</title>
+        <author>Mitchell Harrop</author>
+        <respStmt key="community">
+          <resp>Credited as</resp>
+          <name>Community Contribution</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Queensberry-Street</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Contributed through the website. No sources listed.</p>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="draft">
+      <change when="2026-10-23" type="created">Contributed through the contribution form by Mitchell Harrop.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listPlace>
+      <place xml:id="subject">
+        <placeName type="main">Queensberry Street</placeName>
+        <placeName type="alternative">Queensbury Street</placeName>
+      </place>
+    </listPlace>
+  </standOff>
+  <text>
+    <body>
+      <p>In the scope of our project, Queensberry Street runs west-east between Elizabeth Street and Swanston Street. It intersects from east to west with Elizabeth Street, Berkley Street, Barry and Leicester Streets, Lansdowne Place, Storey Place, David Terrace, and Swanston Street.</p>
+      <p>Buildings include the Queensberry hotel that sits at the corner of Queensberry Street and Swanston Street, the State School and the Church and Mission hall.</p>
+    </body>
+  </text>
+</TEI>

@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Common Ground - Map</title>
+    <title>[DEV] Carlton Common Ground - Map</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="styles/site.css?v={{ site.time | date: '%s' }}">
 </head>
 <body class="map-page">
 <h1 class="visually-hidden">Map of the directory listings</h1>
 <div id="map"></div>
+{% include dev-label.html %}
 {% include map-details-modal.html %}
 
 <svg width="0" height="0" style="position: absolute; width: 0; height: 0; overflow: hidden;">
@@ -44,7 +45,12 @@ let mapApi = null;
 MapCommon.loadByYear(document.getElementById('mapData'), {
     onStart: files => { mapApi = startMap(files); },
     onYear:  (year, records) => mapApi.addYear(year, records),
-    onAll:   () => mapApi.addCrossYearLinks(),
+    onAll:   () => {
+        mapApi.addCrossYearLinks();
+        // map?entity=<entityID>, from an entry's "See on the map" link
+        const entity = new URLSearchParams(location.search).get('entity');
+        if (entity) mapApi.focusEntity(entity);
+    },
 });
 
 // Not indented, to keep the history of the code below readable.
@@ -88,9 +94,9 @@ const mapConfig = [
 // ═══════════════════════════════════════════════════════════
 //  CONSTANTS — derived from the list of data files
 // ═══════════════════════════════════════════════════════════
-const YEARS        = MapCommon.getYears(files);
-const YEAR_COLORS  = MapCommon.getYearColors(YEARS);
-const YEAR_SOURCES = MapCommon.getYearSources(files, YEARS);
+// One layer per data file, e.g. "1905 Directory" and "1905 Electoral roll"
+const LAYERS       = MapCommon.getLayers(files);
+const LAYER_COLORS = MapCommon.getLayerColors(LAYERS);
 const MAX_ARC_OFFSET  = 0.00072; // constant outer bound (degrees lat)
 
 // ═══════════════════════════════════════════════════════════
@@ -103,32 +109,32 @@ const map = L.map('map', { center:[-37.8009,144.9622], zoom:18, minZoom:2, maxZo
 // ═══════════════════════════════════════════════════════════
 //  CHAINS  (arc geometry lives in scripts/map-common.js)
 // ═══════════════════════════════════════════════════════════
-// All unique {year, street, side} combinations, and the raw template
+// All unique {layer, street, side} combinations, and the raw template
 // entries for each (immutable originals). Filled in by addYear as each
 // year arrives.
 const CHAINS    = [];
 const rawChains = {};
 
 
-const activeYears = new Set([YEARS[YEARS.length - 1]]); // Latest year on by default
+const activeLayers = new Set([LAYERS[LAYERS.length - 1]]); // Latest layer on by default
 
-// Compute arc offset for a year given the current active set.
+// Compute arc offset for a layer given the current active set.
 // For North/East: positive offset (bows north / east away from street centreline).
 // For South/West: negative offset (bows south / west away from street centreline).
 // The sign is applied to lat (North/South) or lng (East/West) by applyOffset().
 //
-// Ranking is done ONLY among active years that share the same street+side group.
-// Years on different streets are independent and must not shift each other's offsets.
-function arcOffsetForYear(year, street, side) {
+// Ranking is done ONLY among active layers that share the same street+side group.
+// Layers on different streets are independent and must not shift each other's offsets.
+function arcOffsetForLayer(layer, street, side) {
     const sideSign = MapCommon.sideSign(side);
 
-    // Active peers: years that have a chain for this exact street+side
-    const peers = [...activeYears].filter(y =>
+    // Active peers: layers that have a chain for this exact street+side
+    const peers = [...activeLayers].filter(y =>
         (rawChains[`${y}-${street}-${side}`] || []).length > 0
-    ).sort((a, b) => b - a); // newest first
+    ).sort((a, b) => LAYERS.indexOf(b) - LAYERS.indexOf(a)); // newest first
 
     const N    = peers.length;
-    const rank = peers.indexOf(year);
+    const rank = peers.indexOf(layer);
     if (rank < 0) return 0;
 
     // rank 0 → smallest offset, rank N-1 → MAX_ARC_OFFSET
@@ -137,34 +143,43 @@ function arcOffsetForYear(year, street, side) {
 }
 
 // ── Leaflet layer objects ──
-const markerLayers = {}; // `${year}-${street}-${side}-${idx}` → L.Marker
-const polyLayers   = {}; // `${year}-${street}-${side}` → L.Polyline
-const yearGroups   = {}; // year → L.LayerGroup (holds markers + polylines for that year)
+const markerLayers = {}; // `${layer}-${street}-${side}-${idx}` → L.Marker
+const focusRings   = {}; // same keys → L.CircleMarker round a record from map?entity=
+const polyLayers   = {}; // `${layer}-${street}-${side}` → L.Polyline
+const layerGroups  = {}; // layer → L.LayerGroup (holds markers + polylines for that layer)
 
-YEARS.forEach(year => { yearGroups[year] = L.layerGroup(); });
+LAYERS.forEach(layer => { layerGroups[layer] = L.layerGroup(); });
+
+// The details popup for record idx of a chain, with buttons to the
+// listings either side of it
+function openDetailsAt(key, idx) {
+    const chain = rawChains[key];
+    MapCommon.openDetailsModal(chain[idx], currentPos[`${key}-${idx}`],
+        MapCommon.chainNeighbours(chain, idx, i => openDetailsAt(key, i)));
+}
 
 // Creates the polylines and markers for some chains (positions set later)
 function createChainLayers(chains) {
-chains.forEach(({ year, street, side }) => {
-    const key = `${year}-${street}-${side}`;
+chains.forEach(({ layer, street, side }) => {
+    const key = `${layer}-${street}-${side}`;
     // Placeholder polyline (empty)
-    const poly = L.polyline([], { color:YEAR_COLORS[year], weight:1.5, opacity:0.85 })
-        .bindTooltip(`${year} · ${street}`, { sticky:true, direction:'top' });
+    const poly = L.polyline([], { color:LAYER_COLORS[layer], weight:1.5, opacity:0.85 })
+        .bindTooltip(`${MapCommon.layerLabel(layer)} · ${street}`, { sticky:true, direction:'top' });
     polyLayers[key] = poly;
-    poly.addTo(yearGroups[year]);
+    poly.addTo(layerGroups[layer]);
 
     // Markers — created once for every entry; positions set by initPositions
     rawChains[key].forEach((entry, idx) => {
-        const mk = L.marker([0,0], { icon: makeIcon(entry, YEAR_COLORS[year]) });
+        const mk = L.marker([0,0], { icon: makeIcon(entry, LAYER_COLORS[layer]) });
         mk.bindTooltip(entry.listing, { direction:'top', offset:[0,-4] });
-        const openDetails = () => MapCommon.openDetailsModal(entry, currentPos[`${key}-${idx}`]);
+        const openDetails = () => openDetailsAt(key, idx);
         mk.on('click', openDetails);
         // Enter or Space on a focused marker opens the details too
         mk.on('keypress', (e) => {
             if (e.originalEvent.key === 'Enter' || e.originalEvent.key === ' ') { e.originalEvent.preventDefault(); openDetails(); }
         });
         markerLayers[`${key}-${idx}`] = mk;
-        mk.addTo(yearGroups[year]);
+        mk.addTo(layerGroups[layer]);
     });
 });
 }
@@ -177,7 +192,7 @@ let crossYearLayer = L.layerGroup().addTo(map);
 // ═══════════════════════════════════════════════════════════
 function makeIcon(entry, color) {
     const shape     = MapCommon.markerShape(entry);
-    const uncertain = !!entry._computed;
+    const uncertain = MapCommon.isUncertain(entry);
     let html, size;
 
     // Helper to convert hex colors to an RGBA value for semi-transparent fills if needed
@@ -229,18 +244,18 @@ function makeIcon(entry, color) {
 //  POSITIONED CHAIN CACHE
 //  We store the current "from" positions and animate to "to".
 // ═══════════════════════════════════════════════════════════
-const currentPos = {}; // `${year}-${street}-${side}-${idx}` → { lat, lng }
+const currentPos = {}; // `${layer}-${street}-${side}-${idx}` → { lat, lng }
 
-function getTargetPositions(year, street, side) {
-    const offset = arcOffsetForYear(year, street, side);
-    return MapCommon.computeChain(rawChains[`${year}-${street}-${side}`], offset, side);
+function getTargetPositions(layer, street, side) {
+    const offset = arcOffsetForLayer(layer, street, side);
+    return MapCommon.computeChain(rawChains[`${layer}-${street}-${side}`], offset, side);
 }
 
 // Initialise positions for some chains
 function initPositions(chains) {
-    chains.forEach(({ year, street, side }) => {
-        const key     = `${year}-${street}-${side}`;
-        const targets = getTargetPositions(year, street, side);
+    chains.forEach(({ layer, street, side }) => {
+        const key     = `${layer}-${street}-${side}`;
+        const targets = getTargetPositions(layer, street, side);
         targets.forEach((e, idx) => {
             if (e.lat == null) return;
             currentPos[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
@@ -252,8 +267,8 @@ function initPositions(chains) {
 }
 
 function applyPositionsToMap(chains = CHAINS) {
-    chains.forEach(({ year, street, side }) => {
-        const key   = `${year}-${street}-${side}`;
+    chains.forEach(({ layer, street, side }) => {
+        const key   = `${layer}-${street}-${side}`;
         const pts   = [];
         rawChains[key].forEach((entry, idx) => {
             const pos = currentPos[`${key}-${idx}`];
@@ -262,8 +277,10 @@ function applyPositionsToMap(chains = CHAINS) {
             if (mk) {
                 mk.setLatLng([pos.lat, pos.lng]);
                 // Refresh icon so uncertainty class reflects current _computed state
-                mk.setIcon(makeIcon(entry, YEAR_COLORS[year]));
+                mk.setIcon(makeIcon(entry, LAYER_COLORS[layer]));
             }
+            const ring = focusRings[`${key}-${idx}`];
+            if (ring) ring.setLatLng([pos.lat, pos.lng]);
             pts.push([pos.lat, pos.lng]);
         });
         polyLayers[key].setLatLngs(pts);
@@ -274,9 +291,9 @@ function applyPositionsToMap(chains = CHAINS) {
 //  POSITION UPDATE  (instant — no movement animation)
 // ═══════════════════════════════════════════════════════════
 function recomputePositions() {
-    CHAINS.filter(c => activeYears.has(c.year)).forEach(({ year, street, side }) => {
-        const key     = `${year}-${street}-${side}`;
-        const targets = getTargetPositions(year, street, side);
+    CHAINS.filter(c => activeLayers.has(c.layer)).forEach(({ layer, street, side }) => {
+        const key     = `${layer}-${street}-${side}`;
+        const targets = getTargetPositions(layer, street, side);
         targets.forEach((e, idx) => {
             if (e.lat == null) return;
             currentPos[`${key}-${idx}`] = { lat: e.lat, lng: e.lng };
@@ -300,9 +317,9 @@ function rebuildCrossYearLines() {
     Object.values(crossYearById).forEach(group => {
         for (let i = 0; i < group.length - 1; i++) {
             const a = group[i], b = group[i+1];
-            if (!activeYears.has(a.year) || !activeYears.has(b.year)) continue;
-            const posA = currentPos[`${a.year}-${a.street}-${a.side}-${a.idx}`];
-            const posB = currentPos[`${b.year}-${b.street}-${b.side}-${b.idx}`];
+            if (!activeLayers.has(a.layer) || !activeLayers.has(b.layer)) continue;
+            const posA = currentPos[`${a.layer}-${a.street}-${a.side}-${a.idx}`];
+            const posB = currentPos[`${b.layer}-${b.street}-${b.side}-${b.idx}`];
             if (!posA || !posB) continue;
             L.polyline([[posA.lat,posA.lng],[posB.lat,posB.lng]],
                 { color:'#222', weight:3.5, opacity:0.55, dashArray:'6,5' }).addTo(crossYearLayer);
@@ -414,6 +431,7 @@ function getTileAttribution(source, id) {
         : `Georeferenced via <a href="https://mapwarper.net/maps/${id}">Map Warper</a> · ${MMBW_SLV_ATTRIBUTION}`;
 }
 
+const layerCheckboxes = {}; // layer → its checkbox in the panel
 const CustomControl = L.Control.extend({
     options: { position:'topright' },
     onAdd() {
@@ -422,7 +440,7 @@ const CustomControl = L.Control.extend({
         L.DomEvent.disableScrollPropagation(container);
 
         const homeLink = L.DomUtil.create('a', 'control-home-link', container);
-        homeLink.href = '/order'; homeLink.innerText = '← Home';
+        homeLink.href = '{{ "/" | relative_url }}'; homeLink.innerText = '← Home';
 
         // On phones the panel would cover the whole map, so it starts folded
         // away behind this button (hidden on wider screens by the CSS).
@@ -436,29 +454,78 @@ const CustomControl = L.Control.extend({
         setOpen(!window.matchMedia('(max-width: 600px)').matches);
         L.DomEvent.on(toggle, 'click', () => setOpen(container.classList.contains('panel-collapsed')));
 
+        // What the map shows: two short paragraphs, with the rest folded away. The
+        // directory years come from the data files, so they stay right as years are added.
+        const dirYears = LAYERS.filter(l => l.endsWith('Directory')).map(MapCommon.layerYear);
+        const dirRange = dirYears.length ? ` (${dirYears[0]}–${dirYears[dirYears.length - 1]})` : '';
+        const intro = L.DomUtil.create('div', 'map-intro', container);
+        intro.innerHTML = `
+            <p>This experimental interface isn't a map. There are many maps and map-like parts to it,
+            particularly if you scroll down and show/hide historic maps.</p>
+            <p>Each dot is a listing from a Sands &amp; McDougall street directory${dirRange} or an electoral roll,
+            placed along the side of the street one after another, linked in a chain. Some locations are
+            precisely known, while others hang loosely linked between two known points. Some points are
+            less well-known than others. As the project progresses this will become more and more map-like.</p>
+            <details>
+                <summary>More about this &ldquo;map&rdquo;</summary>
+                <p>Crosses mark street intersections and lanes.</p>
+                <p>Dashed lines join records linked as the same place across years.</p>
+                <p>Click a dot to see the full listing.</p>
+                <p>Each dot is searchable on the main site and represents something equivalent to a phone book
+                listing &ndash; a household, a business, a park, a church. We strive to make each location as
+                accurate as possible and are always improving. Most places will be on the correct block or within
+                a few houses. 1857 and 1858 were not as detailed as later years, so we can only place many
+                listings on the correct street.</p>
+                <p>You can help us improve the map by clicking on a point and starting an entry. Every little
+                bit helps pin down the chains even more.</p>
+            </details>`;
+
         const yearTitle = L.DomUtil.create('div', 'panel-section-title', container);
         yearTitle.innerText = 'Years';
 
-        YEARS.slice().reverse().forEach(year => {
+        LAYERS.slice().reverse().forEach(layer => {
             const row = L.DomUtil.create('label', 'year-row', container);
             const cb  = L.DomUtil.create('input', '', row);
-            cb.type = 'checkbox'; cb.checked = (year === YEARS[YEARS.length - 1]);
+            layerCheckboxes[layer] = cb;
+            cb.type = 'checkbox'; cb.checked = (layer === LAYERS[LAYERS.length - 1]);
             const swatch = L.DomUtil.create('span', 'year-swatch', row);
-            swatch.style.background = YEAR_COLORS[year];
-            const sourceInfo = YEAR_SOURCES[year] ? ` (${YEAR_SOURCES[year]})` : '';
-            row.appendChild(document.createTextNode(`${year}${sourceInfo}`));
+            swatch.style.background = LAYER_COLORS[layer];
+            row.appendChild(document.createTextNode(MapCommon.layerLabel(layer)));
 
             L.DomEvent.on(cb, 'change', () => {
                 if (cb.checked) {
-                    activeYears.add(year);
-                    yearGroups[year].addTo(map);
+                    activeLayers.add(layer);
+                    layerGroups[layer].addTo(map);
                 } else {
-                    activeYears.delete(year);
-                    map.removeLayer(yearGroups[year]);
+                    activeLayers.delete(layer);
+                    map.removeLayer(layerGroups[layer]);
                 }
                 recomputePositions();
             });
         });
+
+        // A modern street map, drawn under the historic maps (zIndex 0;
+        // Leaflet gives other tile layers 1) so it shows through where they
+        // are see-through or faded with their sliders.
+        const baseTitle = L.DomUtil.create('div', 'panel-section-title', container);
+        baseTitle.innerText = 'Base Map';
+
+        const osmRow  = L.DomUtil.create('div', 'layer-control-row', container);
+        const osmLbl  = L.DomUtil.create('label', 'layer-label-container', osmRow);
+        const osmCb   = L.DomUtil.create('input', '', osmLbl); osmCb.type = 'checkbox'; osmCb.checked = false;
+        const osmSpan = L.DomUtil.create('span', '', osmLbl); osmSpan.innerText = 'OpenStreetMap (today)';
+        const osmSc   = L.DomUtil.create('div', 'slider-container', osmRow);
+        osmSc.innerHTML = '<span>0%</span>';
+        const osmSl   = L.DomUtil.create('input', 'opacity-slider', osmSc);
+        osmSl.type = 'range'; osmSl.min = 0; osmSl.max = 100; osmSl.value = 100;
+        osmSl.setAttribute('aria-label', 'Opacity of OpenStreetMap');
+        osmSc.insertAdjacentHTML('beforeend', '<span>100%</span>');
+        const osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom:20, maxNativeZoom:19, zIndex:0,
+            attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        });
+        L.DomEvent.on(osmCb, 'change', () => osmCb.checked ? osmLayer.addTo(map) : map.removeLayer(osmLayer));
+        L.DomEvent.on(osmSl, 'input',  () => osmLayer.setOpacity(osmSl.value/100));
 
         const mapTitle = L.DomUtil.create('div', 'panel-section-title', container);
         mapTitle.innerText = 'Historic Map Layers';
@@ -486,7 +553,7 @@ const CustomControl = L.Control.extend({
         const geoJsonRow = L.DomUtil.create('label', 'layer-control-row', container);
         const geoJsonCb = L.DomUtil.create('input', '', geoJsonRow);
         geoJsonCb.type = 'checkbox';
-        geoJsonCb.checked = true;
+        geoJsonCb.checked = false;
 
         const geoJsonSpan = L.DomUtil.create('span', '', geoJsonRow);
         geoJsonSpan.innerHTML = 'University of Melbourne properties (<a href="https://spatialdata-uom.opendata.arcgis.com/datasets/UOM::uom-land-parcels-parkville/about">2026</a>)';
@@ -511,25 +578,83 @@ map.getContainer().prepend(map.getContainer().querySelector('.leaflet-control-co
 // ═══════════════════════════════════════════════════════════
 //  BOOT
 // ═══════════════════════════════════════════════════════════
-yearGroups[YEARS[YEARS.length - 1]].addTo(map); // Latest year visible by default
-uomLayerGroup.addTo(map); // Add UoM GeoJSON layer to map by default
+layerGroups[LAYERS[LAYERS.length - 1]].addTo(map); // Latest layer visible by default
 
 return {
-    // Draw one year's records. Unmapped records are placed between mapped
-    // ones from the same year, so they can be drawn straight away. If the
-    // year is shown, the other shown years on the same streets bow out to
-    // make room, as when a year is ticked.
+    // Draw one year's records (its directory, electoral roll or both).
+    // Unmapped records are placed between mapped ones from the same layer,
+    // so they can be drawn straight away. If a layer is shown, the other
+    // shown layers on the same streets bow out to make room, as when a
+    // layer is ticked.
     addYear(year, records) {
         const { chains, rawChains: raw } = MapCommon.buildChains(records);
         Object.assign(rawChains, raw);
         CHAINS.push(...chains);
         createChainLayers(chains);
-        if (activeYears.has(year)) recomputePositions();
+        if (chains.some(c => activeLayers.has(c.layer))) recomputePositions();
         else initPositions(chains);
     },
     addCrossYearLinks() {
         crossYearById = MapCommon.buildCrossYearIndex(CHAINS, rawChains);
         rebuildCrossYearLines();
+    },
+    // Show every drawn record with this entityID: tick their years, ring
+    // them, zoom to them and say what is shown, with a link back to the
+    // entry. Records are drawn where they have coordinates, or estimated
+    // between mapped neighbours on the same street; a record with neither
+    // isn't on the map, and the notice says so.
+    focusEntity(id) {
+        const hits = [];
+        CHAINS.forEach(({ layer, street, side }) => {
+            const key = `${layer}-${street}-${side}`;
+            rawChains[key].forEach((entry, idx) => {
+                // == on purpose: "123" in the address matches the number 123
+                if (entry.entityID == id) hits.push({ layer, entry, posKey: `${key}-${idx}` });
+            });
+        });
+        hits.sort((a, b) => a.entry.year - b.entry.year);
+        const drawn = hits.filter(h => currentPos[h.posKey]);
+        drawn.forEach(({ layer }) => {
+            const cb = layerCheckboxes[layer];
+            if (cb && !cb.checked) { cb.checked = true; cb.dispatchEvent(new Event('change')); }
+        });
+        drawn.forEach(({ layer, posKey }) => {
+            const pos = currentPos[posKey];
+            focusRings[posKey] = L.circleMarker([pos.lat, pos.lng], {
+                radius: 15, color: '#fff', weight: 3, fillColor: '#fff', fillOpacity: 0.2, interactive: false, className: 'map-focus-ring',
+            }).addTo(layerGroups[layer]);
+        });
+        if (drawn.length) {
+            // Keep clear of the layers panel, which is open on wider screens
+            const panelOpen = !window.matchMedia('(max-width: 600px)').matches;
+            map.fitBounds(L.latLngBounds(drawn.map(h => currentPos[h.posKey])), {
+                paddingTopLeft: [60, 60], paddingBottomRight: [panelOpen ? 360 : 60, 120], maxZoom: 19,
+            });
+        }
+
+        // Name it by its entry, or for a numeric ID by its latest listing
+        const hasEntry = !!MapCommon.entryFor({ entityID: id });
+        const named = hasEntry ? id : (/^\d+$/.test(id) && hits.length ? hits[hits.length - 1].entry.listing : id);
+        const years = [...new Set(drawn.map(h => h.entry.year))];
+        const estimated = drawn.some(h => h.entry._computed);
+        const notice = L.control({ position: 'bottomleft' });
+        notice.onAdd = () => {
+            const el = L.DomUtil.create('div', 'map-focus-notice');
+            el.setAttribute('role', 'status');
+            L.DomEvent.disableClickPropagation(el);
+            const what = `<strong>${MapCommon.escapeHtml(named)}</strong>`;
+            el.innerHTML = (drawn.length
+                ? `${what}: ${drawn.length === 1 ? 'one listing' : `${drawn.length} listings`} (${years.join(', ')}), ringed in white.${estimated ? ' Some positions are estimated.' : ''}`
+                : `${what} isn't on the map yet.`)
+                + ` <a href="civic?id=${encodeURIComponent(id)}">← Back to the ${hasEntry ? 'entry' : 'record'}</a>`
+                + ' <button type="button" class="map-focus-close" aria-label="Close">&times;</button>';
+            el.querySelector('.map-focus-close').onclick = () => {
+                notice.remove();
+                Object.keys(focusRings).forEach(k => { focusRings[k].remove(); delete focusRings[k]; });
+            };
+            return el;
+        };
+        notice.addTo(map);
     },
 };
 }

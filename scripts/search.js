@@ -6,7 +6,7 @@
 (function () {
   const $ = (id) => document.getElementById(id);
   const input = $('searchInput'), form = $('searchForm'), status = $('searchStatus');
-  const resultsEl = $('searchResults'), yearChips = $('yearChips'), streetSelect = $('streetSelect');
+  const resultsEl = $('searchResults'), yearChips = $('yearChips'), streetSelect = $('streetSelect'), kindChips = $('kindChips');
   const PER_SECTION = 8;
 
   // Historical spellings and directory abbreviations, folded to one form so
@@ -22,8 +22,16 @@
     return t ? (VARIANTS[t] || t) : null;
   };
 
-  const SOURCES = { 'Directory': 'places', 'Electoral roll': 'people' };
-  const state = { q: '', src: 'all', year: '', street: '' };
+  const SOURCES = { 'Directory': 'directories', 'Electoral roll': 'rolls' };
+  const state = { q: '', src: 'all', year: '', street: '', kind: '' };
+
+  // "Looking for": the entry types (schema/carlton.odd). An entry counts by its
+  // <TEI type>, families with people; a directory record by its `kind`
+  // (README: Data); electoral-roll records are all people.
+  const KINDS = { person: 'people', org: 'businesses and organisations', place: 'places', topic: 'topics' };
+  const PLACEHOLDERS = { person: 'A name', org: 'A business, hotel, school or church', place: 'A street, lane or square', topic: 'A topic' };
+  const entryKind = (e) => (e.kind === 'family' ? 'person' : e.kind);
+  const recordKind = (r) => (r.source === 'Electoral roll' ? 'person' : r.kind);
   let index, groups = {}, entries = {}, records = [], recordGroup = [], loading = true;
 
   const escapeHtml = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -34,6 +42,7 @@
     const p = new URLSearchParams(location.search);
     state.q = p.get('q') || ''; state.src = p.get('src') || 'all';
     state.year = p.get('year') || ''; state.street = p.get('street') || '';
+    state.kind = KINDS[p.get('kind')] ? p.get('kind') : '';
   }
   function writeUrl() {
     const p = new URLSearchParams();
@@ -41,6 +50,7 @@
     if (state.src !== 'all') p.set('src', state.src);
     if (state.year) p.set('year', state.year);
     if (state.street) p.set('street', state.street);
+    if (state.kind) p.set('kind', state.kind);
     history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
   }
 
@@ -50,14 +60,36 @@
     const parsed = await Promise.all(files.map(async (name) => {
       try {
         const xml = new DOMParser().parseFromString(await (await fetch(`civic/${name}.xml`)).text(), 'application/xml');
-        const title = xml.getElementsByTagName('part')[0]?.textContent.trim() || name.replace(/-/g, ' ');
-        const html = xml.getElementsByTagName('abstract')[0]?.textContent || '';
-        const text = new DOMParser().parseFromString(html, 'text/html').body.textContent.replace(/\s+/g, ' ').trim();
-        return { name, title, text };
+        let title, text, kind = '', occupations = [], robot = false;
+        if (xml.documentElement.localName === 'TEI') {
+          // TEI entries (schema/carlton.odd): the title, the article's text,
+          // and the subject's occupations, a business's activities or a
+          // place's uses
+          title = xml.getElementsByTagName('title')[0]?.textContent.trim();
+          kind = xml.documentElement.getAttribute('type') || '';
+          // Only a computer-assisted first draft so far: no named author, no community credit
+          const credits = [...xml.getElementsByTagName('respStmt')].map((r) => r.getAttribute('key'));
+          robot = credits.includes('computer-assisted-draft') && !credits.includes('community') && !xml.getElementsByTagName('author').length;
+          text = (xml.getElementsByTagName('body')[0]?.textContent || '').replace(/\s+/g, ' ').trim();
+          const subject = [...xml.getElementsByTagName('*')].find((e) => e.getAttribute('xml:id') === 'subject');
+          if (subject) {
+            occupations = [...subject.children]
+              .filter((e) => e.localName === 'occupation' || (e.localName === 'state' && ['activity', 'use'].includes(e.getAttribute('type'))))
+              .map((e) => ([...e.children].find((c) => c.localName === 'label') || e).textContent.replace(/\s+/g, ' ').trim())
+              .filter(Boolean);
+          }
+        } else {
+          // EAC-CPF entries: the first name part, and the HTML article in <abstract>
+          title = xml.getElementsByTagName('part')[0]?.textContent.trim();
+          const html = xml.getElementsByTagName('abstract')[0]?.textContent || '';
+          text = new DOMParser().parseFromString(html, 'text/html').body.textContent.replace(/\s+/g, ' ').trim();
+        }
+        title = title || name.replace(/-/g, ' ');
+        return { name, title, text, kind, robot, occupations: [...new Set(occupations)] };
       } catch (e) { return null; }
     }));
     parsed.filter(Boolean).forEach((e) => { entries[e.name] = e; });
-    index.addAll(Object.values(entries).map((e) => ({ id: 'e:' + e.name, kind: 'entry', title: e.title, text: e.text })));
+    index.addAll(Object.values(entries).map((e) => ({ id: 'e:' + e.name, kind: 'entry', title: e.title, text: e.text, occupation: e.occupations.join(' ') })));
   }
 
   function buildIndex() {
@@ -66,7 +98,7 @@
       storeFields: ['kind'],
       processTerm: fold,
       searchOptions: {
-        boost: { title: 4, listing: 2 },
+        boost: { title: 4, listing: 2, occupation: 2 },
         prefix: true,
         fuzzy: (term) => (term.length > 4 ? 0.2 : false),
         combineWith: 'AND',
@@ -81,7 +113,7 @@
     const docs = [];
     list.forEach((r) => {
       const i = records.push(r) - 1;
-      const kind = SOURCES[r.source] || 'places';
+      const kind = SOURCES[r.source] || 'directories';
       const key = typeof r.entityID === 'string' ? 'g:' + r.entityID : 'r:' + i;
       (groups[key] = groups[key] || { key, kind, records: [] }).records.push(r);
       recordGroup[i] = groups[key];
@@ -106,13 +138,19 @@
   // ---- Search ----------------------------------------------------------
   function run() {
     const q = state.q.trim();
-    const sections = { entries: [], places: [], people: [] };
+    const sections = { entries: [], directories: [], rolls: [] };
     if (q) {
       const seen = {};
       index.search(q).forEach((hit) => {
         const n = hit.id.split(':');
-        if (n[0] === 'e') { sections.entries.push({ entry: entries[n.slice(1).join(':')], terms: hit.terms, score: hit.score }); return; }
+        if (n[0] === 'e') {
+          const entry = entries[n.slice(1).join(':')];
+          if (state.kind && entryKind(entry) !== state.kind) return;
+          sections.entries.push({ entry, terms: hit.terms, score: hit.score });
+          return;
+        }
         const r = records[+n[1]];
+        if (state.kind && recordKind(r) !== state.kind) return;
         if (state.year && String(r.year) !== state.year) return;
         if (state.street && r.street !== state.street) return;
         const g = recordGroup[+n[1]];
@@ -120,6 +158,10 @@
         seen[g.key] = { group: g, hits: new Set([r]), terms: hit.terms, score: hit.score };
         sections[g.kind].push(seen[g.key]);
       });
+    } else if (state.kind === 'topic') {
+      // Topics can be browsed without a search: every topic entry, A to Z.
+      sections.entries = Object.values(entries).filter((e) => entryKind(e) === 'topic')
+        .sort((a, b) => a.title.localeCompare(b.title)).map((entry) => ({ entry, terms: [] }));
     }
     render(q, sections);
   }
@@ -162,52 +204,73 @@
     return (start > 0 ? '… ' : '') + marked(text.slice(start, end), re) + (end < text.length ? ' …' : '');
   }
 
+  // A trade or use, linked to a search for everything else with it.
+  // Directory listings abbreviate them ("ice cream fctry"), so the card shows
+  // the occupation in full whenever the listing doesn't already say it.
+  function occupationLink(term, terms) {
+    return `<a href="?q=${encodeURIComponent(term)}" data-q="${escapeHtml(term)}">${highlight(term, terms)}</a>`;
+  }
+  const plain = (s) => ` ${String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, ' ').trim()} `;
+  const occupationShown = (r) => r.Occupation && r.Occupation !== 'none given' && !plain(r.listing).includes(plain(r.Occupation));
+
   function entryCard({ entry, terms }) {
     const linked = groups['g:' + entry.title];
     const years = linked ? [...new Set(linked.records.map((r) => r.year))] : [];
     return `<li class="result result-entry">
-      <a class="result-title" href="civic?id=${encodeURIComponent(entry.title)}">${highlight(entry.title, terms)}</a>
+      <a class="result-title" href="civic?id=${encodeURIComponent(entry.title)}">${highlight(entry.title, terms)}</a>${entry.robot ? ' <span class="result-robot" role="img" aria-label="Computer-assisted first draft" title="Computer-assisted first draft: no one has added to it yet">🤖</span>' : ''}
+      ${entry.occupations.length ? `<p class="result-occupation">${entry.occupations.map((o) => occupationLink(o, terms)).join(' · ')}</p>` : ''}
       <p class="result-snippet">${snippet(entry.text, terms)}</p>
       ${years.length ? `<p class="result-meta">Also in the directories: ${years.join(' · ')}</p>` : ''}
     </li>`;
   }
 
+  // People are most listings, so only the other kinds are labelled.
+  const RECORD_KIND_LABELS = { org: 'business or organisation', place: 'place', unknown: 'kind not yet decided' };
   function recordCard({ group, hits, terms }) {
     const recs = group.records;
     const shown = [...hits].sort((a, b) => b.year - a.year)[0];
     const name = group.key.startsWith('g:') ? group.key.slice(2) : null;
     const hasEntry = name && entries[slugify(name)];
     const years = recs.map((r) => `<li${hits.has(r) ? ' class="hit"' : ''}><span class="yr">${r.year}</span> ${highlight(r.listing, terms)} <span class="pg">${r.pages ? 'p. ' + escapeHtml(r.pages) : ''}</span></li>`).join('');
+    // The title goes where the action does: the entry page, which also lists
+    // every record for this name, whether or not an entry has been written.
+    const href = `civic?id=${encodeURIComponent(hasEntry ? name : shown.entityID)}`;
     const link = hasEntry
-      ? `<a class="result-action" href="civic?id=${encodeURIComponent(name)}">Read the entry →</a>`
-      : `<a class="result-action quiet" href="civic?id=${encodeURIComponent(shown.entityID)}">Start an entry</a>`;
+      ? `<a class="result-action" href="${href}">Read the entry →</a>`
+      : `<a class="result-action quiet" href="${href}">Start an entry</a>`;
     return `<li class="result result-record">
       <div class="result-head">
-        <span class="result-title">${highlight(shown.listing, terms)}</span>
-        <span class="result-where">${escapeHtml(shown.street)}${shown.cardinality ? ', ' + escapeHtml(shown.cardinality.toLowerCase()) + ' side' : ''}</span>
+        <a class="result-title" href="${href}">${highlight(shown.listing, terms)}</a>
+        <span class="result-where">${escapeHtml(shown.street)}${shown.cardinality ? ', ' + escapeHtml(shown.cardinality.toLowerCase()) + ' side' : ''}${RECORD_KIND_LABELS[shown.kind] ? ` · ${RECORD_KIND_LABELS[shown.kind]}` : ''}</span>
       </div>
+      ${occupationShown(shown) ? `<p class="result-occupation">${occupationLink(shown.Occupation, terms)}</p>` : ''}
+      ${shown.Notes ? `<p class="result-note">Note: ${escapeHtml(shown.Notes)}</p>` : ''}
       <p class="result-years">${[...new Set(recs.map((r) => r.year))].map((y) => `<span class="${[...hits].some((h) => h.year === y) ? 'on' : ''}">${y}</span>`).join('')}</p>
       ${recs.length > 1 ? `<details class="result-trace"><summary>Across ${recs.length} listings</summary><ol>${years}</ol></details>` : ''}
       ${link}
     </li>`;
   }
 
-  const LABELS = { entries: 'Entries', places: 'Places · directories', people: 'People · electoral rolls' };
+  const LABELS = { entries: 'Entries', directories: 'Directory listings', rolls: 'Electoral rolls' };
+  const MORE = { entries: 'entries', directories: 'directory listings', rolls: 'electoral roll records' };
   function render(q, sections) {
     Object.keys(sections).forEach((k) => {
       const n = sections[k].length;
-      document.querySelector(`[data-count="${k}"]`).textContent = q ? n.toLocaleString() : '';
+      document.querySelector(`[data-count="${k}"]`).textContent = q || state.kind === 'topic' ? n.toLocaleString() : '';
     });
+    kindChips.querySelectorAll('input').forEach((c) => { c.checked = c.value === state.kind; });
+    input.placeholder = PLACEHOLDERS[state.kind] || 'A name, business, trade or street';
     document.querySelectorAll('.search-tabs [data-src]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.src === state.src));
     const active = [state.year, state.street].filter(Boolean).length;
     $('filterBadge').textContent = active ? `(${active})` : '';
 
-    if (!q) {
-      status.textContent = '';
+    const among = state.kind ? ` among ${KINDS[state.kind]}` : '';
+    if (!q && state.kind !== 'topic') {
+      status.textContent = state.kind ? `Search ${KINDS[state.kind]} by name, street or trade.` : '';
       resultsEl.innerHTML = '';
       return;
     }
-    const keys = state.src === 'all' ? ['entries', 'places', 'people'] : [state.src];
+    const keys = state.src === 'all' ? ['entries', 'directories', 'rolls'] : [state.src];
     const total = keys.reduce((n, k) => n + sections[k].length, 0);
     if (!total && loading) {
       // The data-status line below says what's still loading.
@@ -217,17 +280,19 @@
     }
     if (!total) {
       // Read out by screen readers; the message below says the same on screen
-      status.innerHTML = `<span class="visually-hidden">No results for “${escapeHtml(q)}”.</span>`;
-      resultsEl.innerHTML = `<div class="search-empty"><p>Nothing found for “${escapeHtml(q)}”${state.year || state.street ? ' with these filters' : ''}.</p>
+      status.innerHTML = `<span class="visually-hidden">No results for “${escapeHtml(q)}”${among}.</span>`;
+      resultsEl.innerHTML = `<div class="search-empty"><p>Nothing found for “${escapeHtml(q)}”${among}${state.year || state.street ? ' with these filters' : ''}.</p>
         <p>Know something about it? <a href="civic?id=${encodeURIComponent(q)}">Start an entry for “${escapeHtml(q)}”</a>.</p></div>`;
       return;
     }
-    status.textContent = `${total.toLocaleString()} results for “${q}”${loading ? ' so far' : ''}`;
+    status.textContent = q
+      ? `${total.toLocaleString()} results for “${q}”${among}${loading ? ' so far' : ''}`
+      : `${total.toLocaleString()} topics`;
     resultsEl.innerHTML = keys.filter((k) => sections[k].length).map((k) => {
       const list = sections[k];
       const limit = state.src === 'all' ? PER_SECTION : list.length;
       const cards = list.slice(0, limit).map(k === 'entries' ? entryCard : recordCard).join('');
-      const more = list.length > limit ? `<button type="button" class="search-more-btn" data-src="${k}">Show all ${list.length.toLocaleString()} ${LABELS[k].split(' ·')[0].toLowerCase()}</button>` : '';
+      const more = list.length > limit ? `<button type="button" class="search-more-btn" data-src="${k}">Show all ${list.length.toLocaleString()} ${MORE[k]}</button>` : '';
       return `<section class="search-section"><h2>${LABELS[k]} <span>${list.length.toLocaleString()}</span></h2><ol class="results">${cards}</ol>${more}</section>`;
     }).join('');
   }
@@ -238,6 +303,14 @@
   input.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => { state.q = input.value; update(); }, 150); });
   form.addEventListener('submit', (e) => { e.preventDefault(); state.q = input.value; update(); });
   document.addEventListener('click', (e) => {
+    const o = e.target.closest('a[data-q]');
+    if (o && !e.metaKey && !e.ctrlKey && !e.shiftKey) {
+      e.preventDefault();
+      state.q = input.value = o.dataset.q; update();
+      window.scrollTo({ top: $('searchPage').offsetTop });
+      input.focus({ preventScroll: true });
+      return;
+    }
     const b = e.target.closest('[data-src]');
     if (!b) return;
     state.src = b.dataset.src; update(); window.scrollTo({ top: $('searchPage').offsetTop });
@@ -247,6 +320,7 @@
       if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
     }
   });
+  kindChips.addEventListener('change', (e) => { state.kind = e.target.value; update(); });
   yearChips.addEventListener('change', (e) => { state.year = e.target.value; update(); });
   streetSelect.addEventListener('change', () => { state.street = streetSelect.value; update(); });
 

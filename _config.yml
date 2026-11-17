@@ -1,5 +1,26 @@
 theme: jekyll-theme-cayman
 
+# The Apps Script web app (/exec URL) that receives contribution form entries
+# (apps-script/Code.gs, setup in apps-script/README.md). Leave empty to keep
+# the form unconnected: it then only previews and downloads.
+# DEV SITE: left empty so test submissions from this development copy
+# don't reach the live site's submissions sheet or open pull requests there.
+# Live value: "https://script.google.com/macros/s/AKfycbxKYO3HIIwoNWI7ZHyxHvDz9wsvFgQT0KUL3kHgztqtNDaITvjH-uaQiTLEfdGbm2LX/exec"
+contribution_endpoint: ""
+
+# Site pages kept as entries in civic/, so the team can suggest edits to them
+# the same way as any entry: the front page, Featured pages, About and
+# Resources. Each has a small .md page (layout: entry, entry_id: <file
+# name>). They look like ordinary pages, are left out of search, and have a
+# small "Suggest an edit" link instead of the contribution form.
+site_pages: [Home, Featured-pages, About, Resources]
+
+# Entries whose file was renamed: old file name -> new file name. An old
+# address (civic?id=<old>) forwards to the new one, so links from outside
+# the site keep working.
+renamed_entries:
+  Hogan-Ellen: Ellen-Hogan
+
 defaults:
   # Applies to every page unless a more specific rule below overrides it.
   - scope:
@@ -21,13 +42,7 @@ defaults:
   # Facet-list pages: same layout, each just names which slice of
   # the directory data it shows. Add a new scope block here for each new facet.
   - scope:
-      path: "people.md"
+      path: "electoral-rolls.md"
     values:
       layout: facet-list
-      facet: "people"
-
-  - scope:
-      path: "places.md"
-    values:
-      layout: facet-list
-      facet: "places"
+      facet: "electoral-rolls"

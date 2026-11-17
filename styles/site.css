@@ -10,6 +10,7 @@
      8. Map page             (used by map.html only)
      9. 3D Map page         (used by map3d.html only)
     10. Generated facet list (Table of Contents + listings)
+    11. TEI entries          (scripts/tei.js: entry pages and the form's preview)
    ============================================================ */
 
 /* 1. PALETTE & TOKENS ------------------------------------------------- */
@@ -39,9 +40,6 @@
     --font-serif: 'Libre Caslon Text', Georgia, 'Times New Roman', serif;
     --font-mono:  'Courier Prime', 'Courier New', monospace;
     --font-ui:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-
-    /* Red and white checkerboard marking this as the old development site */
-    --dev-checkerboard: conic-gradient(#c8102e 25%, #fff 0 50%, #c8102e 0 75%, #fff 0) 0 0 / 48px 48px;
 }
 
 /* 2. RESET ------------------------------------------------------------ */
@@ -91,20 +89,11 @@ textarea:focus-visible {
 .skip-link:focus { top: 8px; }
 .skip-link:focus-visible { outline-color: var(--moss-bright); }
 
-/* Red and white checkerboard behind the page, so anyone who lands on
-   this old development copy can tell at a glance it isn't the live site.
-   The .wrapper keeps its own solid paper background, so text stays readable. */
 body {
     font-family: var(--font-ui);
     color: var(--ink-soft);
-    background: var(--dev-checkerboard) fixed #fff;
+    background-color: var(--sage-dark);
     line-height: 1.6;
-}
-
-/* Below the wrapper's max width there's no margin left to show the
-   checkerboard, so leave a narrow strip of it down each side */
-@media (max-width: 1240px) {
-    body { padding: 0 12px; }
 }
 
 .wrapper {
@@ -169,12 +158,12 @@ body {
     color: var(--moss-bright);
 }
 
-/* Phones: tighter links so all five items fit on one row */
+/* Phones: tighter links; the six items wrap onto a second row when they don't fit */
 @media (max-width: 600px) {
     .main-nav { padding: 0 4px; }
-    .nav-links { flex-wrap: nowrap; justify-content: space-between; }
+    .nav-links { justify-content: center; }
     .nav-links li a {
-        padding: 14px 7px;
+        padding: 12px 8px;
         font-size: 0.85rem;
         letter-spacing: 0;
         white-space: nowrap;
@@ -263,6 +252,8 @@ body {
     background: var(--paper-deep); border: 1px solid var(--paper-line); padding: 12px 14px;
 }
 .search-years { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.search-kinds { margin: -6px 0 14px; align-items: baseline; }
+.search-kinds legend { float: left; margin: 0 6px 0 0; }
 .search-years legend, .search-street {
     font: 0.72rem var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
     margin-bottom: 6px;
@@ -293,8 +284,11 @@ body {
 a.result-title { text-decoration: underline; text-decoration-color: var(--sage-dark); text-underline-offset: 3px; }
 .results .result-snippet { margin: 6px 0 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.55; }
 .results .result-meta { margin: 6px 0 0; font: 0.8rem var(--font-mono); color: var(--moss); }
+.results .result-occupation { margin: 4px 0 0; font: italic 0.92rem var(--font-serif); color: var(--ink-soft); }
+.result-occupation a { color: var(--moss); }
 .result-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
 .result-where { font: italic 0.92rem var(--font-serif); color: var(--ink-faint); }
+.result-note { margin: 4px 0 0; font-size: 0.85rem; color: var(--ink-faint); }
 .results .result-years { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 0; }
 .result-years span {
     font: 0.75rem var(--font-mono); padding: 1px 6px; border: 1px solid var(--paper-line); color: var(--ink-faint);
@@ -323,24 +317,19 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
 @media (max-width: 600px) {
     .search-box input { font-size: 1rem; padding: 10px 12px; }
     .search-box button { padding: 0 14px; }
-    .search-tabs { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; }
+    .search-tabs { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; min-width: 0; }
     .search-tabs button { white-space: nowrap; }
     .search-more-body { padding: 10px; }
 }
 
 /* 6. PAGE LAYOUT & TYPOGRAPHY -------------------------------------------- */
 .layout-container {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 40px;
     padding: 40px;
 }
 
 @media (max-width: 768px) {
     .layout-container {
-        grid-template-columns: 1fr;
         padding: 20px;
-        gap: 30px;
     }
 }
 
@@ -490,6 +479,17 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
     color: var(--paper);
 }
 
+/* A–Z "Can you help?" box: featured pages that need more writing */
+.main-content section.az-help {
+    margin: 0 0 28px;
+    padding: 14px 18px 4px;
+    background-color: var(--paper-deep);
+    border-left: 4px solid var(--moss);
+    border-radius: 3px;
+}
+
+.main-content section.az-help h2 { margin-top: 0; }
+
 /* A–Z entry status badges (scripts/az-status.js) */
 .az-badge {
     display: inline-block;
@@ -508,6 +508,14 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
     color: var(--paper);
     background-color: var(--moss);
     border: 1px solid var(--moss);
+}
+
+.az-badge-robot {
+    padding: 0 2px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: help;
+    background: transparent;
 }
 
 .az-badge-missing {
@@ -624,53 +632,37 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
     background: transparent;
 }
 
+.contribution-container.kept-note {
+    padding: 14px 18px;
+    border: 0;
+    border-left: 3px solid var(--moss);
+    border-radius: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.contribution-container.kept-note p { margin: 0; }
+.contribution-container.kept-note strong { color: var(--ink); }
+.contribution-container.kept-note a { color: var(--moss); }
+.contribution-container.kept-note .open-request { margin-top: 12px; }
+.kept-note .open-request button {
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border: 1px solid var(--moss);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--moss-deep);
+    cursor: pointer;
+}
+.kept-note .open-request button:hover { background: var(--moss); color: #fff; }
+.kept-note .open-request button:disabled { opacity: 0.7; cursor: default; background: transparent; color: var(--moss-deep); }
+.kept-note .open-status { display: block; margin-top: 6px; font-size: 0.9rem; }
+.kept-note .open-status:empty { display: none; }
+.kept-note .open-status.ok { color: var(--moss-deep); }
+.kept-note .open-status.error { color: #a12c1f; }
+
 @media (max-width: 480px) {
     .contribution-container { padding: 16px; }
-}
-
-.sidebar-menu {
-    background-color: var(--paper-deep);
-    border: 1px solid var(--sage);
-    border-radius: 6px;
-    padding: 24px;
-    align-self: start;
-}
-
-.sidebar-menu h2 {
-    font-family: var(--font-serif);
-    color: var(--ink);
-    font-size: 1.3rem;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--moss);
-    font-weight: normal;
-}
-
-.theme-list {
-    list-style: none;
-}
-
-.theme-list li {
-    border-bottom: 1px solid var(--paper-line);
-}
-
-.theme-list li:last-child {
-    border-bottom: none;
-}
-
-.theme-list a {
-    display: block;
-    color: var(--ink-soft);
-    text-decoration: none;
-    padding: 8px 4px;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-}
-
-.theme-list a:hover {
-    color: var(--moss-deep);
-    padding-left: 8px;
-    background-color: var(--sage-light);
 }
 
 /* 7. FOOTER ---------------------------------------------------------- */
@@ -720,13 +712,31 @@ a.result-title { text-decoration: underline; text-decoration-color: var(--sage-d
 .footer-attribution a { color: var(--paper); }
 .footer-attribution a:hover { color: var(--moss-bright); }
 
+/* The University crest beside the funding acknowledgement; stacks on phones */
+.footer-funding {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--sage-dark);
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.footer-crest { flex: none; line-height: 0; }
+.footer-crest img { display: block; width: 96px; height: auto; }
+
+@media (max-width: 600px) {
+    .footer-funding { flex-direction: column; text-align: center; }
+}
+
 /* 8. MAP PAGE CHROME (map.html) --------------------------------------
    The Leaflet canvas stays full-bleed and dark; only the control
    panel, tooltips, and modal are retinted to the shared palette. */
 html.map-page, body.map-page, body.map-page #map {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
-    background: var(--ink-deepest);
+    background-color: var(--ink-deepest);
 }
 
 #map {
@@ -747,6 +757,18 @@ html.map-page, body.map-page, body.map-page #map {
     margin: 12px 0 6px 0; padding-bottom: 3px;
     border-bottom: 1px solid var(--paper-line);
 }
+
+/* Short explanation at the top of the panel, with more behind a toggle */
+.map-intro {
+    font-size: 12px; line-height: 1.45; color: var(--ink);
+    font-family: var(--font-serif);
+}
+.map-intro p { margin: 0 0 6px; }
+.map-intro summary {
+    cursor: pointer; color: var(--moss); font-weight: bold;
+    margin-bottom: 6px;
+}
+.map-intro summary:hover { color: var(--moss-deep); }
 
 .layer-control-row {
     display: flex; flex-direction: column;
@@ -809,6 +831,7 @@ html.map-page, body.map-page, body.map-page #map {
         cursor: pointer;
     }
     .panel-toggle:hover { background: var(--moss-deep); }
+    .map-intro { margin-top: 10px; }
     .panel-collapsed { width: auto; padding: 6px !important; }
     .panel-collapsed > :not(.control-home-link):not(.panel-toggle) { display: none; }
     .panel-collapsed .control-home-link { margin-bottom: 6px; }
@@ -907,7 +930,7 @@ html.map3d-page, body.map3d-page {
     width: 100%; height: 100%;
     height: 100dvh; /* fit phone screens without the browser bars causing a scroll */
     overflow: hidden;
-    background: var(--ink-deepest);
+    background-color: var(--ink-deepest);
     font-family: var(--font-ui);
     color: var(--sage-light);
 }
@@ -917,10 +940,16 @@ html.map3d-page, body.map3d-page {
     position: absolute; top: 0; left: 0; z-index: 1;
 }
 
+/* Stops above the map controls, so a long list of years scrolls
+   instead of running underneath them. The layer itself lets drags
+   through to the map; its contents don't. */
 #ui-layer {
-    position: absolute; top: 20px; left: 20px;
-    z-index: 10; pointer-events: auto;
+    position: absolute; top: 20px; left: 20px; bottom: 250px;
+    z-index: 10; pointer-events: none;
+    display: flex; flex-direction: column; align-items: flex-start;
 }
+#ui-layer > * { pointer-events: auto; flex-shrink: 0; }
+#ui-layer > .controls-panel { flex-shrink: 1; min-height: 0; }
 
 .map3d-home-link {
     display: inline-block;
@@ -977,6 +1006,8 @@ html.map3d-page, body.map3d-page {
     border-top: 1px solid var(--ink-soft);
     padding-top: 8px;
     margin-top: 4px;
+    display: flex; flex-direction: column;
+    min-height: 0;
 }
 .filter-title {
     font-size: 11px;
@@ -985,10 +1016,45 @@ html.map3d-page, body.map3d-page {
     margin-bottom: 6px;
     letter-spacing: 0.5px;
 }
+/* The title doubles as the button that folds the year panel away */
+.year-panel-toggle {
+    display: flex; align-items: center; gap: 6px;
+    background: none; border: none; padding: 0;
+    font-family: inherit; cursor: pointer; text-align: left;
+}
+.year-panel-toggle::after { content: "▾"; font-size: 12px; }
+.year-panel-toggle[aria-expanded="false"]::after { content: "▸"; }
+.year-panel-toggle[aria-expanded="false"] { margin-bottom: 0; }
+.year-panel-toggle:hover { color: var(--moss-bright); }
+#year-count { text-transform: none; letter-spacing: 0; }
+.year-panel-body {
+    display: flex; flex-direction: column; gap: 8px;
+    min-height: 0;
+}
+.year-panel-body[hidden] { display: none; }
+.year-range, .year-quick {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--sage);
+    flex-shrink: 0;
+}
+.year-range select {
+    background: var(--ink); color: var(--sage-light);
+    border: 1px solid var(--ink-soft); border-radius: 3px;
+    font: inherit; padding: 2px 4px;
+}
+.year-btn {
+    background: var(--ink); color: var(--moss-bright);
+    border: 1px solid var(--moss-bright); border-radius: 3px;
+    font: inherit; font-size: 12px; padding: 3px 8px; cursor: pointer;
+}
+.year-btn:hover { background: var(--moss-bright); color: var(--ink-deepest); }
 .checkbox-group {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 6px 12px;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
 #nav-controls {
@@ -1078,10 +1144,11 @@ html.map3d-page, body.map3d-page {
 }
 
 @media (max-width: 600px) {
-    #ui-layer { top: 12px; left: 12px; right: 80px; }
+    #ui-layer { top: 12px; left: 12px; right: 80px; bottom: 60px; }
     #ui-layer h1 { font-size: 15px; letter-spacing: 1px; }
     #ui-layer p { font-size: 11px; }
-    .checkbox-group { grid-template-columns: repeat(3, 1fr); }
+    /* Short, so the years leave most of the screen to the map */
+    .checkbox-group { grid-template-columns: repeat(3, 1fr); max-height: 25dvh; }
     #nav-controls { display: none; }
 
     #info-panel {
@@ -1334,6 +1401,11 @@ html.map3d-page, body.map3d-page {
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
+.listing-note {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+}
+
 .listing-item a:hover {
     background-color: var(--sage-light);
     color: var(--moss-deep);
@@ -1409,29 +1481,249 @@ html.map3d-page, body.map3d-page {
     text-align: center;
 }
 
-/* The 2D and 3D maps fill the whole screen, so there's no page background
-   to show the dev-site checkerboard. Instead a 12px checkerboard frame sits
-   over the edges of the screen; clicks pass straight through it. */
-html.map-page body::after,
-html.map3d-page body::after {
+/* Map ↔ entry links. The details popup links a record to its entry, and an
+   entry's "See on the map" opens map?entity=<entityID>, which rings the
+   entity's markers and says what is shown. */
+.modal-entry-link { font: 700 0.85rem var(--font-mono); color: var(--moss); }
+.modal-entry-link.quiet { font-weight: 400; color: var(--ink-faint); }
+#modal-link p { margin: 0 0 14px; }
+
+/* Details popup: how sure we are of the record's point (coordConfidence) */
+.modal-label {
+    font: 11px var(--font-ui); color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: .04em;
+}
+.loc-confidence { margin: 6px 0 4px; font: 700 13px var(--font-ui); color: var(--ink-soft); }
+.loc-unrated, .loc-estimated, .loc-street { font-weight: 400; color: var(--ink-faint); }
+.loc-meter { display: inline-flex; gap: 3px; margin-right: 6px; vertical-align: 1px; }
+.loc-dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--sage-dark); }
+.loc-dot.on { border-color: var(--moss); background: var(--moss); }
+.loc-low .loc-dot.on { border-color: #B8862B; background: #B8862B; }
+.loc-details { margin: 0 0 8px; font: 12px/1.5 var(--font-serif); color: var(--ink-soft); }
+.modal-community { margin: 12px 0 0; font: italic 12px/1.5 var(--font-serif); color: var(--ink-faint); }
+.modal-community a { color: var(--moss); }
+
+.map-focus-ring { animation: map-focus-pulse 1.6s ease-in-out infinite; filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.8)); }
+@keyframes map-focus-pulse {
+    0%, 100% { stroke-opacity: 1; }
+    50%      { stroke-opacity: 0.6; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .map-focus-ring { animation: none; }
+}
+
+.map-focus-notice {
+    max-width: min(420px, calc(100vw - 32px));
+    padding: 10px 36px 10px 14px; position: relative;
+    background: var(--paper); color: var(--ink-soft);
+    border: 1px solid var(--sage-dark); border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    font: 0.85rem/1.5 var(--font-serif);
+}
+.map-focus-notice strong { color: var(--ink); }
+.map-focus-notice a { white-space: nowrap; font-family: var(--font-mono); font-size: 0.8rem; }
+.map-focus-close {
+    position: absolute; top: 4px; right: 6px;
+    font: bold 18px/1 var(--font-ui); padding: 4px 6px;
+    background: none; border: 0; color: var(--ink-faint); cursor: pointer;
+}
+.map-focus-close:hover { color: var(--ink); }
+
+/* Next door: the listings either side of a directory listing on the same
+   street and side, in the details popup and on entry pages */
+.modal-neighbours { display: flex; gap: 8px; margin: 0 0 14px; }
+.modal-neighbour {
+    flex: 1 1 0; min-width: 0; text-align: left;
+    padding: 6px 8px; border: 1px solid var(--sage); border-radius: 3px;
+    background: var(--paper-deep); color: var(--ink-soft);
+    font: 12px/1.4 var(--font-serif); overflow-wrap: anywhere;
+}
+.modal-neighbour-next { text-align: right; }
+button.modal-neighbour { cursor: pointer; }
+button.modal-neighbour:hover { border-color: var(--moss); color: var(--ink); }
+span.modal-neighbour { background: none; border-style: dashed; color: var(--ink-faint); }
+.modal-neighbour-label {
+    display: block; font: 11px var(--font-ui); color: var(--moss);
+    text-transform: uppercase; letter-spacing: .04em;
+}
+span.modal-neighbour .modal-neighbour-label { color: var(--ink-faint); }
+
+.neighbours { margin: 20px 0; color: var(--ink-soft); font-size: 14px; }
+.neighbours summary { cursor: pointer; font: 1.15rem var(--font-serif); color: var(--ink); }
+.neighbours .nb-count { font-size: 0.8em; color: var(--ink-faint); }
+.neighbours .nb-intro { margin: 6px 0 10px; color: var(--ink-faint); font-style: italic; }
+.nb-list { list-style: none; padding: 0; margin: 0; }
+.nb-list > li { margin: 0 0 12px; }
+.nb-where { margin: 0 0 4px; font: 12px var(--font-ui); color: var(--ink-faint); }
+.nb-year { font-weight: 700; color: var(--ink); margin-right: 4px; }
+.nb-run { list-style: none; margin: 0; padding: 0 0 0 10px; border-left: 2px solid var(--paper-line); font-family: var(--font-serif); }
+.nb-run li { margin: 0; padding: 1px 0; }
+.nb-run a { color: var(--moss); }
+.nb-this { color: var(--ink); font-weight: 700; }
+.nb-end { color: var(--ink-faint); font-style: italic; }
+
+.entry-map-link { margin: 0 0 16px; font: 0.9rem var(--font-mono); }
+.entry-map-link a { font-weight: 700; color: var(--moss); }
+.entry-map-link .entry-map-years { color: var(--ink-faint); }
+@media (max-width: 600px) {
+    .leaflet-bottom.leaflet-left .map-focus-notice { margin-bottom: 26px; } /* clear of the attribution line */
+}
+
+/* 11. TEI ENTRIES ------------------------------------------------------
+   Markup from TEIEntry.render() in scripts/tei.js, used on entry pages for
+   entries written in TEI and in the contribution form's preview. */
+.pv-entry {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.pv-entry h1 { font-family: var(--font-serif); font-weight: normal; color: var(--ink); font-size: 1.6rem; line-height: 1.25; }
+.pv-entry h2 { font-family: var(--font-serif); font-weight: normal; color: var(--ink); font-size: 1.15rem; margin: 20px 0 6px; }
+.pv-entry p, .pv-entry ul, .pv-entry ol { margin-bottom: 10px; }
+.pv-entry ul, .pv-entry ol { padding-left: 22px; }
+.pv-entry a { color: var(--moss); }
+.pv-entry blockquote { margin: 0 0 10px; padding: 2px 0 2px 18px; border-left: 3px solid var(--moss); font-family: var(--font-serif); }
+.pv-entry blockquote p:last-child { margin-bottom: 0; }
+.pv-type { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--moss); margin-bottom: 2px !important; }
+.pv-life { color: var(--ink-faint); }
+.pv-robot, .result-robot { font-size: 0.8em; cursor: help; }
+.pv-byline { color: var(--ink-faint); font-size: 14px; font-style: italic; }
+.pv-summary p { font-family: var(--font-serif); font-size: 1.08rem; color: var(--ink); }
+.pv-citations { font-size: 14px; }
+.pv-dates { color: var(--ink-faint); font-size: 0.92em; }
+.pv-facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; margin: 14px 0 18px; padding: 12px 14px; background: var(--paper); border-left: 3px solid var(--moss); font-size: 14px; }
+.pv-facts dt { color: var(--ink-faint); }
+.pv-facts dd { color: var(--ink); overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .pv-facts { grid-template-columns: 1fr; }
+  .pv-facts dd { margin-bottom: 6px; }
+}
+.pv-table { overflow-x: auto; margin-bottom: 12px; }
+.pv-table table { border-collapse: collapse; font-size: 14px; }
+.pv-table td { border: 1px solid var(--paper-line); padding: 5px 8px; vertical-align: top; }
+.pv-figure { margin: 16px 0; text-align: center; }
+.pv-figure img { max-width: 100%; max-height: 70vh; height: auto; display: inline-block; }
+.pv-figure figcaption { font-size: 14px; color: var(--ink-faint); margin-top: 6px; }
+.pv-chron { border-collapse: collapse; width: 100%; margin-bottom: 12px; font-size: 14px; }
+.pv-chron th, .pv-chron td { border-bottom: 1px solid var(--paper-line); padding: 5px 8px 5px 0; text-align: left; vertical-align: top; }
+.pv-chron th { white-space: nowrap; color: var(--ink); font-weight: normal; font-family: var(--font-mono); }
+
+/* 12. SITE PAGES ---------------------------------------------------------
+   The front page, Featured pages and About are entries too (site_pages in
+   _config.yml), drawn by entry.html. They keep the look of an ordinary
+   page: a full-size title, no entry type, and a quiet "Suggest an edit"
+   link at the foot instead of the contribution form. */
+.site-page .pv-type, .site-page .pv-byline { display: none; }
+.site-page .pv-entry { font-size: inherit; line-height: inherit; }
+.main-content .site-page .pv-entry h1 { font-size: 2.2rem; margin-bottom: 20px; }
+.site-page .pv-entry h2 { font-size: 1.5rem; margin: 28px 0 10px; }
+.site-page .pv-entry p { margin-bottom: 20px; }
+.site-page .pv-entry ul, .site-page .pv-entry ol { margin-bottom: 20px; }
+.site-page .pv-entry blockquote { margin-bottom: 20px; }
+.site-page .pv-entry li { margin-bottom: 6px; }
+.site-page .az-top { font-size: 0.9rem; font-style: italic; }
+.main-content .site-page ul.az-index { padding-left: 0; }
+
+.page-suggest {
+    margin-top: 48px;
+    padding-top: 10px;
+    border-top: 1px solid var(--paper-line);
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+}
+.page-suggest summary {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--ink-faint);
+    text-decoration: underline;
+    text-decoration-color: var(--paper-line);
+    text-underline-offset: 3px;
+}
+.page-suggest summary::-webkit-details-marker { display: none; }
+.page-suggest summary:hover,
+.page-suggest[open] summary { color: var(--moss-deep); }
+.main-content .page-suggest p { font-size: 0.85rem; color: var(--ink-faint); margin: 10px 0; }
+.page-suggest .contribution-frame {
+    display: block;
+    width: 100%;
+    height: 600px;          /* until the form reports its real height */
+    border: 0;
+    background: transparent;
+}
+
+/* DEV SITE ------------------------------------------------------------
+   This copy is the development version, not the live site. A red and
+   white checkerboard frame around the screen and a "Development version"
+   label (_includes/dev-label.html) make that clear on every page.
+   Remove this section and the include to turn the dev styling off.     */
+
+:root {
+    --dev-checkerboard: conic-gradient(#c8102e 25%, #fff 0 50%, #c8102e 0 75%, #fff 0) 0 0 / 48px 48px;
+    --dev-frame: 12px;
+}
+
+/* 12px checkerboard frame over the screen edges; clicks pass through it.
+   Only on the site's own layouts, not the contribution form inside its iframe. */
+body.is-home::after,
+body.is-inner::after,
+body.map-page::after,
+body.map3d-page::after {
     content: "";
     position: fixed; inset: 0; z-index: 9999;
     pointer-events: none;
-    padding: 12px;
+    padding: var(--dev-frame);
     background: var(--dev-checkerboard) #fff;
-    /* Cut out everything but the 12px padding ring */
+    /* Cut out everything but the padding ring */
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
 
+/* Ordinary pages: keep the content clear of the frame */
+body.is-home,
+body.is-inner {
+    padding: var(--dev-frame);
+    background: var(--dev-checkerboard) fixed #fff;
+}
+
+.dev-label {
+    background: #c8102e;
+    color: #fff;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 8px 16px;
+    text-align: center;
+}
+.dev-label strong { text-transform: uppercase; letter-spacing: 0.08em; margin-right: 8px; }
+.dev-label a { color: #fff; text-decoration: underline; }
+.dev-label a:hover, .dev-label a:focus-visible { color: #fff; text-decoration-thickness: 2px; }
+
+/* On the full-screen maps the label floats as a small tag at the top centre */
+.map-page .dev-label,
+.map3d-page .dev-label {
+    position: fixed; z-index: 10000;
+    top: var(--dev-frame); left: 50%; transform: translateX(-50%);
+    padding: 4px 12px;
+    font-size: 12px;
+    border-radius: 0 0 4px 4px;
+    white-space: nowrap;
+    pointer-events: none; /* never block the map controls underneath */
+}
+.map-page .dev-label-text,
+.map3d-page .dev-label-text { display: none; }
+
 /* Keep the map controls clear of the frame */
-.map-page .leaflet-top    { top: 12px; }
-.map-page .leaflet-bottom { bottom: 12px; }
-.map-page .leaflet-left   { left: 12px; }
-.map-page .leaflet-right  { right: 12px; }
+.map-page .leaflet-top    { top: var(--dev-frame); }
+.map-page .leaflet-bottom { bottom: var(--dev-frame); }
+.map-page .leaflet-left   { left: var(--dev-frame); }
+.map-page .leaflet-right  { right: var(--dev-frame); }
 
 @media (max-width: 600px) {
+    .dev-label { font-size: 13px; padding: 6px 12px; }
+    .dev-label strong { display: block; margin: 0 0 2px; }
+    .map-page .dev-label strong,
+    .map3d-page .dev-label strong { display: inline; margin: 0; }
     #ui-layer { top: 22px; left: 22px; }
-    #info-panel { left: 12px; right: 12px; bottom: 12px; width: auto; }
+    #info-panel { left: var(--dev-frame); right: var(--dev-frame); bottom: var(--dev-frame); width: auto; }
 }

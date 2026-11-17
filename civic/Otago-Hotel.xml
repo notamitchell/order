@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="https://historicalesque.github.io/carlton/schema/carlton.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" type="org" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Otago Hotel</title>
+        <author>Andy May</author>
+        <author>Mitchell Harrop</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Carlton Common Ground</publisher>
+        <idno type="entry">Otago-Hotel</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <listBibl>
+          <bibl><ref target="civic?id=Sands-McDougall-Directory-1875">Sands &amp; McDougall Directory, 1875, p. 108: Otago htl., Hogan, Ellen</ref></bibl>
+          <bibl><ref target="civic?id=Sands-McDougall-Directory-1876">Sands &amp; McDougall Directory, 1876, p. 74: Otago htl, Hogan, Ellen</ref></bibl>
+          <bibl><ref target="civic?id=Sands-McDougall-Directory-1877">Sands &amp; McDougall Directory, 1877, p. 74: Otago htl, Daly, George</ref></bibl>
+          <bibl><ref target="civic?id=Sands-McDougall-Directory-1878">Sands &amp; McDougall Directory, 1878, p. 75: Otago htl, Brenan, J. H.</ref></bibl>
+          <bibl><ref target="civic?id=Sands-McDougall-Directory-1879">Sands &amp; McDougall Directory, 1879, p. 76: Otago htl, Collins, Jer.</ref></bibl>
+          <bibl><ref target="civic?id=Sands-McDougall-Directory-1880">Sands &amp; McDougall Directory, 1880, p. 78: Otago hotel, McManus, Miss Rosa</ref></bibl>
+        </listBibl>
+      </sourceDesc>
+    </fileDesc>
+    <revisionDesc status="draft">
+      <change when="2026-10-28" type="created">Contributed through the contribution form by Andy May, Mitchell Harrop.</change>
+      <change when="2026-10-28" type="revised">Credits tidied: the computer-assisted first draft is credited in the byline.</change>
+      <change when="2026-10-29" type="revised">Credits corrected: the entry was started by people, and the computer-assisted additions were minor, so they are no longer credited in the byline.</change>
+    </revisionDesc>
+  </teiHeader>
+  <standOff>
+    <listOrg>
+      <org xml:id="subject">
+        <orgName type="main">Otago Hotel</orgName>
+        <place type="address" when="1875">
+          <placeName>Pelham Street, Carlton</placeName>
+        </place>
+      </org>
+    </listOrg>
+  </standOff>
+  <text>
+    <body>
+      <div type="summary">
+        <p>The Otago Hotel was located on Pelham Street. There was a hotel of the same name in Flinders Street West. It appears the Otago Hotel in Carlton was renamed the Standard Hotel in the mid 1880s [<ref target="http://nla.gov.au/nla.news-article191195867"><hi rend="italic">Age</hi>, 10 July 1885: 7</ref>].</p>
+      </div>
+      <div type="detail">
+        <p>The directories list the proprietors as <ref target="civic?id=Ellen-Hogan">Ellen Hogan</ref><ref target="https://github.com/historicalesque/carlton/pull/188"> </ref>(1875 and 1876), George Daly (1877), J. H. Brenan (1878), Jer. Collins (1879) and Miss Rosa McManus (1880).</p>
+        <p>Ellen Hogan died at the hotel on 18 May 1876 [<ref target="http://nla.gov.au/nla.news-article202160910"><hi rend="italic">Age</hi>, 19 May 1876: 2]</ref>, and the next publican George Dalley didn't last much longer, dying there on 17 October the same year [Australasian, 21 Oct 1876: 25]. After Dalley's death, the following notice <ref target="http://nla.gov.au/nla.news-article5907444">appeared in the <hi rend="italic">Argus</hi></ref>:</p>
+        <quote>
+          <p>FOR OR SALE, cheap, in consequence of the death of late proprietor, the LEASE, having two years and nine months to run, with goodwill and licence, of OTAGO HOTEL, Pelham street, Carlton, doing a good cash trade, and containing eight rooms. Apply on premises.</p>
+        </quote>
+        <p>In 1879, the publican (or a resident) at the hotel lost their white poodle named "Blong" and notified anyone who had detained the dog that it "Will come home if let loose" [<ref target="http://nla.gov.au/nla.news-article199366971"><hi rend="italic">Age</hi>, 4 Aug 1879: 1</ref>].</p>
+        <p>In November 1881, the delightfully named Phillipa Seymore de la Fontaine advertised as follows [<ref target="http://nla.gov.au/nla.news-article241320304"><hi rend="italic">Herald</hi>, 24 November 1881: 4</ref>]:</p>
+        <quote>
+          <p>I, PHILLIPA SEYMORE DE LA FONTAINE, of Carlton, the holder of a Transferred Publican's License, do hereby give notice that I desire to obtain, and will at the next Licensing Meeting, to be holden at Melbourne, on the thirteenth day of December, APPLY for a Certificate authorising the Issue of a PUBLICAN'S LICENSE, for a house situate at Pelham street, Carlton, known as the Otago Hotel, containing six room, exclusive of those required for the use of the family.</p>
+        </quote>
+      </div>
+    </body>
+  </text>
+</TEI>
