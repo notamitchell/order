@@ -3,10 +3,11 @@ theme: jekyll-theme-cayman
 # The Apps Script web app (/exec URL) that receives contribution form entries
 # (apps-script/Code.gs, setup in apps-script/README.md). Leave empty to keep
 # the form unconnected: it then only previews and downloads.
-# DEV SITE: left empty so test submissions from this development copy
-# don't reach the live site's submissions sheet or open pull requests there.
-# Live value: "https://script.google.com/macros/s/AKfycbxKYO3HIIwoNWI7ZHyxHvDz9wsvFgQT0KUL3kHgztqtNDaITvjH-uaQiTLEfdGbm2LX/exec"
-contribution_endpoint: ""
+# DEV SITE: temporarily standing in for the live site, so the form sends to
+# the live Apps Script (submissions go to the live sheet and open pull
+# requests on the live repository). To make this a test-only copy again,
+# set this to "".
+contribution_endpoint: "https://script.google.com/macros/s/AKfycbxKYO3HIIwoNWI7ZHyxHvDz9wsvFgQT0KUL3kHgztqtNDaITvjH-uaQiTLEfdGbm2LX/exec"
 
 # Site pages kept as entries in civic/, so the team can suggest edits to them
 # the same way as any entry: the front page, Featured pages, About and
